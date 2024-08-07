@@ -43,6 +43,9 @@ import TreeSelect from '@/components/TreeSelect'
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 
+import nodeWrap from '@/components/flow/nodeWrap.vue'; // 彷钉钉流程配置
+import addNode from '@/components/flow/addNode.vue'; // 添加节点
+
 const app = createApp(App)
 
 // 全局方法挂载 
@@ -63,6 +66,8 @@ app.component('ImageUpload', ImageUpload)
 app.component('ImagePreview', ImagePreview)
 app.component('RightToolbar', RightToolbar)
 app.component('Editor', Editor)
+app.component('nodeWrap', nodeWrap); 
+app.component('addNode', addNode); 
 
 app.use(router)
 app.use(store)

@@ -1,5 +1,5 @@
-import { logout} from '@/api/login' //,login,getInfo 
-import { login,getInfo } from '@/api/mock'
+ //import { logout,login,getInfo } from '@/api/login'
+import { login,getInfo,logout } from '@/api/mock'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import defAva from '@/assets/images/profile.jpg'
 
@@ -56,6 +56,7 @@ const useUserStore = defineStore(
       // 退出系统
       logOut() {
         return new Promise((resolve, reject) => {
+      
           logout(this.token).then(() => {
             this.token = ''
             this.roles = []
