@@ -47,6 +47,9 @@ defineProps({
   }
 })
 </script>
+<style scoped lang="scss">  
+@import "@/assets/styles/flow/dialog.scss";
+</style>
 <style lang="scss">
 .select-box {
   height: 370px;

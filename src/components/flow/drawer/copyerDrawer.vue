@@ -82,6 +82,32 @@ const closeDrawer = () => {
 
 <style scoped lang="scss">  
 @import "@/assets/styles/flow/dialog.scss";
+.selected_list {
+    margin-bottom: 20px;
+    line-height: 30px;
+}
+
+.selected_list span {
+    margin-right: 10px;
+    padding: 3px 6px 3px 9px;
+    line-height: 12px;
+    white-space: nowrap;
+    border-radius: 2px;
+    border: 1px solid rgba(220, 220, 220, 1);
+}
+
+.selected_list img {
+    margin-left: 5px;
+    width: 7px;
+    height: 7px;
+    cursor: pointer;
+}
+
+.selected_list a {
+    font-size: 10 !important;
+    color: #46a6fe;
+    cursor: pointer;
+}
 .set_copyer {
     .copyer_content {
         padding: 20px 20px 0;

@@ -13,8 +13,7 @@
                             <img src="@/assets/images/add-close1.png"
                                 @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
                         </span>
-                        <a v-if="approverConfig.nodeApproveList.length != 0"
-                            @click="approverConfig.nodeApproveList = []">清除</a>
+                        <a v-if="approverConfig.nodeApproveList.length != 0"  @click="approverConfig.nodeApproveList = []">清除</a>
                     </p>
                 </div>
                 <div class="approver_manager" v-if="approverConfig.setType == 3">
@@ -220,8 +219,36 @@ const handleCheckedButtonsChange = (val) =>  {
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
+
 .el-drawer__header{
     margin-bottom: 5px !important;
+}
+
+.selected_list {
+    margin-bottom: 20px;
+    line-height: 30px;
+}
+
+.selected_list span {
+    margin-right: 10px;
+    padding: 3px 6px 3px 9px;
+    line-height: 12px;
+    white-space: nowrap;
+    border-radius: 2px;
+    border: 1px solid rgba(220, 220, 220, 1);
+}
+
+.selected_list img {
+    margin-left: 5px;
+    width: 7px;
+    height: 7px;
+    cursor: pointer;
+}
+
+.selected_list a {
+    font-size: 10 !important;
+    color: #46a6fe;
+    cursor: pointer;
 }
 .el-tabs { 
     margin-left: 20px !important;
