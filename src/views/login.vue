@@ -109,8 +109,7 @@ function handleLogin() {
         Cookies.remove("rememberMe");
       } 
       // 调用action的登录方法
-      userStore.login(loginForm.value).then(() => {
-        console.log('loginForm==loginForm=======',JSON.stringify(loginForm.value));
+      userStore.login(loginForm.value).then(() => { 
         const query = route.query;
         const otherQueryParams = Object.keys(query).reduce((acc, cur) => {
           if (cur !== "redirect") {
@@ -123,8 +122,7 @@ function handleLogin() {
         loading.value = false; 
       });
     }
-  });
-  console.log('userId=========',JSON.stringify(userId.value));
+  }); 
 }
 
 onMounted(async () => {
