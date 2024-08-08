@@ -118,5 +118,6 @@ const delList = ()=> {
 }
 </script>
 <style>
+@import "@/assets/styles/flow/workflow.scss";
 @import "@/assets/styles/flow/dialog.scss";
 </style>

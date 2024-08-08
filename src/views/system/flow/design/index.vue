@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container" style="background-color: #f5f5f7 !important;">
+    <div class="app-container">
         <div class="fd-nav">
             <div class="fd-nav-left"> 
                 <div class="fd-nav-title">{{ title }}</div>
@@ -109,9 +109,15 @@ const publish = () => {
 };
 
 </script>
-<style scoped>
-@import "@/assets/styles/flow/main.scss";
+<style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";
+
+.app-container{
+    position: relative;
+    background-color: #f5f5f7;
+    min-height: calc(100vh - 84px); 
+    padding-top: 15px;
+}
 
 .step-tab {
    display: flex;

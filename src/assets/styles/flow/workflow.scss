@@ -1053,14 +1053,14 @@ html {
 .fd-nav-content {
     // position: fixed;
     text-align: center;
-    top: 60px;
+    // top: 60px;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
-    padding-bottom: 30px
+    padding-bottom: calc(100vh - 84px);
 }
 
 .error-modal-desc {
@@ -1395,7 +1395,7 @@ html {
     display: inline-block;
     position: relative;
     width: 100%;
-    padding: 54.5px 0;
+    padding: 0;
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;

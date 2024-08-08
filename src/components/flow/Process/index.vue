@@ -1,5 +1,5 @@
 <template>
-    <div class="fd-nav-content" style="margin-top: 50px  !important;height: auto;">
+    <div class="app-container" style="margin-top: 50px  !important;height: auto;">
         <section class="dingflow-design">
             <div class="zoom">
                 <div class="zoom-out" :class="nowVal == 50 && 'disabled'" @click="zoomSize(1)"></div>
@@ -126,7 +126,16 @@ defineExpose({
     getData
 })
 </script>
-<style scoped lang="scss"> 
+<style scoped lang="scss">  
+@import "@/assets/styles/flow/workflow.scss";
+
+.app-container{
+    position: relative;
+    background-color: #f5f5f7;
+    min-height: calc(100vh - 84px); 
+    padding-top: 15px;
+}
+
  .clearfix {
     zoom: 1
 }
@@ -173,25 +182,5 @@ defineExpose({
 .zoom .zoom-in.disabled {
     opacity: .5
 }
-
-.dingflow-design .end-node {
-    border-radius: 50%;
-    font-size: 14px;
-    color: rgba(25, 31, 37, .4);
-    text-align: left
-}
-
-.dingflow-design .end-node .end-node-circle {
-    width: 20px;
-    height: 20px;
-    margin: auto;
-    border-radius: 50%;
-    background: #dbdcdc
-}
-
-.dingflow-design .end-node .end-node-text {
-    margin-top: 5px;
-    text-align: center
-}
-
+ 
 </style>

@@ -250,9 +250,7 @@ const closeDrawer = (val) => {
     setCondition(false)
 }
 </script>
-<style scoped lang="scss">
-@import "@/assets/styles/flow/main.scss";
-@import "@/assets/styles/flow/workflow.scss";
+<style scoped lang="scss"> 
 @import "@/assets/styles/flow/dialog.scss";
 .condition_copyer {
     .priority_level {

@@ -50,7 +50,8 @@ defineProps({
 let emits = defineEmits(['del'])
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="scss"> 
+@import "@/assets/styles/flow/workflow.scss";
 .select-result {
   width: 276px;
   height: 100%;

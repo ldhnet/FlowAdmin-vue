@@ -136,10 +136,8 @@ const addType = (type)=> {
     }
 }
 </script>
-<style scoped lang="scss"> 
-@import "@/assets/styles/flow/main.scss";
+<style scoped lang="scss">  
 @import "@/assets/styles/flow/workflow.scss";
-
 .add-node-btn-box {
     width: 240px;
     display: -webkit-inline-box;

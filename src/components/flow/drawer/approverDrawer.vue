@@ -5,7 +5,7 @@
             <div class="drawer_content">
                 <div class="approver_content">
                     <el-radio-group v-model="approverConfig.setType" class="clear" @change="changeType">
-                        <el-radio v-for="({ value, label }) in setTypes" :key="value" :label="value">{{ label }}</el-radio>
+                        <el-radio v-for="({ value, label }) in setTypes" :value="value">{{ label }}</el-radio>
                     </el-radio-group>
                     <el-button type="primary" @click="addApprover" v-if="approverConfig.setType == 5">添加/修改人员</el-button>
                     <p class="selected_list" v-if="approverConfig.setType == 5">
@@ -76,17 +76,17 @@
                         <div class="approver_some">
                             <p>多人审批时采用的审批方式</p>
                             <el-radio-group v-model="approverConfig.signType" class="clear">
-                                <el-radio :label="1">会签（需所有审批人同意，不限顺序）</el-radio>
+                                <el-radio :value="1">会签（需所有审批人同意，不限顺序）</el-radio>
                                 <br />
-                                <el-radio :label="2">或签（只需一名审批人同意或拒绝即可）</el-radio>
+                                <el-radio :value="2">或签（只需一名审批人同意或拒绝即可）</el-radio>
                             </el-radio-group>
                         </div>
                         <div class="approver_some">
                             <p>审批人为空时</p>
                             <el-radio-group v-model="approverConfig.noHeaderAction" class="clear">
-                                <el-radio :label="1">自动审批通过/不允许发起</el-radio>
+                                <el-radio :value="1">自动审批通过/不允许发起</el-radio>
                                 <br />
-                                <el-radio :label="2">转交给审核管理员</el-radio>
+                                <el-radio :value="2">转交给审核管理员</el-radio>
                             </el-radio-group>
                         </div>
                     </el-tab-pane>
@@ -94,10 +94,9 @@
                         <div class="approver_some">
                             <p>【审批页面】按钮权限显示控制</p> 
                             <el-checkbox-group class="clear"  v-model="checkApprovalPageBtns"> 
-                                <el-checkbox  border
-                                 v-for="opt in approvalPageButtons" 
-                                :label="opt.value" 
-                                :key="opt.value" 
+                                <el-checkbox style="margin: 0 15px 0 0;"  border
+                                 v-for="opt in approvalPageButtons"  
+                                :value="opt.value" 
                                 :disabled="opt.type === 'default'"
                                  @change="handleCheckedButtonsChange(opt.value)"
                                 >{{opt.label}}</el-checkbox>
@@ -220,8 +219,6 @@ const handleCheckedButtonsChange = (val) =>  {
  
 </script>
 <style scoped lang="scss">
-@import "@/assets/styles/flow/main.scss";
-@import "@/assets/styles/flow/workflow.scss";
 @import "@/assets/styles/flow/dialog.scss";
 .el-tabs { 
     margin-left: 20px !important;

@@ -1,5 +1,5 @@
 <template>
-    <div class="fd-nav-content">
+    <div style="margin-top: 50px; position: relative;">
         <div class="form-container">
             <el-form ref="ruleFormRef" :model="form" :rules="rules" label-width="auto"
                 style="max-width: 600px;margin: auto;">
@@ -142,6 +142,11 @@ defineExpose({
   padding: 15px;
   max-width: 700px;
   min-height: 600px;
-  margin-left: 20%;
+  position: absolute;
+  top:300px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 </style>

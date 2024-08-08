@@ -47,7 +47,8 @@ defineProps({
   }
 })
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss"> 
+@import "@/assets/styles/flow/workflow.scss";
 .select-box {
   height: 420px;
   overflow-y: auto;

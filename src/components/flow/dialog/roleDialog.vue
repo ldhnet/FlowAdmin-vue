@@ -91,6 +91,6 @@ const closeDialog = () => {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
 </style>

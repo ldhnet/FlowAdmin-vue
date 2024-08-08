@@ -6,4 +6,11 @@ export default function directive(app){
   app.directive('hasRole', hasRole)
   app.directive('hasPermi', hasPermi)
   app.directive('copyText', copyText)
+  app.directive('focus', {
+    mounted(el) {
+      el.focus();
+    }
+  })  
+  app.directive('enter-number', { 
+  }) 
 }

@@ -294,8 +294,7 @@ const arrTransfer = (index, type = 1) => {
     emits("update:nodeConfig", props.nodeConfig);
 };
 </script>
-<style scoped lang="scss">
-@import "@/assets/styles/flow/main.scss";
+<style scoped lang="scss"> 
 @import "@/assets/styles/flow/workflow.scss";
 .error_tip {
     position: absolute;
