@@ -7,6 +7,7 @@
 "use strict";
 
 import axios from "axios";  
+import cache from '@/plugins/cache';
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   timeout: 60 * 1000, // Timeout
@@ -22,6 +23,7 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function (config) {
     config.headers = config.headers || {};  
+    config.headers.Userid = cache.session.get('userId');
     return config;
   },
   function (error) { 
