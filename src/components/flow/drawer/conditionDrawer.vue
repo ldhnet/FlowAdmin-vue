@@ -6,7 +6,7 @@
 -->
 
 <template>
-    <el-drawer :append-to-body="true" title="条件设置" v-model="visible" class="condition_copyer" :show-close="false" :size="550" :before-close="saveCondition"> 
+    <el-drawer :append-to-body="true" title="条件设置" v-model="visible" class="condition_copyer" :show-close="false" :size="680" :before-close="saveCondition"> 
         <template #header="{ titleId, titleClass }">
             <h3 :id="titleId" :class="titleClass">条件设置</h3>
             <select v-model="conditionConfig.priorityLevel" class="priority_level">
@@ -250,7 +250,7 @@ const closeDrawer = (val) => {
     setCondition(false)
 }
 </script>
-<style scoped lang="scss"> 
+<style scoped lang="scss">  
 @import "@/assets/styles/flow/dialog.scss";
 .condition_copyer {
     .priority_level {
@@ -270,9 +270,9 @@ const closeDrawer = (val) => {
 
         p.tip {
             margin: 20px 0;
-            width: 510px;
+            width: 610px;
             text-indent: 17px;
-            line-height: 45px;
+            line-height: 50px;
             background: rgba(241, 249, 255, 1);
             border: 1px solid rgba(64, 163, 247, 1);
             color: #46a6fe;
@@ -283,14 +283,18 @@ const closeDrawer = (val) => {
             max-height: 500px;
             overflow-y: scroll;
             margin-bottom: 20px;
-
+     
             li {
+                border-bottom: 1px solid rgb(79, 88, 95);
                 &>span {
                     float: left;
-                    margin-right: 8px;
+                    margin-right: 5px;
                     width: 70px;
-                    line-height: 32px;
+                    line-height: 65px;
                     text-align: right;
+                    color: #0857a1;
+                    font-size: 14px;
+
                 }
 
                 &>div {
@@ -309,7 +313,9 @@ const closeDrawer = (val) => {
                 &>a {
                     float: right;
                     margin-right: 10px;
-                    margin-top: 7px;
+                    margin-top: 20px;
+                    color: #46a6fe;
+                    font-size: 14px;
                 }
 
                 select,

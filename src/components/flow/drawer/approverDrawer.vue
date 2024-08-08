@@ -1,6 +1,6 @@
 <template>
     <el-drawer :append-to-body="true" title="审批人设置" v-model="visible" class="set_promoter" :show-close="false"
-        :size="550" :before-close="saveApprover">
+        :size="680" :before-close="saveApprover">
         <div class="demo-drawer__content">
             <div class="drawer_content">
                 <div class="approver_content">
@@ -220,6 +220,9 @@ const handleCheckedButtonsChange = (val) =>  {
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
+.el-drawer__header{
+    margin-bottom: 5px !important;
+}
 .el-tabs { 
     margin-left: 20px !important;
 }

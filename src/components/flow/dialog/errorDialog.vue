@@ -53,9 +53,7 @@ let visibleDialog = computed({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/flow/workflow.scss";
-@import "@/assets/styles/flow/dialog.scss";
-
+@import "@/assets/styles/flow/dialog.scss"; 
 .ant-confirm-body .ant-confirm-title {
   color: rgba(0, 0, 0, .85);
   font-weight: 500;

@@ -1,11 +1,11 @@
 <!--
  * @Date:  2024-05-25 14:05:59
- * * @LastEditors: LDH 574427343@qq.com
+ * @LastEditors: LDH 574427343@qq.com
  * @LastEditTime: 2023-03-15 14:59:19
- * @FilePath: /ant-flow/src/components/dialog/roleDialog.vue
+ * @FilePath: /flow/src/components/dialog/roleDialog.vue
 -->
 <template>
-   <el-dialog title="选择角色" v-model="visibleDialog" :width="600" append-to-body class="promoter_person">
+   <el-dialog title="选择角色" v-model="visibleDialog" style="width: 680px !important;"  append-to-body class="promoter_person">
       <div class="person_body clear">
           <div class="person_tree l">
               <input type="text" placeholder="搜索角色" v-model="searchVal" @input="getDebounceData($event,2)">
@@ -91,6 +91,6 @@ const closeDialog = () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="scss"> 
 @import "@/assets/styles/flow/dialog.scss";
 </style>

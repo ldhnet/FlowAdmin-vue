@@ -1,10 +1,10 @@
 <template>
-   <el-dialog title="选择成员" v-model="visibleDialog" :width="600" append-to-body class="promoter_person">
+   <el-dialog title="选择成员" v-model="visibleDialog" style="width: 680px !important;" append-to-body class="promoter_person">
       <div class="person_body clear">
           <div class="person_tree l">
               <input type="text" placeholder="搜索成员" v-model="searchVal" @input="getDebounceData($event)">
               <p class="ellipsis tree_nav" v-if="!searchVal">
-                  <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
+                  <!-- <span @click="getDepartmentList(0)" class="ellipsis">天下</span> -->
                   <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
                   :key="index+'a'" @click="getDepartmentList(item.id)">{{item.departmentName}}</span>   
               </p>
@@ -117,7 +117,6 @@ const delList = ()=> {
   checkedEmployessList.value = []
 }
 </script>
-<style>
-@import "@/assets/styles/flow/workflow.scss";
+<style scoped lang="scss"> 
 @import "@/assets/styles/flow/dialog.scss";
 </style>

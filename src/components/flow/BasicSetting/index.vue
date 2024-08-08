@@ -139,11 +139,11 @@ defineExpose({
 <style scoped>
 .form-container {   
   background: white !important;
-  padding: 15px;
+  padding: 30px;
   max-width: 700px;
   min-height: 600px;
   position: absolute;
-  top:300px;
+  top:270px;
   left: 0;
   bottom: 0;
   right: 0;

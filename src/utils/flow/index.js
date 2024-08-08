@@ -45,7 +45,7 @@ All.prototype = {
     toggleClass(arr, elem, key = 'id') {
         return arr.some(item => { return item[key] == elem[key] });
     },
-    toChecked(arr, elem, key = 'id') {
+    toChecked(arr, elem, key = 'id') { 
         var isIncludes = this.toggleClass(arr, elem, key);
         !isIncludes ? arr.push(elem) : this.removeEle(arr, elem, key);
     },

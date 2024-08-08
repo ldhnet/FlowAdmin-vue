@@ -4,6 +4,7 @@
     /* border-bottom: 1px solid #f2f2f2 !important; */
     color: #323232 !important;
     font-size: 16px !important;
+    margin-bottom: 5px !important;
 }
 .el-drawer__header .el-drawer__title{
     font-size: 16px !important;
@@ -55,6 +56,7 @@
 .el-dialog__header .el-dialog__headerbtn {
     height: 12px !important;
     width: 12px !important;
+    margin: 15px !important;
 }
 
 .el-dialog__header .el-icon-close {
@@ -67,7 +69,7 @@
     display: block !important;
     width: 12px !important;
     height: 12px !important;
-    background: url(~@/assets/images/add-close.png) no-repeat center !important;
+    background: url(../../images/add-close.png) no-repeat center !important;
     background-size: 100% 100% !important;
     content: "" !important;
 }
@@ -95,7 +97,7 @@
     display: inline-block !important;
     width: 80px !important;
     height: 80px !important;
-    background: url(~@/assets/images/loading.gif) no-repeat center !important;
+    background: url(../../images/loading.gif) no-repeat center !important;
 }
 
 .el-timeline {

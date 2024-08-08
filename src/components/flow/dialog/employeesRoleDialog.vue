@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="选择成员" v-model="visibleDialog" :width="600" append-to-body class="promoter_person">
+  <el-dialog title="选择成员" v-model="visibleDialog" style="width: 650px !important;"  append-to-body class="promoter_person">
       <div class="person_body clear">
           <div class="person_tree l">
               <input type="text" placeholder="搜索成员" v-model="searchVal" @input="getDebounceData($event,activeName)">
@@ -155,7 +155,6 @@ const closeDialog = ()=> {
 }
 </script>
 
-<style>
-@import "@/assets/styles/flow/workflow.scss";
+<style scoped lang="scss"> 
 @import "@/assets/styles/flow/dialog.scss";
 </style>

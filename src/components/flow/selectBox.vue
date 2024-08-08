@@ -47,15 +47,13 @@ defineProps({
   }
 })
 </script>
-<style scoped lang="scss"> 
-@import "@/assets/styles/flow/workflow.scss";
+<style lang="scss">
 .select-box {
-  height: 420px;
-  overflow-y: auto;
-
+  height: 370px;
+  overflow-y: auto; 
   li {
     padding: 5px 0;
-
+    list-style-type: none;
     i {
       float: right;
       padding-left: 24px;
@@ -63,13 +61,13 @@ defineProps({
       color: #3195f8;
       font-size: 12px;
       cursor: pointer;
-      background: url(~@/assets/images/next_level_active.png) no-repeat 10px center;
+      background: url(../../assets/images/next_level_active.png) no-repeat 10px center;
       border-left: 1px solid rgb(238, 238, 238);
     }
 
     a.active+i {
       color: rgb(197, 197, 197);
-      background-image: url(~@/assets/images/next_level.png);
+      background-image: url(../../assets/images/next_level.png);
       pointer-events: none;
     }
 

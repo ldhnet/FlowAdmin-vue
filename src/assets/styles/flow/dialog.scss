@@ -1,4 +1,28 @@
-@import "./override-element-ui.scss";
+@import "./override-element-ui.scss"; 
+body,
+html {
+    font-size: 14px
+}
+
+body {
+    font-family: Microsoft Yahei, Lucida Grande, Lucida Sans Unicode, Helvetica, Arial, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #fff;
+    position: static!important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+ol,ul {
+    list-style-type: none
+}
+
+b,strong {
+    font-weight: 700
+}
+
+img {
+    border: 0
+}
+
 .person_body {
   border: 1px solid #f5f5f5;
   height: 500px;
@@ -11,7 +35,7 @@
   color: #38adff;
   font-size: 12px;
   cursor: pointer;
-  background: url(~@/assets/images/jiaojiao.png) no-repeat right center;
+  background: url(../../images/jiaojiao.png) no-repeat right center;
 }
 .tree_nav span:last-of-type {
   background: none;
@@ -19,7 +43,7 @@
 .person_tree {
   padding: 10px 12px 0 8px;
   width: 280px;
-  height: 100%;
+  height: 90%;
   border-right: 1px solid #f5f5f5;
 }
 .person_tree input {
@@ -29,100 +53,11 @@
   font-size: 12px;
   border-radius: 2px;
   border: 1px solid #d5dadf;
-  background: url(~@/assets/images/list_search.png) no-repeat 10px center;
+  background: url(../../images/list_search.png) no-repeat 10px center;
   background-size: 14px 14px;
   margin-bottom: 14px;
 }
-
-
-
-a,
-abbr,
-acronym,
-address,
-applet,
-article,
-aside,
-audio,
-b,
-big,
-blockquote,
-body,
-canvas,
-caption,
-center,
-cite,
-code,
-dd,
-del,
-details,
-dfn,
-div,
-dl,
-dt,
-em,
-fieldset,
-figcaption,
-figure,
-footer,
-form,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-header,
-hgroup,
-html,
-i,
-iframe,
-img,
-ins,
-kbd,
-label,
-legend,
-li,
-mark,
-menu,
-nav,
-object,
-ol,
-p,
-pre,
-q,
-s,
-samp,
-section,
-small,
-span,
-strike,
-strong,
-sub,
-summary,
-sup,
-table,
-tbody,
-td,
-tfoot,
-th,
-thead,
-time,
-tr,
-tt,
-u,
-ul,
-var,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
+ 
 .clear:before,
 .clear:after {
     content: " ";
@@ -222,5 +157,5 @@ select {
 }
 
 .check_box a.active::after {
-    background: url(~@/assets/images/check_box.png) no-repeat center;
+    background: url(../../images/check_box.png) no-repeat center;
 }
