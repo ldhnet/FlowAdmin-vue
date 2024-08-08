@@ -34,7 +34,7 @@ import { ref, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
 import { getMockWorkFlowData } from '@/api/mock';
-//import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/jdCloudApi';
+import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatcommit_data'
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 import BasicSetting from "@/components/flow/BasicSetting/index.vue";
