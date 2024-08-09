@@ -5,8 +5,8 @@
  * @FilePath: \components\dashboard\LiveChart.vue
 -->
 <template>
-    <el-row :gutter="20" style="padding-bottom: 10px">
-        <el-col :span="6">
+    <el-row :gutter="20">
+        <el-col :md="6">
             <div class="ve-card ve_card1">
                 <el-icon>
                     <football />
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :md="6">
             <div class="ve-card ve_card2">
                 <el-icon>
                     <user />
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </el-col> 
-        <el-col :span="6">
+        <el-col :md="6">
             <div class="ve-card ve_card3">
                 <el-icon>
                     <ice-cream />
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :md="6">
             <div class="ve-card ve_card4">
                 <el-icon>
                     <document />
@@ -58,7 +58,10 @@
 <style lang="scss" scoped>
 .el-row {
     height: 50%; 
-    padding-right: 10px;
+    padding-right: 10px;   
+}
+.el-col {  
+    margin-bottom: 10px;
 }
 .ve-card {
     border-radius: 10px;
