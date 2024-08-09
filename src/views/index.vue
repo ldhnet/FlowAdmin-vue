@@ -121,6 +121,8 @@
 import shortcuts from "@/components/dashboard/Shortcuts";
 const version = ref('3.0.0')
 
+console.log("VITE_APP_BASE_API=======",import.meta.env.BASE_URL);
+
 function goTarget(url) {
   window.open(url, '__blank')
 }

@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
 
@@ -105,8 +105,8 @@ export const dynamicRoutes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
+const router = createRouter({   
+  history: createWebHashHistory(import.meta.env.BASE_URL),//createWebHistory(), //
   routes: constantRoutes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
