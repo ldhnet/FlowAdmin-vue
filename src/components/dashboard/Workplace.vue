@@ -6,61 +6,20 @@
             </div>
         </template> 
         <el-row :gutter="10">
-            <el-col :md="6">
-                <el-card shadow="always"  class="card-col">
+            <el-col :md="6" v-for="(item, index) in flowList" >
+                <el-card shadow="always"  class="card-col" @click="handleFlow">
                     <div slot="title">                    
                         <div class="card-icon">
-                            <el-avatar size="large" src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png" />
+                            <el-avatar size="large" :src="item.IconUrl"/>
                         </div>
                         <div class="card-title">
-                            <a>请假申请</a>
-                            <p>请假申请流程办理</p>
+                            <a>{{ item.title }}</a>
+                            <p>{{ item.description }}</p>
                         </div>
                     </div>
                 </el-card>
             </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title" >                        
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                            src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/person.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>加班申请</a>
-                            <p>加班申请流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title" > 
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                                src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/sealing.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>打卡申诉</a>
-                            <p>打卡申诉流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title">
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                            src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/overtime.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>工时录入</a>
-                            <p>工时录入流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
+
         </el-row> 
     </el-card> 
     <el-card>
@@ -70,83 +29,79 @@
             </div>
         </template> 
         <el-row :gutter="10">
-            <el-col :md="6">
-                <el-card shadow="always"  class="card-col">
+            <el-col :md="6" v-for="(item, index) in hrList" >
+                <el-card shadow="always"  class="card-col" @click="handleFlow">
                     <div slot="title">                    
                         <div class="card-icon">
-                            <el-avatar size="large" src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png" />
+                            <el-avatar size="large" :src="item.IconUrl"/>
                         </div>
                         <div class="card-title">
-                            <a>人员入职流程</a>
-                            <p>人员入职流程办理</p>
+                            <a>{{ item.title }}</a>
+                            <p>{{ item.description }}</p>
                         </div>
                     </div>
                 </el-card>
             </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title" >                        
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                            src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/person.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>人员转正流程</a>
-                            <p>人员转正流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title" > 
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                                src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/sealing.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>人员离职流程</a>
-                            <p>人员离职流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :md="6">
-                <el-card shadow="always" class="card-col">
-                    <div slot="title">
-                        <div class="card-icon">
-                            <el-avatar size="large"
-                            src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/overtime.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>人员离职交接流程</a>
-                            <p>人员离职交接流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row> 
-
-        <el-row :gutter="10">
-            <el-col :md="6">
-                <el-card shadow="always"  class="card-col">
-                    <div slot="title">                    
-                        <div class="card-icon">
-                            <el-avatar size="large" src="//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png" />
-                        </div>
-                        <div class="card-title">
-                            <a>部门调动流程</a>
-                            <p>部门调动流程办理</p>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-           
         </el-row> 
     </el-card> 
 </template>
 
-<script>
+<script setup> 
+ const { proxy } = getCurrentInstance();
+function handleFlow(row) {
+   proxy.$modal.msgSuccess("演示环境努力开发中！");
+ }
+
+ const flowList = [
+    { 
+        title: "请假申请",
+        description: "请假申请流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png"
+    },
+    {
+        title: "加班申请",
+        description: "加班申请流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/person.png"
+    },
+    {
+        title: "打卡申诉",
+        description: "打卡申诉流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/sealing.png"
+    },
+    {
+        title: "工时录入",
+        description: "工时录入流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/overtime.png"
+    }
+ ]; 
+
+ const hrList = [
+    { 
+        title: "人员入职流程",
+        description: "人员入职流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/richang.png"
+    },
+    {
+        title: "人员转正流程",
+        description: "人员转正流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/zhushou.png"
+    },
+    {
+        title: "人员离职流程",
+        description: "人员离职流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/worktile.png"
+    },
+    {
+        title: "人员离职交接流程",
+        description: "人员离职交接流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/icon-manage-04.png"
+    },
+    {
+        title: "部门调动流程",
+        description: "部门调动流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/jiejing.png"
+    }
+ ]; 
 
 </script>
 <style lang="scss" scoped>
