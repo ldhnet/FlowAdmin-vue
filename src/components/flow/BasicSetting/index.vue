@@ -41,7 +41,7 @@
 <script setup>
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
-//import { getFromCodeData } from '@/api/flow/jdCloudApi';
+import { getFromCodeData } from "@/api/mockflow";
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
 let props = defineProps({
@@ -85,11 +85,11 @@ onMounted(async () => {
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;
     }
-    // await getFromCodeData().then((res) => {
-    //     if (res.code == 200) { 
-    //         formCodeOptions.value = res.data;
-    //     }
-    // });
+    await getFromCodeData().then((res) => {
+        if (res.code == 200) { 
+            formCodeOptions.value = res.data;
+        }
+    });
 });
 
 let rules = {

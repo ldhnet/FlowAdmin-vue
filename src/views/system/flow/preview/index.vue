@@ -4,7 +4,7 @@
             <span class="task-title-text">流程详情预览</span>
         </div>
 
-        <el-row style="background-color: #f5f5f7;height: calc(100vh - 10px);">
+        <el-row style="background-color: #f5f5f7;min-height: calc(100vh);">
             <el-col :span="24">
                 <el-radio-group v-model="tabPosition">
                     <el-radio-button value="buinessForm">业务表单信息</el-radio-button>

@@ -132,7 +132,7 @@ defineExpose({
 .app-container {
     position: relative;
     background-color: #f5f5f7;
-    min-height: calc(100vh - 84px);
+    min-height: calc(100vh);
     padding-top: 5px;
     margin-top: 20px !important;
     height: auto;
