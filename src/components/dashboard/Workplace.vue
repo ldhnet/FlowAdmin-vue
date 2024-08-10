@@ -1,4 +1,26 @@
 <template>
+      <el-card >
+        <template v-slot:header>
+            <div class="clearfix">
+                <span>可用流程</span>
+            </div>
+        </template> 
+        <el-row :gutter="10">
+            <el-col :md="6" v-for="(item, index) in enableList" >
+                <el-card shadow="always"  class="card-col" @click="handleStart">
+                    <div slot="title">                    
+                        <div class="card-icon">
+                            <el-avatar size="large" :src="item.IconUrl"/>
+                        </div>
+                        <div class="card-title">
+                            <a>{{ item.title }}</a>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                </el-card>
+            </el-col> 
+        </el-row> 
+    </el-card> 
     <el-card >
         <template v-slot:header>
             <div class="clearfix">
@@ -18,8 +40,7 @@
                         </div>
                     </div>
                 </el-card>
-            </el-col>
-
+            </el-col> 
         </el-row> 
     </el-card> 
     <el-card>
@@ -103,6 +124,19 @@ function handleFlow(row) {
     }
  ]; 
 
+ const enableList= [ 
+    {
+        title: "第三方账号申请",
+        description: "第三方账号申请办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/person.png"
+    }
+ ]; 
+
+
+function handleStart(row) {
+   const obj = { path: "/bizdemo" };
+   proxy.$tab.openPage(obj);
+}
 </script>
 <style lang="scss" scoped>
  .card-col {

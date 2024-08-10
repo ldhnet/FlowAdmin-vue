@@ -40,7 +40,7 @@
 
          <el-table-column label="状态" align="center" prop="effectiveStatus">
             <template #default="item">
-               {{ item.row.effectiveStatus == 1 ? '活跃' : '不活跃' }}
+               <el-tag>{{ item.row.effectiveStatus == 1 ? '活跃' : '不活跃' }}</el-tag> 
             </template>
          </el-table-column>
 
@@ -52,6 +52,8 @@
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
                <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button v-if="scope.row.effectiveStatus == 1" type="info" disabled link>启动</el-button>
+               <el-button v-else type="success" link @click="effectiveById(scope.row)">启动</el-button>
                <el-button link type="primary"  @click="handleDelete(scope.row)">删除</el-button>
             </template>
          </el-table-column>
@@ -62,8 +64,9 @@
    </div>
 </template>
 
-<script setup name="Post">
-import { getBpmnConflistPage } from "@/api/mockflow";
+<script setup>
+import { ElMessage } from 'element-plus';
+import { getBpmnConflistPage,getEffectiveBpmn } from "@/api/mockflow";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
 
@@ -97,6 +100,17 @@ function getList() {
    });
 }
 
+const effectiveById = async (data) => {
+    await getEffectiveBpmn(data).then(async (res) => {
+        if (res.code == 200) {
+            getList();
+            ElMessage.success("操作成功");
+        } else {
+            ElMessage.error("操作失败");
+        }
+    });
+
+};
 /** 搜索按钮操作 */
 function handleQuery() {
    queryParams.value.page = 1;

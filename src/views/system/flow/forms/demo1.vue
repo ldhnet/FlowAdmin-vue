@@ -1,12 +1,8 @@
 <template>
-    <div class="form-container">
-        <div class="task-title-text">
-            <span>表单预览</span>
-        </div>
-        <el-divider />
+    <div class="form-container"> 
         <el-form ref="ruleFormRef" :model="form" :rules="rules" style="max-width: 600px; margin: auto;">
             <el-row>
-                <el-col :span="24">
+                <!-- <el-col :span="24">
                     <el-form-item label="表单名称" prop="formName">
                         <el-input v-model="form.formName" :style="{ width: '100%' }" />
                     </el-form-item>
@@ -15,7 +11,7 @@
                     <el-form-item label="表单编码" prop="formNo">
                         <el-input v-model="form.formNo" :style="{ width: '100%' }" />
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="24">
                     <el-form-item label="申请账户类型" prop="accountType">
                         <el-select v-model="form.accountType" placeholder="请选择账户类型" :style="{ width: '100%' }">
@@ -79,12 +75,6 @@ let rules = {
     bottom: 0;
     right: 0;
     margin: auto;
-}
-.task-title-text {
-    line-height: 28px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #383838;
 }
 
 .end-node-circle {

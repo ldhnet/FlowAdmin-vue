@@ -144,6 +144,18 @@
                         "noCache": false,
                         "link": null
                     }
+                },
+                {
+                    "name": "BizDemo",
+                    "path": "/bizdemo",
+                    "hidden": true,
+                    "component": "bizdemo/demo1",
+                    "meta": {
+                        "title": "发起流程表单",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 }
             ]
         }

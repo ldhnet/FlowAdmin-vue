@@ -32,18 +32,22 @@
 
         <!-- 添加或修改用户配置对话框 -->
         <el-dialog v-model="open" width="600px" append-to-body :before-close="handleClose">
-            <div>
+            <div class="task-title-text">
+                <span>表单预览</span>
+            </div>
+            <el-divider />
+            <div style="max-height: 350px;overflow: hidden;">
                 <demo1 />
             </div>
             <template #footer>
-                <el-button @click="handleClose">取 消</el-button> 
-            </template>    
+                <el-button @click="handleClose">取 消</el-button>
+            </template>
         </el-dialog>
     </div>
 
 </template>
 
-<script setup name="Post">
+<script setup>
 import demo1 from "@/views/system/flow/forms/demo1.vue";
 const { proxy } = getCurrentInstance();
 const open = ref(false);
@@ -110,3 +114,13 @@ function handleQuery() {
 }
 getList();
 </script>
+
+<style scoped lang="scss">
+.task-title-text {
+    line-height: 28px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #383838;
+}
+
+</style>

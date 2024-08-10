@@ -69,9 +69,9 @@
           <div class="body">
             <p>
               <i class="el-icon-s-promotion"></i> 官网：<el-link
-                href="http://www.ruoyi.vip"
+                href="http://117.72.70.166/admin/"
                 target="_blank"
-                >http://www.ruoyi.vip</el-link
+                >http://117.72.70.166/admin/</el-link
               >
             </p>
             <p>

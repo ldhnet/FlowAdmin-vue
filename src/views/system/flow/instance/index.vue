@@ -46,7 +46,7 @@
     </div>
  </template>
  
- <script setup name="Post"> 
+ <script setup> 
  import { getApprovedlistPage } from "@/api/mockflow";  
  const { proxy } = getCurrentInstance();
  const dataList = ref([]); 
