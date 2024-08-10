@@ -51,7 +51,8 @@
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+               <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button link type="primary"  @click="handleDelete(scope.row)">删除</el-button>
             </template>
          </el-table-column>
       </el-table>
@@ -120,6 +121,10 @@ function resetQuery() {
 function handleDelete(row) {
    proxy.$modal.msgError("演示环境不允许删除操作！");
 }
-
+/** 预览 */
+function handlePreview(row) {
+   const obj = { path: "/system/flow/preview" };
+   proxy.$tab.openPage(obj);
+}
 getList();
 </script>

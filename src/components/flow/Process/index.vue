@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container" style="margin-top: 50px  !important;height: auto;">
+    <div class="app-container">
         <section class="dingflow-design">
             <div class="zoom">
                 <div class="zoom-out" :class="nowVal == 50 && 'disabled'" @click="zoomSize(1)"></div>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue' 
+import { ref, onMounted } from 'vue'
 import { useStore } from '@/store/modules/flow'
 import { nodeTypeList } from '@/utils/flow/const'
 import errorDialog from "@/components/flow/dialog/errorDialog.vue";
@@ -34,7 +34,7 @@ import copyerDrawer from "@/components/flow/drawer/copyerDrawer.vue";
 import conditionDrawer from "@/components/flow/drawer/conditionDrawer.vue";
 
 let { setTableId, setIsTried } = useStore()
-const emit = defineEmits(['nextChange']) 
+const emit = defineEmits(['nextChange'])
 let props = defineProps({
     processData: {
         type: Object,
@@ -44,13 +44,13 @@ let props = defineProps({
 
 let tipList = ref([]);
 let tipVisible = ref(false);
-let nowVal = ref(100); 
-let nodeConfig = ref({}); 
-let directorMaxLevel = ref(3); 
+let nowVal = ref(100);
+let nodeConfig = ref({});
+let directorMaxLevel = ref(3);
 onMounted(async () => {
-    if(props.processData){
+    if (props.processData) {
         nodeConfig.value = props.processData;
-    } 
+    }
 });
 
 const reErr = ({ childNode }) => {
@@ -108,7 +108,7 @@ const getJson = () => {
         tipVisible.value = true;
         return;
     }
-    let submitData = JSON.parse(JSON.stringify(nodeConfig.value)); 
+    let submitData = JSON.parse(JSON.stringify(nodeConfig.value));
     return submitData;
 };
 
@@ -116,27 +116,29 @@ const getJson = () => {
 const getData = () => {
     let resData = getJson();
     return new Promise((resolve, reject) => {
-        if (!resData) { 
+        if (!resData) {
             return
         }
-        resolve({ formData: resData})
+        resolve({ formData: resData })
     })
 };
 defineExpose({
     getData
 })
 </script>
-<style scoped lang="scss">  
+<style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";
 
-.app-container{
+.app-container {
     position: relative;
     background-color: #f5f5f7;
-    min-height: calc(100vh - 84px); 
-    padding-top: 15px;
+    min-height: calc(100vh - 84px);
+    padding-top: 5px;
+    margin-top: 20px !important;
+    height: auto;
 }
 
- .clearfix {
+.clearfix {
     zoom: 1
 }
 
@@ -182,5 +184,4 @@ defineExpose({
 .zoom .zoom-in.disabled {
     opacity: .5
 }
- 
 </style>

@@ -182,3 +182,33 @@ aside {
     margin-bottom: 10px;
   }
 }
+
+
+.page-close-box {
+  position: absolute;
+  top: -0;
+  right: -0;
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.page-close-box img {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-image: url();
+}
+
+.page-close-box::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border: 20px solid #46A6FE;
+  border-color: #46A6FE #46A6FE transparent transparent;
+  content: '';
+}

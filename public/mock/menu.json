@@ -86,6 +86,18 @@
             },
             "children": [ 
                 {
+                    "name": "FlowForms",
+                    "path": "flow/forms",
+                    "hidden": false,
+                    "component": "system/flow/forms/index",
+                    "meta": {
+                        "title": "流程表单",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },
+                {
                     "name": "FlowConfig",
                     "path": "flow/config",
                     "hidden": false,
@@ -104,6 +116,18 @@
                     "component": "system/flow/design/index",
                     "meta": {
                         "title": "流程设计",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },
+                {
+                    "name": "FlowPreview",
+                    "path": "flow/preview",
+                    "hidden": true,
+                    "component": "system/flow/preview/index",
+                    "meta": {
+                        "title": "流程预览",
                         "icon": "",
                         "noCache": false,
                         "link": null
