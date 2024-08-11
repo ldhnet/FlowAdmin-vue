@@ -92,14 +92,8 @@ let { setInstanceDrawer } = store
  function resetQuery() { 
  } 
  
- function handlePreview(row) {
-   console.log('row========',row);
-  
-   setInstanceDrawer(true);
-
-   console.log('row===store.instanceDrawer=====',store.instanceDrawer);
-   
-   //proxy.$modal.msgError("演示环境不允许操作！");
+ function handlePreview(row) {   
+   setInstanceDrawer(true);  
  }
    
  getList();

@@ -4,24 +4,36 @@
             <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane name="createFrom" style="max-width: 1280px">
                     <template #label>
-                        账号申请
+                        请假申请
                     </template>
                     <el-form ref="ruleFormRef" :model="form" :rules="rules"
                         style="max-width: 600px;min-height: 500px; margin: auto;">
                         <el-row>
                             <el-col :span="24">
-                                <el-form-item label="申请账户类型" prop="accountType">
-                                    <el-select v-model="form.accountType" placeholder="请选择账户类型"
+                                <el-form-item label="请假类型" prop="leaveType">
+                                    <el-select v-model="form.leaveType" placeholder="请选择请假类型"
                                         :style="{ width: '100%' }">
-                                        <el-option v-for="(item, index) in accountTypeOptions" :key="index"
+                                        <el-option v-for="(item, index) in leaveTypeOptions" :key="index"
                                             :label="item.label" :value="item.value"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="24">
-                                <el-form-item label="备注说明" prop="remark">
-                                    <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" :maxlength="100"
-                                        show-word-limit :autosize="{ minRows: 4, maxRows: 4 }"
+                                <el-form-item label="开始时间" prop="beginDate">
+                                    <el-date-picker :disabled-date="disabledBeginDateDate" v-model="form.beginDate"
+                                        type="datetime" placeholder="请选择开始时间" format="YYYY/MM/DD HH:mm" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="24">
+                                <el-form-item label="结束时间" prop="endDate">
+                                    <el-date-picker :disabled-date="disabledEndDate" v-model="form.endDate"
+                                        type="datetime" placeholder="请选择结束时间" format="YYYY/MM/DD HH:mm" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="24">
+                                <el-form-item label="请假说明" prop="remark">
+                                    <el-input v-model="form.remark" type="textarea" placeholder="请填写请假理由"
+                                        :maxlength="100" show-word-limit :autosize="{ minRows: 4, maxRows: 4 }"
                                         :style="{ width: '100%' }"></el-input>
                                 </el-form-item>
                             </el-col>
@@ -61,43 +73,61 @@ import { FormatUtils } from '@/utils/flow/formatFlowPreview'
 
 const { proxy } = getCurrentInstance()
 const activeName = ref("createFrom")
-const flowCode = "DSFZH_WMA"
+const flowCode = "LEAVE_WMA"
 const nodeConfig = ref(null)
 const ruleFormRef = ref(null)
-let accountTypeOptions = [{
-    "label": "腾讯云",
+let leaveTypeOptions = [{
+    "label": "年假",
     "value": 1
 }, {
-    "label": "百度云",
+    "label": "事假",
     "value": 2
 }, {
-    "label": "阿里云",
+    "label": "婚嫁",
     "value": 3
+}, {
+    "label": "病假",
+    "value": 4
 }];
+
 const form = reactive({
-    formName: '',//云账号申请单
-    formNo: '',//
-    accountType: '',
+    leaveType: 1,
+    beginDate: "",
+    endDate: "",
+    userName: '测试人员',
+    userId: 1,
     remark: ''
 })
 
 let rules = {
-    formName: [{
+    beginDate: [{
         required: true,
-        message: '请输入表单名称',
+        message: '请选择开始时间',
         trigger: 'blur'
     }],
-    formNo: [{
+    endDate: [{
         required: true,
-        message: '请输入表单编号',
+        message: '请选择结束时间',
         trigger: 'blur'
     }],
-    accountType: [{
+    remark: [{
         required: true,
-        message: '请选择账户类型',
+        message: '请填写请假理由',
+        trigger: 'blur'
+    }],
+    leaveType: [{
+        required: true,
+        message: '请选择请假类型',
         trigger: 'change'
     }],
 };
+const disabledBeginDateDate = (time) => {
+    return time.getTime() > new Date(form.endDate);
+}
+const disabledEndDate = (time) => {
+    return time.getTime() < new Date(form.beginDate);
+}
+
 function handleSubmit() {
     proxy.$refs['ruleFormRef'].validate((valid) => {
         if (!valid) {
@@ -132,8 +162,7 @@ const handleClick = (tab, event) => {
 }
 const getFlowPreviewList = async () => {
     let param = {
-        "formCode": flowCode,
-        "accountType": form.accountType
+        "formCode": flowCode
     }
     let resData = await getFlowPreview(param);
     let formatData = FormatUtils.formatSettings(resData.data);
@@ -143,15 +172,14 @@ const startTest = () => {
     let param = {
         "processKey": flowCode ?? '',
         "processNumber": flowCode ?? '',
-        "formCode": flowCode ?? '',
-        "operationType": form.accountType,
-        "remark": form.formCode + '发起测试流程accountType' + form.accountType
+        "formCode": flowCode ?? '', 
+        "remark": form.formCode + '发起请假测试流程'
     };
     processOperation(param).then((res) => {
         if (res.code == 200) {
             return true;
         } else {
-            ElMessage.error("发起测试流程失败" + res.errMsg);
+            ElMessage.error("发起请假测试流程失败" + res.errMsg);
         }
     });
 }

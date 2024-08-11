@@ -7,7 +7,7 @@
         </template> 
         <el-row :gutter="10">
             <el-col :md="6" v-for="(item, index) in enableList" >
-                <el-card shadow="always"  class="card-col" @click="handleStart">
+                <el-card shadow="always"  class="card-col" @click="handleStart(item)">
                     <div slot="title">                    
                         <div class="card-icon">
                             <el-avatar size="large" :src="item.IconUrl"/>
@@ -126,16 +126,30 @@ function handleFlow(row) {
 
  const enableList= [ 
     {
+        formCode:"DSFZH_WMA",
         title: "第三方账号申请",
         description: "第三方账号申请办理",
         IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/person.png"
+    },
+    { 
+        formCode:"LEAVE_WMA",
+        title: "请假申请",
+        description: "请假申请流程办理",
+        IconUrl:"//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png"
     }
  ]; 
 
 
-function handleStart(row) {
-   const obj = { path: "/bizdemo" };
-   proxy.$tab.openPage(obj);
+function handleStart(row) { 
+    if (row.formCode == "DSFZH_WMA") { 
+        const obj = { path: "/bizdemo/demo1" };
+        proxy.$tab.openPage(obj);
+    }
+    if (row.formCode == "LEAVE_WMA") { 
+        const obj = { path: "/bizdemo/demo2" };
+        proxy.$tab.openPage(obj);
+    }
+
 }
 </script>
 <style lang="scss" scoped>
