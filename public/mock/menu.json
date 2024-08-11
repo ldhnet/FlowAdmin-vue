@@ -98,18 +98,6 @@
                     }
                 },
                 {
-                    "name": "FlowForms",
-                    "path": "flow/forms",
-                    "hidden": false,
-                    "component": "system/flow/forms/index",
-                    "meta": {
-                        "title": "流程表单",
-                        "icon": "",
-                        "noCache": false,
-                        "link": null
-                    }
-                },
-                {
                     "name": "FlowConfig",
                     "path": "flow/config",
                     "hidden": false,
