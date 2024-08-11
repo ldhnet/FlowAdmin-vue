@@ -60,16 +60,7 @@ const init = async () => {
     title.value = data.bpmnName;
     nodeConfig.value = data.nodeConfig;
 }
-
-function jumpFlowTable() {
-
-};
-function jumpFlowConf() {
-
-};
-function jumpFlow() {
-
-};
+ 
 </script>
 
 <style scoped lang="scss">

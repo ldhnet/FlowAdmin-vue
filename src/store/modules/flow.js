@@ -13,6 +13,7 @@
     conditionsConfig1: {
       conditionNodes: [],
     },
+    instanceDrawer: false,
   }),
   actions: {
     setUserId(payload) {
@@ -47,6 +48,9 @@
     },
     setConditionsConfig(payload) {
       this.conditionsConfig1 = payload
+    },
+    setInstanceDrawer(payload) {
+      this.instanceDrawer = payload
     },
   }
 })
