@@ -159,8 +159,9 @@ const startTest = () => {
         } else {
             ElMessage.error("发起测试流程失败" + res.errMsg);
         }
+        closeLoading();
     });
-    closeLoading();
+
 }
 /** 关闭按钮 */
 function close() {
