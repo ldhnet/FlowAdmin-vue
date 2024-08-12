@@ -134,13 +134,13 @@ function handleSubmit() {
             activeName.value = "createFrom";
             ElMessage.error('请先填写表单');
         } else {
-            const ret = startTest();
-            if (ret) {
-                ElMessage.success("发起测试流程成功");
-                const obj = { path: "/flowtask/mytask" };
-                proxy.$tab.openPage(obj);
+            // const ret = startTest();
+            // if (ret) {
+            //     ElMessage.success("发起测试流程成功");
+            //     const obj = { path: "/flowtask/mytask" };
+            //     proxy.$tab.openPage(obj);
 
-            }
+            // }
         }
     })
 }
@@ -173,11 +173,14 @@ const startTest = () => {
         "processKey": flowCode ?? '',
         "processNumber": flowCode ?? '',
         "formCode": flowCode ?? '', 
-        "remark": form.formCode + '发起请假测试流程'
+        "remark": flowCode + '发起请假测试流程'
     };
     processOperation(param).then((res) => {
+        console.log('res============',JSON.stringify(res));
         if (res.code == 200) {
-            return true;
+            ElMessage.success("发起测试流程成功");
+            const obj = { path: "/flowtask/mytask" };
+            proxy.$tab.openPage(obj);
         } else {
             ElMessage.error("发起请假测试流程失败" + res.errMsg);
         }

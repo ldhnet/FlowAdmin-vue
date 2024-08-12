@@ -52,10 +52,10 @@ onMounted(async () => {
 });
 const init = async () => {
     let mockjson = await getMockWorkFlowData();
-    console.log("old===data=mockjson.data==========", JSON.stringify(mockjson.data));
+    //console.log("old===data=mockjson.data==========", JSON.stringify(mockjson.data));
     let data = FormatDisplayUtils.getToTree(mockjson.data);
-    console.log("old===data=mockjson==========", JSON.stringify(data));
-    console.log("old===data=.nodeConfig==========", JSON.stringify(data.nodeConfig));
+    // console.log("old===data=mockjson==========", JSON.stringify(data));
+    // console.log("old===data=.nodeConfig==========", JSON.stringify(data.nodeConfig));
     processConfig.value = data;
     title.value = data.bpmnName;
     nodeConfig.value = data.nodeConfig;

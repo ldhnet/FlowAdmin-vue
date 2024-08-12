@@ -73,7 +73,7 @@ const { proxy } = getCurrentInstance();
  function getList() {
    loading.value = true;
    getMyRequestlistPage(queryParams.value).then(response => {
-     console.log('response=========',JSON.stringify(response));
+     //console.log('response=========',JSON.stringify(response));
      dataList.value = response.data;
      total.value = response.pagination.totalCount;
      loading.value = false;

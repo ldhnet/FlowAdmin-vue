@@ -31,7 +31,7 @@ let props = defineProps({
     }
 });
 onMounted(() => {
-   console.log("old===props=nodeConfig==========", JSON.stringify(props.nodeConfig));
+   //console.log("old===props=nodeConfig==========", JSON.stringify(props.nodeConfig));
 });
 
 </script>

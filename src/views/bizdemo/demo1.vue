@@ -53,12 +53,12 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
 import flowReviewWarp from "@/components/flow/flowReviewWarp.vue"
-import { getFlowPreview, processOperation } from '@/api/mockflow';
+import { getFlowPreview, processOperation,addBizDemo } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatFlowPreview'
-
+import {showLoading,closeLoading} from '@/plugins/loading'
 const { proxy } = getCurrentInstance()
 const activeName = ref("createFrom")
 const flowCode = "DSFZH_WMA"
@@ -104,13 +104,12 @@ function handleSubmit() {
             activeName.value = "createFrom";
             ElMessage.error('请先填写表单');
         } else {
-            const ret = startTest();
-            if (ret) {
-                ElMessage.success("发起测试流程成功");
-                const obj = { path: "/flowtask/mytask" };
-                proxy.$tab.openPage(obj);
 
-            }
+            startTest();
+            // if (ret) {
+          
+
+            // }
         }
     })
 }
@@ -141,19 +140,27 @@ const getFlowPreviewList = async () => {
 }
 const startTest = () => {
     let param = {
-        "processKey": flowCode ?? '',
-        "processNumber": flowCode ?? '',
+        "processKey":'',
+        "processNumber": '',
         "formCode": flowCode ?? '',
         "operationType": form.accountType,
-        "remark": form.formCode + '发起测试流程accountType' + form.accountType
-    };
-    processOperation(param).then((res) => {
+        "remark":  '发起测试流程accountType' + form.accountType
+    }; 
+    showLoading();
+    processOperation(param).then((res) => { 
         if (res.code == 200) {
-            return true;
+            param.processNumber = res.data.processNumber; 
+            addBizDemo(param).then((res) => {
+                console.log('res============',JSON.stringify(res));         
+            });
+            ElMessage.success("发起测试流程成功");
+            const obj = { path: "/flowtask/mytask" };
+            proxy.$tab.openPage(obj);
         } else {
             ElMessage.error("发起测试流程失败" + res.errMsg);
         }
     });
+    closeLoading();
 }
 /** 关闭按钮 */
 function close() {

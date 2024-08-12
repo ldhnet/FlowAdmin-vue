@@ -91,7 +91,7 @@ export function getBpmnConflistPage(pageDto) {
  * @param {*} data 
  * @returns 
  */
-export function processOperation(data) { 
+export function processOperation(data) {  
   return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data);
 }
 
@@ -142,4 +142,26 @@ export function getViewBusinessProcess(data) {
  */
 export function getApproveNodeProperties() {  
   return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`);
+}
+
+ /**
+ * 获取业务表单数据
+ * @returns 
+ */
+ export function getBizDemoByFlowKey(flowkey) {  
+  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`);
+}
+ 
+ /**
+ * 新增业务表单数据
+ * @returns 
+ */
+ export function addBizDemo(param) {  
+  let data = {
+    "flowkey": param.processNumber,
+    "formcode": param.formCode,
+    "processnumber": param.processNumber,
+    "bizformjson": JSON.stringify(param)
+  }   
+  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data);
 }
