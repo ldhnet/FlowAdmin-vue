@@ -1,5 +1,4 @@
-.el-drawer__header {
-    margin-bottom: 0 !important;
+.el-drawer__header { 
     padding: 14px 0 14px 20px !important;
     /* border-bottom: 1px solid #f2f2f2 !important; */
     color: #323232 !important;
@@ -9,6 +8,14 @@
 .el-drawer__header .el-drawer__title{
     font-size: 16px !important;
 }
+
+.drawer-title { 
+    padding: 14px 0 14px 20px !important; 
+    color: #323232 !important;
+    font-size: 16px !important;
+    margin-bottom: 0px !important;
+}
+
 .demo-drawer__content {
     display: flex !important;
     flex-direction: column !important;
@@ -21,6 +28,7 @@
 
 .demo-drawer__content>div {
     border-top: 1px solid #F2F2F2 !important;
+    margin-top: 15px;
 }
 
 .demo-drawer__footer {

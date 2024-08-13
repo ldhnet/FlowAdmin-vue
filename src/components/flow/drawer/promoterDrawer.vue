@@ -5,7 +5,8 @@
  * @FilePath: /ant-flow/src/components/drawer/promoterDrawer.vue
 -->
 <template>
-    <el-drawer :append-to-body="true" title="发起人" v-model="visible" class="set_promoter" :show-close="false" :size="680" :before-close="savePromoter"> 
+    <el-drawer :append-to-body="true" title="发起人" v-model="visible" class="set_promoter"  :with-header="false" :size="680">
+        <span class="drawer-title">发起人</span> 
         <div class="demo-drawer__content">
             <div class="promoter_content drawer_content">
                 <p>{{ $func.arrToStr(flowPermission) || '所有人' }}</p>
@@ -71,6 +72,7 @@ const closeDrawer = () => {
 </script>
 <style scoped lang="scss">  
 @import "@/assets/styles/flow/dialog.scss";
+
 .set_promoter {
     .promoter_content {
         padding: 0 20px;

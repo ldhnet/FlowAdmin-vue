@@ -5,7 +5,8 @@
  * @FilePath: /ant-flow/src/components/drawer/copyerDrawer.vue
 -->
 <template>
-    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :show-close="false" :size="680" :before-close="saveCopyer"> 
+    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer"  :with-header="false" :size="680">
+        <span class="drawer-title">抄送人设置</span> 
         <div class="demo-drawer__content">
             <div class="copyer_content drawer_content">
                 <el-button type="primary" @click="addCopyer">添加成员</el-button>

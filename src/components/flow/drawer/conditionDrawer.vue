@@ -6,7 +6,8 @@
 -->
 
 <template>
-    <el-drawer :append-to-body="true" title="条件设置" v-model="visible" class="condition_copyer" :show-close="false" :size="680" :before-close="saveCondition"> 
+    <el-drawer :append-to-body="true" title="条件设置" v-model="visible" class="condition_copyer"  :with-header="false" :size="680">
+        <span class="drawer-title">条件设置</span> 
         <template #header="{ titleId, titleClass }">
             <h3 :id="titleId" :class="titleClass">条件设置</h3>
             <select v-model="conditionConfig.priorityLevel" class="priority_level">
@@ -285,7 +286,7 @@ const closeDrawer = (val) => {
             margin-bottom: 20px;
      
             li {
-                border-bottom: 1px solid rgb(79, 88, 95);
+                border-bottom: 1px solid #F2F2F2;
                 &>span {
                     float: left;
                     margin-right: 5px;

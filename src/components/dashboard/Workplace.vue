@@ -82,22 +82,22 @@ const flowList = [
     {
         title: "请假申请",
         description: "请假申请流程办理",
-        IconUrl: "src/assets/images/work/leave.png"
+        IconUrl:getAssetsFile("leave")  
     },
     {
         title: "加班申请",
         description: "加班申请流程办理",
-        IconUrl: "src/assets/images/work/person.png"
+        IconUrl:getAssetsFile("person")  
     },
     {
         title: "打卡申诉",
         description: "打卡申诉流程办理",
-        IconUrl: "src/assets/images/work/daka.png"
+        IconUrl:getAssetsFile("daka")   
     },
     {
         title: "工时录入",
         description: "工时录入流程办理",
-        IconUrl: "src/assets/images/work/overtime.png"
+        IconUrl: getAssetsFile("overtime")  
     }
 ];
 
@@ -105,27 +105,27 @@ const hrList = [
     {
         title: "人员入职流程",
         description: "人员入职流程办理",
-        IconUrl: "src/assets/images/work/richang.png"
+        IconUrl: getAssetsFile("richang") 
     },
     {
         title: "人员转正流程",
         description: "人员转正流程办理",
-        IconUrl: "src/assets/images/work/zhushou.png"
+        IconUrl:getAssetsFile("zhushou") 
     },
     {
         title: "人员离职流程",
         description: "人员离职流程办理",
-        IconUrl: "src/assets/images/work/worktile.png"
+        IconUrl:getAssetsFile("worktile") 
     },
     {
         title: "人员离职交接流程",
         description: "人员离职交接流程办理",
-        IconUrl: "src/assets/images/work/icon-manage-04.png"
+        IconUrl: getAssetsFile("icon-manage-04") 
     },
     {
         title: "部门调动流程",
         description: "部门调动流程办理",
-        IconUrl: "src/assets/images/work/jiejing.png"
+        IconUrl: getAssetsFile("jiejing")
     }
 ];
 
@@ -134,13 +134,13 @@ const enableList = [
         formCode: "DSFZH_WMA",
         title: "第三方账号申请",
         description: "第三方账号申请办理",
-        IconUrl: "src/assets/images/work/person.png"
+        IconUrl: getAssetsFile("person")//"src/assets/images/work/person.png"
     },
     {
         formCode: "LEAVE_WMA",
         title: "请假申请",
         description: "请假申请流程办理",
-        IconUrl: "src/assets/images/work/leave.png"
+        IconUrl: getAssetsFile("leave")
     }
 ];
 
@@ -155,7 +155,12 @@ function handleStart(row) {
         proxy.$tab.openPage(obj);
     }
 
-}
+} 
+
+ function getAssetsFile(pathUrl) { 
+    return new URL(`../../assets/images/work/${pathUrl}.png`, import.meta.url).href;
+ }
+  
 </script>
 <style lang="scss" scoped>
 .card-col {

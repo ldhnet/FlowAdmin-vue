@@ -67,7 +67,7 @@ let duplicateOptions = [{
 let formCodeOptions = ref([]);
 
 const form = reactive({
-    bpmnName: '合同审批',
+    bpmnName: '',
     bpmnCode: generatorID,
     bpmnType: 1,
     formCode: '',
