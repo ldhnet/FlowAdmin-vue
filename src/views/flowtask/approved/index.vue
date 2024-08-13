@@ -31,7 +31,7 @@
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)">预览</el-button> 
+               <el-button link type="primary" icon="Edit" @click="handlePreview(scope.row)">预览</el-button> 
             </template>
          </el-table-column>
       </el-table>
@@ -43,11 +43,16 @@
          v-model:limit="queryParams.pageSize"
          @pagination="getList"
       /> 
+      <InstanceDrawer ref="drawerRef" />
    </div>
 </template>
 
 <script setup> 
 import { getApprovedlistPage } from "@/api/mockflow";  
+import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
+import { useStore } from '@/store/modules/flow'
+let store = useStore()
+let { setInstanceDrawer } = store
 const { proxy } = getCurrentInstance();
 const dataList = ref([]); 
 const loading = ref(true);
@@ -86,10 +91,10 @@ function handleQuery() {
 } 
 function resetQuery() { 
 } 
-/** 修改按钮操作 */
-function handleUpdate(row) {
-  proxy.$modal.msgError("演示环境不允许操作！");
-}
+ 
+function handlePreview(row) {   
+   setInstanceDrawer(true);  
+ }
   
 getList();
 </script>
