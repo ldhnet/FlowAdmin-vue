@@ -2,7 +2,7 @@
  * @Date: 2022-09-21 14:41:53
  * @LastEditors: LDH 574427343@qq.com
  * @LastEditTime: 2023-05-24 15:20:24
- * @FilePath: /ant-flow/src/components/flowOpt/flowReviewWarp.vue
+ * @FilePath: /src/components/flow/LineWarp.vue
 -->
 <template>
     <div class="node-wrap">
@@ -18,28 +18,31 @@
         </div>
         <div class="pixel-line"></div>
     </div>
-    <flowReviewWarp v-if="nodeConfig.childNode" v-model:nodeConfig="nodeConfig.childNode" />
+    <LineWarp v-if="nodeConfig.childNode" v-model:nodeConfig="nodeConfig.childNode" />
+ 
 </template>
-<script setup>
-import { onMounted } from "vue";
-import { bgColors } from '@/utils/flow/const'
-
+<script setup> 
+import { bgColors } from '@/utils/flow/const' 
 let props = defineProps({
     nodeConfig: {
         type: Object,
         default: () => ({}),
     }
-});
-onMounted(() => {
-   //console.log("old===props=nodeConfig==========", JSON.stringify(props.nodeConfig));
-});
-
+}); 
 </script>
 <style scoped lang="scss">
-@import "@/assets/styles/flow/workflow.scss"; 
+@import "@/assets/styles/flow/workflow.scss";
+
 .pixel-line {
     height: 30px;
     background-color: black;
     transform: scaleX(0.001);
+}
+.end-node-circle {
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border-radius: 50%;
+    background: #dbdcdc
 }
 </style>

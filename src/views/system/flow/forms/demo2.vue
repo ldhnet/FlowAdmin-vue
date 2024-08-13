@@ -96,8 +96,8 @@ const disabledEndDate = (time) => {
 .form-container {
     background: white !important;
     padding: 30px;
-    max-width: 700px;
-    min-height: 720px;
+    max-width: 600px;
+    min-height: 520px;
     top: 0;
     left: 0;
     bottom: 0;

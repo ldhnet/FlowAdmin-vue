@@ -3,30 +3,31 @@
         <div class="task-title">
             <span class="task-title-text">流程详情预览</span>
         </div>
-
-        <el-row style="background-color: #f5f5f7;min-height: calc(100vh);">
-            <el-col :span="24">
-                <el-radio-group v-model="tabPosition">
-                    <el-radio-button value="buinessForm">业务表单信息</el-radio-button>
-                    <el-radio-button value="flowForm">流程基本信息</el-radio-button>
-                    <el-radio-button value="flow">流程图预览</el-radio-button>
-                </el-radio-group>
-            </el-col>
-            <el-col :span="24" v-if="tabPosition == 'buinessForm'">
-                <demo1 ref="buinessDemo1" />
-            </el-col>
-            <el-col :span="24" v-if="tabPosition == 'flowForm'">
-                <div style="pointer-events: none;">
-                    <BasicSetting ref="basicSetting" :basicData="processConfig" />
-                </div> 
-            </el-col>
-            <el-col :span="24" v-if="tabPosition == 'flow'">
-                <div style="pointer-events: auto;">
-                    <Process ref="processDesign" :processData="nodeConfig" />
-                </div>                
-            </el-col>
-        </el-row>
-        <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
+        <div style="background-color: #f5f5f7;min-height: calc(100vh - 200px);">
+            <el-row>
+                <el-col :span="24" style="margin-bottom: 20px;">
+                    <el-radio-group v-model="tabPosition">
+                        <el-radio-button value="buinessForm">业务表单信息</el-radio-button>
+                        <el-radio-button value="flowForm">流程基本信息</el-radio-button>
+                        <el-radio-button value="flow">流程图预览</el-radio-button>
+                    </el-radio-group>
+                </el-col>
+                <el-col :span="24" v-if="tabPosition == 'buinessForm'">
+                    <demo1 ref="buinessDemo1" />
+                </el-col>
+                <el-col :span="24" v-if="tabPosition == 'flowForm'">
+                    <div style="pointer-events: none;">
+                        <BasicSetting ref="basicSetting" :basicData="processConfig" />
+                    </div>
+                </el-col>
+                <el-col :span="24" v-if="tabPosition == 'flow'">
+                    <div style="pointer-events: auto;">
+                        <Process ref="processDesign" :processData="nodeConfig" />
+                    </div>
+                </el-col>
+            </el-row>
+            <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
+        </div> 
     </div>
 </template>
 
@@ -60,7 +61,7 @@ const init = async () => {
     title.value = data.bpmnName;
     nodeConfig.value = data.nodeConfig;
 }
- 
+
 </script>
 
 <style scoped lang="scss">

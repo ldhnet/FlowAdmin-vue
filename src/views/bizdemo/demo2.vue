@@ -48,15 +48,7 @@
                 </el-tab-pane>
 
                 <el-tab-pane name="flowFromReview" label="流程预览">
-                    <div style="text-align:center;">
-                        <div class="box-scale">
-                            <flowReviewWarp v-if="nodeConfig" v-model:nodeConfig="nodeConfig" />
-                            <div class="end-node">
-                                <div class="end-node-circle"></div>
-                                <div class="end-node-text">流程结束</div>
-                            </div>
-                        </div>
-                    </div>
+                    <ReviewWarp v-if="flowParam" v-model:flowParam="flowParam" />
                 </el-tab-pane>
             </el-tabs>
             <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
@@ -65,17 +57,17 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
+import { ref, reactive, watch, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
-import flowReviewWarp from "@/components/flow/flowReviewWarp.vue"
-import { getFlowPreview, processOperation } from '@/api/mockflow';
-import { FormatUtils } from '@/utils/flow/formatFlowPreview'
-
+import ReviewWarp from "@/components/flow/reviewWarp.vue" 
 const { proxy } = getCurrentInstance()
 const activeName = ref("createFrom")
-const flowCode = "LEAVE_WMA"
-const nodeConfig = ref(null)
+const flowCode = "LEAVE_WMA" 
 const ruleFormRef = ref(null)
+const flowParam = ref({
+    "formCode": flowCode,
+    "accountType": 1
+})
 let leaveTypeOptions = [{
     "label": "年假",
     "value": 1
@@ -127,20 +119,16 @@ const disabledBeginDateDate = (time) => {
 const disabledEndDate = (time) => {
     return time.getTime() < new Date(form.beginDate);
 }
-
+watch(form, (val) => { 
+    flowParam.value.accountType = val.accountType;
+})
 function handleSubmit() {
     proxy.$refs['ruleFormRef'].validate((valid) => {
         if (!valid) {
             activeName.value = "createFrom";
             ElMessage.error('请先填写表单');
         } else {
-            // const ret = startTest();
-            // if (ret) {
-            //     ElMessage.success("发起测试流程成功");
-            //     const obj = { path: "/flowtask/mytask" };
-            //     proxy.$tab.openPage(obj);
-
-            // }
+           ret = startTest(); 
         }
     })
 }
@@ -154,20 +142,11 @@ const handleClick = (tab, event) => {
             activeName.value = "createFrom";
             ElMessage.error('请先填写表单');
         } else {
-            getFlowPreviewList();
+            activeName.value = "flowFromReview";
         }
-    })
-
-    getFlowPreviewList();
+    }) 
 }
-const getFlowPreviewList = async () => {
-    let param = {
-        "formCode": flowCode
-    }
-    let resData = await getFlowPreview(param);
-    let formatData = FormatUtils.formatSettings(resData.data);
-    nodeConfig.value = formatData;
-}
+ 
 const startTest = () => {
     let param = {
         "processKey": flowCode ?? '',
@@ -191,15 +170,7 @@ function close() {
     proxy.$tab.closePage();
 }
 </script>
-<style scoped lang="scss">
-.end-node-circle {
-    width: 20px;
-    height: 20px;
-    margin: auto;
-    border-radius: 50%;
-    background: #dbdcdc
-}
-
+<style scoped lang="scss"> 
 .task-title-text {
     line-height: 28px;
     font-weight: 600;
