@@ -1,6 +1,6 @@
 <template>
     <div class="form-container"> 
-        <el-form ref="ruleFormRef" :model="form" :rules="rules" style="max-width: 600px; margin: auto;">
+        <el-form ref="ruleFormRef" label-position="right" :model="form" :rules="rules" style="max-width: 600px; margin: auto;">
             <el-row>
                 <!-- <el-col :span="24">
                     <el-form-item label="表单名称" prop="formName">

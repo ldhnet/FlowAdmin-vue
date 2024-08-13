@@ -27,23 +27,24 @@
                 </el-col>
             </el-row>
             <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
-        </div> 
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getMockWorkFlowData } from "@/api/mock";
-import BasicSetting from "@/components/flow/BasicSetting/index.vue";
-import Process from "@/components/flow/Process/index.vue";
-import demo1 from "@/views/system/flow/forms/demo1.vue";
+import { ref, onMounted } from 'vue'
+import { getApiWorkFlowData } from "@/api/mockflow"
+import BasicSetting from "@/components/flow/BasicSetting/index.vue"
+import Process from "@/components/flow/Process/index.vue"
+import demo1 from "@/views/system/flow/forms/demo1.vue"
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 const { proxy } = getCurrentInstance();
-
+const route = useRoute();
 const tabPosition = ref('buinessForm')
-let processConfig = ref(null);
-let nodeConfig = ref(null);
-let title = ref('');
+let processConfig = ref(null)
+let nodeConfig = ref(null)
+let title = ref('')
+let id = route.query?.id
 /** 关闭按钮 */
 function close() {
     proxy.$tab.closePage();
@@ -52,11 +53,8 @@ onMounted(async () => {
     await init();
 });
 const init = async () => {
-    let mockjson = await getMockWorkFlowData();
-    //console.log("old===data=mockjson.data==========", JSON.stringify(mockjson.data));
+    let mockjson = await getApiWorkFlowData({ id });
     let data = FormatDisplayUtils.getToTree(mockjson.data);
-    // console.log("old===data=mockjson==========", JSON.stringify(data));
-    // console.log("old===data=.nodeConfig==========", JSON.stringify(data.nodeConfig));
     processConfig.value = data;
     title.value = data.bpmnName;
     nodeConfig.value = data.nodeConfig;

@@ -136,8 +136,11 @@ function handleDelete(row) {
    proxy.$modal.msgError("演示环境不允许删除操作！");
 }
 /** 预览 */
-function handlePreview(row) {
-   const obj = { path: "/system/flow/preview" };
+function handlePreview(row) { 
+   const params ={
+      id: row.id
+   };
+   const obj = {path: "/system/flow/preview",query:params};
    proxy.$tab.openPage(obj);
 }
 getList();
