@@ -7,7 +7,7 @@
             <el-row>
                 <el-col :span="24" style="margin-bottom: 20px;">
                     <el-radio-group v-model="tabPosition">
-                        <el-radio-button value="buinessForm">业务表单信息</el-radio-button>
+                        <!-- <el-radio-button value="buinessForm">业务表单信息</el-radio-button> -->
                         <el-radio-button value="flowForm">流程基本信息</el-radio-button>
                         <el-radio-button value="flow">流程图预览</el-radio-button>
                     </el-radio-group>
@@ -40,7 +40,7 @@ import demo1 from "@/views/system/flow/forms/demo1.vue"
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 const { proxy } = getCurrentInstance();
 const route = useRoute();
-const tabPosition = ref('buinessForm')
+const tabPosition = ref('flowForm')
 let processConfig = ref(null)
 let nodeConfig = ref(null)
 let title = ref('')

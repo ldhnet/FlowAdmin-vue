@@ -72,7 +72,7 @@ export default {
     loadingInstance = ElLoading.service({
       lock: true,
       text: content,
-      background: "rgba(0, 0, 0, 0.7)",
+      background: "rgba(0, 0, 0, 0.2)",
     })
   },
   // 关闭遮罩层
