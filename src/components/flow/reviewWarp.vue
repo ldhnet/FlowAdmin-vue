@@ -13,6 +13,7 @@
 import LineWarp from "@/components/flow/lineWarp.vue"
 import { getFlowPreview } from '@/api/mockflow'
 import { FormatUtils } from '@/utils/flow/formatFlowPreview'
+const { proxy } = getCurrentInstance()
 const nodeConfig = ref(null)
 
 let props = defineProps({
@@ -23,7 +24,9 @@ let props = defineProps({
 });
 
 const getFlowPreviewList = async (param) => {  
+    proxy.$modal.loading();
     let resData = await getFlowPreview(param);
+    proxy.$modal.closeLoading();
     let formatData = FormatUtils.formatSettings(resData.data);
     nodeConfig.value = formatData;
 }

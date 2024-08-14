@@ -7,7 +7,7 @@
                 </div>
             </template>
             <el-row :gutter="10">
-                <el-col :md="6" v-for="(item, index) in enableList">
+                <el-col :md="6" v-for="(item, index) in worlflowList">
                     <el-card shadow="always" class="card-col" @click="handleStart(item)">
                         <div slot="title">
                             <div class="card-icon">
@@ -73,7 +73,11 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { getFromCodeData } from "@/api/mockflow";
 const { proxy } = getCurrentInstance();
+let worlflowList = ref([]);
+
 function handleFlow(row) {
     proxy.$modal.msgSuccess("演示环境努力开发中！");
 }
@@ -128,30 +132,37 @@ const hrList = [
         IconUrl: getAssetsFile("jiejing")
     }
 ];
-
-const enableList = [
-    {
-        formCode: "DSFZH_WMA",
-        title: "第三方账号申请",
-        description: "第三方账号申请办理",
-        IconUrl: getAssetsFile("person")//"src/assets/images/work/person.png"
-    },
-    {
-        formCode: "LEAVE_WMA",
-        title: "请假申请",
-        description: "请假申请流程办理",
-        IconUrl: getAssetsFile("leave")
-    }
-];
-
+ 
+let statusColor = {
+  "LEAVE_WMA": 'leave', 
+  "DSFZH_WMA": 'jiejing',
+}; 
+ 
+onMounted(async () => { 
+    await getFromCodeData().then((res) => {
+        if (res.code == 200) { 
+            worlflowList.value = res.data.reverse().map(c => {
+            return { 
+                formCode: c.key,
+                title: c.value,
+                description:  c.value + '流程办理',
+                IconUrl: getAssetsFile(statusColor[c.key])
+            }
+        });
+        }
+    });
+});
 
 function handleStart(row) {
+    const params ={
+        formCode: row.formCode
+    }; 
     if (row.formCode == "DSFZH_WMA") {
-        const obj = { path: "/bizdemo/demo1" };
+        const obj = { path: "/bizdemo/demo1",query:params };
         proxy.$tab.openPage(obj);
     }
     if (row.formCode == "LEAVE_WMA") {
-        const obj = { path: "/bizdemo/demo2" };
+        const obj = { path: "/bizdemo/demo2",query:params };
         proxy.$tab.openPage(obj);
     }
 

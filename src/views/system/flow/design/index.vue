@@ -32,14 +32,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { getMockWorkFlowData } from '@/api/mock';
 import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatcommit_data'
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 import BasicSetting from "@/components/flow/BasicSetting/index.vue";
-import Process from "@/components/flow/Process/index.vue";
-import { showLoading, closeLoading } from '@/plugins/loading'
+import Process from "@/components/flow/Process/index.vue"; 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
  
@@ -82,7 +81,7 @@ onMounted(async () => {
 const publish = () => {
    const step1 = basicSetting.value.getData();
    const step2 = processDesign.value.getData();
-   showLoading();
+   proxy.$modal.loading();
    Promise.all([step1, step2])
        .then((res) => {
            ElMessage.success("设置成功,F12控制台查看数据");
@@ -107,7 +106,7 @@ const publish = () => {
            if (err && err.msg)
                ElMessage.error("设置失败" + JSON.stringify(err.msg));
        });
-       closeLoading();
+       proxy.$modal.closeLoading();
 };
 
 </script>
@@ -117,8 +116,9 @@ const publish = () => {
 .app-container{
     position: relative;
     background-color: #f5f5f7;
-    min-height: calc(100vh - 84px); 
+    min-height: calc(100vh - 100px); 
     padding-top: 15px;
+    overflow: auto;
 }
 
 .step-tab {

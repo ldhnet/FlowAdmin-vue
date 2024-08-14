@@ -36,7 +36,9 @@
                 </el-tab-pane>
 
                 <el-tab-pane name="flowFromReview" label="流程预览">
-                    <ReviewWarp v-if="flowParam" v-model:flowParam="flowParam" />
+                    <div v-if="reviewWarpShow"> 
+                        <ReviewWarp  v-model:flowParam="flowParam" />
+                    </div>                     
                 </el-tab-pane>
             </el-tabs>
             <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
@@ -48,12 +50,14 @@
 import { ref, reactive,watch, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
 import ReviewWarp from "@/components/flow/reviewWarp.vue"
-import { processOperation, addBizDemo } from '@/api/mockflow';
-import { showLoading, closeLoading } from '@/plugins/loading'
+import { processOperation, addBizDemo } from '@/api/mockflow' 
 const { proxy } = getCurrentInstance()
+const route = useRoute();
 const activeName = ref("createFrom")
-const flowCode = "DSFZH_WMA"
+const flowCode = route.query?.formCode
 const ruleFormRef = ref(null)
+const reviewWarpShow = ref(false)
+
 const flowParam = ref({
     "formCode": flowCode,
     "accountType": 1
@@ -97,10 +101,10 @@ watch(form, (val) => {
     flowParam.value.accountType = val.accountType;
 })
 
-function handleSubmit() {
+function handleSubmit() { 
     proxy.$refs['ruleFormRef'].validate((valid) => {
         if (!valid) {
-            activeName.value = "createFrom";
+            activeName.value = "createFrom"; 
             ElMessage.error('请先填写表单');
         } else { 
             startTest(); 
@@ -108,8 +112,9 @@ function handleSubmit() {
     })
 }
 
-const handleClick = (tab, event) => {
+const handleClick = (tab, event) => { 
     if (tab.props.name != 'flowFromReview') {
+        reviewWarpShow.value=false; 
         return;
     }
     proxy.$refs['ruleFormRef'].validate((valid) => {
@@ -118,19 +123,18 @@ const handleClick = (tab, event) => {
             ElMessage.error('请先填写表单');
         } else {
             activeName.value = "flowFromReview";
+            reviewWarpShow.value=true; 
         }
     }) 
 }
 
 const startTest = () => {
     let param = {
-        "processKey": '',
-        "processNumber": '',
         "formCode": flowCode ?? '',
         "operationType": form.accountType,
         "remark": '发起测试流程accountType' + form.accountType
     };
-    showLoading();
+    proxy.$modal.loading();
     processOperation(param).then((res) => {
         if (res.code == 200) {
             param.processNumber = res.data.processNumber;
@@ -143,7 +147,7 @@ const startTest = () => {
         } else {
             ElMessage.error("发起测试流程失败" + res.errMsg);
         }
-        closeLoading();
+        proxy.$modal.closeLoading();
     });
 
 }
