@@ -15,7 +15,9 @@
                     "meta": {
                         "title": "发起请求",
                         "icon": "guide",
-                        "affix": true 
+                        "affix": false ,
+                        "noCache": false,
+                        "link": null
                     }
                 }
             ]
