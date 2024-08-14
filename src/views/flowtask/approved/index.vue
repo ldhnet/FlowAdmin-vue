@@ -52,8 +52,7 @@ import { getApprovedlistPage } from "@/api/mockflow";
 import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
 import { useStore } from '@/store/modules/flow'
 let store = useStore()
-let { setInstanceDrawer } = store
-const { proxy } = getCurrentInstance();
+let { setInstanceDrawer, setInstanceDrawerConfig } = store 
 const dataList = ref([]); 
 const loading = ref(true);
 const showSearch = ref(true); 
@@ -93,7 +92,10 @@ function resetQuery() {
 } 
  
 function handlePreview(row) {   
-   setInstanceDrawer(true);  
+   setInstanceDrawer(true);
+   setInstanceDrawerConfig({
+      processNumber: row.processNumber,
+   })
  }
   
 getList();
