@@ -100,7 +100,7 @@ export function processOperation(data) {
  * @param { Number } id 
  * @returns 
  */
-export function getBpmVerifyInfoVos(param) {
+export function getBpmVerifyInfoVos(param) { 
   return http.get(`${baseUrl}/bpmnConf/getBpmVerifyInfoVos?processNumber=${param.processNumber}`)
 }
 

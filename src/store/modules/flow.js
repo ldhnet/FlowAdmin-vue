@@ -14,6 +14,7 @@
       conditionNodes: [],
     },
     instanceDrawer: false,
+    instanceViewConfig1: {},
   }),
   actions: {
     setUserId(payload) {
@@ -51,6 +52,9 @@
     },
     setInstanceDrawer(payload) {
       this.instanceDrawer = payload
+    },
+    setInstanceDrawerConfig(payload) {
+      this.instanceViewConfig1 = payload
     },
   }
 })

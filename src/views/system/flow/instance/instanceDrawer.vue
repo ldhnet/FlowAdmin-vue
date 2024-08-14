@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-drawer v-model="visible" title="流程预览" :size="800" :with-header="false" :show-close="false">
+    <el-drawer v-model="visible" title="流程预览" :size="800" :with-header="false" :destroy-on-close="true" :show-close="false">
       <span style="font-weight: bold;">流程详情</span>
       <el-divider />
 
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useStore } from '@/store/modules/flow'
 import DynamicForm from "@/components/dynamicForm/index.vue"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
@@ -32,12 +32,13 @@ import ReviewWarp from "@/components/flow/reviewWarp.vue"
 
 let store = useStore()
 let { setInstanceDrawer } = store
+let instanceDrawer = computed(() => store.instanceDrawer)
 const activeName = ref('baseTab')
 const flowParam = ref({
   "formCode": "DSFZH_WMA",
   "accountType": 1
 })
-let instanceDrawer = computed(() => store.instanceDrawer)
+
 let visible = computed({
   get() {
     return instanceDrawer.value
@@ -46,10 +47,6 @@ let visible = computed({
     closeDrawer()
   }
 })
-
-onMounted(async () => {
-
-});
 
 const closeDrawer = () => {
   setInstanceDrawer(false)

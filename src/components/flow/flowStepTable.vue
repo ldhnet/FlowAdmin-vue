@@ -6,7 +6,7 @@
             <el-table-column label="执行人" align="center" prop="verifyUserName" />
             <el-table-column label="操作" align="center" prop="type">
                 <template #default="item">
-                    <el-tag :type="item.row.type">{{ item.row.verifyStatusName ?? "结束" }}</el-tag>
+                    <el-tag :type="item.row.type">{{ item.row.verifyStatusName }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="审批意见" align="center" prop="remark" />
@@ -24,19 +24,18 @@
 import { ref, onMounted } from 'vue'
 import { statusColor } from '@/utils/flow/const';
 import { getBpmVerifyInfoVos } from '@/api/mockflow';
-
+import { useStore } from '@/store/modules/flow'
+let store = useStore()
 let activityList = ref(null);
 let loading = ref(false);
-
+let instanceViewConfig1 = computed(() => store.instanceViewConfig1)
 onMounted(async () => {
     loading.value = true;
     await getPreviewData();
 })
 const getPreviewData = async () => {
-    let param = {
-        "processNumber": "DSFZH_WMA_9",
-    }
-    let resData = await getBpmVerifyInfoVos(param);
+    let param = instanceViewConfig1.value; 
+    let resData = await getBpmVerifyInfoVos(param); 
     loading.value = false;
     if (resData.code == 200) {
         activityList.value = resData.data.map(c => {
@@ -44,7 +43,8 @@ const getPreviewData = async () => {
                 ...c,
                 type: statusColor[c.verifyStatus],
                 size: c.verifyStatus == 99 ? 'large' : 'normal',
-                remark: c.verifyStatus == 0 ? '流程结束' : c.verifyDesc
+                verifyStatusName: c.verifyStatusName ? c.verifyStatusName : (c.verifyStatus == 0 && c.taskName == '流程结束' ? '结束'  : '未处理'),
+                remark: c.verifyDesc
             }
         })
     };

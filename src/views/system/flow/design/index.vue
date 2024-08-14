@@ -39,10 +39,10 @@ import { FormatUtils } from '@/utils/flow/formatcommit_data'
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 import BasicSetting from "@/components/flow/BasicSetting/index.vue";
 import Process from "@/components/flow/Process/index.vue";
- 
+import { showLoading, closeLoading } from '@/plugins/loading'
+const { proxy } = getCurrentInstance()
 const route = useRoute();
-const router = useRouter();
-
+ 
 const basicSetting = ref(null);
 const processDesign = ref(null);
 
@@ -78,12 +78,11 @@ onMounted(async () => {
    nodeConfig.value = data.nodeConfig;  
 });
 
-const toReturn = () => {
-   router.push({ path: "/todo" });
-};
+ 
 const publish = () => {
    const step1 = basicSetting.value.getData();
    const step2 = processDesign.value.getData();
+   showLoading();
    Promise.all([step1, step2])
        .then((res) => {
            ElMessage.success("设置成功,F12控制台查看数据");
@@ -97,6 +96,8 @@ const publish = () => {
            setApiWorkFlowData(data).then((resLog) => {
                if (resLog.code == 200) {
                    console.log("提交到API返回成功");
+                   const obj = { path: "/system/flow/config" };
+                   proxy.$tab.openPage(obj);
                } else {
                    console.log("提交到API返回失败=", JSON.stringify(resLog));
                }
@@ -106,6 +107,7 @@ const publish = () => {
            if (err && err.msg)
                ElMessage.error("设置失败" + JSON.stringify(err.msg));
        });
+       closeLoading();
 };
 
 </script>

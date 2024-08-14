@@ -52,7 +52,7 @@
  import { useStore } from '@/store/modules/flow'
  import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
 let store = useStore()
-let { setInstanceDrawer } = store
+let { setInstanceDrawer,setInstanceDrawerConfig } = store
  const { proxy } = getCurrentInstance();
  const dataList = ref([]); 
  const loading = ref(true);
@@ -92,8 +92,11 @@ let { setInstanceDrawer } = store
  function resetQuery() { 
  } 
  
- function handlePreview(row) {   
+ function handlePreview(row) {    
    setInstanceDrawer(true);  
+   setInstanceDrawerConfig({
+      processNumber: row.processNumber, 
+    })
  }
    
  getList();
