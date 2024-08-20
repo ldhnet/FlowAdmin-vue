@@ -23,6 +23,12 @@ export function getInfo() {
 }
 
 /**
+ * 获取登录用户信息  
+ */
+export function getUserProfile() {
+  return http.get(`${baseUrl}mock/profile.json`)
+} 
+/**
  * 获取菜单  
  */
 export function getRouters() {
