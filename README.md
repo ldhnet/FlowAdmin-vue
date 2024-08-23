@@ -53,10 +53,12 @@ npm run dev
         <td><img src="https://gitee.com/ldhnet/ruoyivue3-demo/raw/master/src/assets/review/demo4.png"/></td>
     </tr> 
 </table>
- 
- <table>  
-    <tr> 
-        <td style="max-width:150px;">
+
+##  捐赠支持
+😀 你可以请作者喝杯咖啡表示鼓励
+<table>  
+    <tr>  
+        <td style="max-width:200px;">
             <img src="https://gitee.com/ldhnet/HSharpAdmin/raw/master/HSharp.Web/HSharp.Admin.Web/wwwroot/image/pay.png"/>
         </td>
     </tr> 
