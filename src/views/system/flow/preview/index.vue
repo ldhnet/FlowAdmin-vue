@@ -12,16 +12,16 @@
                         <el-radio-button value="flow">流程图预览</el-radio-button>
                     </el-radio-group>
                 </el-col>
-                <el-col :span="24" v-if="tabPosition == 'buinessForm'">
+                <!-- <el-col :span="24" v-if="tabPosition == 'buinessForm'">
                     <demo1 ref="buinessDemo1" />
-                </el-col>
+                </el-col> -->
                 <el-col :span="24" v-if="tabPosition == 'flowForm'">
-                    <div style="pointer-events: none;">
+                    <div v-if="processConfig">
                         <BasicSetting ref="basicSetting" :basicData="processConfig" />
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'flow'">
-                    <div style="pointer-events: auto;">
+                    <div style="pointer-events: auto;" v-if="nodeConfig">
                         <Process ref="processDesign" :processData="nodeConfig" />
                     </div>
                 </el-col>
@@ -50,7 +50,9 @@ function close() {
     proxy.$tab.closePage();
 };
 onMounted(async () => {
+    proxy.$modal.loading();
     await init();
+    proxy.$modal.closeLoading();
 });
 const init = async () => {
     let mockjson = await getApiWorkFlowData({ id });
