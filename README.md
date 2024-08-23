@@ -42,10 +42,7 @@ npm run dev
 3.  流程管理：流程设计，流程列表。 
  
 ## 演示图  
-<table>
-    <tr>
-        <td><img src="https://gitee.com/ldhnet/ruoyivue3-demo/raw/master/src/assets/review/demo1.png"/></td> 
-    </tr>
+<table> 
     <tr> 
         <td><img src="https://gitee.com/ldhnet/ruoyivue3-demo/raw/master/src/assets/review/demo2.png"/></td>
     </tr>
