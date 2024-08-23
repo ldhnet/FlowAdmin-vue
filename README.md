@@ -51,10 +51,13 @@ npm run dev
     </tr>
      <tr> 
         <td><img src="https://gitee.com/ldhnet/ruoyivue3-demo/raw/master/src/assets/review/demo4.png"/></td>
-    </tr>
-    <tr> 
-        <td><img src="https://gitee.com/ldhnet/HSharpAdmin/raw/master/HSharp.Web/HSharp.Admin.Web/wwwroot/image/demo_2.png"/></td>
     </tr> 
 </table>
  
- 
+ <table>  
+    <tr> 
+        <td style="max-width:150px;">
+            <img src="https://gitee.com/ldhnet/HSharpAdmin/raw/master/HSharp.Web/HSharp.Admin.Web/wwwroot/image/pay.png"/>
+        </td>
+    </tr> 
+</table>
