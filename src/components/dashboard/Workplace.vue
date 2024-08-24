@@ -158,12 +158,8 @@ function handleStart(row) {
     const params ={
         formCode: row.formCode
     };  
-    if(bizFormMaps.has(row.formCode)) {
-        const obj = { path: bizFormMaps.get(row.formCode),query:params };
-        proxy.$tab.openPage(obj);
-    }else{
-        proxy.$modal.msgError(`未找到业务表单${row.formCode}的路由!`);
-    }
+    const obj = { path:'/bizdemo/demo1',query:params };
+    proxy.$tab.openPage(obj);
 } 
 
  function getAssetsFile(pathUrl) { 

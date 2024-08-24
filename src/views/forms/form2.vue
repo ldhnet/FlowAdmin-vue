@@ -1,13 +1,14 @@
 <template>
-    <div class="form-container">
-        <el-form ref="ruleFormRef" label-position="right" :model="form" :rules="rules" style="max-width: 600px; margin: auto;">
+    <div>
+        <el-form ref="ruleFormRef" :model="form" :rules="rules"
+            style="max-width: 600px;min-height: 100px; margin: auto;">
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="请假类型" prop="leaveType">
                         <el-select v-model="form.leaveType" placeholder="请选择请假类型" :style="{ width: '100%' }">
                             <el-option v-for="(item, index) in leaveTypeOptions" :key="index" :label="item.label"
                                 :value="item.value"></el-option>
-                         </el-select>
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -29,16 +30,32 @@
                             :style="{ width: '100%' }"></el-input>
                     </el-form-item>
                 </el-col>
-                 
+                <el-col :span="24" v-if="!props.isPreview">
+                    <el-form-item>
+                        <el-button type="primary" style="position: absolute;top:5px; right: 5px;"
+                            @click="handleSubmit">提交</el-button>
+                    </el-form-item>
+                </el-col>
             </el-row>
         </el-form>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
+import { ElMessage } from 'element-plus'
+const { proxy } = getCurrentInstance()
+let props = defineProps({
+    previewData: {
+        type: Object,
+        default: () => ({}),
+    },
+    isPreview: {
+        type: Boolean,
+        default: true,
+    }
+}); 
 const ruleFormRef = ref(null)
- 
 let leaveTypeOptions = [{
     "label": "年假",
     "value": 1
@@ -84,32 +101,34 @@ let rules = {
         trigger: 'change'
     }],
 };
-
 const disabledBeginDateDate = (time) => {
     return time.getTime() > new Date(form.endDate);
 }
 const disabledEndDate = (time) => {
     return time.getTime() < new Date(form.beginDate);
-} 
-</script>
-<style scoped>
-.form-container {
-    background: white !important;
-    padding: 30px;
-    max-width: 600px;
-    min-height: 520px;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
 }
 
-.end-node-circle {
-    width: 20px;
-    height: 20px;
-    margin: auto;
-    border-radius: 50%;
-    background: #dbdcdc
+const getFromData = () => {
+    return JSON.stringify(form);
 }
-</style>
+const handleSubmit = () => {
+    handleValidate().then((isValid) => {
+        if (isValid) {
+            proxy.$emit("handleBizBtn", JSON.stringify(form))
+        }
+    });
+}
+
+const handleValidate = () => {
+    return proxy.$refs['ruleFormRef'].validate((valid) => {
+        if (!valid) {
+            ElMessage.error('请先填写表单');
+        }
+    });
+}
+defineExpose({
+    handleValidate,
+    getFromData
+})
+</script>
+<style scoped lang="scss"></style>

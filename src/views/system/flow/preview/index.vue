@@ -36,7 +36,6 @@ import { ref, onMounted } from 'vue'
 import { getApiWorkFlowData } from "@/api/mockflow"
 import BasicSetting from "@/components/flow/BasicSetting/index.vue"
 import Process from "@/components/flow/Process/index.vue"
-import demo1 from "@/views/system/flow/forms/demo1.vue"
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 const { proxy } = getCurrentInstance();
 const route = useRoute();

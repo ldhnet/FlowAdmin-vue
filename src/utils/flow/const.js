@@ -82,12 +82,10 @@ export let viewPageButtons = [
 ]
 
 export const bizFormMaps = new Map([
-  ['DSFZH_WMA', '/bizdemo/demo1'],
-  ['LEAVE_WMA', '/bizdemo/demo2']
+  ['DSFZH_WMA', '/forms/form1.vue'],
+  ['LEAVE_WMA', '/forms/form2.vue']
 ]);
  
-
-
 export let pageButtonsColor = {
   0: 'primary', 
   1: 'primary',//提交
