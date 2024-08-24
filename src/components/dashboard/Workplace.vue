@@ -74,7 +74,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getFromCodeData } from "@/api/mockflow";
+import { getFromCodeData } from "@/api/mockflow"
+import { bizFormMaps } from "@/utils/flow/const"
 const { proxy } = getCurrentInstance();
 let worlflowList = ref([]);
 
@@ -156,16 +157,13 @@ onMounted(async () => {
 function handleStart(row) {
     const params ={
         formCode: row.formCode
-    }; 
-    if (row.formCode == "DSFZH_WMA") {
-        const obj = { path: "/bizdemo/demo1",query:params };
+    };  
+    if(bizFormMaps.has(row.formCode)) {
+        const obj = { path: bizFormMaps.get(row.formCode),query:params };
         proxy.$tab.openPage(obj);
+    }else{
+        proxy.$modal.msgError(`未找到业务表单${row.formCode}的路由!`);
     }
-    if (row.formCode == "LEAVE_WMA") {
-        const obj = { path: "/bizdemo/demo2",query:params };
-        proxy.$tab.openPage(obj);
-    }
-
 } 
 
  function getAssetsFile(pathUrl) { 

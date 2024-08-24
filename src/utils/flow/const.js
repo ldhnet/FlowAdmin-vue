@@ -81,6 +81,13 @@ export let viewPageButtons = [
   { value: 15, label: '转发' }
 ]
 
+export const bizFormMaps = new Map([
+  ['DSFZH_WMA', '/bizdemo/demo1'],
+  ['LEAVE_WMA', '/bizdemo/demo2']
+]);
+ 
+
+
 export let pageButtonsColor = {
   0: 'primary', 
   1: 'primary',//提交

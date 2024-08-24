@@ -31,14 +31,14 @@
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button link type="primary" icon="ZoomIn" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button link type="primary" icon="ZoomIn" @click="handlePreview(scope.row)">查看</el-button>
             </template>
          </el-table-column>
       </el-table>
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.page" v-model:limit="queryParams.pageSize"
          @pagination="getList" />
-      <InstanceDrawer />
+      <InstanceDrawer v-if="visible"/>
    </div>
 
 </template>
@@ -46,14 +46,23 @@
 <script setup>
 import { getMyRequestlistPage } from "@/api/mockflow"
 import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/flow' 
 let store = useStore()
 let { setInstanceDrawer, setInstanceDrawerConfig } = store
+let instanceDrawerVisible = computed(() => store.instanceDrawer)
 const dataList = ref([]);
 const loading = ref(true);
 const showSearch = ref(true);
 const total = ref(0);
 
+let visible = computed({
+  get() {
+    return instanceDrawerVisible.value
+  },
+  set() {
+    closeDrawer()
+  }
+})
 const data = reactive({
    form: {},
    queryParams: {
@@ -91,6 +100,7 @@ function resetQuery() {
 function handlePreview(row) {
    setInstanceDrawer(true);
    setInstanceDrawerConfig({
+      formCode: row.processKey,
       processNumber: row.processNumber,
    })
 }

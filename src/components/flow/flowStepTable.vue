@@ -6,7 +6,7 @@
             <el-table-column label="执行人" align="center" prop="verifyUserName" />
             <el-table-column label="操作" align="center" prop="type">
                 <template #default="item">
-                    <el-tag :type="item.row.type">{{ item.row.verifyStatusName }}</el-tag>
+                    <el-tag :type="item.row.type" :size="item.row.size">{{ item.row.verifyStatusName }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="审批意见" align="center" prop="remark" />
@@ -42,8 +42,8 @@ const getPreviewData = async () => {
             return {
                 ...c,
                 type: statusColor[c.verifyStatus],
-                size: c.verifyStatus == 99 ? 'large' : 'normal',
-                verifyStatusName: c.verifyStatusName ? c.verifyStatusName : (c.verifyStatus == 0 && c.taskName == '流程结束' ? '结束'  : '未处理'),
+                size: c.verifyStatus == 99 ? 'large' : 'default',
+                verifyStatusName: c.verifyStatusName ? c.verifyStatusName : (c.taskName != '流程结束'?'未处理':'结束'),
                 remark: c.verifyDesc
             }
         })
