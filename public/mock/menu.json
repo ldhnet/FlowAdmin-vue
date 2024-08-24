@@ -70,6 +70,18 @@
                         "noCache": false,
                         "link": null
                     }
+                },
+                {
+                    "name": "approve",
+                    "path": "pendding/approve",
+                    "hidden": true,
+                    "component": "flowtask/pendding/approve",
+                    "meta": {
+                        "title": "流程审批",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 }
             ]
         },
@@ -143,7 +155,7 @@
                     "meta": {
                         "title": "发起账号申请流程",
                         "icon": "",
-                        "noCache": false,
+                        "noCache": true,
                         "link": null
                     }
                 },

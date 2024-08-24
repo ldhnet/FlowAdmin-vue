@@ -31,7 +31,7 @@
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button link type="primary" icon="ZoomIn" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button link type="primary" icon="ZoomIn" @click="handlePreview(scope.row)">查看</el-button>
             </template>
          </el-table-column>
       </el-table>
