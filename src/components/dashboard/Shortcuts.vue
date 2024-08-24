@@ -9,10 +9,10 @@
         <el-col :md="6">
             <div class="ve-card ve_card1">
                 <el-icon>
-                    <football />
+                    <bell />
                 </el-icon>
                 <div>
-                    <p>菜单数量</p>
+                    <p>我的代办</p>
                     <span>6</span>
                 </div>
             </div>
@@ -20,10 +20,10 @@
         <el-col :md="6">
             <div class="ve-card ve_card2">
                 <el-icon>
-                    <user />
+                    <EditPen />
                 </el-icon>
                 <div>
-                    <p>用户数量</p>
+                    <p>我的已办</p>
                     <span>6</span>
                 </div>
             </div>
@@ -31,10 +31,10 @@
         <el-col :md="6">
             <div class="ve-card ve_card3">
                 <el-icon>
-                    <ice-cream />
+                    <TakeawayBox /> 
                 </el-icon>
                 <div>
-                    <p>角色数量</p>
+                    <p>我的发起</p>
                     <span>6</span>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <document />
                 </el-icon>
                 <div>
-                    <p>资料数量</p>
+                    <p>我的草稿</p>
                     <span>6</span>
                 </div>
             </div>
