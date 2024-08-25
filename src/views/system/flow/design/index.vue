@@ -84,21 +84,22 @@ const publish = () => {
    proxy.$modal.loading();
    Promise.all([step1, step2])
        .then((res) => {
-           ElMessage.success("设置成功,F12控制台查看数据");
+           //ElMessage.success("设置成功,F12控制台查看数据");
            let basicData = res[0].formData;
            var nodes = FormatUtils.formatSettings(res[1].formData);
            Object.assign(basicData, { nodes: nodes });
            return basicData;
        })
        .then((data) => {
-           console.log("提交到API=====data=", JSON.stringify(data));
+           //console.log("提交到API=====data=", JSON.stringify(data));
            setApiWorkFlowData(data).then((resLog) => {
                if (resLog.code == 200) {
                    console.log("提交到API返回成功");
                    const obj = { path: "/system/flow/config" };
                    proxy.$tab.openPage(obj);
                } else {
-                   console.log("提交到API返回失败=", JSON.stringify(resLog));
+                   //console.log("提交到API返回失败=", JSON.stringify(resLog));
+                   ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
                }
            });
        })

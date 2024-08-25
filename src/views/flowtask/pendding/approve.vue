@@ -175,7 +175,10 @@ const preview = () => {
                     return { value: c.buttonType, label: c.name };
                 });
             }
-        }
+        }else{
+            ElMessage.error("获取表单数据失败:" + response.errMsg);
+            close();
+        } 
         proxy.$modal.closeLoading();
     });
 }
