@@ -6,8 +6,8 @@
  */
 
 import http from '@/utils/axios' 
-let baseUrl = "http://117.72.70.166:7001";
-//let baseUrl = "http://localhost:7001";
+//let baseUrl = "http://117.72.70.166:7001";
+let baseUrl = "http://localhost:7001";
 /**
  * 获取审批数据
  * @param { Number } id 

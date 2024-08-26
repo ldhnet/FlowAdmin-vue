@@ -2,7 +2,7 @@
  * @Date: 2023-03-29 15:25:37
  * @LastEditors: LDH 574427343@qq.com
  * @LastEditTime: 2023-03-29 15:52:38
- * @FilePath: /ant-flow/src/utils/const.js
+ * @FilePath: /src/utils/const.js
  */
 
 export let bgColors = ["",'87, 106, 149', '', '', '255, 148, 62','50, 150, 250']
@@ -48,21 +48,6 @@ export let opt1s = [
   { value: '<', label: '<' },
   { value: '≤', label: '≤' },
 ]
-
-export let statusColor = {
-  0: 'info', 
-  1: 'primary',//提交
-  2: 'primary',//同意
-  3: 'danger',//拒绝
-  4: 'danger',//撤回
-  5: 'danger',//作废
-  6: 'danger',//终止
-  7: 'primary',//
-  8: 'danger',//打回修改
-  9: 'primary',//加批
-  99: 'success',//处理中
-  100: 'info' 
-}; 
  
 export let approvalPageButtons = [
   { value: 3, label: '同意',type:'default' },
@@ -86,6 +71,21 @@ export const bizFormMaps = new Map([
   ['LEAVE_WMA', '/forms/form2.vue']
 ]);
  
+export let statusColor = {
+  0: 'info', 
+  1: 'primary',//提交
+  2: 'primary',//同意
+  3: 'danger',//拒绝
+  4: 'danger',//撤回
+  5: 'danger',//作废
+  6: 'danger',//终止
+  7: 'primary',//
+  8: 'danger',//打回修改
+  9: 'primary',//加批
+  99: 'success',//处理中
+  100: 'info' 
+}; 
+
 export let pageButtonsColor = {
   0: 'primary', 
   1: 'primary',//提交

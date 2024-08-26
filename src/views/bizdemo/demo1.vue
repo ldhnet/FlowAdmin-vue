@@ -7,8 +7,7 @@
                         填写表单
                     </template>
                     <el-row>
-                        <el-col :span="24">
-                            <!-- <form1 ref="formRef" @handleBizBtn="handleSubmit" /> -->
+                        <el-col :span="24"> 
                             <component  ref="formRef" v-if="componentLoaded" :is="loadedComponent" :isPreview="false" @handleBizBtn="handleSubmit"></component>
                         </el-col>
                     </el-row> 
@@ -26,10 +25,9 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, getCurrentInstance } from 'vue' 
 import ReviewWarp from '@/components/flow/reviewWarp.vue'
-import { processOperation, addBizDemo } from '@/api/mockflow' 
+import { processOperation } from '@/api/mockflow' 
 import { bizFormMaps } from "@/utils/flow/const"
 const modules = import.meta.glob('../forms/**/*.vue');
 
@@ -68,16 +66,12 @@ const startTest = (param) => {
     bizFrom.operationType = 1;//operationType 1发起 3 审批
     proxy.$modal.loading();
     processOperation(bizFrom).then((res) => {
-        if (res.code == 200) {
-            bizFrom.processNumber = res.data.processNumber;
-            addBizDemo(bizFrom).then((res) => {
-                console.log('res============', JSON.stringify(res));
-            });
-            ElMessage.success("发起流程成功");
+        if (res.code == 200) { 
+            proxy.$modal.msgSuccess("发起流程成功");
             const obj = { path: "/flowtask/mytask" };
             proxy.$tab.openPage(obj);
         } else {
-            ElMessage.error("发起流程失败" + res.errMsg);
+            proxy.$modal.msgError("发起流程失败" + res.errMsg);
         }
         proxy.$modal.closeLoading();
     });

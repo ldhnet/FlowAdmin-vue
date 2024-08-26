@@ -24,8 +24,8 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item label="请假时长" prop="LeaveHour">
-                        <el-input-number v-model="form.LeaveHour"  style="width: 220px;" :min="1" :max="100" placeholder="请输入时长" />
+                    <el-form-item label="请假时长" prop="leaveHour">
+                        <el-input-number v-model="form.leaveHour"  style="width: 220px;" :min="1" :max="100" placeholder="请输入时长" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -79,7 +79,7 @@ const form = reactive({
     leaveType: 1,
     beginDate: "",
     endDate: "",
-    LeaveHour: 0,
+    leaveHour: 0,
     userName: '测试人员',
     userId: 1,
     remark: ''
@@ -96,7 +96,7 @@ let rules = {
         message: '请选择结束时间',
         trigger: 'blur'
     }],
-    LeaveHour: [{
+    leaveHour: [{
         required: true,
         message: '请填写请假时长',
         trigger: 'blur'
