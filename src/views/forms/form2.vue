@@ -76,13 +76,13 @@ let leaveTypeOptions = [{
 }];
 
 const form = reactive({
-    leaveType: 1,
-    beginDate: "",
-    endDate: "",
-    leaveHour: 0,
-    userName: '测试人员',
-    userId: 1,
-    remark: ''
+    leaveType: props.previewData?.leaveType??1,
+    beginDate:props.previewData?.beginDate??"",
+    endDate: props.previewData?.endDate??"",
+    leaveHour: props.previewData?.leaveHour??0,
+    userName:props.previewData?.leaveUserName?? leaveUserName,
+    userId:props.previewData?.leaveUserId?? leaveUserId,
+    remark: props.previewData?.remark??""
 })
 
 let rules = {
