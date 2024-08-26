@@ -94,7 +94,8 @@ const publish = () => {
            //console.log("提交到API=====data=", JSON.stringify(data));
            setApiWorkFlowData(data).then((resLog) => {
                if (resLog.code == 200) {
-                   console.log("提交到API返回成功");
+                   //console.log("提交到API返回成功");
+                   ElMessage.success("设置成功,F12控制台查看数据");
                    const obj = { path: "/system/flow/config" };
                    proxy.$tab.openPage(obj);
                } else {

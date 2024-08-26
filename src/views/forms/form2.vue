@@ -5,7 +5,7 @@
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="请假类型" prop="leaveType">
-                        <el-select v-model="form.leaveType" placeholder="请选择请假类型" :style="{ width: '100%' }">
+                        <el-select v-model="form.leaveType" placeholder="请选择请假类型" :style="{ width: '220px' }">
                             <el-option v-for="(item, index) in leaveTypeOptions" :key="index" :label="item.label"
                                 :value="item.value"></el-option>
                         </el-select>
@@ -13,14 +13,19 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="开始时间" prop="beginDate">
-                        <el-date-picker :disabled-date="disabledBeginDateDate" v-model="form.beginDate" type="datetime"
+                        <el-date-picker :disabled-date="disabledBeginDateDate" :autocomplete="off" v-model="form.beginDate" type="datetime"
                             placeholder="请选择开始时间" format="YYYY/MM/DD HH:mm" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="结束时间" prop="endDate">
                         <el-date-picker :disabled-date="disabledEndDate" v-model="form.endDate" type="datetime"
-                            placeholder="请选择结束时间" format="YYYY/MM/DD HH:mm" />
+                            placeholder="请选择结束时间" :autocomplete="off" format="YYYY/MM/DD HH:mm" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="请假时长" prop="LeaveHour">
+                        <el-input-number v-model="form.LeaveHour"  style="width: 220px;" :min="1" :max="100" placeholder="请输入时长" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -74,6 +79,7 @@ const form = reactive({
     leaveType: 1,
     beginDate: "",
     endDate: "",
+    LeaveHour: 0,
     userName: '测试人员',
     userId: 1,
     remark: ''
@@ -88,6 +94,11 @@ let rules = {
     endDate: [{
         required: true,
         message: '请选择结束时间',
+        trigger: 'blur'
+    }],
+    LeaveHour: [{
+        required: true,
+        message: '请填写请假时长',
         trigger: 'blur'
     }],
     remark: [{
