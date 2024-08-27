@@ -13,14 +13,14 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="开始时间" prop="beginDate">
-                        <el-date-picker :disabled-date="disabledBeginDateDate" :autocomplete="off" v-model="form.beginDate" type="datetime"
+                        <el-date-picker :disabled-date="disabledBeginDateDate" v-model="form.beginDate" type="datetime"
                             placeholder="请选择开始时间" format="YYYY/MM/DD HH:mm" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="结束时间" prop="endDate">
                         <el-date-picker :disabled-date="disabledEndDate" v-model="form.endDate" type="datetime"
-                            placeholder="请选择结束时间" :autocomplete="off" format="YYYY/MM/DD HH:mm" />
+                            placeholder="请选择结束时间" format="YYYY/MM/DD HH:mm" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -80,8 +80,8 @@ const form = reactive({
     beginDate:props.previewData?.beginDate??"",
     endDate: props.previewData?.endDate??"",
     leaveHour: props.previewData?.leaveHour??0,
-    userName:props.previewData?.leaveUserName?? leaveUserName,
-    userId:props.previewData?.leaveUserId?? leaveUserId,
+    userName:props.previewData?.leaveUserName?? "",
+    userId:props.previewData?.leaveUserId?? "",
     remark: props.previewData?.remark??""
 })
 

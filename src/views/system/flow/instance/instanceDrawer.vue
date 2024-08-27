@@ -51,8 +51,8 @@ let componentLoaded = ref(false);
 let loadedComponent = ref(null);
 
 const flowParam = ref({
-  "formCode": "DSFZH_WMA",
-  "accountType": 1
+  "processNumber": viewConfig.value?.processNumber,
+  "isStartPreview": false
 })
 
 let visible = computed({
