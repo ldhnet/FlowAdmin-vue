@@ -7,13 +7,14 @@
 <template>
     <div class="node-wrap">
         <div class="node-wrap-box" :class="(nodeConfig.nodeType == 1 ? 'start-node ' : '')">
-            <div class="title" :style="`background: rgb(${bgColors[nodeConfig.nodeType]});`">
+            <div class="title" :style="(nodeConfig.isNodeDeduplication == 1 ? `background: rgb(${bgColors[0]});` : `background: rgb(${bgColors[nodeConfig.nodeType]});`)">
                 <span>{{ nodeConfig.nodeName }}</span>
             </div>
             <div class="content" @click="setPerson">
-                <div class="text">
+                <div v-html="nodeConfig.nodeDisplayName" class="text"></div>
+                <!-- <div class="text">  
                     {{ nodeConfig.nodeDisplayName ?? '未获取到' }}
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="pixel-line"></div>
@@ -29,6 +30,22 @@ let props = defineProps({
         default: () => ({}),
     }
 }); 
+let nodeConfig = computed(() => {  
+    let approvers =props.nodeConfig.assigneeList; 
+    let nameStr= '';
+    if(props.nodeConfig.nodeType == 1)
+        return props.nodeConfig;
+    for (let item of approvers) {  
+        if(item.isDeduplication == 1){ 
+            nameStr +='<del><em>'+ item.assigneeName +'</em></del>' + '  ';
+        }else{
+            nameStr += item.assigneeName + '  ';
+        }  
+      }
+      props.nodeConfig.nodeDisplayName =nameStr;
+    return props.nodeConfig
+})
+//console.log("nodeConfig==============",JSON.stringify(props.nodeConfig)) 
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";
@@ -44,5 +61,8 @@ let props = defineProps({
     margin: auto;
     border-radius: 50%;
     background: #dbdcdc
+}
+.line-through {
+    text-decoration: line-through
 }
 </style>

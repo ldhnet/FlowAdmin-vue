@@ -1,12 +1,12 @@
 <template>
    <div class="app-container">
       <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch">
-         <el-form-item label="流程编号" prop="bpmnCode">
-            <el-input v-model="queryParams.postCode" placeholder="请输入流程编号" clearable style="width: 200px"
+         <el-form-item label="流程编号" prop="processNumber">
+            <el-input v-model="queryParams.processNumber" placeholder="请输入流程编号" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
-         <el-form-item label="流程名称" prop="bpmnName">
-            <el-input v-model="queryParams.postName" placeholder="请输入流程名称" clearable style="width: 200px"
+         <el-form-item label="流程描述" prop="description">
+            <el-input v-model="queryParams.description" placeholder="请输入流程描述" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
 
@@ -17,8 +17,9 @@
       </el-form>
       <el-table v-loading="loading" :data="dataList">
          <el-table-column label="流程类型" align="center" prop="processKey" />
+         <el-table-column label="类型名称" align="center" prop="processTypeName" />
          <el-table-column label="流程编号" align="center" prop="processNumber" />
-         <el-table-column label="流程名称" align="center" prop="processDigest" />
+         <el-table-column label="流程描述" align="center" prop="description" />
          <el-table-column label="状态" align="center" prop="effectiveStatus">
             <template #default="item">
                <el-tag>{{ item.row.taskState }}</el-tag>
@@ -68,12 +69,12 @@ const data = reactive({
    queryParams: {
       page: 1,
       pageSize: 10,
-      bpmnCode: undefined,
-      bpmnName: undefined
+      processNumber: undefined,
+      description: undefined
    },
    rules: {
-      bpmnCode: [{ required: true, message: "流程编号不能为空", trigger: "blur" }],
-      bpmnName: [{ required: true, message: "流程名称不能为空", trigger: "blur" }],
+      processNumber: [{ required: true, message: "流程编号不能为空", trigger: "blur" }],
+      description: [{ required: true, message: "流程名称不能为空", trigger: "blur" }],
    }
 });
 const { queryParams, form, rules } = toRefs(data);

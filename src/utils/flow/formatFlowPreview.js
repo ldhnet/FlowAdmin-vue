@@ -29,6 +29,7 @@ export class FormatUtils {
             nodeDisplayName: this.arrToStr(node?.params?.assigneeList),
             nodeTo: node.params?.nodeTo,
             assigneeList: node?.params?.assigneeList,
+            isNodeDeduplication: node?.params?.isNodeDeduplication,
         };
         return newNode;
     }

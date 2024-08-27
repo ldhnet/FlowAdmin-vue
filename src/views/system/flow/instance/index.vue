@@ -17,8 +17,9 @@
       </el-form>
       <el-table v-loading="loading" :data="dataList">
          <el-table-column label="流程类型" align="center" prop="processKey" />
+         <el-table-column label="类型名称" align="center" prop="processTypeName" />
          <el-table-column label="流程编号" align="center" prop="processNumber" />
-         <el-table-column label="流程名称" align="center" prop="processDigest" />
+         <el-table-column label="流程描述" align="center" prop="description" />
          <el-table-column label="状态" align="center" prop="effectiveStatus">
             <template #default="item">
                <el-tag>{{ item.row.taskState }}</el-tag>
