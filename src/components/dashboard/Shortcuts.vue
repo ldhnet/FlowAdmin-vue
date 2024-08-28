@@ -6,7 +6,7 @@
 -->
 <template>
     <el-row :gutter="20">
-        <el-col :md="6">
+        <el-col :xs="24"  :md="6">
             <div class="ve-card ve_card1">
                 <el-icon>
                     <bell />
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :md="6">
+        <el-col :xs="24"  :md="6">
             <div class="ve-card ve_card2">
                 <el-icon>
                     <EditPen />
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </el-col> 
-        <el-col :md="6">
+        <el-col :xs="24"  :md="6">
             <div class="ve-card ve_card3">
                 <el-icon>
                     <TakeawayBox /> 
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :md="6">
+        <el-col  :xs="24" :md="6">
             <div class="ve-card ve_card4">
                 <el-icon>
                     <document />

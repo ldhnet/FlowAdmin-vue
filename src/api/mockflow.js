@@ -6,8 +6,8 @@
  */
 
 import http from '@/utils/axios' 
-let baseUrl = "http://117.72.70.166:7001";
-//let baseUrl = "http://localhost:7001";
+//let baseUrl = "http://117.72.70.166:7001";
+let baseUrl = "http://localhost:7001";
 /**
  * 获取审批数据
  * @param { Number } id 
@@ -32,7 +32,14 @@ export function getFromCodeData() {
 export function setApiWorkFlowData(data) {
   return http.post(`${baseUrl}/bpmnConf/edit`, data)
 }
- 
+ /**
+ * 获取代办事项 
+ * @returns 
+ */
+export function getTodoList() {  
+  return http.get(`${baseUrl}/bpmnConf/todoList`);
+}
+
 /**
  * 获取所有实例列表
  * @param {*} pageDto 

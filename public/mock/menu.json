@@ -153,24 +153,12 @@
                     "hidden": true,
                     "component": "bizdemo/demo1",
                     "meta": {
-                        "title": "发起账号申请流程",
+                        "title": "发起申请流程",
                         "icon": "",
                         "noCache": true,
                         "link": null
                     }
-                },
-                {
-                    "name": "BizDemo2",
-                    "path": "/bizdemo/demo2",
-                    "hidden": true,
-                    "component": "bizdemo/demo2",
-                    "meta": {
-                        "title": "发起请假申请流程",
-                        "icon": "",
-                        "noCache": false,
-                        "link": null
-                    }
-                }
+                } 
             ]
         }
     ]

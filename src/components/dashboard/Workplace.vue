@@ -171,7 +171,7 @@ function handleStart(row) {
 .card-col {
     cursor: pointer;
     margin-bottom: 10px;
-
+    overflow: hidden;
     &:hover {
         background: rgba(0, 0, 0, 0.45);
 
@@ -191,13 +191,19 @@ function handleStart(row) {
         margin-bottom: 8px;
         font-size: 14px;
         color: #1890ff;
+        width: 95px;
         overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
 
     p {
+        width: 95px;
         font-size: 12px;
         font-weight: 300;
         overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
 }
 
