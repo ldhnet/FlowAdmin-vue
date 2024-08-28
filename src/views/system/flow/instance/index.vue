@@ -1,12 +1,12 @@
 <template>
    <div class="app-container">
-      <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch">
-         <el-form-item label="流程编号" prop="bpmnCode">
-            <el-input v-model="queryParams.postCode" placeholder="请输入流程编号" clearable style="width: 200px"
+      <el-form :model="taskMgmtVO" ref="queryRef" :inline="true" v-show="showSearch">
+         <el-form-item label="流程编号" prop="processNumber">
+            <el-input v-model="taskMgmtVO.processNumber" placeholder="请输入关键字" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
-         <el-form-item label="流程名称" prop="bpmnName">
-            <el-input v-model="queryParams.postName" placeholder="请输入流程名称" clearable style="width: 200px"
+         <el-form-item label="流程描述" prop="description">
+            <el-input v-model="taskMgmtVO.description" placeholder="请输入关键字" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
 
@@ -25,9 +25,9 @@
                <el-tag>{{ item.row.taskState }}</el-tag>
             </template>
          </el-table-column>
-         <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+         <el-table-column label="创建时间" align="center" prop="runTime" width="180">
             <template #default="scope">
-               <span>{{ parseTime(scope.row.createTime) }}</span>
+               <span>{{ parseTime(scope.row.runTime) }}</span>
             </template>
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
@@ -37,14 +37,14 @@
          </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.page" v-model:limit="queryParams.pageSize"
+      <pagination v-show="total > 0" :total="total" v-model:page="pageDto.page" v-model:limit="pageDto.pageSize"
          @pagination="getList" />
       <InstanceDrawer v-if="visible" />
    </div>
 </template>
 
 <script setup>
-import { getApprovedlistPage } from "@/api/mockflow"
+import { getAllProcesslistPage } from "@/api/mockflow"
 import { useStore } from '@/store/modules/flow'
 import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
 let store = useStore()
@@ -65,23 +65,25 @@ let visible = computed({
 })
 const data = reactive({
    form: {},
-   queryParams: {
+   pageDto: {
       page: 1,
-      pageSize: 10,
-      bpmnCode: undefined,
-      bpmnName: undefined
+      pageSize: 10
+   },
+   taskMgmtVO: { 
+      processNumber: undefined,
+      processTypeName: undefined
    },
    rules: {
-      bpmnCode: [{ required: true, message: "流程编号不能为空", trigger: "blur" }],
-      bpmnName: [{ required: true, message: "流程名称不能为空", trigger: "blur" }],
+      processNumber: [{ required: true, message: "关键字不能为空", trigger: "blur" }],
+      processTypeName: [{ required: true, message: "关键字不能为空", trigger: "blur" }],
    }
 });
-const { queryParams, form, rules } = toRefs(data);
+const { pageDto, taskMgmtVO } = toRefs(data);
 
-/** 查询岗位列表 */
-function getList() {
+/** 查询流程实例列表 */
+const getList = async()=> {
    loading.value = true;
-   getApprovedlistPage(queryParams.value).then(response => {
+   await getAllProcesslistPage(pageDto.value,taskMgmtVO.value).then(response => {
       dataList.value = response.data;
       total.value = response.pagination.totalCount;
       loading.value = false;
@@ -89,11 +91,16 @@ function getList() {
 }
 
 /** 搜索按钮操作 */
-function handleQuery() {
-   queryParams.value.page = 1;
-   getList();
+const handleQuery= async()=> {
+   pageDto.value.page = 1;
+   await  getList();
 }
 function resetQuery() {
+   taskMgmtVO.value = {
+      processNumber: undefined,
+      processTypeName: undefined
+  };
+  handleQuery();
 }
 
 function handlePreview(row) {

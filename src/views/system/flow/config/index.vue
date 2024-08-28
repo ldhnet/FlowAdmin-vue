@@ -1,12 +1,12 @@
 <template>
    <div class="app-container">
-      <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch">
+      <el-form :model="taskMgmtVO" ref="queryRef" :inline="true" v-show="showSearch">
          <el-form-item label="流程编号" prop="bpmnCode">
-            <el-input v-model="queryParams.postCode" placeholder="请输入流程编号" clearable style="width: 200px"
+            <el-input v-model="taskMgmtVO.bpmnCode" placeholder="请输入关键字" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
          <el-form-item label="流程名称" prop="bpmnName">
-            <el-input v-model="queryParams.postName" placeholder="请输入流程名称" clearable style="width: 200px"
+            <el-input v-model="taskMgmtVO.bpmnName" placeholder="请输入关键字" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
 
@@ -59,7 +59,7 @@
          </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.page" v-model:limit="queryParams.pageSize"
+      <pagination v-show="total > 0" :total="total" v-model:page="pageDto.page" v-model:limit="pageDto.pageSize"
          @pagination="getList" />
    </div>
 </template>
@@ -76,9 +76,11 @@ const showSearch = ref(true);
 const total = ref(0);
 const data = reactive({
    form: {},
-   queryParams: {
+   pageDto: {
       page: 1,
-      pageSize: 10,
+      pageSize: 10
+   },
+   taskMgmtVO: { 
       bpmnCode: undefined,
       bpmnName: undefined
    },
@@ -87,12 +89,12 @@ const data = reactive({
       bpmnName: [{ required: true, message: "流程名称不能为空", trigger: "blur" }],
    }
 });
-const { queryParams, form, rules } = toRefs(data);
+const { pageDto, taskMgmtVO } = toRefs(data);
 
 /** 查询岗位列表 */
 function getList() {
    loading.value = true;
-   getBpmnConflistPage(queryParams.value).then(response => {
+   getBpmnConflistPage(pageDto.value,taskMgmtVO.value).then(response => {
       let res = response.data;
       configList.value = res.data;
       total.value = res.pagination.totalCount;
@@ -113,7 +115,7 @@ const effectiveById = async (data) => {
 };
 /** 搜索按钮操作 */
 function handleQuery() {
-   queryParams.value.page = 1;
+   pageDto.value.page = 1;
    getList();
 }
  
@@ -127,6 +129,10 @@ function handleUpdate() {
 
 /** 重置按钮操作 */
 function resetQuery() {
+   taskMgmtVO.value = {
+      bpmnCode: undefined,
+      bpmnName: undefined
+  };
    proxy.resetForm("queryRef");
    handleQuery();
 }

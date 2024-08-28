@@ -6,8 +6,8 @@
  */
 
 import http from '@/utils/axios' 
-let baseUrl = "http://117.72.70.166:7001";
-//let baseUrl = "http://localhost:7001";
+//let baseUrl = "http://117.72.70.166:7001";
+let baseUrl = "http://localhost:7001";
 /**
  * 获取审批数据
  * @param { Number } id 
@@ -32,43 +32,59 @@ export function getFromCodeData() {
 export function setApiWorkFlowData(data) {
   return http.post(`${baseUrl}/bpmnConf/edit`, data)
 }
-
+ 
 /**
- * 获取用户代办数据列表
- * @param {*} data 
+ * 获取所有实例列表
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getPenddinglistPage(pageDto) { 
+export function getAllProcesslistPage(pageDto,taskMgmtVO) { 
   let data = {
     "pageDto": pageDto,
-    "taskMgmtVO": {}
+    "taskMgmtVO": taskMgmtVO
+  }
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/6`, data);
+}
+ 
+/**
+ * 获取用户代办数据列表
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
+ * @returns 
+ */
+export function getPenddinglistPage(pageDto,taskMgmtVO) { 
+  let data = {
+    "pageDto": pageDto,
+    "taskMgmtVO": taskMgmtVO
   } 
   return http.post(`${baseUrl}/bpmnConf/process/listPage/5`, data);
 }
-
+ 
 /**
  * 获取用户已审批数据列表
- * @param {*} data 
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getApprovedlistPage(pageDto) { 
+export function getApprovedlistPage(pageDto,taskMgmtVO) { 
   let data = {
     "pageDto": pageDto,
-    "taskMgmtVO": {}
+    "taskMgmtVO": taskMgmtVO
   }
   return http.post(`${baseUrl}/bpmnConf/process/listPage/4`, data);
 }
 
 /**
  * 获取我发起的流程列表
- * @param {*} data 
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getMyRequestlistPage(pageDto) {
- 
+export function getMyRequestlistPage(pageDto,taskMgmtVO) { 
   let data = {
     "pageDto": pageDto,
-    "taskMgmtVO": {}
+    "taskMgmtVO": taskMgmtVO
   }
   return http.post(`${baseUrl}/bpmnConf/process/listPage/3`, data);
 }
@@ -78,10 +94,10 @@ export function getMyRequestlistPage(pageDto) {
  * @param {*} data 
  * @returns 
  */
-export function getBpmnConflistPage(pageDto) {
+export function getBpmnConflistPage(pageDto,taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
-    "entity": {}
+    "entity": taskMgmtVO
   }  
   return http.post(`${baseUrl}/bpmnConf/listPage`, data);
 }
