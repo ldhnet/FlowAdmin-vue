@@ -9,7 +9,7 @@
                     <el-radio-group v-model="tabPosition">
                         <!-- <el-radio-button value="buinessForm">业务表单信息</el-radio-button> -->
                         <el-radio-button value="flowForm">流程基本信息</el-radio-button>
-                        <el-radio-button value="flow">流程图预览</el-radio-button>
+                        <el-radio-button value="flow">流程模板预览</el-radio-button>
                     </el-radio-group>
                 </el-col>
                 <!-- <el-col :span="24" v-if="tabPosition == 'buinessForm'">

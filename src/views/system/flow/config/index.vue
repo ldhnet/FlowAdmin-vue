@@ -49,9 +49,10 @@
                <span>{{ parseTime(scope.row.updateTime) }}</span>
             </template>
          </el-table-column>
-         <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
+         <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
                <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button link type="primary" @click="handleEdit(scope.row)">编辑</el-button>
                <el-button v-if="scope.row.effectiveStatus == 1" type="info" disabled link>启动</el-button>
                <el-button v-else type="success" link @click="effectiveById(scope.row)">启动</el-button>
                <el-button link type="primary"  @click="handleDelete(scope.row)">删除</el-button>
@@ -71,7 +72,7 @@ const router = useRouter();
 const { proxy } = getCurrentInstance();
 
 const configList = ref([]);
-const loading = ref(true);
+const loading = ref(false);
 const showSearch = ref(true);
 const total = ref(0);
 const data = reactive({
@@ -102,6 +103,14 @@ function getList() {
    });
 }
 
+const handleEdit =  (row) => {
+   const params ={
+      id: row.id
+   };
+   const obj = {path: "/system/flow/design",query:params};
+   proxy.$tab.openPage(obj);
+}
+
 const effectiveById = async (data) => {
     await getEffectiveBpmn(data).then(async (res) => {
         if (res.code == 200) {
@@ -112,7 +121,7 @@ const effectiveById = async (data) => {
         }
     });
 
-};
+}
 /** 搜索按钮操作 */
 function handleQuery() {
    pageDto.value.page = 1;

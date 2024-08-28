@@ -117,7 +117,7 @@
                     "hidden": false,
                     "component": "system/flow/config/index",
                     "meta": {
-                        "title": "流程列表",
+                        "title": "流程模板列表",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -129,7 +129,7 @@
                     "hidden": false,
                     "component": "system/flow/design/index",
                     "meta": {
-                        "title": "流程设计",
+                        "title": "流程模板设计",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -141,7 +141,7 @@
                     "hidden": true,
                     "component": "system/flow/preview/index",
                     "meta": {
-                        "title": "流程预览",
+                        "title": "流程模板预览",
                         "icon": "",
                         "noCache": false,
                         "link": null
