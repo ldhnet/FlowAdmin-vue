@@ -31,18 +31,7 @@
             @click="goTarget('https://gitee.com/ldhnet')"
             >访问主页</el-button
           >
-        </p>
-        <p>
-          <el-badge :value="todoFrom.todoCount" class="item">
-              <el-button icon="bell" plain type="primary" @click="handleTodayTodo()">今日待办</el-button>
-          </el-badge>
-          <el-badge :value="todoFrom.doneTodayCount" class="item">
-              <el-button icon="EditPen" plain type="primary" @click="handleTodayDone()">今日已办</el-button>
-          </el-badge>
-          <el-badge :value="todoFrom.doneCreateCount" class="item">
-              <el-button icon="TakeawayBox" plain type="primary" @click="handleTodayCreate()">今日创建</el-button>
-          </el-badge>
-        </p>
+        </p> 
       </el-col>
 
       <el-col :sm="24" :lg="12" style="padding-left: 50px">
@@ -129,36 +118,9 @@
 </template>
 
 <script setup name="Index">
-import shortcuts from "@/components/dashboard/Shortcuts";
-import { getTodoList } from "@/api/mockflow";
-const { proxy } = getCurrentInstance();
-const version = ref('3.0.0') 
-let todoFrom = ref({
-  todoCount: 0,
-  doneTodayCount: 0,
-  doneCreateCount: 0,
-}) 
-const getTodo = () => {
-  getTodoList().then(res => {
-    todoFrom.value = res.data;
-  }).catch((err) => {
-    if (err && err.msg)
-      console.log("获取todolist失败=" + JSON.stringify(err.msg));
-  })
-}
-getTodo();
-const handleTodayTodo = () => {
-  const obj = {path: "/flowtask/pendding"};
-  proxy.$tab.openPage(obj);
-}
-const handleTodayDone = () => {
-  const obj = {path: "/flowtask/approved"};
-  proxy.$tab.openPage(obj);
-}
-const handleTodayCreate = () => {
-  const obj = {path: "/flowtask/mytask"};
-  proxy.$tab.openPage(obj);
-}
+import shortcuts from "@/components/dashboard/Shortcuts";  
+const version = ref('3.0.0')  
+  
 console.log("VITE_APP_BASE_API=======",import.meta.env.BASE_URL);
 
 function goTarget(url) {

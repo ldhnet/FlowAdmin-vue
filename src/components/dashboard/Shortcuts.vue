@@ -7,35 +7,35 @@
 <template>
     <el-row :gutter="20">
         <el-col :xs="24"  :md="6">
-            <div class="ve-card ve_card1">
+            <div class="ve-card ve_card1" @click="handleTodo()">
                 <el-icon>
                     <bell />
                 </el-icon>
                 <div>
                     <p>我的代办</p>
-                    <span>6</span>
+                    <span>{{ todoFrom.todoCount }}</span>
                 </div>
             </div>
         </el-col>
         <el-col :xs="24"  :md="6">
-            <div class="ve-card ve_card2">
+            <div class="ve-card ve_card2" @click="handleTodayDone()">
                 <el-icon>
                     <EditPen />
                 </el-icon>
                 <div>
-                    <p>我的已办</p>
-                    <span>6</span>
+                    <p>今日已办</p>
+                    <span>{{ todoFrom.doneTodayCount }}</span>
                 </div>
             </div>
         </el-col> 
         <el-col :xs="24"  :md="6">
-            <div class="ve-card ve_card3">
+            <div class="ve-card ve_card3" @click="handleTodayCreate()">
                 <el-icon>
                     <TakeawayBox /> 
                 </el-icon>
                 <div>
-                    <p>我的发起</p>
-                    <span>6</span>
+                    <p>今日发起</p>
+                    <span>{{ todoFrom.doneCreateCount }}</span>
                 </div>
             </div>
         </el-col>
@@ -46,15 +46,44 @@
                 </el-icon>
                 <div>
                     <p>我的草稿</p>
-                    <span>6</span>
+                    <span>0</span>
                 </div>
             </div>
         </el-col>
     </el-row>
 </template>
+ 
+<script setup name="Index"> 
+import { getTodoList } from "@/api/mockflow";
+const { proxy } = getCurrentInstance(); 
 
-<!-- <script setup></script> -->
-
+let todoFrom = ref({
+  todoCount: 0,
+  doneTodayCount: 0,
+  doneCreateCount: 0,
+}) 
+const getTodo = () => {
+  getTodoList().then(res => {
+    todoFrom.value = res.data;
+  }).catch((err) => {
+    if (err && err.msg)
+      console.log("获取todolist失败=" + JSON.stringify(err.msg));
+  })
+}
+getTodo();
+const handleTodo = () => {
+  const obj = {path: "/flowtask/pendding"};
+  proxy.$tab.openPage(obj);
+}
+const handleTodayDone = () => {
+  const obj = {path: "/flowtask/approved"};
+  proxy.$tab.openPage(obj);
+}
+const handleTodayCreate = () => {
+  const obj = {path: "/flowtask/mytask"};
+  proxy.$tab.openPage(obj);
+} 
+</script>
 <style lang="scss" scoped>
 .el-row {
     height: 50%; 
@@ -64,6 +93,7 @@
     margin-bottom: 10px;
 }
 .ve-card {
+    cursor: pointer;
     border-radius: 10px;
     height: 100%;
     display: flex;
