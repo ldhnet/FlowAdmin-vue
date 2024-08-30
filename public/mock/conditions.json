@@ -5,8 +5,8 @@
     {
       "columnId": "1",
       "showType": "1",
-      "showName": "预计采购总费用",
-      "columnName": "planProcurementTotalMoney",
+      "showName": "支出费用",
+      "columnName": "outTotalMoney",
       "columnType": "Double",
       "fixedDownBoxValue": ""
     },
@@ -14,15 +14,15 @@
       "columnId": "2",
       "showType": "3",
       "showName": "采购类型",
-      "columnName": "procurementType",
+      "columnName": "purchaseType",
       "columnType": "String",
-      "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"新开园区集中采购\",\"column\":\"\",\"type\":\"1\"}}"
+      "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"集中采购\",\"column\":\"\",\"type\":\"1\"}}"
     },
     {
       "columnId": "3",
       "showType": "1",
-      "showName": "园区面积",
-      "columnName": "parkArea",
+      "showName": "采购费用",
+      "columnName": "purchaseMoney",
       "columnType": "Double",
       "fixedDownBoxValue": ""
     },
