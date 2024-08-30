@@ -29,7 +29,12 @@
       </el-row>
 
       <el-table v-loading="loading" :data="configList">
-         <el-table-column label="流程类型" align="center" prop="formCode" />
+         <el-table-column label="模板类型" align="center" prop="formCode" />
+         <el-table-column label="模板名称" align="center" prop="formCodeName">
+            <template #default="item">
+               {{ getFromCodeName(item.row.formCode) }}
+            </template>
+         </el-table-column>
          <el-table-column label="流程编号" align="center" prop="bpmnCode" />
          <el-table-column label="流程名称" align="center" prop="bpmnName" />
          <el-table-column label="是否去重" align="center" prop="deduplicationType">
@@ -66,11 +71,12 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
-import { getBpmnConflistPage,getEffectiveBpmn } from "@/api/mockflow";
+import { getBpmnConflistPage,getEffectiveBpmn,getFromCodeData } from "@/api/mockflow";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
-
+let formCodeOptions = ref([]);
 const configList = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
@@ -91,7 +97,21 @@ const data = reactive({
    }
 });
 const { pageDto, taskMgmtVO } = toRefs(data);
-
+onMounted(async() => {
+   await initFromCode();
+   getList(); 
+})
+const initFromCode = async () => {
+  await getFromCodeData().then((res) => {
+      if (res.code == 200) {
+         formCodeOptions.value = res.data;
+      }
+   });
+}
+const getFromCodeName = (formCode) => { 
+  const result= formCodeOptions.value.filter(item => item.key == formCode)[0]; 
+  return result.value;
+}
 /** 查询岗位列表 */
 function getList() {
    loading.value = true;
@@ -100,7 +120,7 @@ function getList() {
       configList.value = res.data;
       total.value = res.pagination.totalCount;
       loading.value = false;
-   });
+   }); 
 }
 
 const handleEdit =  (row) => {
@@ -158,5 +178,5 @@ function handlePreview(row) {
    const obj = {path: "/system/flow/preview",query:params};
    proxy.$tab.openPage(obj);
 }
-getList();
+
 </script>

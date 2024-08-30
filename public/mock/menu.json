@@ -110,6 +110,17 @@
                         "noCache": false,
                         "link": null
                     }
+                },{
+                    "name": "FlowEntrust",
+                    "path": "flow/entrust",
+                    "hidden": false,
+                    "component": "system/flow/entrust/index",
+                    "meta": {
+                        "title": "委托管理",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 },
                 {
                     "name": "FlowConfig",

@@ -9,8 +9,8 @@
                     </el-select>
                 </el-form-item> -->
 
-            <el-form-item label="流程类型" prop="formCode">
-                <el-select v-model="form.formCode" placeholder="请选择分类" :style="{ width: '100%' }">
+            <el-form-item label="模板类型" prop="formCode">
+                <el-select v-model="form.formCode" placeholder="请选择模板类型" :style="{ width: '100%' }">
                     <el-option v-for="(item, index) in formCodeOptions" :key="index" :label="item.value"
                         :value="item.key"></el-option>
                 </el-select>
@@ -26,8 +26,8 @@
                         :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="审批说明" prop="remark">
-                <el-input v-model="form.remark" type="textarea" placeholder="请输入审批说明" :maxlength="100" show-word-limit
+            <el-form-item label="流程说明" prop="remark">
+                <el-input v-model="form.remark" type="textarea" placeholder="请输入流程说明" :maxlength="100" show-word-limit
                     :autosize="{ minRows: 4, maxRows: 4 }" :style="{ width: '100%' }"></el-input>
             </el-form-item>
             <el-form-item style="float: right;">

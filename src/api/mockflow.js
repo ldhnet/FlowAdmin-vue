@@ -6,8 +6,8 @@
  */
 
 import http from '@/utils/axios' 
-let baseUrl = "http://117.72.70.166:7001";
-//let baseUrl = "http://localhost:7001";
+//let baseUrl = "http://117.72.70.166:7001";
+let baseUrl = "http://localhost:7001";
 /**
  * 获取审批数据
  * @param { Number } id 
@@ -188,4 +188,48 @@ export function getApproveNodeProperties() {
     "bizformjson": JSON.stringify(param)
   }   
   return http.post(`${baseUrl}/bizdemo/addBizDemo`, data);
+}
+/**
+ * 获取委托列表
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
+ * @returns 
+ */
+export function getUserEntrustListPage(pageDto,taskMgmtVO) { 
+  let data = {
+    "pageDto": pageDto,
+    "taskMgmtVO": taskMgmtVO
+  }
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/1`, data);
+}
+/**
+ * 获取委托列表
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
+ * @returns 
+ */
+export function getEntrustListPage(pageDto,taskMgmtVO) { 
+  let data = {
+    "pageDto": pageDto,
+    "taskMgmtVO": taskMgmtVO
+  }
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/2`, data);
+}
+ /**
+ *  委托详情
+ * @returns 
+ */
+ export function entrustDetail(id) {    
+  return http.get(`${baseUrl}/bpmnBusiness/entrustDetail/${id}`);
+}
+ /**
+ * 设置委托
+ * @returns 
+ */
+ export function setEntrust(data) {   
+  data.ids = [{
+    id: data.id,
+      powerId: data.powerId
+  }]; 
+  return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data);
 }
