@@ -21,7 +21,6 @@ export class FormatDisplayUtils {
      * @returns Object
      */
     static createNodeDisplay(nodeData) {
- 
        let displayObj = {
             tableId: nodeData.id,
             bpmnCode: nodeData.bpmnCode,
@@ -119,10 +118,9 @@ export class FormatDisplayUtils {
                     }
 
                 }
-                Object.assign(node, { signType: node.property.signType });
-
+                Object.assign(node, { signType: node.property?.signType }); 
                 let typeCode = typeCodes.filter(t => t.type == node.nodeProperty);
-                node.setType = typeCode[0].value;
+                node.setType = typeCode[0]?.value??0;
                 Object.assign(node, { nodeApproveList: [] });
                 
                 node.nodeApproveList = empList;

@@ -54,7 +54,7 @@ onMounted(async () => {
     proxy.$modal.closeLoading();
 });
 const init = async () => {
-    let mockjson = await getApiWorkFlowData({ id });
+    let mockjson = await getApiWorkFlowData({ id }); 
     let data = FormatDisplayUtils.getToTree(mockjson.data);
     processConfig.value = data;
     title.value = data.bpmnName;

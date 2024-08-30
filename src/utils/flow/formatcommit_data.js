@@ -1,6 +1,6 @@
 // import { FormatUtils } from '@/utils/flow/formatcommit_data'
 //import { NodeUtils } from '@/utils/flow/nodeUtils'
-import {typecodes} from '@/utils/flow/const'
+import { typeCodes } from '@/utils/flow/const'
 const isEmpty = data => data === null || data === undefined || data === ''
 const isEmptyArray = data => Array.isArray(data) ? data.length === 0 : true
 
@@ -195,7 +195,7 @@ export class FormatUtils {
                 }
                 //node.nodeProperty = node.setType;
                 let typeNodeProperty= typeCodes.filter(t=>t.value==node.setType);
-                node.nodeProperty=typeNodeProperty[0].type;    
+                node.nodeProperty=typeNodeProperty[0]?.type;    
                 node.property = approveObj;
                 delete node.nodeApproveList;
             }
