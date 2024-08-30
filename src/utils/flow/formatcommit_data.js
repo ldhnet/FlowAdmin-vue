@@ -1,5 +1,6 @@
 // import { FormatUtils } from '@/utils/flow/formatcommit_data'
 //import { NodeUtils } from '@/utils/flow/nodeUtils'
+import {typecodes} from '@/utils/flow/const'
 const isEmpty = data => data === null || data === undefined || data === ''
 const isEmptyArray = data => Array.isArray(data) ? data.length === 0 : true
 
@@ -12,7 +13,7 @@ export class FormatUtils {
 
         let treeList = this.flattenMapTreeToList(param);
         let combinationList = this.getEndpointNodeId(treeList);
-        let finalList = this.cleanNodeList(combinationList); 
+        let finalList = this.cleanNodeList(combinationList);
         let fomatList = this.adapterActivitiNodeList(finalList);
         return fomatList;
         // let finalObj = {
@@ -30,16 +31,17 @@ export class FormatUtils {
         // return finalObj;
     }
     /**
-    * 展平树结构
-    * @param {Object} treeData  - 节点数据 
-    * @returns Array - 节点数组
-    */
+     * 展平树结构
+     * @param {Object} treeData  - 节点数据 
+     * @returns Array - 节点数组
+     */
     static flattenMapTreeToList(treeData) {
         let nodeData = [];
-        function traverse(node) { 
+
+        function traverse(node) {
             if (!node && !node.hasOwnProperty('nodeType')) {
                 return nodeData;
-            } 
+            }
             if (node.nodeType == 2) {
                 if (node.childNode) {
                     node.childNode.nodeFrom = node.nodeId;
@@ -53,8 +55,7 @@ export class FormatUtils {
                     node.nodeTo = node.conditionNodes.map(item => item.nodeId);
                     delete node.conditionNodes
                 }
-            }
-            else if (node.childNode) {
+            } else if (node.childNode) {
                 node.nodeTo = [node.childNode.nodeId];
                 node.childNode.nodeFrom = node.nodeId;
                 traverse(node.childNode);
@@ -91,9 +92,13 @@ export class FormatUtils {
         for (let getway of getwayList) {
             if (nodesGroup.hasOwnProperty(getway.nodeId)) {
                 let itemNodes = nodesGroup[getway.nodeId];
-                let comNode = itemNodes.find((c) => { return c.nodeType != 3; });
+                let comNode = itemNodes.find((c) => {
+                    return c.nodeType != 3;
+                });
                 if (!comNode) continue;
-                let conditionList = itemNodes.filter((c) => { return c.nodeId != comNode.nodeId; });
+                let conditionList = itemNodes.filter((c) => {
+                    return c.nodeId != comNode.nodeId;
+                });
                 for (let itemNode of conditionList) {
                     function internalTraverse(info) {
                         if (info) {
@@ -105,8 +110,7 @@ export class FormatUtils {
                                     for (let t_item of tempNode) {
                                         internalTraverse(t_item);
                                     }
-                                }
-                                else {
+                                } else {
                                     internalTraverse(tempNode);
                                 }
                             }
@@ -124,7 +128,9 @@ export class FormatUtils {
      * @returns 
      */
     static cleanNodeList(arr) {
-        let nodeIds = arr.map((c) => { return c.nodeId; });
+        let nodeIds = arr.map((c) => {
+            return c.nodeId;
+        });
         for (const node of arr) {
             node.nodeTo = Array.from(new Set(node.nodeTo));
             if (!isEmptyArray(node.nodeTo)) {
@@ -145,14 +151,16 @@ export class FormatUtils {
         for (let node of nodeList) {
             if (node.hasOwnProperty('id')) {
                 delete node.id;
-            }   
+            }
             if (node.nodeType == 3) {
                 let conditionObj = {
-                    conditionList:node.conditionList,
+                    conditionList: node.conditionList,
                     sort: node.priorityLevel,
                     isDefault: node.isDefault
-                }; 
-                Object.assign(node, { property: {} });
+                };
+                Object.assign(node, {
+                    property: {}
+                });
                 node.property = conditionObj;
                 delete node.conditionList;
             }
@@ -160,20 +168,39 @@ export class FormatUtils {
             if (node.nodeType == 4 || node.nodeType == 5) {
                 let approveObj = {
                     emplIds: [],
+                    emplList: [],
+                    roleIds: [],
+                    roleList: [],
                     signType: node.signType,
                 }
+
                 if (node.nodeApproveList && !isEmptyArray(node.nodeApproveList)) {
-                    for (let approve of node.nodeApproveList) {
-                        approveObj.emplIds.push(parseInt(approve.targetId));
+                    if(node.setType==4){
+                        for(let approve of node.nodeApproveList){
+                            let role={};
+                            role.id=parseInt(approve.targetId);
+                            role.name=node.name;
+                            approveObj.roleIds.push(parseInt(approve.targetId));
+                            approveObj.roleList.push(role);
+                        }
+                    } else if(node.setType==5){
+                        for (let approve of node.nodeApproveList) {
+                            let emp={};
+                            emp.id=parseInt(approve.targetId);
+                            emp.name=approve.name;
+                            approveObj.emplIds.push(parseInt(approve.targetId));
+                            approveObj.emplList.push(emp);
+                        }
                     }
                 }
-                node.nodeProperty = node.setType;
+                //node.nodeProperty = node.setType;
+                let typeNodeProperty= typeCodes.filter(t=>t.value==node.setType);
+                node.nodeProperty=typeNodeProperty[0].type;    
                 node.property = approveObj;
                 delete node.nodeApproveList;
             }
         }
         return nodeList;
-    }
+    } 
 
 }
-

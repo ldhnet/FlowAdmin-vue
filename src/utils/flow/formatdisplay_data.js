@@ -1,5 +1,5 @@
 // import { FormatDisplayUtils } from '@/utils/formatdisplay_data'
-import { approveList,hrbpOptions } from '@/utils/flow/const'
+import { approveList,hrbpOptions,typeCodes} from '@/utils/flow/const'
 const isEmptyArray = data => Array.isArray(data) ? data.length === 0 : true
 
 export class FormatDisplayUtils {
@@ -86,19 +86,28 @@ export class FormatDisplayUtils {
             }
 
             if (node.nodeType == 4 || node.nodeType == 5) {
-                let empList = [];       
-                if (node.property && !isEmptyArray(node.property.emplIds)) {
-                    if(node.nodeProperty == 6){
-                        for (let emplId of node.property.emplIds) {
-                            let approveObj = {
-                                type: 6,
-                                targetId: parseInt(emplId),
-                                name: hrbpOptions.find(item => item.value == emplId)?.label 
-                            };
-                            empList.push(approveObj);
-                        }
+                let empList = [];
+                if (node.nodeProperty == 6 && !isEmptyArray(node.property.emplIds)) {
+                    for (let emplId of node.property.emplIds) {
+                        let approveObj = {
+                            type: 6,
+                            targetId: parseInt(emplId),
+                            name: hrbpOptions.find(item => item.value == emplId)?.label
+                        };
+                        empList.push(approveObj);
                     }
-                    if (node.nodeProperty == 5) {
+                }
+                if (node.nodeProperty == 4 && !isEmptyArray(node.property.roleList)) {
+                    for (let role of node.property.roleList) {
+                        let r = {
+                            type: 3,
+                            targetId: parseInt(role.id),
+                            name: role.name
+                        };
+                        empList.push(r);
+                    }
+                } else {
+                    if (node.nodeProperty == 5 && !isEmptyArray(node.property.emplIds)) {
                         for (let emplId of node.property.emplIds) {
                             let approveObj = {
                                 type: 5,
@@ -108,11 +117,14 @@ export class FormatDisplayUtils {
                             empList.push(approveObj);
                         }
                     }
-                    Object.assign(node, { signType: node.property.signType });
+
                 }
-                node.setType = node.nodeProperty; 
+                Object.assign(node, { signType: node.property.signType });
+
+                let typeCode = typeCodes.filter(t => t.type == node.nodeProperty);
+                node.setType = typeCode[0].value;
                 Object.assign(node, { nodeApproveList: [] });
- 
+                
                 node.nodeApproveList = empList;
                 delete node.property;
             }

@@ -137,7 +137,7 @@ let checkedList = ref([])
 let checkApprovalPageBtns = ref([])
 let checkedHRBP = ref('') 
 let approvalPageBtns = ref([]) 
-let { setApproverConfig, setApprover } = store
+// let { setApproverConfig, setApprover } = store
 let approverConfig1 = computed(() => store.approverConfig1)
 let approverDrawer = computed(() => store.approverDrawer)
 let visible = computed({
@@ -171,6 +171,8 @@ onMounted(() => {
 })
 
 const changeType = (val) => {
+    console.log('typevale=====>',val);
+    
     approverConfig.value.nodeApproveList = [];
     approverConfig.value.signType = 1;
     approverConfig.value.noHeaderAction = 2;
@@ -200,7 +202,7 @@ const sureRoleApprover = (data) => {
 const saveApprover = () => { 
     approverConfig.value.error = !$func.setApproverStr(approverConfig.value) 
     //console.log('approverConfig.===saveApprover=======',JSON.stringify(approverConfig.value)) 
-    setApproverConfig({
+    store.setApproverConfig({
         value: approverConfig.value,
         flag: true,
         id: approverConfig1.value.id
@@ -208,7 +210,7 @@ const saveApprover = () => {
     closeDrawer()
 }
 const closeDrawer = () => {
-    setApprover(false)
+    store.setApprover(false)
 }
   
 const handleCheckedButtonsChange = (val) =>  {   

@@ -30,6 +30,15 @@ export let setTypes = [
   //{ value: 8, label: '关联业务表' },
   //{ value: 14, label: '指定部门' },
 ]
+export let typeCodes =[
+  { value:2 ,type:1 },
+  { value:3 ,type:3 },
+  { value:4 ,type:4 },
+  { value:5 ,type:12 },
+  { value:12 ,type:2 },
+  { value:13 ,type:13 },
+  ]
+
 export let hrbpOptions = [
   { value: 1, label: 'HRBP' },  
   { value: 2, label: 'HRBP Leader' }, 
