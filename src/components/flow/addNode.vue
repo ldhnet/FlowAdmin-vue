@@ -129,7 +129,7 @@ const addType = (type)=> {
                 "conditionList": [],
                 "nodeApproveList": [],
                 "childNode": null,
-                "isDefault": 0, 
+                "isDefault": 1, 
                 "error": false,
             }]
         })
