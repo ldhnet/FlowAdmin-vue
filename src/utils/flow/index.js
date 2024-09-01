@@ -63,7 +63,7 @@ All.prototype = {
             if (nodeConfig.nodeApproveList.length == 1) {
                 return nodeConfig.nodeApproveList[0].name
             } else if (nodeConfig.nodeApproveList.length > 1) {
-                if (nodeConfig.signType == 1) {
+                if (nodeConfig.signType == 1|| nodeConfig.signType == 3) {
                     return this.arrToStr(nodeConfig.nodeApproveList)
                 } else if (nodeConfig.signType == 2) {
                     return nodeConfig.nodeApproveList.length + "人(" + this.arrToStr(nodeConfig.nodeApproveList) + ")会签"

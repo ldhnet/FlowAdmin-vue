@@ -79,7 +79,7 @@
                                 <br />
                                 <el-radio :value="2">或签（只需一名审批人同意或拒绝即可）</el-radio>
                                 <br />
-                                <el-radio  v-show="approverConfig.setType == 5"  :value="3">顺序会签（需要所有审批人同意，根据前端传入的顺序）</el-radio>
+                                <el-radio :value="3" v-if="approverConfig.setType == 5">顺序会签（需要所有审批人同意，根据前端传入的顺序）</el-radio>
                             </el-radio-group>
                         </div>
                         <div class="approver_some">
