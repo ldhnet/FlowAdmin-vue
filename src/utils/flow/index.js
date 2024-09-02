@@ -63,10 +63,12 @@ All.prototype = {
             if (nodeConfig.nodeApproveList.length == 1) {
                 return nodeConfig.nodeApproveList[0].name
             } else if (nodeConfig.nodeApproveList.length > 1) {
-                if (nodeConfig.signType == 1|| nodeConfig.signType == 3) {
+                if (nodeConfig.signType == 2) {
                     return this.arrToStr(nodeConfig.nodeApproveList)
-                } else if (nodeConfig.signType == 2) {
+                } else if (nodeConfig.signType == 1) {
                     return nodeConfig.nodeApproveList.length + "人(" + this.arrToStr(nodeConfig.nodeApproveList) + ")会签"
+                } else if(nodeConfig.signType == 3){
+                    return nodeConfig.nodeApproveList.length + "人(" + this.arrToStr(nodeConfig.nodeApproveList) + ")顺序会签"
                 }
             }
         } else if (nodeConfig.setType == 3) {
