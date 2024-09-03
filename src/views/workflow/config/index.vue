@@ -127,7 +127,7 @@ const handleEdit =  (row) => {
    const params ={
       id: row.id
    };
-   const obj = {path: "/system/flow/design",query:params};
+   const obj = {path: "/workflow/design",query:params};
    proxy.$tab.openPage(obj);
 }
 
@@ -175,7 +175,7 @@ function handlePreview(row) {
    const params ={
       id: row.id
    };
-   const obj = {path: "/system/flow/preview",query:params};
+   const obj = {path: "/workflow/preview",query:params};
    proxy.$tab.openPage(obj);
 }
 

@@ -86,8 +86,8 @@
             ]
         },
         {
-            "name": "System",
-            "path": "/system",
+            "name": "Workflow",
+            "path": "/workflow",
             "hidden": false,
             "redirect": "noRedirect",
             "component": "Layout",
@@ -101,9 +101,9 @@
             "children": [ 
                 {
                     "name": "FlowInstance",
-                    "path": "flow/instance",
+                    "path": "instance",
                     "hidden": false,
-                    "component": "system/flow/instance/index",
+                    "component": "workflow/instance/index",
                     "meta": {
                         "title": "流程实例",
                         "icon": "",
@@ -113,9 +113,9 @@
                 },
                 {
                     "name": "FlowConfig",
-                    "path": "flow/config",
+                    "path": "config",
                     "hidden": false,
-                    "component": "system/flow/config/index",
+                    "component": "workflow/config/index",
                     "meta": {
                         "title": "流程模板列表",
                         "icon": "",
@@ -125,9 +125,9 @@
                 },
                 {
                     "name": "FlowDesign",
-                    "path": "flow/design",
+                    "path": "design",
                     "hidden": false,
-                    "component": "system/flow/design/index",
+                    "component": "workflow/design/index",
                     "meta": {
                         "title": "流程模板设计",
                         "icon": "",
@@ -137,9 +137,9 @@
                 },
                 {
                     "name": "FlowPreview",
-                    "path": "flow/preview",
+                    "path": "preview",
                     "hidden": true,
-                    "component": "system/flow/preview/index",
+                    "component": "workflow/preview/index",
                     "meta": {
                         "title": "流程模板预览",
                         "icon": "",
@@ -158,7 +158,7 @@
                         "noCache": true,
                         "link": null
                     }
-                } 
+                }
             ]
         },
         {

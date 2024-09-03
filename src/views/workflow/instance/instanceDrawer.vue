@@ -40,7 +40,7 @@ let { setInstanceDrawer } = store
 let instanceDrawer = computed(() => store.instanceDrawer)
 let viewConfig = computed(() => store.instanceViewConfig1)
 const activeName = ref('baseTab')
-const modules = import.meta.glob('../../../forms/**/*.vue');
+const modules = import.meta.glob('../../forms/**/*.vue');
 
 let baseTabShow = ref(true);
 let flowStepShow = ref(false);
@@ -86,7 +86,7 @@ const closeDrawer = () => {
 const loadComponent = () => {
   if (bizFormMaps.has(viewConfig.value.formCode)) {
     const componentPath = bizFormMaps.get(viewConfig.value.formCode);
-    const componentPathVue = `../../..${componentPath}`;
+    const componentPathVue = `../..${componentPath}`;
     const importDybanicVue = modules[componentPathVue];
     importDybanicVue().then(component => {
       loadedComponent.value = markRaw(component.default)

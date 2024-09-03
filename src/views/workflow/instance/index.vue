@@ -46,7 +46,7 @@
 <script setup>
 import { getAllProcesslistPage } from "@/api/mockflow"
 import { useStore } from '@/store/modules/flow'
-import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
+import InstanceDrawer from "@/views/workflow/instance/instanceDrawer.vue"
 let store = useStore()
 let { setInstanceDrawer, setInstanceDrawerConfig } = store
 let instanceDrawerVisible = computed(() => store.instanceDrawer)

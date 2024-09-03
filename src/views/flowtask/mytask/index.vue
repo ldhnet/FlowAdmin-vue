@@ -46,7 +46,7 @@
 
 <script setup>
 import { getMyRequestlistPage } from "@/api/mockflow"
-import InstanceDrawer from "@/views/system/flow/instance/instanceDrawer.vue"
+import InstanceDrawer from "@/views/workflow/instance/instanceDrawer.vue"
 import { useStore } from '@/store/modules/flow'
 let store = useStore()
 let { setInstanceDrawer, setInstanceDrawerConfig } = store

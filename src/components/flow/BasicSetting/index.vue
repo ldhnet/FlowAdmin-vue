@@ -123,7 +123,7 @@ const getData = () => {
         proxy.$refs['ruleFormRef'].validate((valid, fields) => {
             if (!valid) {
                 emit('nextChange', { label: "基础设置", key: "basicSetting" })
-                return;
+                reject({valid:false});
             }
             form.effectiveStatus = form.effectiveStatus ? 1 : 0;
             resolve({ formData: form })  // TODO 提交表单

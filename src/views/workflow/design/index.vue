@@ -83,35 +83,34 @@ onMounted(async () => {
 const publish = () => { 
     const step1 = basicSetting.value.getData();
     const step2 = processDesign.value.getData();
+    proxy.$modal.loading(); 
     Promise.all([step1, step2])
-        .then((res) => {
+        .then((res) => { 
             //ElMessage.success("设置成功,F12控制台查看数据");
             let basicData = res[0].formData;
             var nodes = FormatUtils.formatSettings(res[1].formData);
             Object.assign(basicData, { nodes: nodes });
             return basicData;
         })
-        .then((data) => {
-            proxy.$modal.loading();
+        .then((data) => {       
             console.log("提交到API=====data=", JSON.stringify(data)); 
             setApiWorkFlowData(data).then((resLog) => {
                 proxy.$modal.closeLoading();
-                if (resLog.code == 200) {
-                    //console.log("提交到API返回成功");
+                if (resLog.code == 200) { 
                     ElMessage.success("设置成功,F12控制台查看数据");
-                    const obj = { path: "/system/flow/config" };
+                    const obj = { path: "/workflow/config" };
                     proxy.$tab.openPage(obj);
                 } else { 
                     ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
                 }
             });
         })
-        .catch((err) => {
+        .catch((err) => { 
             proxy.$modal.closeLoading();
-            if (err && err.msg)
-                ElMessage.error("设置失败" + JSON.stringify(err.msg));
+            if (err)
+                console.log("设置失败" + JSON.stringify(err));
         }).finally(() => {
-            proxy.$modal.closeLoading();
+            //proxy.$modal.closeLoading();
         });
 };
 
