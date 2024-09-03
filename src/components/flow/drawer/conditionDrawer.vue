@@ -193,7 +193,7 @@ const sureCondition = () => {
                     "columnId": columnId,
                     "type": 2,
                     "showName": showName,
-                    "optType": "1",
+                    "optType": "2",
                     "zdy1": "2",
                     "opt1": "<",
                     "zdy2": "",
@@ -226,6 +226,11 @@ const sureCondition = () => {
 }
 const saveCondition = () => {
     closeDrawer()
+    
+    console.log('conditionList=========',JSON.stringify(conditionConfig.value))
+
+    console.log('conditionsConfig.value.conditionNodes=========',JSON.stringify(conditionsConfig.value.conditionNodes))
+
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
     conditionsConfig.value.conditionNodes.splice(conditionConfig.value.priorityLevel - 1, 0, a[0])//填充新下标
     conditionsConfig.value.conditionNodes.map((item, index) => {

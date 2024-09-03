@@ -5,7 +5,7 @@
                 <div class="approve" v-if="componentLoaded">
                     <el-row style="float: left;padding-left: 10%;">
                         <el-col :span="24" class="my-col">
-                            <div v-if="baseTabShow" style="pointer-events: none;">
+                            <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
                                 <component v-if="componentLoaded" :is="loadedComponent" :previewData="componentData"
                                     :isPreview="true" />
                             </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref, markRaw } from 'vue'
+import { ref, markRaw,watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
@@ -81,6 +81,7 @@ const { proxy } = getCurrentInstance()
 const route = useRoute();
 const formCode = route.query?.formCode
 const processNumber = route.query?.processNumber
+const taskId = route.query?.taskId
 const activeName = ref('baseTab')
 const modules = import.meta.glob('../../forms/**/*.vue');
 
@@ -91,7 +92,7 @@ let flowReviewShow = ref(false);
 let componentData = ref(null);
 let componentLoaded = ref(false);
 let loadedComponent = ref(null);
-
+let enableClass = ref(false);
 let approvalButtons = ref([]);
 const approveFormRef = ref(null);
 const approveForm = reactive({
@@ -115,12 +116,15 @@ onMounted(() => {
         return c.type == 'default';
     }); 
 });
-
+watch(approvalButtons, (val) => {
+    enableClass.value = val.some(c => c.value == 2); 
+})
 const approveSubmit = async (param, type) => { 
     if (!param) return;
     param.validate(async (valid, fields) => {
         if (valid) {
             let data = {
+                "taskId":taskId,
                 "processNumber": processNumber,
                 "formCode": formCode,
                 "approvalComment": approveForm.remark,
@@ -216,7 +220,9 @@ const loadComponent = () => {
 handleTabClick({ paneName: "baseTab" })
 </script>
 <style lang="scss">
-
+.disableClss{
+    pointer-events: none;
+}
 .approve {
     width: 100%;
     height: 100%;

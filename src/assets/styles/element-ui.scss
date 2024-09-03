@@ -94,3 +94,25 @@
 .el-dropdown .el-dropdown-link{
   color: var(--el-color-primary) !important;
 }
+
+
+.el-dialog {
+  width: 520px;
+  border: 1px solid #DDE1E5 !important;
+  border-radius: 3px !important;
+}
+
+.el-dialog__header {
+  padding: 0 0 0 20px !important;
+  line-height: 50px !important;
+  height: 50px !important;
+  background: #fff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  margin-bottom: 16px !important;
+}
+
+.el-dialog__header .el-dialog__title {
+  font-size: 16px !important;
+  line-height: 50px !important;
+  color: #333333 !important;
+}

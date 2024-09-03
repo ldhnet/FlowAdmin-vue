@@ -44,15 +44,23 @@ export let hrbpOptions = [
   { value: 1, label: 'HRBP' },
   { value: 2, label: 'HRBP Leader' },
 ]
-
 export let optTypes = [
-  { value: '1', label: '小于' },
+  { value: '1', label: '大于等于' },
   { value: '2', label: '大于' },
   { value: '3', label: '小于等于' },
-  { value: '4', label: '等于' },
-  { value: '5', label: '大于等于' },
+  { value: '4', label: '小于' }, 
+  { value: '5', label: '等于' },
   { value: '6', label: '介于两个数之间' },
 ]
+
+// export let optTypes = [
+//   { value: '1', label: '小于' },
+//   { value: '2', label: '大于' },
+//   { value: '3', label: '小于等于' },
+//   { value: '4', label: '等于' },
+//   { value: '5', label: '大于等于' },
+//   { value: '6', label: '介于两个数之间' },
+// ]
 
 export let opt1s = [
   { value: '<', label: '<' },

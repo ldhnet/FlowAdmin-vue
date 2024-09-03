@@ -80,8 +80,7 @@ onMounted(async () => {
 });
 
 
-const publish = () => {
-    proxy.$modal.loading();
+const publish = () => { 
     const step1 = basicSetting.value.getData();
     const step2 = processDesign.value.getData();
     Promise.all([step1, step2])
@@ -93,7 +92,8 @@ const publish = () => {
             return basicData;
         })
         .then((data) => {
-            console.log("提交到API=====data=", JSON.stringify(data));
+            proxy.$modal.loading();
+            console.log("提交到API=====data=", JSON.stringify(data)); 
             setApiWorkFlowData(data).then((resLog) => {
                 proxy.$modal.closeLoading();
                 if (resLog.code == 200) {
@@ -111,7 +111,7 @@ const publish = () => {
             if (err && err.msg)
                 ElMessage.error("设置失败" + JSON.stringify(err.msg));
         }).finally(() => {
-            //proxy.$modal.closeLoading();
+            proxy.$modal.closeLoading();
         });
 };
 

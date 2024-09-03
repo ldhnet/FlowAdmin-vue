@@ -89,7 +89,8 @@ function handleQuery() {
 function handleUpdate(row) {  
    const params = {
       formCode: row.processKey,
-      processNumber: row.processNumber
+      processNumber: row.processNumber,
+      taskId:  row.taskId
    };
    setInstanceDrawerConfig(params);
    const obj = { path: "pendding/approve", query: params };
