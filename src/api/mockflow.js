@@ -226,10 +226,6 @@ export function getEntrustListPage(pageDto,taskMgmtVO) {
  * 设置委托
  * @returns 
  */
- export function setEntrust(data) {   
-  data.ids = [{
-    id: data.id,
-      powerId: data.powerId
-  }]; 
+ export function setEntrust(data) {    
   return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data);
 }

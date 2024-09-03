@@ -19,17 +19,29 @@
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
                 <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
-            </el-col> 
+            </el-col>
         </el-row>
 
         <!-- 添加或修改委托对话框 -->
         <el-dialog :title="title" v-model="open" width="550px" append-to-body>
             <el-form :model="form" :rules="rules" ref="formRef" label-width="150px">
                 <el-row>
-                    <el-col :span="24">
+                    <el-col :span="24" style="margin-bottom: 20px;">
+                        <el-form-item label="类型" prop="selectType">
+                            <el-radio-group v-model="tabPosition">
+                                <el-radio-button value="oneflow">具体流程</el-radio-button>
+                                <el-radio-button value="allflow">全部流程</el-radio-button>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="24" v-if="tabPosition == 'oneflow'">
                         <el-form-item label="流程模板" prop="powerId">
                             <el-select v-model="form.powerId" placeholder="请选择模板类型" :style="{ width: '220px' }">
-                                <el-option v-for="(item, index) in formCodeOptions" :key="index" :label="item.value" :value="item.key"></el-option>
+                                <el-option v-for="(item, index) in formCodeOptions" :key="index" :label="item.value"
+                                    :value="item.key"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -38,7 +50,8 @@
                     <el-col :span="24">
                         <el-form-item label="审批人" prop="sender">
                             <el-select v-model="form.sender" filterable placeholder="请选择当前审批人" style="width: 220px">
-                                <el-option v-for="(item, index) in userOptions" :key="index" :label="item.label" :value="item.value" />
+                                <el-option v-for="item in userOptions" :key="item.value" :label="item.label"
+                                    :value="item.value" />
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -49,23 +62,23 @@
                             <el-select v-model="form.receiverId" filterable placeholder="请选择委托人" style="width: 220px">
                                 <el-option v-for="item in userOptions" :key="item.value" :label="item.label"
                                     :value="item.value" />
-                            </el-select> 
+                            </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="开始时间" prop="beginTime">
-                            <el-date-picker :disabled-date="disabledBeginDate" v-model="form.beginTime"
-                                type="datetime" placeholder="请选择开始时间" format="YYYY/MM/DD HH:mm" />
+                            <el-date-picker :disabled-date="disabledBeginDate" v-model="form.beginTime" type="date"
+                                placeholder="请选择开始时间" format="YYYY/MM/DD" />
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="结束时间" prop="endTime">
-                            <el-date-picker :disabled-date="disabledEndDate" v-model="form.endTime" type="datetime"
-                                placeholder="请选择结束时间" format="YYYY/MM/DD HH:mm" />
+                            <el-date-picker :disabled-date="disabledEndDate" v-model="form.endTime" type="date"
+                                placeholder="请选择结束时间" format="YYYY/MM/DD" />
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -86,12 +99,12 @@
 
             <el-table-column label="委托开始" align="center" prop="beginTime">
                 <template #default="scope">
-                    <span>{{ parseTime(scope.row.beginTime) }}</span>
+                    <span>{{ parseTime(scope.row.beginTime, "{y}-{m}-{d}") }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="委托结束" align="center" prop="endTime">
                 <template #default="scope">
-                    <span>{{ parseTime(scope.row.endTime) }}</span>
+                    <span>{{ parseTime(scope.row.endTime, "{y}-{m}-{d}") }}</span>
                 </template>
             </el-table-column>
             <!-- <el-table-column label="状态" align="center" prop="effectiveStatus">
@@ -101,12 +114,12 @@
           </el-table-column> -->
             <el-table-column label="创建时间" align="center" prop="createTime">
                 <template #default="scope">
-                    <span>{{ parseTime(scope.row.createTime) }}</span>
+                    <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width">
                 <template #default="scope">
-                    <el-button link type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+                    <!-- <el-button link type="primary" @click="handleEdit(scope.row)">编辑</el-button> -->
                     <el-button link type="primary" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
@@ -130,7 +143,7 @@ const showSearch = ref(true);
 const total = ref(0);
 let formCodeOptions = ref([]);
 let userOptions = ref([]);
-
+const tabPosition = ref('oneflow');
 const data = reactive({
     form: {},
     pageDto: {
@@ -147,19 +160,19 @@ const data = reactive({
 const { pageDto, taskMgmtVO, form, rules } = toRefs(data);
 
 const disabledBeginDate = (time) => {
-    //return time.getTime() > new Date(form.endTime);
+    return time.getTime() > new Date(form?.endTime ?? "");
 }
 const disabledEndDate = (time) => {
-    //return time.getTime() < new Date(form.beginTime);
+    return time.getTime() < new Date(form?.beginTime ?? "");
 }
 
 watch(() => form.value.receiverId, (newVal, oldVal) => {
     if (newVal) {
-        form.value.receiverName = getReceiverLabel(newVal); 
+        form.value.receiverName = getReceiverLabel(newVal);
     }
-}) 
-const getReceiverLabel  = (value) => { 
-    let obj = userOptions.value.filter(item => item.value == value)[0]; 
+})
+const getReceiverLabel = (value) => {
+    let obj = userOptions.value.filter(item => item.value == value)[0];
     return obj.label;
 }
 
@@ -199,7 +212,6 @@ const getUserList = () => {
     }
 }
 
-
 /** 查询岗位列表 */
 function getList() {
     loading.value = true;
@@ -210,15 +222,15 @@ function getList() {
     });
 }
 
-const handleEdit = (row) => {
-    reset();
-    entrustDetail(row.id).then(response => {
-        form.value = response.data;
-        console.log(form.value);
-        title.value = "编辑委托";
-        open.value = true;
-    });
-}
+// const handleEdit = (row) => {
+//     reset();
+//     entrustDetail(row.id).then(response => {
+//         form.value = response.data;
+//         console.log('form.value=========',JSON.stringify(form.value));
+//         title.value = "编辑委托";
+//         open.value = true;
+//     });
+// }
 
 /** 搜索按钮操作 */
 function handleQuery() {
@@ -232,10 +244,21 @@ function handleAdd() {
     open.value = true;
 }
 
-function handleUpdate() {
-    proxy.$modal.msgError("演示环境不允许删除操作！");
-}
 function submitForm() {
+    form.value.ids = [];
+    if (tabPosition.value == "oneflow") {
+        form.value.ids.push({
+            id: form.value.id ?? 0,
+            powerId: form.value.powerId
+        });
+    } else {
+        for (const fc of formCodeOptions.value) {
+            form.value.ids.push({
+                id: fc.id ?? 0,
+                powerId: fc.key
+            });
+        }
+    }
     proxy.$refs["formRef"].validate(valid => {
         if (valid) {
             if (form.value.id != undefined) {
@@ -244,9 +267,9 @@ function submitForm() {
                     open.value = false;
                     getList();
                 });
-            } else { 
+            } else {
                 setEntrust(form.value).then(response => {
-                    if(response.code != 200){
+                    if (response.code != 200) {
                         proxy.$modal.msgError("新增失败");
                         return;
                     }
@@ -264,10 +287,7 @@ function cancel() {
 }
 /** 重置按钮操作 */
 function resetQuery() {
-    taskMgmtVO.value = {
-        bpmnCode: undefined,
-        bpmnName: undefined
-    };
+    taskMgmtVO.value = {};
     proxy.resetForm("queryRef");
     handleQuery();
 }

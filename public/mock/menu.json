@@ -110,17 +110,6 @@
                         "noCache": false,
                         "link": null
                     }
-                },{
-                    "name": "FlowEntrust",
-                    "path": "flow/entrust",
-                    "hidden": false,
-                    "component": "system/flow/entrust/index",
-                    "meta": {
-                        "title": "委托管理",
-                        "icon": "",
-                        "noCache": false,
-                        "link": null
-                    }
                 },
                 {
                     "name": "FlowConfig",
@@ -167,6 +156,44 @@
                         "title": "发起申请流程",
                         "icon": "",
                         "noCache": true,
+                        "link": null
+                    }
+                } 
+            ]
+        },
+        {
+            "name": "flowentrust",
+            "path": "/flowentrust",
+            "hidden": false,
+            "redirect": "noRedirect",
+            "component": "Layout",
+            "alwaysShow": true,
+            "meta": {
+                "title": "委托管理",
+                "icon": "row",
+                "noCache": false,
+                "link": null
+            },
+            "children": [{
+                    "name": "FlowEntrustSet",
+                    "path": "entrustset",
+                    "hidden": false,
+                    "component": "flowentrust/entrustset/index",
+                    "meta": {
+                        "title": "委托设置",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },{
+                    "name": "FlowEntrustList",
+                    "path": "entrustlist",
+                    "hidden": false,
+                    "component": "flowentrust/entrustlist/index",
+                    "meta": {
+                        "title": "委托列表",
+                        "icon": "",
+                        "noCache": false,
                         "link": null
                     }
                 } 

@@ -100,6 +100,7 @@ export let statusColor = {
   6: 'danger',//终止
   7: 'primary',//
   8: 'danger',//打回修改
+  10: 'warning',//承办
   13: 'primary',//加批
   99: 'success',//处理中
   21: 'success',//转办
@@ -113,6 +114,7 @@ export let pageButtonsColor = {
   3: 'primary',//同意
   4: 'danger',//不同意
   8: 'success',//打印
+  10: 'warning',//承办
   12: 'danger',//终止
   15: 'primary',//转发
   18: 'warning',//打回修改
