@@ -109,10 +109,10 @@ const initFromCode = async () => {
    });
 }
 const getFromCodeName = (formCode) => { 
-  const result= formCodeOptions.value.filter(item => item.key == formCode)[0]; 
-  return result.value;
+  const result= formCodeOptions.value.filter(item => item.key == formCode)[0];  
+  return result?.value;
 }
-/** 查询岗位列表 */
+/** 查询列表 */
 function getList() {
    loading.value = true;
    getBpmnConflistPage(pageDto.value,taskMgmtVO.value).then(response => {
