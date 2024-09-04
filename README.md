@@ -18,8 +18,11 @@
 ## 前端运行
 
 ```bash
-# 克隆项目
+# gitee克隆项目
 git clone https://gitee.com/ldhnet/FlowAdmin-vue.git
+
+# gitcode克隆项目
+git clone https://gitcode.com/ldhnet/FlowAdmin-vue.git
 
 # 进入项目目录
 cd FlowAdmin-vue
