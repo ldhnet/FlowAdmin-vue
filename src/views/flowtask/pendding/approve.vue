@@ -19,9 +19,14 @@
                                 </el-form-item>
                                 <el-form-item style="float: right;">
                                     <!-- <el-button type="primary" @click="approveSubmit(approveFormRef,3)">同意</el-button> --> 
-                                    <el-button v-for="btn in approvalButtons" :type="pageButtonsColor[btn.value]"  @click="approveSubmit(approveFormRef, btn.value)">
-                                        {{ btn.label }}
-                                    </el-button>
+                                     <div v-for="btn in approvalButtons">
+                                        <el-button style="margin: 5px;" v-if="btn.label"
+                                                :type="pageButtonsColor[btn.value]"   
+                                                @click="approveSubmit(approveFormRef, btn.value)">
+                                                {{ btn.label }}
+                                         </el-button>
+                                     </div>
+                              
                                 </el-form-item>
                             </el-form>
                         </el-col>
