@@ -34,7 +34,7 @@
                             <img src="@/assets/images/add-close1.png"
                                 @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
                         </span>
-                        <a v-if="approverConfig.nodeApproveList.length != 0"
+                        <a v-if="approverConfig?.nodeApproveList?.length != 0"
                             @click="approverConfig.nodeApproveList = []">清除</a>
                     </p>
                 </div>
@@ -45,7 +45,7 @@
                             <img src="@/assets/images/add-close1.png"
                                 @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
                         </span>
-                        <a v-if="approverConfig.nodeApproveList.length != 0"
+                        <a v-if="approverConfig.nodeApproveList?.length != 0"
                             @click="approverConfig.nodeApproveList = []">清除</a>
                     </p>
                 </div>
@@ -101,7 +101,16 @@
                                 :disabled="opt.type === 'default'"
                                  @change="handleCheckedButtonsChange(opt.value)"
                                 >{{opt.label}}</el-checkbox>
-                                </el-checkbox-group> 
+                            </el-checkbox-group> 
+
+                            <!-- <el-checkbox-group v-if="afterSignUpWayVisible" class="approver_some" v-model="checkAfterSignUpWay"> 
+                                <el-checkbox style="margin: 0 15px 0 0;"  border  :value="1"  @change="handleAfterSignUpWay(opt.value)" >是否回到加批人</el-checkbox>
+                            </el-checkbox-group>  -->
+
+                            <el-checkbox border style="margin-top: 10px;" 
+                            v-if="afterSignUpWayVisible"  
+                            v-model="checkAfterSignUpWay"
+                            @change="handleAfterSignUpWay(checkAfterSignUpWay)">是否回到加批人</el-checkbox>
                         </div> 
                     </el-tab-pane> 
                 </el-tabs> 
@@ -116,7 +125,7 @@
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue' 
+import { ref, watch, computed } from 'vue' 
 import $func from '@/utils/flow/index'
 import { setTypes,hrbpOptions,approvalPageButtons } from '@/utils/flow/const'
 import { useStore } from '@/store/modules/flow'
@@ -139,7 +148,10 @@ let checkedList = ref([])
 let checkApprovalPageBtns = ref([])
 let checkedHRBP = ref('') 
 let approvalPageBtns = ref([]) 
-// let { setApproverConfig, setApprover } = store
+
+let afterSignUpWayVisible = computed(()=> approverConfig.value?.isSignUp == 1) 
+let checkAfterSignUpWay = ref(false)
+ 
 let approverConfig1 = computed(() => store.approverConfig1)
 let approverDrawer = computed(() => store.approverDrawer)
 let visible = computed({
@@ -150,9 +162,10 @@ let visible = computed({
         closeDrawer()
     }
 }) 
+ 
 watch(approverConfig1, (val) => { 
     approverConfig.value = val.value;   
-    checkApprovalPageBtns.value = val.value.buttons?.approvalPage;          
+    checkApprovalPageBtns.value = val.value.buttons?.approvalPage;   
 })
 watch(approverConfig1, (val) => { 
     approvalPageBtns.value = val.value.buttons?.approvalPage;   
@@ -162,18 +175,18 @@ watch(approverConfig1, (val) => {
         })
     }   
 })
-
+watch(() => approverConfig.value?.property?.afterSignUpWay, (newVal, oldVal) => { 
+        checkAfterSignUpWay.value = newVal == 1?true:false
+    } 
+)
 watch(checkedHRBP, (val) => {  
     let labelName = hrbpOptions.find(item => item.value == val)?.label; 
     approverConfig.value.nodeApproveList = [{"type":6,"targetId":val,"name":labelName}]; 
   
 })
- 
-onMounted(() => {     
-})
 
 const changeType = (val) => {
-    console.log('typevale=====>',val);
+    //console.log('typevale=====>',val);
     
     approverConfig.value.nodeApproveList = [];
     approverConfig.value.signType = 1;
@@ -218,8 +231,29 @@ const closeDrawer = () => {
 const handleCheckedButtonsChange = (val) =>  {   
     const index = approvalPageBtns.value.indexOf(val); 
     index < 0 ? approvalPageBtns.value.push(val) : approvalPageBtns.value.splice(index, 1);    
+    const isAddStep = approvalPageBtns.value.indexOf(19); 
+    if(isAddStep >= 0){
+        approverConfig.value.isSignUp = 1;
+    }else{
+        approverConfig.value.isSignUp = 0;
+    }
 }
- 
+const handleAfterSignUpWay = (val) => {
+    const isTure = approverConfig.value.hasOwnProperty("property");
+    if (isTure) {
+        if (approverConfig.value.property.hasOwnProperty("afterSignUpWay")) {
+            approverConfig.value.property.afterSignUpWay = val ? 1 : 2;
+        } else {
+            Object.assign(approverConfig.value.property, { afterSignUpWay: val ? 1 : 2 });
+        }
+    } else {
+        Object.assign(approverConfig.value, {
+            property: { afterSignUpWay: val ? 1 : 2 }
+        });
+    }
+    console.log('approverConfig.value=============',JSON.stringify(approverConfig.value))
+}
+
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";

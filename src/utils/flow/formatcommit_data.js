@@ -194,6 +194,8 @@ export class FormatUtils {
                     }
                 }
                 //node.nodeProperty = node.setType;
+
+                Object.assign(approveObj, { afterSignUpWay : node.property.afterSignUpWay });
                 let typeNodeProperty= typeCodes.filter(t=>t.value==node.setType);
                 node.nodeProperty=typeNodeProperty[0]?.type;    
                 node.property = approveObj;

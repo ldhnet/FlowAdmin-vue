@@ -225,12 +225,7 @@ const sureCondition = () => {
     conditionVisible.value = false;
 }
 const saveCondition = () => {
-    closeDrawer()
-    
-    console.log('conditionList=========',JSON.stringify(conditionConfig.value))
-
-    console.log('conditionsConfig.value.conditionNodes=========',JSON.stringify(conditionsConfig.value.conditionNodes))
-
+    closeDrawer() 
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
     conditionsConfig.value.conditionNodes.splice(conditionConfig.value.priorityLevel - 1, 0, a[0])//填充新下标
     conditionsConfig.value.conditionNodes.map((item, index) => {

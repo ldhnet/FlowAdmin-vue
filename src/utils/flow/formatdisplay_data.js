@@ -1,6 +1,6 @@
 // import { FormatDisplayUtils } from '@/utils/formatdisplay_data'
 import { approveList,hrbpOptions,typeCodes} from '@/utils/flow/const'
-const isEmptyArray = data => Array.isArray(data) ? data.length === 0 : true
+const isEmptyArray = data => Array.isArray(data) ? data.length === 0 : false
 
 export class FormatDisplayUtils {
     /**
@@ -8,9 +8,10 @@ export class FormatDisplayUtils {
      * @param {Array} parmData 
      * @returns Object
      */
-    static getToTree(parmData) {           
+    static getToTree(parmData) {        
+        if (isEmptyArray(parmData)) return;
         let node = this.createNodeDisplay(parmData); 
-        let formatList = this.formatDisplayStructNodeList(parmData.nodes);    
+        let formatList = this.formatDisplayStructNodeList(parmData.nodes);     
         node.nodeConfig = this.depthConverterToTree(formatList);//parmData.nodes
         return node;
     }
@@ -20,7 +21,8 @@ export class FormatDisplayUtils {
      * @param { Object } nodeData - 源节点数据
      * @returns Object
      */
-    static createNodeDisplay(nodeData) {
+    static createNodeDisplay(nodeData) { 
+       if (isEmptyArray(nodeData)) return;
        let displayObj = {
             tableId: nodeData.id,
             bpmnCode: nodeData.bpmnCode,
@@ -124,7 +126,7 @@ export class FormatDisplayUtils {
                 Object.assign(node, { nodeApproveList: [] });
                 
                 node.nodeApproveList = empList;
-                delete node.property;
+                //delete node.property;
             }
         }
         return nodeList;

@@ -71,7 +71,7 @@ export let approvalPageButtons = [
   { value: 3, label: '同意', type: 'default' },
   { value: 4, label: '不同意', type: 'default' },
   { value: 18, label: '打回' },
-  { value: 13, label: '加批' },
+  { value: 19, label: '加批' },
   { value: 21, label: '转办' }
 ]
 export let startPageButtons = [
@@ -101,7 +101,8 @@ export let statusColor = {
   7: 'primary',//
   8: 'danger',//打回修改
   10: 'warning',//承办
-  13: 'primary',//加批
+  13: 'primary',//添加审批人
+  19: 'success',//加批
   99: 'success',//处理中
   21: 'success',//转办
   100: 'info'
@@ -118,7 +119,8 @@ export let pageButtonsColor = {
   12: 'danger',//终止
   15: 'primary',//转发
   18: 'warning',//打回修改
-  13: 'primary',//加批 
+  13: 'primary',//添加审批人
+  19: 'success',//加批
   21: 'primary',//转办 
 };
 

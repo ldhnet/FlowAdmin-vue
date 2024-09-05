@@ -61,7 +61,10 @@ const addType = (type)=> {
                 "noHeaderAction": 1, 
                 "childNode": props.childNodeP,
                 "error": true,
-                "property":null,
+                "isSignUp":0,
+                "property":{
+                    "afterSignUpWay":1
+                },
                 "buttons":{
                     "startPage": [1],
                     "approvalPage": [3,4],
@@ -82,7 +85,8 @@ const addType = (type)=> {
                 "error": true,
                 "ccSelfSelectFlag": 1,
                 "childNode": props.childNodeP,
-                "property":null,
+                "isSignUp":0,
+                "property":{},
                 "buttons":{
                     "startPage": [],
                     "approvalPage": [],
@@ -102,7 +106,8 @@ const addType = (type)=> {
             "nodeTo": [],
             "childNode": null, 
             "error": true,
-            "property":null,
+            "isSignUp":0,
+            "property":{},
             "conditionNodes": [{
                 "nodeId": NodeUtils.idGenerator(),
                 "nodeName": "条件1", 

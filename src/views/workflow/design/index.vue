@@ -75,8 +75,8 @@ onMounted(async () => {
    proxy.$modal.closeLoading();
 
    processConfig.value = data;
-   title.value = data.bpmnName;
-   nodeConfig.value = data.nodeConfig;  
+   title.value = data?.bpmnName;
+   nodeConfig.value = data?.nodeConfig;  
 });
 
 

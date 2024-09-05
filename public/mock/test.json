@@ -1,0 +1,339 @@
+{
+    "bpmnName": "请假测试确实",
+    "bpmnCode": "QJCSQS",
+    "bpmnType": 1,
+    "formCode": "LEAVE_WMA",
+    "remark": "请假测试确实",
+    "effectiveStatus": 0,
+    "deduplicationType": 2,
+    "nodes": [
+        {
+            "confId": 445,
+            "nodeId": "YKEIZB",
+            "nodeType": 4,
+            "nodeProperty": 5,
+            "nodePropertyName": "指定人员",
+            "nodeFrom": "H6ZIZB",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "审核人",
+            "nodeDisplayName": "邱灵珊",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 1,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:37",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:37",
+            "nodeTo": [],
+            "property": {
+                "emplIds": [
+                    19
+                ],
+                "emplList": [
+                    {
+                        "id": 19,
+                        "name": "邱灵珊"
+                    }
+                ],
+                "roleIds": [],
+                "roleList": [],
+                "signType": 1,
+                "afterSignUpWay": 1
+            },
+            "params": null,
+            "buttons": {
+                "startPage": [
+                    1
+                ],
+                "approvalPage": [
+                    3,
+                    4,
+                    19,
+                    18,
+                    21
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA",
+            "signType": 1,
+            "setType": 5,
+            "conditionNodes": [],
+            "error": false
+        },
+        {
+            "confId": 445,
+            "nodeId": "XOYIZB",
+            "nodeType": 4,
+            "nodeProperty": 5,
+            "nodePropertyName": "指定人员",
+            "nodeFrom": "K6ZIZB",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "审核人",
+            "nodeDisplayName": "2人(刘正风,风清扬)会签",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 1,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:38",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:38",
+            "nodeTo": [
+                "YKEIZB"
+            ],
+            "property": {
+                "emplIds": [
+                    12,
+                    11
+                ],
+                "emplList": [
+                    {
+                        "id": 12,
+                        "name": "刘正风"
+                    },
+                    {
+                        "id": 11,
+                        "name": "风清扬"
+                    }
+                ],
+                "roleIds": [],
+                "roleList": [],
+                "signType": 1,
+                "afterSignUpWay": 0
+            },
+            "params": null,
+            "buttons": {
+                "startPage": [
+                    1
+                ],
+                "approvalPage": [
+                    3,
+                    4,
+                    19,
+                    18
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA",
+            "signType": 1,
+            "setType": 5,
+            "conditionNodes": [],
+            "error": false
+        },
+        {
+            "confId": 445,
+            "nodeId": "K6ZIZB",
+            "nodeType": 3,
+            "nodeProperty": 1,
+            "nodePropertyName": null,
+            "nodeFrom": "H6ZIZB",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "条件1",
+            "nodeDisplayName": "请假时长 > 20",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 0,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:39",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:38",
+            "nodeTo": [
+                "XOYIZB"
+            ],
+            "params": null,
+            "buttons": {
+                "startPage": [],
+                "approvalPage": [
+                    2
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA",
+            "priorityLevel": 1,
+            "isDefault": 0,
+            "conditionNodes": [],
+            "error": false,
+            "property": {
+                "conditionList": [
+                    {
+                        "showType": "1",
+                        "columnId": "37",
+                        "type": 2,
+                        "showName": "请假时长",
+                        "optType": 2,
+                        "zdy1": "20",
+                        "opt1": "<",
+                        "zdy2": "",
+                        "opt2": "<",
+                        "columnDbname": "leaveHour",
+                        "columnType": "Double",
+                        "fixedDownBoxValue": null
+                    }
+                ],
+                "sort": 1,
+                "isDefault": 0
+            }
+        },
+        {
+            "confId": 445,
+            "nodeId": "NXYIZB",
+            "nodeType": 3,
+            "nodeProperty": 1,
+            "nodePropertyName": null,
+            "nodeFrom": "H6ZIZB",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "条件2",
+            "nodeDisplayName": "其他条件进入此流程",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 0,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:39",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:39",
+            "nodeTo": [
+                "YKEIZB"
+            ],
+            "params": null,
+            "buttons": {
+                "startPage": [],
+                "approvalPage": [
+                    2
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA",
+            "priorityLevel": 2,
+            "isDefault": 1,
+            "conditionNodes": [],
+            "error": false,
+            "property": {
+                "conditionList": [],
+                "sort": 2,
+                "isDefault": 1
+            }
+        },
+        {
+            "confId": 445,
+            "nodeId": "H6ZIZB",
+            "nodeType": 2,
+            "nodeProperty": 1,
+            "nodePropertyName": null,
+            "nodeFrom": "Gb2",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "路由",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 0,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:40",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:39",
+            "nodeTo": [
+                "K6ZIZB",
+                "NXYIZB"
+            ],
+            "property": null,
+            "params": null,
+            "buttons": {
+                "startPage": [],
+                "approvalPage": [
+                    2
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA"
+        },
+        {
+            "confId": 445,
+            "nodeId": "Gb2",
+            "nodeType": 1,
+            "nodeProperty": 1,
+            "nodePropertyName": null,
+            "nodeFrom": "",
+            "nodeFroms": null,
+            "prevId": [],
+            "batchStatus": 0,
+            "approvalStandard": 2,
+            "nodeName": "发起人",
+            "nodeDisplayName": "发起人",
+            "annotation": null,
+            "isDeduplication": 0,
+            "deduplicationExclude": false,
+            "isSignUp": 0,
+            "orderedNodeType": null,
+            "remark": "",
+            "isDel": 0,
+            "createUser": "张三",
+            "createTime": "2024-09-05 10:54:40",
+            "updateUser": "",
+            "updateTime": "2024-09-05 10:54:40",
+            "nodeTo": [
+                "H6ZIZB"
+            ],
+            "property": null,
+            "params": null,
+            "buttons": {
+                "startPage": [],
+                "approvalPage": [
+                    2
+                ],
+                "viewPage": null
+            },
+            "templateVos": null,
+            "approveRemindVo": null,
+            "conditionsUrl": null,
+            "formCode": "LEAVE_WMA",
+            "conditionNodes": []
+        }
+    ]
+}
