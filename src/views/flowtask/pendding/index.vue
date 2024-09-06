@@ -92,9 +92,10 @@ function handleUpdate(row) {
       processNumber: row.processNumber,
       taskId:  row.taskId
    };
-   setInstanceDrawerConfig(params);
+   setInstanceDrawerConfig(params); 
    const obj = { path: "pendding/approve", query: params };
-   proxy.$tab.openPage(obj);
+   //proxy.$tab.openPage(obj);   
+   proxy.$tab.closeOpenPage(obj);
 }
 function resetQuery() {
    taskMgmtVO.value = {

@@ -6,7 +6,8 @@
                     <el-row style="float: left;padding-left: 10%;">
                         <el-col :span="24" class="my-col">
                             <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
-                                <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent" :previewData="componentData"  :isPreview="true" />
+                                <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent"
+                                    :previewData="componentData" :isPreview="true" />
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col">
@@ -17,15 +18,15 @@
                                         :style="{ width: '100%' }"></el-input>
                                 </el-form-item>
                                 <el-form-item style="float: right;">
-                                    <!-- <el-button type="primary" @click="approveSubmit(approveFormRef,3)">同意</el-button> --> 
-                                     <div v-for="btn in approvalButtons">
+                                    <!-- <el-button type="primary" @click="approveSubmit(approveFormRef,3)">同意</el-button> -->
+                                    <div v-for="btn in approvalButtons">
                                         <el-button style="margin: 5px;" v-if="btn.label"
-                                                :type="pageButtonsColor[btn.value]"   
-                                                @click="approveSubmit(approveFormRef, btn.value)">
-                                                {{ btn.label }}
-                                         </el-button>
-                                     </div>
-                              
+                                            :type="pageButtonsColor[btn.value]"
+                                            @click="approveSubmit(approveFormRef, btn.value)">
+                                            {{ btn.label }}
+                                        </el-button>
+                                    </div>
+
                                 </el-form-item>
                             </el-form>
                         </el-col>
@@ -43,11 +44,13 @@
                                             <template #header>
                                                 <div class="card-header">
                                                     <span>{{ activity.taskName }} </span>
-                                                    <span><el-tag type="success" v-if="activity.verifyStatus==99">进行中</el-tag></span> 
+                                                    <span><el-tag type="success"
+                                                            v-if="activity.verifyStatus == 99">进行中</el-tag></span>
                                                 </div>
                                             </template>
                                             <p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
-                                            <p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}</p>
+                                            <p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
+                                            </p>
                                             <p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
                                             <p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
                                         </el-card>
@@ -74,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, markRaw,watch } from 'vue'
+import { ref, markRaw, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
@@ -120,17 +123,17 @@ const activities = ref([]);
 onMounted(() => {
     approvalButtons.value = approvalPageButtons.filter((c) => {
         return c.type == 'default';
-    }); 
+    });
 });
 watch(approvalButtons, (val) => {
-    enableClass.value = val.some(c => c.value == 2); 
+    enableClass.value = val.some(c => c.value == 2);
 })
-const approveSubmit = async (param, type) => { 
+const approveSubmit = async (param, type) => {
     if (!param) return;
     param.validate(async (valid, fields) => {
         if (valid) {
             let approveSubData = {
-                "taskId":taskId,
+                "taskId": taskId,
                 "processNumber": processNumber,
                 "formCode": formCode,
                 "approvalComment": approveForm.remark,
@@ -142,9 +145,9 @@ const approveSubmit = async (param, type) => {
                         Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));
                     }
                 });
-            };   
+            };
             proxy.$modal.loading();
-            let resData = await processOperation(approveSubData); 
+            let resData = await processOperation(approveSubData);
             if (resData.code == 200) {
                 ElMessage.success("审批成功");
                 close();
@@ -195,10 +198,10 @@ const preview = () => {
                     return { value: c.buttonType, label: c.name };
                 });
             }
-        }else{
+        } else {
             ElMessage.error("获取表单数据失败:" + response.errMsg);
             close();
-        } 
+        }
         proxy.$modal.closeLoading();
     });
 }
@@ -220,7 +223,9 @@ const getFlowApproveStep = async () => {
 };
 
 const close = () => {
-    proxy.$tab.closePage();
+    //proxy.$tab.closePage();
+    const obj = { path: "/flowtask/pendding" };
+    proxy.$tab.closeOpenPage(obj);
 }
 const loadComponent = () => {
     if (bizFormMaps.has(formCode)) {
@@ -236,9 +241,10 @@ const loadComponent = () => {
 handleTabClick({ paneName: "baseTab" })
 </script>
 <style lang="scss">
-.disableClss{
+.disableClss {
     pointer-events: none;
 }
+
 .approve {
     width: 100%;
     height: 100%;
@@ -262,15 +268,18 @@ handleTabClick({ paneName: "baseTab" })
 
 .el-timeline {
     --el-timeline-node-size-normal: 25px !important;
-    --el-timeline-node-size-large: 25px !important; 
+    --el-timeline-node-size-large: 25px !important;
 }
+
 .el-timeline-item__node--normal {
     left: -8px !important;
 }
+
 .el-timeline-item__node--large {
     left: -8px !important;
 }
-.el-timeline-item__wrapper { 
+
+.el-timeline-item__wrapper {
     top: 0px !important;
-} 
+}
 </style>
