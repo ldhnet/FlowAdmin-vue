@@ -6,13 +6,12 @@
                     <el-row style="float: left;padding-left: 10%;">
                         <el-col :span="24" class="my-col">
                             <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
-                                <component v-if="componentLoaded" :is="loadedComponent" :previewData="componentData"
-                                    :isPreview="true" />
+                                <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent" :previewData="componentData"  :isPreview="true" />
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col">
                             <el-form ref="approveFormRef" :model="approveForm" :rules="rules" class="my-form">
-                                <el-form-item label="审批备注" prop="remark">
+                                <el-form-item label="备注/说明" prop="remark">
                                     <el-input v-model="approveForm.remark" type="textarea" placeholder="请输入备注"
                                         :maxlength="100" show-word-limit :autosize="{ minRows: 4, maxRows: 4 }"
                                         :style="{ width: '100%' }"></el-input>
@@ -104,6 +103,8 @@ const approveForm = reactive({
     remark: ''
 })
 
+const componentFormRef = ref(null);
+
 let rules = {
     remark: [{
         required: true,
@@ -128,15 +129,22 @@ const approveSubmit = async (param, type) => {
     if (!param) return;
     param.validate(async (valid, fields) => {
         if (valid) {
-            let data = {
+            let approveSubData = {
                 "taskId":taskId,
                 "processNumber": processNumber,
                 "formCode": formCode,
                 "approvalComment": approveForm.remark,
                 "operationType": type
             };
+            if (type == 2) {
+                await componentFormRef.value.handleValidate().then((isValid) => {
+                    if (isValid) {
+                        Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));
+                    }
+                });
+            };   
             proxy.$modal.loading();
-            let resData = await processOperation(data); 
+            let resData = await processOperation(approveSubData); 
             if (resData.code == 200) {
                 ElMessage.success("审批成功");
                 close();
@@ -147,6 +155,9 @@ const approveSubmit = async (param, type) => {
         }
     })
 }
+
+
+
 
 const handleTabClick = (tab, event) => {
     if (tab.paneName == 'baseTab') {
