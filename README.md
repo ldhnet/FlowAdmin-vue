@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/ldhnet/ant-flow/raw/master/public/images/logo.png"  width = "80px"; height= "80px";>
+	<img alt="logo" src="https://gitee.com/ldhnet/ant-flow/raw/master/public/images/logo.png"   width = 25%; height=25%;>
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">FlowAdmin v3.0.0</h1>
 <h4 align="center">基于Vue3 Element-Plus 前端快速开发框架</h4>
