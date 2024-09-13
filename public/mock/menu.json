@@ -53,7 +53,7 @@
                     "hidden": false,
                     "component": "flowtask/pendding/index",
                     "meta": {
-                        "title": "代办任务",
+                        "title": "待办任务",
                         "icon": "",
                         "noCache": false,
                         "link": null
