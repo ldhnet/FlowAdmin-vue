@@ -12,7 +12,7 @@
                     <bell />
                 </el-icon>
                 <div>
-                    <p>我的代办</p>
+                    <p>我的待办</p>
                     <span>{{ todoFrom.todoCount }}</span>
                 </div>
             </div>
