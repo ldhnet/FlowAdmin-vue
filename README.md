@@ -59,10 +59,9 @@ npm run dev
 
 ##  捐赠支持
 😀 你可以请作者喝杯咖啡表示鼓励
-<table>  
-    <tr>  
-        <td style="max-width:200px;">
-            <img src="https://gitee.com/ldhnet/HSharpAdmin/raw/master/HSharp.Web/HSharp.Admin.Web/wwwroot/image/pay.png"/>
-        </td>
-    </tr> 
+<table>
+    <tr>
+        <td><img src="https://gitee.com/ldhnet/AntFlow-Vue3/raw/master/public/images/wxpay.jpg"/></td>
+        <td><img src="https://gitee.com/ldhnet/AntFlow-Vue3/raw/master/public/images/alipay.jpg"/></td>
+    </tr>  
 </table>
