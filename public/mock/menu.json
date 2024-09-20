@@ -198,6 +198,18 @@
                     }
                 } 
             ]
+        },
+        {
+            "name": "http://117.72.70.166:7001/doc.html",
+            "path": "http://117.72.70.166:7001/doc.html",
+            "hidden": false,
+            "component": "Layout",
+            "meta": {
+                "title": "接口文档",
+                "icon": "swagger",
+                "noCache": false,
+                "link": "http://117.72.70.166:7001/doc.html"
+            }
         }
     ]
 }

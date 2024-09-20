@@ -3,7 +3,7 @@
         <el-tabs v-model="activeName" class="set-tabs" @tab-click="handleTabClick">
             <el-tab-pane label="表单信息" name="baseTab">
                 <div class="approve" v-if="componentLoaded">
-                    <el-row style="float: left;padding-left: 10%;">
+                    <el-row style="padding-left: -5px;padding-right: -5px;">
                         <el-col :span="24" class="my-col">
                             <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
                                 <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent"
@@ -32,7 +32,7 @@
                         </el-col>
                     </el-row>
 
-                    <el-row style="float: left;">
+                     <!-- <el-row style="float: left;">
                         <el-col :span="24">
                             <el-timeline style="max-width: 600px">
                                 <el-timeline-item v-for="(activity, index) in activities" :key="index"
@@ -58,7 +58,7 @@
                                 </el-timeline-item>
                             </el-timeline>
                         </el-col>
-                    </el-row>
+                    </el-row>-->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="审批记录" name="flowStep">
@@ -82,7 +82,7 @@ import { ElMessage } from 'element-plus'
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
 import ReviewWarp from "@/components/flow/reviewWarp.vue"
-import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons } from "@/utils/flow/const"
+import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons,ConstApprovalButton } from "@/utils/flow/const"
 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
@@ -126,7 +126,7 @@ onMounted(() => {
     });
 });
 watch(approvalButtons, (val) => {
-    enableClass.value = val.some(c => c.value == 2);
+    enableClass.value = val.some(c => c.value == ConstApprovalButton.resubmit);
 })
 const approveSubmit = async (param, type) => {
     if (!param) return;
@@ -139,7 +139,7 @@ const approveSubmit = async (param, type) => {
                 "approvalComment": approveForm.remark,
                 "operationType": type
             };
-            if (type == 2) {
+            if (type == ConstApprovalButton.resubmit) {
                 await componentFormRef.value.handleValidate().then((isValid) => {
                     if (isValid) {
                         Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));

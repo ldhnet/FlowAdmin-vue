@@ -67,22 +67,36 @@ export let opt1s = [
   { value: '≤', label: '≤' },
 ]
 
+export class ConstApprovalButton {
+  static preview =0;//预览
+  static submit =1;//提交
+  static resubmit = 2;//重新提交
+  static agree = 3;//同意
+  static noAgree = 4;//不同意
+  static print = 8;//打印
+  static terminate = 12;//终止
+  static forward = 15;//转发
+  static repulse = 18;//打回
+  static addApproval = 19;//加批
+  static transfer = 21;//转办 
+}
+
 export let approvalPageButtons = [
-  { value: 3, label: '同意', type: 'default' },
-  { value: 4, label: '不同意', type: 'default' },
-  { value: 18, label: '打回' },
-  { value: 19, label: '加批' },
-  { value: 21, label: '转办' }
+  { value: ConstApprovalButton.agree, label: '同意', type: 'default' },
+  { value: ConstApprovalButton.noAgree, label: '不同意', type: 'default' },
+  { value: ConstApprovalButton.repulse, label: '打回' },
+  { value: ConstApprovalButton.addApproval, label: '加批' },
+  { value: ConstApprovalButton.transfer, label: '转办' }
 ]
 export let startPageButtons = [
-  { value: 1, label: '提交', type: 'default' },
-  { value: 2, label: '重新提交', type: 'default' },
-  { value: 12, label: '终止' }
+  { value: ConstApprovalButton.submit, label: '提交', type: 'default' },
+  { value: ConstApprovalButton.resubmit, label: '重新提交', type: 'default' },
+  { value: ConstApprovalButton.terminate, label: '终止' }
 ]
 export let viewPageButtons = [
-  { value: 0, label: '预览', type: 'default' },
-  { value: 8, label: '打印' },
-  { value: 15, label: '转发' }
+  { value: ConstApprovalButton.preview, label: '预览', type: 'default' },
+  { value: ConstApprovalButton.print, label: '打印' },
+  { value: ConstApprovalButton.forward, label: '转发' }
 ]
 
 export const bizFormMaps = new Map([

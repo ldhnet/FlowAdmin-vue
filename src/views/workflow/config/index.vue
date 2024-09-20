@@ -56,10 +56,10 @@
          </el-table-column>
          <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
-               <el-button link type="primary" @click="handleEdit(scope.row)">编辑</el-button>
                <el-button v-if="scope.row.effectiveStatus == 1" type="info" disabled link>启动</el-button>
                <el-button v-else type="success" link @click="effectiveById(scope.row)">启动</el-button>
+               <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
+               <el-button link type="primary" @click="handleEdit(scope.row)">复制</el-button> 
                <el-button link type="primary"  @click="handleDelete(scope.row)">删除</el-button>
             </template>
          </el-table-column>
