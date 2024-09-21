@@ -158,7 +158,7 @@ function handleStart(row) {
     const params ={
         formCode: row.formCode
     };  
-    const obj = { path:'/bizdemo/demo1',query:params };
+    const obj = { path:'/bizentry/index',query:params };
     proxy.$tab.openPage(obj);
 } 
 

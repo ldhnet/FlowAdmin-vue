@@ -148,10 +148,10 @@
                     }
                 },
                 {
-                    "name": "BizDemo1",
-                    "path": "/bizdemo/demo1",
+                    "name": "BizEntry",
+                    "path": "/bizentry/index",
                     "hidden": true,
-                    "component": "bizdemo/demo1",
+                    "component": "bizentry/index",
                     "meta": {
                         "title": "发起申请流程",
                         "icon": "",
@@ -170,7 +170,7 @@
             "alwaysShow": true,
             "meta": {
                 "title": "委托管理",
-                "icon": "row",
+                "icon": "clipboard",
                 "noCache": false,
                 "link": null
             },

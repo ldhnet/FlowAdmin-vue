@@ -10,8 +10,8 @@ const headers = {
   "Userid": cache.session.get('userId'),
   //"Username": cache.session.get('userName')
 }
-let baseUrl = "http://117.72.70.166:7001";
-//let baseUrl = "http://localhost:7001";
+//let baseUrl = "http://117.72.70.166:7001";
+let baseUrl = "http://localhost:7002";
 /**
  * 获取审批数据
  * @param { Number } id 
@@ -171,28 +171,7 @@ export function getViewBusinessProcess(data) {
 export function getApproveNodeProperties() {
   return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`, { headers })
 }
-
-/**
-* 获取业务表单数据
-* @returns 
-*/
-export function getBizDemoByFlowKey(flowkey) {
-  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`, { headers })
-}
-
-/**
-* 新增业务表单数据
-* @returns 
-*/
-export function addBizDemo(param) {
-  let data = {
-    "flowkey": param.processNumber,
-    "formcode": param.formCode,
-    "processnumber": param.processNumber,
-    "bizformjson": JSON.stringify(param)
-  }
-  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data, { headers })
-}
+ 
 /**
  * 获取委托列表
  * @param {*} pageDto 

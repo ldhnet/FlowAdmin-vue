@@ -15,7 +15,7 @@
                   <ul class="list-group list-group-striped">
                      <li class="list-group-item">
                         <svg-icon icon-class="user" />用户名称
-                        <div class="pull-right">{{ state.user.userName }}</div>
+                        <div class="pull-right">{{ _userName }}</div>
                      </li>
                      <li class="list-group-item">
                         <svg-icon icon-class="phone" />手机号码
@@ -63,12 +63,13 @@
 </template>
 
 <script setup name="Profile">
+import cache from '@/plugins/cache';
 import userAvatar from "./userAvatar";
 import userInfo from "./userInfo";
 import resetPwd from "./resetPwd";
 //import { getUserProfile } from "@/api/system/user";
 import { getUserProfile } from "@/api/mock";
-
+const _userName=cache.session.get('userName');
 const activeTab = ref("userinfo");
 const state = reactive({
   user: {},

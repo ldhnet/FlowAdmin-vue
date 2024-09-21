@@ -1,7 +1,7 @@
 <template>
    <el-form ref="userRef" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="用户昵称" prop="nickName">
-         <el-input v-model="form.nickName" maxlength="30" />
+         <el-input v-model="_userName" maxlength="30" />
       </el-form-item>
       <el-form-item label="手机号码" prop="phonenumber">
          <el-input v-model="form.phonenumber" maxlength="11" />
@@ -24,7 +24,7 @@
 
 <script setup>
 import { updateUserProfile } from "@/api/system/user";
-
+import cache from '@/plugins/cache';
 const props = defineProps({
   user: {
     type: Object
@@ -32,7 +32,7 @@ const props = defineProps({
 });
 
 const { proxy } = getCurrentInstance();
-
+const _userName=cache.session.get('userName');
 const form = ref({});
 const rules = ref({
   nickName: [{ required: true, message: "用户昵称不能为空", trigger: "blur" }],
