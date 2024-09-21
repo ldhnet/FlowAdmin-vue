@@ -118,7 +118,7 @@ const componentFormRef = ref(null);
 const handleClickType = ref(null);
 let dialogVisible = ref(false);
 let dialogTitle = ref('');
-let isMultiple = ref(false);
+let isMultiple = ref(false);//false 转办，true 加批
 
 let rules = {
     remark: [{
@@ -310,15 +310,17 @@ const addUserDialog = () => {
  * 确定Dialog 弹框
  */
 const sureDialogBtn = async (data) => { 
+    approveSubData.operationType = handleClickType.value;  
+    approveSubData.approvalComment = data.remark;
     if (!isMultiple.value) {
         data.selectList.unshift({
             id:  cache.session.get('userId'),
             name: cache.session.get('userName'),
         })
-    }
-    approveSubData.operationType = handleClickType.value;
-    approveSubData.signUpUsers = data.selectList;
-    approveSubData.approvalComment = data.remark;
+        approveSubData.userInfos = data.selectList; 
+    }else{ 
+        approveSubData.signUpUsers = data.selectList;
+    } 
     //console.log('sureDialogBtn==========approveSubData=============', JSON.stringify(approveSubData));  
     await approveProcess(approveSubData);
 }
