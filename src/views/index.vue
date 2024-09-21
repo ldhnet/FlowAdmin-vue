@@ -1,6 +1,5 @@
 <template>
-  <div class="app-container home">
-
+  <div class="app-container home"> 
     <el-row :gutter="20">
       <el-col :sm="24" :lg="24"><shortcuts /></el-col> 
     </el-row>
@@ -119,10 +118,16 @@
 
 <script setup name="Index">
 import shortcuts from "@/components/dashboard/Shortcuts";  
+import cache from '@/plugins/cache'; 
+import { approveList } from '@/utils/flow/const';
 const version = ref('3.0.0')  
   
 console.log("VITE_APP_BASE_API=======",import.meta.env.BASE_URL);
 
+onMounted(() => {
+    let userId = cache.session.get('userId'); 
+    let name = approveList[userId];  
+})
 function goTarget(url) {
   window.open(url, '__blank')
 }

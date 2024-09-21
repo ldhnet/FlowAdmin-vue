@@ -72,13 +72,27 @@ export class ConstApprovalButton {
   static submit =1;//提交
   static resubmit = 2;//重新提交
   static agree = 3;//同意
-  static noAgree = 4;//不同意
+  static noAgree = 4;//拒绝
   static print = 8;//打印
   static terminate = 12;//终止
   static forward = 15;//转发
   static repulse = 18;//打回
   static addApproval = 19;//加批
   static transfer = 21;//转办 
+
+  static buttonsObj={
+    0: '预览',
+    1: '提交',//提交
+    2: '重新提交',//
+    3: '同意',//拒绝
+    4: '拒绝',//拒绝 
+    8: '打印',//打印
+    12: '终止',//终止
+    15: '转发',//转发
+    18: '打回',//打回
+    19: '加批',//加批 
+    21: '转办',//转办
+  }
 }
 
 export let approvalPageButtons = [

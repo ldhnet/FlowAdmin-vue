@@ -6,8 +6,7 @@
  */
 "use strict";
 
-import axios from "axios";  
-import cache from '@/plugins/cache';
+import axios from "axios";   
 import useUserStore from '@/store/modules/user'
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
@@ -23,8 +22,7 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function (config) {
-    config.headers = config.headers || {};  
-    config.headers.Userid = cache.session.get('userId');
+    config.headers = config.headers || {};   
     return config;
   },
   function (error) { 

@@ -5,7 +5,8 @@
  * @FilePath: /ant-flow/src/api/index.js
  */
 
-import http from '@/utils/axios' 
+import http from '@/utils/axios';
+import cache from '@/plugins/cache';
 let baseUrl = "http://117.72.70.166:7001";
 //let baseUrl = "http://localhost:7001";
 /**
@@ -14,7 +15,12 @@ let baseUrl = "http://117.72.70.166:7001";
  * @returns 
  */
 export function getApiWorkFlowData(data) {
-  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`)
+  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    })
 }
 /**
  * 获取审批数据
@@ -22,7 +28,12 @@ export function getApiWorkFlowData(data) {
  * @returns 
  */
 export function getFromCodeData() {
-  return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`)
+  return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    })
 }
 /**
  * 设置审批数据
@@ -30,14 +41,24 @@ export function getFromCodeData() {
  * @returns 
  */
 export function setApiWorkFlowData(data) {
-  return http.post(`${baseUrl}/bpmnConf/edit`, data)
+  return http.post(`${baseUrl}/bpmnConf/edit`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    })
 }
- /**
- * 获取代办事项 
- * @returns 
- */
-export function getTodoList() {  
-  return http.get(`${baseUrl}/bpmnConf/todoList`);
+/**
+* 获取代办事项 
+* @returns 
+*/
+export function getTodoList() {
+  return http.get(`${baseUrl}/bpmnConf/todoList`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -46,40 +67,55 @@ export function getTodoList() {
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getAllProcesslistPage(pageDto,taskMgmtVO) { 
+export function getAllProcesslistPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/6`, data);
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/6`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
- 
+
 /**
  * 获取用户代办数据列表
  * @param {*} pageDto 
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getPenddinglistPage(pageDto,taskMgmtVO) { 
+export function getPenddinglistPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
-  } 
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/5`, data);
+  }
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/5`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
- 
+
 /**
  * 获取用户已审批数据列表
  * @param {*} pageDto 
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getApprovedlistPage(pageDto,taskMgmtVO) { 
+export function getApprovedlistPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/4`, data);
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/4`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -88,12 +124,17 @@ export function getApprovedlistPage(pageDto,taskMgmtVO) {
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getMyRequestlistPage(pageDto,taskMgmtVO) { 
+export function getMyRequestlistPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/3`, data);
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/3`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -101,12 +142,17 @@ export function getMyRequestlistPage(pageDto,taskMgmtVO) {
  * @param {*} data 
  * @returns 
  */
-export function getBpmnConflistPage(pageDto,taskMgmtVO) {
+export function getBpmnConflistPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "entity": taskMgmtVO
-  }  
-  return http.post(`${baseUrl}/bpmnConf/listPage`, data);
+  }
+  return http.post(`${baseUrl}/bpmnConf/listPage`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -115,8 +161,13 @@ export function getBpmnConflistPage(pageDto,taskMgmtVO) {
  * operationType 1 发起 3 审批
  * @returns 
  */
-export function processOperation(data) {  
-  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data);
+export function processOperation(data) {
+  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -124,8 +175,13 @@ export function processOperation(data) {
  * @param { Number } id 
  * @returns 
  */
-export function getBpmVerifyInfoVos(param) { 
-  return http.get(`${baseUrl}/bpmnConf/getBpmVerifyInfoVos?processNumber=${param.processNumber}`)
+export function getBpmVerifyInfoVos(param) {
+  return http.get(`${baseUrl}/bpmnConf/getBpmVerifyInfoVos?processNumber=${param.processNumber}`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    })
 }
 
 /**
@@ -138,7 +194,12 @@ export function getFlowPreview(data) {
   //   "formCode": "DSFZH_WMA",
   //    "accountType":1
   // }
-  return http.post(`${baseUrl}/bpmnConf/startPagePreviewNode`, data);
+  return http.post(`${baseUrl}/bpmnConf/startPagePreviewNode`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 
@@ -147,8 +208,13 @@ export function getFlowPreview(data) {
  * @param {*} data 
  * @returns 
  */
-export function getEffectiveBpmn(data) { 
-  return http.get(`${baseUrl}/bpmnConf/effectiveBpmn/${data.id}`);
+export function getEffectiveBpmn(data) {
+  return http.get(`${baseUrl}/bpmnConf/effectiveBpmn/${data.id}`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
 /**
@@ -156,38 +222,58 @@ export function getEffectiveBpmn(data) {
  * @param {*} data 
  * @returns 
  */
-export function getViewBusinessProcess(data) {  
-  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess`, data);
+export function getViewBusinessProcess(data) {
+  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
- /**
- * 获取审批页面 审批人配置类型 
- * @returns 
- */
-export function getApproveNodeProperties() {  
-  return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`);
+/**
+* 获取审批页面 审批人配置类型 
+* @returns 
+*/
+export function getApproveNodeProperties() {
+  return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 
- /**
- * 获取业务表单数据
- * @returns 
- */
- export function getBizDemoByFlowKey(flowkey) {  
-  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`);
+/**
+* 获取业务表单数据
+* @returns 
+*/
+export function getBizDemoByFlowKey(flowkey) {
+  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
- 
- /**
- * 新增业务表单数据
- * @returns 
- */
- export function addBizDemo(param) {  
+
+/**
+* 新增业务表单数据
+* @returns 
+*/
+export function addBizDemo(param) {
   let data = {
     "flowkey": param.processNumber,
     "formcode": param.formCode,
     "processnumber": param.processNumber,
     "bizformjson": JSON.stringify(param)
-  }   
-  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data);
+  }
+  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 /**
  * 获取委托列表
@@ -195,12 +281,17 @@ export function getApproveNodeProperties() {
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getUserEntrustListPage(pageDto,taskMgmtVO) { 
+export function getUserEntrustListPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/1`, data);
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/1`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
 /**
  * 获取委托列表
@@ -208,24 +299,41 @@ export function getUserEntrustListPage(pageDto,taskMgmtVO) {
  * @param {*} taskMgmtVO 
  * @returns 
  */
-export function getEntrustListPage(pageDto,taskMgmtVO) { 
+export function getEntrustListPage(pageDto, taskMgmtVO) {
   let data = {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/2`, data);
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/2`,
+    data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    }
+  );
 }
- /**
- *  委托详情
- * @returns 
- */
- export function entrustDetail(id) {    
-  return http.get(`${baseUrl}/bpmnBusiness/entrustDetail/${id}`);
+/**
+*  委托详情
+* @returns 
+*/
+export function entrustDetail(id) {
+  return http.get(`${baseUrl}/bpmnBusiness/entrustDetail/${id}`,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }
- /**
- * 设置委托
- * @returns 
- */
- export function setEntrust(data) {    
-  return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data);
+/**
+* 设置委托
+* @returns 
+*/
+export function setEntrust(data) {
+  return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data,
+    {
+      headers: {
+        'Userid': cache.session.get('userId')
+      }
+    });
 }

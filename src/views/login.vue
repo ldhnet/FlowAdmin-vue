@@ -62,7 +62,7 @@ const { proxy } = getCurrentInstance();
 
 let userOptions = ref([]);
 let userId = ref('1');
-
+let _userName = ref('');
 const loginForm = ref({
   username: "admin",
   password: "admin123",
@@ -76,8 +76,6 @@ const loginRules = {
   password: [{ required: true, trigger: "blur", message: "请输入您的密码" }],
   code: [{ required: true, trigger: "change", message: "请输入验证码" }]
 };
-
-const codeUrl = ref("");
 const loading = ref(false); 
 // 注册开关
 const register = ref(false);
@@ -87,27 +85,32 @@ watch(route, (newRoute) => {
     redirect.value = newRoute.query && newRoute.query.redirect;
 }, { immediate: true });
 
+watch(userId, (val) => {
+  _userName.value = approveList[val]; 
+}, { immediate: true });
+
 function handleLogin() {
   if(!userId.value) {
         ElMessage.error("请选择用户");
         return;    
-    }
-  cache.session.set('userId', userId.value);
-  proxy.$refs.loginRef.validate(valid => {
-
-    if (valid) {
+    }  
+  cache.session.set('userId', userId.value); 
+  cache.session.set('userName', _userName.value);  
+  proxy.$refs.loginRef.validate(valid => {  
+    if (valid) { 
       loading.value = true;
       // 勾选了需要记住密码设置在 cookie 中设置记住用户名和密码
-      if (loginForm.value.rememberMe) {
+      if (loginForm.value.rememberMe) {  
         Cookies.set("username", loginForm.value.username, { expires: 30 });
         Cookies.set("password", encrypt(loginForm.value.password), { expires: 30 });
-        Cookies.set("rememberMe", loginForm.value.rememberMe, { expires: 30 });
+        Cookies.set("rememberMe", loginForm.value.rememberMe, { expires: 30 }); 
       } else {
+
         // 否则移除
         Cookies.remove("username");
         Cookies.remove("password");
-        Cookies.remove("rememberMe");
-      } 
+        Cookies.remove("rememberMe"); 
+      }  
       // 调用action的登录方法
       userStore.login(loginForm.value).then(() => { 
         const query = route.query;

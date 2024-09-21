@@ -1,5 +1,9 @@
 <template>
     <div class="app-container">
+        <div class="flex gap-2">
+            <el-tag type="primary">{{ formCode }}</el-tag>
+            <el-tag type="success" style="margin-left: 5px;">{{ processNumber }}</el-tag>
+        </div>
         <el-tabs v-model="activeName" class="set-tabs" @tab-click="handleTabClick">
             <el-tab-pane label="表单信息" name="baseTab">
                 <div class="approve" v-if="componentLoaded">
@@ -32,7 +36,7 @@
                         </el-col>
                     </el-row>
 
-                     <!-- <el-row style="float: left;">
+                    <!-- <el-row style="float: left;">
                         <el-col :span="24">
                             <el-timeline style="max-width: 600px">
                                 <el-timeline-item v-for="(activity, index) in activities" :key="index"
@@ -48,17 +52,17 @@
                                                             v-if="activity.verifyStatus == 99">进行中</el-tag></span>
                                                 </div>
                                             </template>
-                                            <p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
-                                            <p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
-                                            </p>
-                                            <p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
-                                            <p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
-                                        </el-card>
-                                    </div>
-                                </el-timeline-item>
-                            </el-timeline>
-                        </el-col>
-                    </el-row>-->
+<p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
+<p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
+</p>
+<p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
+<p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
+</el-card>
+</div>
+</el-timeline-item>
+</el-timeline>
+</el-col>
+</el-row>-->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="审批记录" name="flowStep">
@@ -73,16 +77,19 @@
             </el-tab-pane>
         </el-tabs>
         <label class="page-close-box" @click="close()"><img src="@/assets/images/back-close.png"></label>
+        <employees-dialog v-model:visible="dialogVisible" :isMultiple="isMultiple" :title="dialogTitle"
+            @change="sureDialogBtn" />
     </div>
 </template>
 
 <script setup>
 import { ref, markRaw, watch } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
 import ReviewWarp from "@/components/flow/reviewWarp.vue"
-import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons,ConstApprovalButton } from "@/utils/flow/const"
+import employeesDialog from '@/components/flow/dialog/usersDialog.vue'
+import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons, ConstApprovalButton } from "@/utils/flow/const"
 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
@@ -104,9 +111,13 @@ let approvalButtons = ref([]);
 const approveFormRef = ref(null);
 const approveForm = reactive({
     remark: ''
-})
+});
 
 const componentFormRef = ref(null);
+const handleClickType = ref(null);
+let dialogVisible = ref(false);
+let dialogTitle = ref('');
+let isMultiple = ref(false);
 
 let rules = {
     remark: [{
@@ -118,8 +129,14 @@ let rules = {
 const flowParam = ref({
     "formCode": formCode,
     "accountType": 1
-})
+});
 const activities = ref([]);
+let approveSubData = reactive({
+    "taskId": taskId,
+    "processNumber": processNumber,
+    "formCode": formCode
+});
+
 onMounted(() => {
     approvalButtons.value = approvalPageButtons.filter((c) => {
         return c.type == 'default';
@@ -128,39 +145,11 @@ onMounted(() => {
 watch(approvalButtons, (val) => {
     enableClass.value = val.some(c => c.value == ConstApprovalButton.resubmit);
 })
-const approveSubmit = async (param, type) => {
-    if (!param) return;
-    param.validate(async (valid, fields) => {
-        if (valid) {
-            let approveSubData = {
-                "taskId": taskId,
-                "processNumber": processNumber,
-                "formCode": formCode,
-                "approvalComment": approveForm.remark,
-                "operationType": type
-            };
-            if (type == ConstApprovalButton.resubmit) {
-                await componentFormRef.value.handleValidate().then((isValid) => {
-                    if (isValid) {
-                        Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));
-                    }
-                });
-            };
-            proxy.$modal.loading();
-            let resData = await processOperation(approveSubData);
-            if (resData.code == 200) {
-                ElMessage.success("审批成功");
-                close();
-            } else {
-                ElMessage.error("审批失败:" + resData.errMsg);
-            }
-            proxy.$modal.closeLoading();
-        }
-    })
-}
 
-
-
+watch(handleClickType, (val) => {
+    dialogTitle.value = `设置${ConstApprovalButton.buttonsObj[val]}人员`;
+    isMultiple.value = val == ConstApprovalButton.addApproval ? true : false;
+})
 
 const handleTabClick = (tab, event) => {
     if (tab.paneName == 'baseTab') {
@@ -179,8 +168,54 @@ const handleTabClick = (tab, event) => {
         flowStepShow.value = false;
         flowReviewShow.value = true;
     }
+};
+const getFlowApproveStep = async () => {
+    let param = {
+        "processNumber": processNumber,
+    }
+    let resData = await getBpmVerifyInfoVos(param);
+    if (resData.code == 200) {
+        activities.value = resData.data.map(c => {
+            return {
+                ...c,
+                type: statusColor[c.verifyStatus],
+                size: 'large'
+            }
+        });
+    }
+};
+/**
+ * 点击页面按钮
+ * @param param 
+ * @param type 
+ */
+const approveSubmit = async (param, type) => {
+    if (!param) return;
+    handleClickType.value = type;
+    if (type == ConstApprovalButton.addApproval || type == ConstApprovalButton.transfer) {
+        addUserDialog();
+        return;
+    };
+    param.validate(async (valid, fields) => {
+        if (valid) {
+            approveSubData.approvalComment = approveForm.remark;
+            approveSubData.operationType = type;
+            if (type == ConstApprovalButton.resubmit) {
+                await componentFormRef.value.handleValidate().then((isValid) => {
+                    if (isValid) {
+                        Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));
+                    }
+                });
+            };
+            await approveProcess(approveSubData);
+        }
+    })
 }
 
+
+/**
+ * 预览
+ */
 const preview = () => {
     let queryParams = ref({
         "formCode": formCode,
@@ -206,27 +241,39 @@ const preview = () => {
     });
 }
 
-const getFlowApproveStep = async () => {
-    let param = {
-        "processNumber": processNumber,
-    }
-    let resData = await getBpmVerifyInfoVos(param);
-    if (resData.code == 200) {
-        activities.value = resData.data.map(c => {
-            return {
-                ...c,
-                type: statusColor[c.verifyStatus],
-                size: 'large'
-            }
-        });
-    }
-};
-
+/**
+ * 审批
+ * @param param 
+ */
+const approveProcess = async (param) => {
+    ElMessageBox.confirm('确定完成操作吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).then(async () => {
+        dialogVisible.value = false;
+        proxy.$modal.loading();
+        let resData = await processOperation(param);
+        if (resData.code == 200) {
+            ElMessage.success("审批成功");
+            close();
+        } else {
+            ElMessage.error("审批失败:" + resData.errMsg);
+        }
+        proxy.$modal.closeLoading();
+    }).catch(() => { });  
+}
+/**
+ * 关闭当前审批页
+ */
 const close = () => {
     //proxy.$tab.closePage();
     const obj = { path: "/flowtask/pendding" };
     proxy.$tab.closeOpenPage(obj);
 }
+/**
+ * 动态加载表单组件
+ */
 const loadComponent = () => {
     if (bizFormMaps.has(formCode)) {
         const componentPath = bizFormMaps.get(formCode);
@@ -238,7 +285,30 @@ const loadComponent = () => {
     }
 }
 
-handleTabClick({ paneName: "baseTab" })
+handleTabClick({ paneName: "baseTab" });
+/**
+ * 选人员Dialog 弹框
+ */
+const addUserDialog = () => {
+    dialogVisible.value = true;
+}
+/**
+ * 确定Dialog 弹框
+ */
+const sureDialogBtn = async (data) => { 
+    if (!isMultiple.value) {
+        data.selectList.unshift({
+            id: 1,
+            name: '张三',
+        })
+    }
+    approveSubData.operationType = handleClickType.value;
+    approveSubData.signUpUsers = data.selectList;
+    approveSubData.approvalComment = data.remark;
+    //console.log('sureDialogBtn==========approveSubData=============', JSON.stringify(approveSubData));  
+    await approveProcess(approveSubData);
+}
+
 </script>
 <style lang="scss">
 .disableClss {

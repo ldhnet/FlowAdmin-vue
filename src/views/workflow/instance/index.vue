@@ -24,10 +24,15 @@
             <template #default="item">
                <el-tag>{{ item.row.taskState }}</el-tag>
             </template>
-         </el-table-column>
-         <el-table-column label="创建时间" align="center" prop="runTime" width="180">
+         </el-table-column> 
+         <!-- <el-table-column label="创建时间" align="center" prop="createTime" width="180">
             <template #default="scope">
-               <span>{{ parseTime(scope.row.runTime) }}</span>
+               <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+            </template>
+         </el-table-column> -->
+         <el-table-column label="更新时间" align="center" prop="runTime" width="180">
+            <template #default="scope">
+               <span>{{ parseTime(scope.row.runTime, '{y}-{m}-{d} {h}:{i}') }}</span>
             </template>
          </el-table-column>
          <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
