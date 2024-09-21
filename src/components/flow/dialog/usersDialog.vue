@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :title="title" v-model="visibleDialog" style="width: 680px !important;" append-to-body  class="promoter_person">
-    <div class="flex flex-wrap">
+  <el-dialog :title="title" v-model="visibleDialog" style="width: 680px !important; " append-to-body  class="promoter_person">
+    <div style="min-height: 250px !important;">
       <el-row style="padding-left: -5px;padding-right: -5px;">
         <el-col :span="24" class="my-col">
           <el-form ref="formRef" :model="form" :rules="rules" class="my-form">
@@ -130,23 +130,25 @@ const remoteMethod = (query) => {
  * 保存
  */
 let saveDialog = () => {
+  let resFrom={};
   proxy.$refs['formRef'].validate((valid) => {
     if (valid) {
       if (!props.isMultiple) {
-        form.value.selectList = [{
+        resFrom.selectList = [{
           id: form.value.selectList,
           name: approveList[form.value.selectList]
         }]
       } else {
-        form.value.selectList = form.value.selectList.map((c) => {
+        resFrom.selectList = form.value.selectList.map((c) => {
           return {
             id: c,
             name: approveList[c]
           }
         })
       }
-      //console.log('form.value==========', JSON.stringify(form.value))
-      emits('change', form.value)
+      resFrom.remark = form.value.remark
+      //console.log('resFrom.value==========', JSON.stringify(resFrom))
+      emits('change', resFrom)
     }
   });
 }

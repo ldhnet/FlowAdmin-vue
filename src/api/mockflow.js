@@ -4,9 +4,12 @@
  * @LastEditTime: 2023-03-29 15:52:57
  * @FilePath: /ant-flow/src/api/index.js
  */
-
 import http from '@/utils/axios';
 import cache from '@/plugins/cache';
+const headers = {
+  "Userid": cache.session.get('userId'),
+  //"Username": cache.session.get('userName')
+}
 let baseUrl = "http://117.72.70.166:7001";
 //let baseUrl = "http://localhost:7001";
 /**
@@ -15,12 +18,7 @@ let baseUrl = "http://117.72.70.166:7001";
  * @returns 
  */
 export function getApiWorkFlowData(data) {
-  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    })
+  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
 }
 /**
  * 获取审批数据
@@ -28,12 +26,7 @@ export function getApiWorkFlowData(data) {
  * @returns 
  */
 export function getFromCodeData() {
-  return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    })
+  return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`, { headers })
 }
 /**
  * 设置审批数据
@@ -41,24 +34,14 @@ export function getFromCodeData() {
  * @returns 
  */
 export function setApiWorkFlowData(data) {
-  return http.post(`${baseUrl}/bpmnConf/edit`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    })
+  return http.post(`${baseUrl}/bpmnConf/edit`, data, { headers })
 }
 /**
 * 获取代办事项 
 * @returns 
 */
 export function getTodoList() {
-  return http.get(`${baseUrl}/bpmnConf/todoList`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.get(`${baseUrl}/bpmnConf/todoList`, { headers })
 }
 
 /**
@@ -72,12 +55,7 @@ export function getAllProcesslistPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/6`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/6`, data, { headers })
 }
 
 /**
@@ -91,12 +69,7 @@ export function getPenddinglistPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/5`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/5`, data, { headers })
 }
 
 /**
@@ -110,12 +83,7 @@ export function getApprovedlistPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/4`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/4`, data, { headers })
 }
 
 /**
@@ -129,12 +97,7 @@ export function getMyRequestlistPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/process/listPage/3`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/3`, data, { headers })
 }
 
 /**
@@ -147,12 +110,7 @@ export function getBpmnConflistPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "entity": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnConf/listPage`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/listPage`, data, { headers })
 }
 
 /**
@@ -162,12 +120,7 @@ export function getBpmnConflistPage(pageDto, taskMgmtVO) {
  * @returns 
  */
 export function processOperation(data) {
-  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data, { headers })
 }
 
 /**
@@ -176,12 +129,7 @@ export function processOperation(data) {
  * @returns 
  */
 export function getBpmVerifyInfoVos(param) {
-  return http.get(`${baseUrl}/bpmnConf/getBpmVerifyInfoVos?processNumber=${param.processNumber}`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    })
+  return http.get(`${baseUrl}/bpmnConf/getBpmVerifyInfoVos?processNumber=${param.processNumber}`, { headers })
 }
 
 /**
@@ -194,12 +142,7 @@ export function getFlowPreview(data) {
   //   "formCode": "DSFZH_WMA",
   //    "accountType":1
   // }
-  return http.post(`${baseUrl}/bpmnConf/startPagePreviewNode`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/startPagePreviewNode`, data, { headers })
 }
 
 
@@ -209,12 +152,7 @@ export function getFlowPreview(data) {
  * @returns 
  */
 export function getEffectiveBpmn(data) {
-  return http.get(`${baseUrl}/bpmnConf/effectiveBpmn/${data.id}`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.get(`${baseUrl}/bpmnConf/effectiveBpmn/${data.id}`, { headers })
 }
 
 /**
@@ -223,12 +161,7 @@ export function getEffectiveBpmn(data) {
  * @returns 
  */
 export function getViewBusinessProcess(data) {
-  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess`, data, { headers })
 }
 
 /**
@@ -236,12 +169,7 @@ export function getViewBusinessProcess(data) {
 * @returns 
 */
 export function getApproveNodeProperties() {
-  return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.get(`${baseUrl}/bpmnBusiness/listNodeProperties`, { headers })
 }
 
 /**
@@ -249,12 +177,7 @@ export function getApproveNodeProperties() {
 * @returns 
 */
 export function getBizDemoByFlowKey(flowkey) {
-  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.get(`${baseUrl}/bizdemo/getBizDemoByFlowKey?flowkey=${flowkey}`, { headers })
 }
 
 /**
@@ -268,12 +191,7 @@ export function addBizDemo(param) {
     "processnumber": param.processNumber,
     "bizformjson": JSON.stringify(param)
   }
-  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bizdemo/addBizDemo`, data, { headers })
 }
 /**
  * 获取委托列表
@@ -286,12 +204,7 @@ export function getUserEntrustListPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/1`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/1`, data, { headers })
 }
 /**
  * 获取委托列表
@@ -304,36 +217,19 @@ export function getEntrustListPage(pageDto, taskMgmtVO) {
     "pageDto": pageDto,
     "taskMgmtVO": taskMgmtVO
   }
-  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/2`,
-    data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    }
-  );
+  return http.post(`${baseUrl}/bpmnBusiness/entrustlist/2`, data, { headers })
 }
 /**
 *  委托详情
 * @returns 
 */
 export function entrustDetail(id) {
-  return http.get(`${baseUrl}/bpmnBusiness/entrustDetail/${id}`,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.get(`${baseUrl}/bpmnBusiness/entrustDetail/${id}`, { headers })
 }
 /**
 * 设置委托
 * @returns 
 */
 export function setEntrust(data) {
-  return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data,
-    {
-      headers: {
-        'Userid': cache.session.get('userId')
-      }
-    });
+  return http.post(`${baseUrl}/bpmnBusiness/editEntrust`, data, { headers })
 }

@@ -85,6 +85,7 @@
 <script setup>
 import { ref, markRaw, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import cache from '@/plugins/cache';
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
 import ReviewWarp from "@/components/flow/reviewWarp.vue"
@@ -227,11 +228,14 @@ const preview = () => {
         if (response.code == 200) {
             componentData.value = response.data;
             componentLoaded.value = true;
-            let auditButtons = response.data.processRecordInfo?.pcButtons?.audit;
+            let auditButtons = response.data.processRecordInfo?.pcButtons?.audit; 
             if (Array.isArray(auditButtons) && auditButtons.length > 0) {
                 approvalButtons.value = auditButtons.map(c => {
                     return { value: c.buttonType, label: c.name };
-                });
+                }).sort(function(a,b){
+                    return a.value - b.value
+                }); 
+                approvalButtons.value = uniqueByMap(approvalButtons.value);
             }
         } else {
             ElMessage.error("获取表单数据失败:" + response.errMsg);
@@ -240,7 +244,17 @@ const preview = () => {
         proxy.$modal.closeLoading();
     });
 }
-
+/**
+ * 数组去重
+ * @param arr 
+ */
+function uniqueByMap(arr) {
+    if (!Array.isArray(arr)) { 
+        return
+    }
+    const res = new Map();
+    return arr.filter((item) => !res.has(item.value) && res.set(item.value, true)); 
+}
 /**
  * 审批
  * @param param 
@@ -298,8 +312,8 @@ const addUserDialog = () => {
 const sureDialogBtn = async (data) => { 
     if (!isMultiple.value) {
         data.selectList.unshift({
-            id: 1,
-            name: '张三',
+            id:  cache.session.get('userId'),
+            name: cache.session.get('userName'),
         })
     }
     approveSubData.operationType = handleClickType.value;
