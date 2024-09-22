@@ -80,9 +80,15 @@ const handleTabClick = (tab, event) => {
     flowReviewShow.value = true;
   }
 }
+/**
+ * 关闭抽屉
+ */
 const closeDrawer = () => {
   setInstanceDrawer(false)
 }
+/**
+ * 动态加载业务表单组件
+ */
 const loadComponent = () => {
   if (bizFormMaps.has(viewConfig.value.formCode)) {
     const componentPath = bizFormMaps.get(viewConfig.value.formCode);
@@ -93,7 +99,9 @@ const loadComponent = () => {
     })
   }
 }
-
+/**
+ * 预览
+ */
 const preview = () => {
   let queryParams = ref({
     "formCode": viewConfig.value.formCode,

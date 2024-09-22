@@ -45,6 +45,11 @@ const handleSubmit = (param) => {
     //console.log('handleSubmit=====param=======', param);
     startTest(param)
 }
+/**
+ * 点击tab切换
+ * @param tab 
+ * @param event 
+ */
 const handleClick = (tab, event) => {
     if (tab.props.name != 'flowFromReview') {
         reviewWarpShow.value = false;
@@ -60,6 +65,10 @@ const handleClick = (tab, event) => {
         }
     });
 } 
+/**
+ * 发起流程
+ * @param param 
+ */
 const startTest = (param) => {
     let bizFrom= JSON.parse(param);
     bizFrom.formCode = flowCode ?? '';  
@@ -77,7 +86,9 @@ const startTest = (param) => {
     });
 
 }
-
+/**
+ * 动态加载业务表单组件
+ */
 const loadComponent = () => {
   if (bizFormMaps.has(flowCode)) {
     const componentPath = bizFormMaps.get(flowCode);
