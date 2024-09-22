@@ -1,36 +1,45 @@
 /*
- * @Date: 2023-03-29 15:25:37
+ * @Date: 2024-09-21 22:05:32
  * @LastEditors: LDH 574427343@qq.com
- * @LastEditTime: 2023-03-29 15:52:38
- * @FilePath: /src/utils/const.js
+ * @LastEditTime: 2024-09-21 22:05:32
+ * @FilePath: /src/utils/flow/const.js
  */
 
 export let bgColors = ["192,192,192", '87, 106, 149', '255，97，0', '65，105，225', '255, 148, 62', '50, 150, 250'] // '灰色, 蓝色, 橙色, 黄色, 黄色'
 export let placeholderList = ["发起人", "审核人", "抄送人"];
-
 export let nodeTypeList = ["未知", "发起人", "网关", "条件", "审核人", "抄送人"];
 
-// export let setTypes = [
-//   { value: 1, label: '指定成员' },
-//   { value: 2, label: '主管' },
-//   { value: 3, label: '指定角色' },
-//   //{ value: 4, label: '指定部门' },
-//   { value: 5, label: '发起人自己' }, 
-//   { value: 8, label: '关联业务表' }, 
-// ]
-
 export let setTypes = [
-  { value: 5, label: '指定人员' },
-  { value: 13, label: '直属领导' },
-  { value: 4, label: '指定角色' },
-  // { value: 3, label: '指定层级审批' },
+  { value: 4, label: '指定角色' },  
+  { value: 5, label: '指定人员' }, 
   { value: 6, label: 'HRBP' },
-  // { value: 12, label: '发起人自己' },
-
-  //{ value: 2, label: '层层审批' },
-  //{ value: 8, label: '关联业务表' },
-  //{ value: 14, label: '指定部门' },
+  { value: 13, label: '直属领导' },
+  // { value: 2, label: '层层审批' },
+  // { value: 3, label: '指定层级审批' },
+  // { value: 8, label: '关联业务表' },
+  // { value: 12, label: '发起人自己' }, 
+  // { value: 14, label: '指定部门' },
 ]
+export const nodeConf = {
+  nodeType: {
+    start : 1,//发起人
+    getway : 2,//'网关'
+    condition : 3,//'条件'
+    approve: 4,//'审核人'
+    copy: 5//'抄送人'
+  },
+  approveType: {
+      role: 4,//'指定角色'
+      user: 5,//'指定人员' 
+      hrbp: 6,//'HRBP'
+      leader: 13,//'直属领导'
+      // layer: 2,//'层层审批'
+      // level: 3,//'指定层级审批'
+      // business: 8,//'关联业务表'
+      // self: 12,//'发起人自己' 
+      // department: 14,//'指定部门'
+  }
+}
 export let typeCodes = [
   { value: 2, type: 1 },
   { value: 3, type: 3 },
@@ -53,21 +62,12 @@ export let optTypes = [
   { value: '6', label: '介于两个数之间' },
 ]
 
-// export let optTypes = [
-//   { value: '1', label: '小于' },
-//   { value: '2', label: '大于' },
-//   { value: '3', label: '小于等于' },
-//   { value: '4', label: '等于' },
-//   { value: '5', label: '大于等于' },
-//   { value: '6', label: '介于两个数之间' },
-// ]
-
 export let opt1s = [
   { value: '<', label: '<' },
   { value: '≤', label: '≤' },
 ]
 
-export class ConstApprovalButton {
+export class approvalButtonConf {
   static preview =0;//预览
   static submit =1;//提交
   static resubmit = 2;//重新提交
@@ -96,21 +96,21 @@ export class ConstApprovalButton {
 }
 
 export let approvalPageButtons = [
-  { value: ConstApprovalButton.agree, label: '同意', type: 'default' },
-  { value: ConstApprovalButton.noAgree, label: '不同意', type: 'default' },
-  { value: ConstApprovalButton.repulse, label: '打回' },
-  { value: ConstApprovalButton.addApproval, label: '加批' },
-  { value: ConstApprovalButton.transfer, label: '转办' }
+  { value: approvalButtonConf.agree, label: '同意', type: 'default' },
+  { value: approvalButtonConf.noAgree, label: '不同意', type: 'default' },
+  { value: approvalButtonConf.repulse, label: '打回' },
+  { value: approvalButtonConf.addApproval, label: '加批' },
+  { value: approvalButtonConf.transfer, label: '转办' }
 ]
 export let startPageButtons = [
-  { value: ConstApprovalButton.submit, label: '提交', type: 'default' },
-  { value: ConstApprovalButton.resubmit, label: '重新提交', type: 'default' },
-  { value: ConstApprovalButton.terminate, label: '终止' }
+  { value: approvalButtonConf.submit, label: '提交', type: 'default' },
+  { value: approvalButtonConf.resubmit, label: '重新提交', type: 'default' },
+  { value: approvalButtonConf.terminate, label: '终止' }
 ]
 export let viewPageButtons = [
-  { value: ConstApprovalButton.preview, label: '预览', type: 'default' },
-  { value: ConstApprovalButton.print, label: '打印' },
-  { value: ConstApprovalButton.forward, label: '转发' }
+  { value: approvalButtonConf.preview, label: '预览', type: 'default' },
+  { value: approvalButtonConf.print, label: '打印' },
+  { value: approvalButtonConf.forward, label: '转发' }
 ]
 
 export const bizFormMaps = new Map([

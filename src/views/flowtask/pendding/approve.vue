@@ -90,7 +90,7 @@ import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@
 import FlowStepTable from "@/components/flow/flowStepTable.vue"
 import ReviewWarp from "@/components/flow/reviewWarp.vue"
 import employeesDialog from '@/components/flow/dialog/usersDialog.vue'
-import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons, ConstApprovalButton } from "@/utils/flow/const"
+import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
@@ -144,12 +144,12 @@ onMounted(() => {
     });
 });
 watch(approvalButtons, (val) => {
-    enableClass.value = val.some(c => c.value == ConstApprovalButton.resubmit);
+    enableClass.value = val.some(c => c.value == approvalButtonConf.resubmit);
 })
 
 watch(handleClickType, (val) => {
-    dialogTitle.value = `设置${ConstApprovalButton.buttonsObj[val]}人员`;
-    isMultiple.value = val == ConstApprovalButton.addApproval ? true : false;
+    dialogTitle.value = `设置${approvalButtonConf.buttonsObj[val]}人员`;
+    isMultiple.value = val == approvalButtonConf.addApproval ? true : false;
 })
 
 const handleTabClick = (tab, event) => {
@@ -193,7 +193,7 @@ const getFlowApproveStep = async () => {
 const approveSubmit = async (param, type) => {
     if (!param) return;
     handleClickType.value = type;
-    if (type == ConstApprovalButton.addApproval || type == ConstApprovalButton.transfer) {
+    if (type == approvalButtonConf.addApproval || type == approvalButtonConf.transfer) {
         addUserDialog();
         return;
     };
@@ -201,7 +201,7 @@ const approveSubmit = async (param, type) => {
         if (valid) {
             approveSubData.approvalComment = approveForm.remark;
             approveSubData.operationType = type;
-            if (type == ConstApprovalButton.resubmit) {
+            if (type == approvalButtonConf.resubmit) {
                 await componentFormRef.value.handleValidate().then((isValid) => {
                     if (isValid) {
                         Object.assign(approveSubData, JSON.parse(componentFormRef.value.getFromData()));

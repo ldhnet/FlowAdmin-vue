@@ -5,9 +5,7 @@
 </template>
 
 <script setup name="Index">
-import Workplace from "@/components/dashboard/Workplace";
-const version = ref('3.0.0')
-
+import Workplace from "@/components/dashboard/Workplace"; 
 </script>
 
 <style scoped lang="scss"></style>
