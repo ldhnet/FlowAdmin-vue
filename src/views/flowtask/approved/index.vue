@@ -50,7 +50,7 @@
 <script setup>
 import { getApprovedlistPage } from "@/api/mockflow";
 import InstanceDrawer from "@/views/workflow/instance/instanceDrawer.vue"
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 let store = useStore()
 let { setInstanceDrawer, setInstanceDrawerConfig } = store
 let instanceDrawerVisible = computed(() => store.instanceDrawer)

@@ -35,7 +35,7 @@
 <script setup>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
 import $func from '@/utils/flow/index'
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import { ref, watch, computed } from 'vue'
 let copyerConfig = ref({})
 let ccSelfSelectFlag = ref([])

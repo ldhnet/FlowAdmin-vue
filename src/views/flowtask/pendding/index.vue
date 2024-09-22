@@ -49,7 +49,7 @@
 
 <script setup>
 import { getPenddinglistPage } from "@/api/mockflow";
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 let store = useStore()
 let { setInstanceDrawerConfig } = store
 const { proxy } = getCurrentInstance();

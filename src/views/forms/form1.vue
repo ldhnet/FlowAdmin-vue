@@ -13,7 +13,7 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="备注说明" prop="remark">
-                        <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" :maxlength="100"
+                        <el-input v-model="form.remark" type="textarea" placeholder="请输入备注说明" :maxlength="100"
                             show-word-limit :autosize="{ minRows: 4, maxRows: 4 }"
                             :style="{ width: '100%' }"></el-input>
                     </el-form-item>
@@ -61,9 +61,9 @@ const form = reactive({
 })
 
 let rules = {
-    formName: [{
+    remark: [{
         required: true,
-        message: '请输入表单名称',
+        message: '请输入备注说明',
         trigger: 'blur'
     }],
     accountType: [{

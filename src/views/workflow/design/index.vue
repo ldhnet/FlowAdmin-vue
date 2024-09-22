@@ -37,8 +37,8 @@ import { getMockWorkFlowData } from '@/api/mock';
 import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatcommit_data'
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
-import BasicSetting from "@/components/flow/BasicSetting/index.vue";
-import Process from "@/components/flow/Process/index.vue"; 
+import BasicSetting from "@/components/Workflow/BasicSetting/index.vue";
+import Process from "@/components/Workflow/Process/index.vue"; 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
  

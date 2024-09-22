@@ -43,8 +43,8 @@ import TreeSelect from '@/components/TreeSelect'
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 
-import nodeWrap from '@/components/flow/nodeWrap.vue'; // 彷钉钉流程配置
-import addNode from '@/components/flow/addNode.vue'; // 添加节点
+import nodeWrap from '@/components/Workflow/nodeWrap.vue'; // 彷钉钉流程配置
+import addNode from '@/components/Workflow/addNode.vue'; // 添加节点
 
 const app = createApp(App)
 

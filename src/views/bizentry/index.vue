@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, getCurrentInstance } from 'vue' 
-import ReviewWarp from '@/components/flow/reviewWarp.vue'
+import ReviewWarp from '@/components/Workflow/reviewWarp.vue'
 import { processOperation } from '@/api/mockflow' 
 import { bizFormMaps } from "@/utils/flow/const"
 const modules = import.meta.glob('../forms/**/*.vue');

@@ -10,7 +10,7 @@
     </div>
 </template>
 <script setup>
-import LineWarp from "@/components/flow/lineWarp.vue"
+import LineWarp from "@/components/Workflow/lineWarp.vue"
 import { getFlowPreview } from '@/api/mockflow'
 import { FormatUtils } from '@/utils/flow/formatFlowPreview'
 const { proxy } = getCurrentInstance()

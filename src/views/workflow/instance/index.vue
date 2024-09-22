@@ -50,7 +50,7 @@
 
 <script setup>
 import { getAllProcesslistPage } from "@/api/mockflow"
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import InstanceDrawer from "@/views/workflow/instance/instanceDrawer.vue"
 let store = useStore()
 let { setInstanceDrawer, setInstanceDrawerConfig } = store

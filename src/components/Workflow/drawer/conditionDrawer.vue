@@ -89,7 +89,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import $func from '@/utils/flow/index'
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import { optTypes, opt1s } from '@/utils/flow/const'
 import { getConditions } from '@/api/mock'
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'

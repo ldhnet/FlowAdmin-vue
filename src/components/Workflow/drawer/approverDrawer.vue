@@ -128,7 +128,7 @@
 import { ref, watch, computed } from 'vue' 
 import $func from '@/utils/flow/index'
 import { setTypes,hrbpOptions,approvalPageButtons } from '@/utils/flow/const'
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import employeesDialog from '../dialog/employeesDialog.vue'
 import roleDialog from '../dialog/roleDialog.vue' 
 let store = useStore()

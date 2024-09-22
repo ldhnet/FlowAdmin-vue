@@ -117,7 +117,7 @@
 </template>
 
 <script setup name="Index">
-import shortcuts from "@/components/dashboard/Shortcuts";  
+import shortcuts from "@/components/Dashboard/Shortcuts";  
 import cache from '@/plugins/cache'; 
 import { approveList } from '@/utils/flow/const';
 const version = ref('3.0.0')  

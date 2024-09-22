@@ -25,13 +25,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import { nodeTypeList } from '@/utils/flow/const'
-import errorDialog from "@/components/flow/dialog/errorDialog.vue";
-import promoterDrawer from "@/components/flow/drawer/promoterDrawer.vue";
-import approverDrawer from "@/components/flow/drawer/approverDrawer.vue";
-import copyerDrawer from "@/components/flow/drawer/copyerDrawer.vue";
-import conditionDrawer from "@/components/flow/drawer/conditionDrawer.vue";
+import errorDialog from "@/components/Workflow/dialog/errorDialog.vue";
+import promoterDrawer from "@/components/Workflow/drawer/promoterDrawer.vue";
+import approverDrawer from "@/components/Workflow/drawer/approverDrawer.vue";
+import copyerDrawer from "@/components/Workflow/drawer/copyerDrawer.vue";
+import conditionDrawer from "@/components/Workflow/drawer/conditionDrawer.vue";
 
 let { setTableId, setIsTried } = useStore()
 const emit = defineEmits(['nextChange'])

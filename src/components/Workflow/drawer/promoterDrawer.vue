@@ -28,7 +28,7 @@
 <script setup>
 import employeesDialog from '../dialog/employeesDialog.vue'
 import $func from '@/utils/flow/index'
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import { computed, ref, watch } from 'vue'
 let flowPermission = ref([])
 let promoterVisible = ref(false)

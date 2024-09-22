@@ -89,7 +89,7 @@
 <script setup>
 import { onMounted, ref, watch, getCurrentInstance, computed } from "vue";
 import $func from "@/utils/flow/index";
-import { useStore } from '@/store/modules/flow'
+import { useStore } from '@/store/modules/workflow'
 import { bgColors, placeholderList } from '@/utils/flow/const'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
 let _uid = getCurrentInstance().uid;

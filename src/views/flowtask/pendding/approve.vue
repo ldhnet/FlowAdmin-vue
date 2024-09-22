@@ -87,9 +87,9 @@ import { ref, markRaw, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import cache from '@/plugins/cache';
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
-import FlowStepTable from "@/components/flow/flowStepTable.vue"
-import ReviewWarp from "@/components/flow/reviewWarp.vue"
-import employeesDialog from '@/components/flow/dialog/usersDialog.vue'
+import FlowStepTable from "@/components/Workflow/flowStepTable.vue"
+import ReviewWarp from "@/components/Workflow/reviewWarp.vue"
+import employeesDialog from '@/components/Workflow/dialog/usersDialog.vue'
 import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
 
 const { proxy } = getCurrentInstance()
