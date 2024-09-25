@@ -23,15 +23,7 @@ let formCols = [{
     "required": true,
     "step": 24,
     "sort": 1,
-}, {
-    "colType": "text",
-    "colName": "userName",
-    "label": "姓名:",
-    "value": "张三",
-    "required": true,
-    "step": 24,
-    "sort": 4,
-}, {
+},  {
     "colType": "text",
     "colName": "sex",
     "label": "性别:",

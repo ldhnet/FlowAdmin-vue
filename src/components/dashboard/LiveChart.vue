@@ -114,4 +114,9 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.live-chart {
+    width: 100%;
+    height: 100%;
+}
+</style>
