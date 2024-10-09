@@ -10,10 +10,10 @@ export let placeholderList = ["发起人", "审核人", "抄送人"];
 export let nodeTypeList = ["未知", "发起人", "网关", "条件", "审核人", "抄送人"];
 
 export let setTypes = [
-  { value: 4, label: '指定角色' },  
+  //{ value: 4, label: '指定角色' },  
   { value: 5, label: '指定人员' }, 
-  { value: 6, label: 'HRBP' },
-  { value: 13, label: '直属领导' },
+  //{ value: 6, label: 'HRBP' },
+  //{ value: 13, label: '直属领导' },
   // { value: 2, label: '层层审批' },
   // { value: 3, label: '指定层级审批' },
   // { value: 8, label: '关联业务表' },

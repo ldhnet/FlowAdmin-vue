@@ -4,9 +4,11 @@
         <div class="demo-drawer__content">
             <div class="drawer_content">
                 <div class="approver_content">
+                    <p><font color="red"><p style="font-weight: 100;font-size: small;">*测试环境，仅开放指定人员</p></font></p>
                     <el-radio-group v-model="approverConfig.setType" class="clear" @change="changeType">
-                        <el-radio v-for="({ value, label }) in setTypes" :value="value">{{ label }}</el-radio>
+                        <el-radio v-for="({ value, label }) in setTypes" :value="value">{{ label }}</el-radio> 
                     </el-radio-group>
+               
                     <el-button type="primary" @click="addApprover" v-if="approverConfig.setType == 5">添加/修改人员</el-button>
                     <p class="selected_list" v-if="approverConfig.setType == 5">
                         <span v-for="(item, index) in approverConfig.nodeApproveList" :key="index">{{ item.name }}
