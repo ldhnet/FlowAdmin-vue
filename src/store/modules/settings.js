@@ -1,9 +1,12 @@
 import defaultSettings from '@/settings'
 import { useDynamicTitle } from '@/utils/dynamicTitle'
+import packageData from '../../../package.json'
 
 const { sideTheme, showSettings, topNav, tagsView, fixedHeader, sidebarLogo, dynamicTitle } = defaultSettings
 
 const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || ''
+
+const versionSetting = localStorage.getItem('version-setting') || packageData.version
 
 const useSettingsStore = defineStore(
   'settings',
@@ -17,7 +20,8 @@ const useSettingsStore = defineStore(
       tagsView: storageSetting.tagsView === undefined ? tagsView : storageSetting.tagsView,
       fixedHeader: storageSetting.fixedHeader === undefined ? fixedHeader : storageSetting.fixedHeader,
       sidebarLogo: storageSetting.sidebarLogo === undefined ? sidebarLogo : storageSetting.sidebarLogo,
-      dynamicTitle: storageSetting.dynamicTitle === undefined ? dynamicTitle : storageSetting.dynamicTitle
+      dynamicTitle: storageSetting.dynamicTitle === undefined ? dynamicTitle : storageSetting.dynamicTitle,
+      version: versionSetting
     }),
     actions: {
       // 修改布局设置

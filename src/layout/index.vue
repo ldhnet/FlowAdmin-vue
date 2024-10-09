@@ -14,14 +14,15 @@
 </template>
 
 <script setup>
+import { ElMessageBox } from 'element-plus'
 import { useWindowSize } from '@vueuse/core'
 import Sidebar from './components/Sidebar/index.vue'
 import { AppMain, Navbar, Settings, TagsView } from './components'
-import defaultSettings from '@/settings'
-
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
-
+import { getCurrentVersion } from "@/api/version"
+ 
+ 
 const settingsStore = useSettingsStore()
 const theme = computed(() => settingsStore.theme);
 const sideTheme = computed(() => settingsStore.sideTheme);
@@ -62,6 +63,31 @@ function handleClickOutside() {
 const settingRef = ref(null);
 function setLayout() {
   settingRef.value.openSetting();
+}
+
+const timerCheckVersion = setInterval(() => {
+  checkVersion();
+},1000)
+
+function checkVersion() {
+  const versionSetting = settingsStore.version
+  if(!versionSetting) return 
+  getCurrentVersion().then(res => {
+      if (res.version !== versionSetting) {
+        clearInterval(timerCheckVersion)
+        reloadNotifier(res.version);
+      }
+    })
+}
+function reloadNotifier(version) { 
+    ElMessageBox.confirm('检测到有新版本，点击“立即刷新”获取最新版本', '发现新版本', {
+      confirmButtonText: '立即刷新',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      localStorage.setItem('version-setting',version) 
+      location.reload();
+    }).catch(() => {});
 }
 </script>
 
