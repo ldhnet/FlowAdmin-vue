@@ -67,13 +67,13 @@ function setLayout() {
 
 const timerCheckVersion = setInterval(() => {
   checkVersion();
-},1000)
+},1000 * 60 * 60)
 
 function checkVersion() {
   const versionSetting = settingsStore.version
   if(!versionSetting) return 
   getCurrentVersion().then(res => {
-      if (res.version !== versionSetting) {
+      if (res.version !== versionSetting && res.must) {
         clearInterval(timerCheckVersion)
         reloadNotifier(res.version);
       }
