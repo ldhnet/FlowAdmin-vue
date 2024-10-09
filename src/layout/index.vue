@@ -86,7 +86,7 @@ function reloadNotifier(version) {
       type: 'warning'
     }).then(() => {
       localStorage.setItem('version-setting',version) 
-      location.reload();
+      location.reload(true);
     }).catch(() => {});
 }
 </script>
