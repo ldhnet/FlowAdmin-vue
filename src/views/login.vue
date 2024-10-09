@@ -95,7 +95,7 @@ function handleLogin() {
         return;    
     }  
   cache.session.set('userId', userId.value); 
-  cache.session.set('userName', _userName.value);  
+  cache.session.set('userName', encodeURIComponent(_userName.value));   
   proxy.$refs.loginRef.validate(valid => {  
     if (valid) { 
       loading.value = true;

@@ -210,6 +210,65 @@
                 "noCache": false,
                 "link": "http://117.72.70.166:7001/doc.html"
             }
+        }, {
+            "name": "outsideMgt",
+            "path": "/outsideMgt",
+            "hidden": true,
+            "redirect": "noRedirect",
+            "component": "Layout",
+            "alwaysShow": true,
+            "meta": {
+                "title": "三方管理",
+                "icon": "component",
+                "noCache": false,
+                "link": null
+            },
+            "children": [{
+                    "name": "outsideJoin",
+                    "path": "outsideJoin",
+                    "hidden": false,
+                    "component": "outsideMgt/outsideJoin/index",
+                    "meta": {
+                        "title": "三方申请",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },{
+                    "name": "outsideApp",
+                    "path": "outsideApp",
+                    "hidden": false,
+                    "component": "outsideMgt/outsideApp/index",
+                    "meta": {
+                        "title": "三方应用",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },{
+                    "name": "outsideTemp",
+                    "path": "outsideTemp",
+                    "hidden": false,
+                    "component": "outsideMgt/outsideTemp/index",
+                    "meta": {
+                        "title": "三方模板",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },{
+                    "name": "outsideDesign",
+                    "path": "outsideDesign",
+                    "hidden": false,
+                    "component": "outsideMgt/outsideDesign/index",
+                    "meta": {
+                        "title": "三方设计",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                }
+            ]
         }
     ]
 }
