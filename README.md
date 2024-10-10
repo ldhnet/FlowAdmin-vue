@@ -9,8 +9,9 @@
 -  在线预览  &nbsp;&nbsp; [预览入口](http://117.72.70.166/admin/) &nbsp;&nbsp;&nbsp; [系统操作手册](https://gitee.com/ldhnet/FlowAdmin-vue/wikis/pages?sort_id=12305957&doc_id=5841736)
 -  📢📢预览功能以及API介绍文档来啦(持续完善中...) [wiki](https://gitee.com/ldhnet/FlowAdmin-vue/wikis)
 -  📢📢📢后端功能即将开源,加关注加群及时了解最新动态
--  📢📢 **antflow后端开源啦!!** | 🆓 **完全开源免费,无付费引导** 都不会有收费功能,可放心使用** 
--  开源地址vue3版本 [Gitee仓库](https://gitee.com/ldhnet/FlowAdmin-vue.git)  点个星吧！ 
+-  📢📢 **antflow后端开源啦!!** | 🆓 **完全开源免费,无付费引导,可放心使用** 
+-  开源前端地址 [Gitee仓库](https://gitee.com/ldhnet/AntFlow-Vue3) |    [GitHub仓库](https://github.com/ldhnet/AntFlow-Vue3) 
+-  开源后端地址 [Gitee仓库](https://gitee.com/tylerzhou/Antflow) | [Github仓库](https://github.com/mrtylerzhou/AntFlow) 
  - QQ技术交流群（972107977） 期待您的加入
  - 有疑问可以Issues留言，我们会认真对待
   [issues地址](https://gitee.com/ldhnet/FlowAdmin-vue/issues)
