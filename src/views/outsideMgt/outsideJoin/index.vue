@@ -23,11 +23,17 @@
       <el-table-column label="业务方标识" align="center" prop="businessPartyMark" />
       <el-table-column label="业务方名字" align="center" prop="name" />
       <el-table-column label="审批流类型" align="center" prop="typeName" />
-      <el-table-column label="流程管理员" align="center" prop="name" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
+      </el-table-column>
+      <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width">
+            <template #default="scope">
+               <el-button link type="primary" icon="Edit" @click="handleEdit(scope.row)">编辑</el-button>
+               <el-button link type="primary" icon="Delete"  @click="handleDelete(scope.row)">删除</el-button>
+            </template>
       </el-table-column>
     </el-table>
 
@@ -81,7 +87,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getBusinessPartyList, setBusinessParty } from "@/api/mockoutside";
+import { getBusinessPartyList, setBusinessParty,getBusinessPartyDetail } from "@/api/mockoutside";
 const { proxy } = getCurrentInstance();
 const list = ref([]);
 const loading = ref(false);
@@ -152,6 +158,23 @@ function submitForm() {
     }
   });
 }
+/** 修改按钮操作 */
+function handleEdit(row) {  
+  reset();
+  const id = row.id;
+  getBusinessPartyDetail(id).then(response => {
+    form.value = response.data; 
+    form.value.type = form.value.type.toString();
+    open.value = true;
+    title.value = "编辑业务方"; 
+  });
+}
+
+/** 删除按钮操作 */
+function handleDelete(row) {  
+  proxy.$modal.msgError("演示环境不允许删除操作！");
+}
+
 /** 取消操作表单 */
 function cancel() {
   open.value = false;
