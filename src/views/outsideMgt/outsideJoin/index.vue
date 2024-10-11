@@ -1,9 +1,186 @@
 <template>
-    <div class="app-container">
-      <h5>三方申请</h5>
-    </div>
-  </template> 
-  
-  <script setup>
-  
-  </script>
+  <div class="app-container">
+    <el-form :model="vo" ref="queryRef" :inline="true" v-show="showSearch">
+      <el-form-item label="业务方标识" prop="businessPartyMark">
+        <el-input v-model="vo.businessPartyMark" placeholder="请输入关键字" clearable style="width: 200px"
+          @keyup.enter="handleQuery" />
+      </el-form-item>
+      <el-form-item label="业务方名字" prop="name">
+        <el-input v-model="vo.name" placeholder="请输入关键字" clearable style="width: 200px" @keyup.enter="handleQuery" />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
+      </el-col>
+    </el-row>
+    <el-table v-loading="loading" :data="list">
+      <el-table-column label="业务方标识" align="center" prop="businessPartyMark" />
+      <el-table-column label="业务方名字" align="center" prop="name" />
+      <el-table-column label="审批流类型" align="center" prop="typeName" />
+      <el-table-column label="流程管理员" align="center" prop="name" />
+      <el-table-column label="创建时间" align="center" prop="createTime">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total > 0" :total="total" v-model:page="page.page" v-model:limit="page.pageSize"
+      @pagination="getList" />
+
+    <!-- 添加或修改委托对话框 -->
+    <el-dialog :title="title" v-model="open" width="550px" append-to-body>
+      <el-form :model="form" :rules="rules" ref="formRef" label-width="130px" style="margin: 0 20px;">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="业务方标识" prop="businessPartyMark">
+              <el-input v-model="form.businessPartyMark" placeholder="请输入业务方标识" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="业务方名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入业务方名称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="审批流类型" prop="type">
+              <el-radio-group v-model="form.type">
+                <el-radio value="1">嵌入式</el-radio>
+                <el-radio value="2">调入式</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="备注">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { getBusinessPartyList, setBusinessParty } from "@/api/mockoutside";
+const { proxy } = getCurrentInstance();
+const list = ref([]);
+const loading = ref(false);
+const showSearch = ref(true);
+const total = ref(0);
+
+const open = ref(false);
+const title = ref("");
+
+const data = reactive({
+  form: {},
+  page: {
+    page: 1,
+    pageSize: 10
+  },
+  vo: {},
+  rules: {
+    businessPartyMark: [{ required: true, message: '请输入业务方标识', trigger: 'blur' }],
+    name: [{ required: true, message: '请输入业务方名称', trigger: 'blur' }],
+    type: [{ required: true, message: '', trigger: 'change' }]
+  }
+});
+const { page, vo, form, rules } = toRefs(data);
+
+onMounted(async () => {
+  getList();
+})
+
+
+/** 查询岗位列表 */
+function getList() {
+  loading.value = true;
+  getBusinessPartyList(page.value, vo.value).then(response => {
+    list.value = response.data;
+    total.value = response.pagination.totalCount;
+    loading.value = false;
+  }).catch(() => {
+    loading.value = false;
+  });
+}
+/** 新增接入业务方 */
+function handleAdd() {
+  reset();
+  title.value = "添加业务方";
+  open.value = true;
+}
+/** 提交表单 */
+function submitForm() {
+  proxy.$refs["formRef"].validate(valid => {
+    if (valid) {
+      if (form.value.id != undefined) {
+        setBusinessParty(form.value).then(response => {
+          proxy.$modal.msgSuccess("修改成功");
+          open.value = false;
+          getList();
+        });
+      } else {
+        setBusinessParty(form.value).then(response => {
+          if (response.code != 200) {
+            proxy.$modal.msgError("新增失败");
+            return;
+          }
+          proxy.$modal.msgSuccess("新增成功");
+          open.value = false;
+          getList();
+        });
+      }
+    }
+  });
+}
+/** 取消操作表单 */
+function cancel() {
+  open.value = false;
+  reset();
+}
+
+/** 重置操作表单 */
+function reset() {
+  form.value = {
+    id: undefined,
+    businessPartyMark: undefined,
+    name: undefined,
+    type: undefined,
+    remark: undefined
+  };
+  proxy.resetForm("queryRef");
+};
+
+/** 搜索按钮操作 */
+function handleQuery() {
+  page.value.page = 1;
+  getList();
+}
+
+/** 重置按钮操作 */
+function resetQuery() {
+  vo.value = {};
+  proxy.resetForm("queryRef");
+  handleQuery();
+}
+
+</script>
