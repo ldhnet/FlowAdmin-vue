@@ -115,8 +115,8 @@ onMounted(async () => {
 function getList() {
   loading.value = true;
   getBusinessPartyList(page.value, vo.value).then(response => {
-    list.value = response.data;
-    total.value = response.pagination.totalCount;
+    list.value = response.data.data;
+    total.value = response.data.pagination.totalCount;
     loading.value = false;
   }).catch(() => {
     loading.value = false;
