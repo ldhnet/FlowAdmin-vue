@@ -117,7 +117,7 @@ onMounted(async () => {
 })
 
 
-/** 查询岗位列表 */
+/** 查询接入业务方列表 */
 function getList() {
   loading.value = true;
   getBusinessPartyList(page.value, vo.value).then(response => {

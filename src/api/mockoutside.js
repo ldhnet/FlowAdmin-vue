@@ -43,6 +43,19 @@ export function getBusinessPartyDetail(id) {
 export function setBusinessParty(data) { 
   return http.post(`${baseUrl}/outSideBpm/businessParty/edit`, data, { headers })
 } 
+/**
+ * 获取业务方应用列表
+ * @param {*} page 
+ * @param {*} vo 
+ * @returns 
+ */
+export function getApplicationsPageList(page,vo) {
+  let data = {
+    "page": page,
+    "vo": vo
+  }
+  return http.get(`${baseUrl}/outSideBpm/businessParty/applicationsPageList`,data, { headers })
+}
 
 /**
  * 接入业务方应用注册
@@ -52,7 +65,14 @@ export function setBusinessParty(data) {
 export function registerApplication(data) {
   return http.post(`${baseUrl}/outSideBpm/businessParty/registerApplication`, data, { headers })
 } 
-
+/**
+ * 获取注册应用详情
+ * @param {*} data 
+ * @returns 
+ */
+export function getApplicationDetail(id) {
+  return http.get(`${baseUrl}/outSideBpm/businessParty/applicationDetail/${id}`, { headers })
+} 
 /**
  * 获取可用接入业务方的标识
  * @param { String } businessPartyMark 
@@ -61,3 +81,11 @@ export function registerApplication(data) {
 export function getPartyMarkByIdBpmConf(businessPartyMark) {
   return http.get(`${baseUrl}/outSideBpm/businessParty/getPartyMarkByIdBpmConf/${businessPartyMark}`, { headers })
 }
+/**
+ * 获取业务方k-v 
+ * @returns 
+ */
+export function getPartyMarkKV() {
+  return http.get(`${baseUrl}/outSideBpm/businessParty/getPartyMarkKV`, { headers })
+}
+ 
