@@ -14,17 +14,20 @@
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
+   
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
       </el-col>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
+
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="业务方标识" align="center" prop="businessPartyMark" />
-      <el-table-column label="业务方名字" align="center" prop="name" />
-      <el-table-column label="审批流类型" align="center" prop="typeName" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="业务方标识" align="center" prop="businessPartyMark" v-if="columns[0].visible" :show-overflow-tooltip="true" />
+      <el-table-column label="业务方名字" align="center" prop="name" v-if="columns[1].visible" :show-overflow-tooltip="true" />
+      <el-table-column label="审批流类型" align="center" prop="typeName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
+      <el-table-column label="备注" align="center" prop="remark" v-if="columns[3].visible" :show-overflow-tooltip="true" />
+      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[4].visible" >
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
@@ -116,6 +119,14 @@ onMounted(async () => {
   getList();
 })
 
+// 列显隐信息
+const columns = ref([
+  { key: 0, label: `业务方标识`, visible: true },
+  { key: 1, label: `业务方名字`, visible: true },
+  { key: 2, label: `审批流类型`, visible: true },
+  { key: 3, label: `备注`, visible: true }, 
+  { key: 4, label: `创建时间`, visible: true }
+]);
 
 /** 查询接入业务方列表 */
 function getList() {
