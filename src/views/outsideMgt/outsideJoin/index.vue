@@ -48,7 +48,15 @@
       <el-form :model="form" :rules="rules" ref="formRef" label-width="130px" style="margin: 0 20px;">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="业务方标识" prop="businessPartyMark">
+            <el-form-item prop="businessPartyMark">
+              <template #label>
+                  <span>
+                     <el-tooltip content="业务方唯一标识" placement="top">
+                        <el-icon><question-filled /></el-icon>
+                     </el-tooltip>
+                     业务方标识
+                  </span>
+               </template>
               <el-input v-model="form.businessPartyMark" placeholder="请输入业务方标识" />
             </el-form-item>
           </el-col>

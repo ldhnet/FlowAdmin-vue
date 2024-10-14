@@ -19,7 +19,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24" v-if="!props.isPreview">
-                    <el-form-item prop="remark" style="float: right;">
+                    <el-form-item style="float: right;">
                         <el-button type="primary" @click="handleSubmit">提交</el-button>
                     </el-form-item>
                 </el-col>
@@ -29,8 +29,7 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive, getCurrentInstance } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, watch, reactive, getCurrentInstance } from 'vue' 
 const { proxy } = getCurrentInstance()
 
 let props = defineProps({
@@ -90,7 +89,7 @@ const handleSubmit = () => {
 const handleValidate = () => {
     return proxy.$refs['ruleFormRef'].validate((valid) => {
         if (!valid) {
-            ElMessage.error('请先填写表单');
+            return false;
         }
     });
 }

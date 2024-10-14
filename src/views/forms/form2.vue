@@ -47,8 +47,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, reactive, getCurrentInstance } from 'vue' 
 const { proxy } = getCurrentInstance()
 let props = defineProps({
     previewData: {
@@ -133,7 +132,7 @@ const handleSubmit = () => {
 const handleValidate = () => {
     return proxy.$refs['ruleFormRef'].validate((valid) => {
         if (!valid) {
-            ElMessage.error('请先填写表单');
+            return false;
         }
     });
 }
