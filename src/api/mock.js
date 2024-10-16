@@ -1,5 +1,4 @@
- 
-import http from '@/utils/axios' 
+ import http from '@/utils/axios' 
 let baseUrl = import.meta.env.BASE_URL
 
 /**

@@ -1,0 +1,46 @@
+{
+  "code": "200",
+  "msg": "操作成功",
+  "data": [
+    {
+      "columnId": "1",
+      "showType": "2",
+      "showName": "支出费用",
+      "columnName": "outTotalMoney",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+    },
+    {
+      "columnId": "2",
+      "showType": "2",
+      "showName": "请假时长",
+      "columnName": "purchaseType",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
+    },
+    {
+      "columnId": "3",
+      "showType": "2",
+      "showName": "采购费用",
+      "columnName": "purchaseMoney",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2W\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于5W\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于10W\",\"disabled\":\"false\"}]"
+    },
+    {
+      "columnId": "4",
+      "showType": "2",
+      "showName": "账户类型",
+      "columnName": "accountType",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"腾讯云\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"百度云\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"阿里云\",\"disabled\":\"false\"}]"
+    },
+    {
+      "columnId": "5",
+      "showType": "2",
+      "showName": "职级",
+      "columnName": "jobLevelType",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"CEO\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"CTO\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"CFO\",\"disabled\":\"false\"}]"
+    } 
+  ]
+}

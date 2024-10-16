@@ -8,70 +8,16 @@
                     <el-radio-group v-model="approverConfig.setType" class="clear" @change="changeType">
                         <el-radio v-for="({ value, label }) in setTypes" :value="value">{{ label }}</el-radio> 
                     </el-radio-group>
-               
-                    <el-button type="primary" @click="addApprover" v-if="approverConfig.setType == 5">添加/修改人员</el-button>
-                    <p class="selected_list" v-if="approverConfig.setType == 5">
-                        <span v-for="(item, index) in approverConfig.nodeApproveList" :key="index">{{ item.name }}
-                            <img src="@/assets/images/add-close1.png"
-                                @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
-                        </span>
-                        <a v-if="approverConfig.nodeApproveList.length != 0"  @click="approverConfig.nodeApproveList = []">清除</a>
-                    </p>
-                </div>
-                <div class="approver_manager" v-if="approverConfig.setType == 3">
-                    <p>
-                        <span>发起人的：</span>
-                        <select v-model="approverConfig.directorLevel">
-                            <option v-for="item in directorMaxLevel" :value="item" :key="item">
-                                {{ item == 1 ? '直接' : '第' + item + '级' }}主管</option>
-                        </select>
-                    </p>
-                    <p class="tip">找不到主管时，由上级主管代审批</p>
-                </div>
 
-                <div class="approver_self_select" v-show="approverConfig.setType == 4">
-                    <el-button type="primary" @click="addRoleApprover">添加/修改角色</el-button>
+                    <el-button type="primary" @click="addApprover" v-if="approverConfig.setType == 5">添加成员</el-button>
                     <p class="selected_list">
-                        <span v-for="(item, index) in approverConfig.nodeApproveList" :key="index">{{ item.name }}
-                            <img src="@/assets/images/add-close1.png"
-                                @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
+                        <span v-for="(item,index) in approverConfig.nodeApproveList" :key="index">{{item.name}}
+                            <img src="@/assets/images/add-close1.png" @click="$func.removeEle(approverConfig.nodeApproveList,item,'targetId')">
                         </span>
-                        <a v-if="approverConfig?.nodeApproveList?.length != 0"
-                            @click="approverConfig.nodeApproveList = []">清除</a>
+                        <a v-if="approverConfig.nodeApproveList&&approverConfig.nodeApproveList.length!=0" @click="approverConfig.nodeApproveList=[]">清除</a>
                     </p>
                 </div>
-                <div class="approver_self_select" v-show="approverConfig.setType == 14">
-                    <el-button type="primary" @click="addRoleApprover">添加/修改部门</el-button>
-                    <p class="selected_list">
-                        <span v-for="(item, index) in approverConfig.nodeApproveList" :key="index">{{ item.name }}
-                            <img src="@/assets/images/add-close1.png"
-                                @click="$func.removeEle(approverConfig.nodeApproveList, item, 'targetId')">
-                        </span>
-                        <a v-if="approverConfig.nodeApproveList?.length != 0"
-                            @click="approverConfig.nodeApproveList = []">清除</a>
-                    </p>
-                </div>
-               
-                <div class="approver_self" v-if="approverConfig.setType == 6">
-                    <p>HRBP选择设置</p>
-                    <div class="approver_some">
-                        <el-select  v-model="checkedHRBP" placeholder="请选择">
-                            <el-option
-                                v-for="item in hrbpOptions" required
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            />
-                        </el-select>
-                    </div> 
-                </div>
-                <div class="approver_self" v-if="approverConfig.setType == 12">
-                    <p>该审批节点设置“发起人自己”后，审批人默认为发起人</p>
-                </div>
-                <div class="approver_self" v-if="approverConfig.setType == 13">
-                    <p>该审批节点设置“直属领导”后，审批人默认为发起人的直属领导</p>
-                </div>
-
+    
                 <el-tabs v-model="activeName" class="set-tabs">
                     <el-tab-pane label="基础设置" name="baseTab">                        
                         <div class="approver_some">
@@ -120,19 +66,17 @@
             <div class="demo-drawer__footer clear">
                 <el-button type="primary" @click="saveApprover">确 定</el-button>
                 <el-button @click="closeDrawer">取 消</el-button>
-            </div>
-            <employees-dialog v-model:visible="approverVisible" :data="checkedList" @change="sureApprover" />
-            <role-dialog v-model:visible="approverRoleVisible" :data="checkedRoleList" @change="sureRoleApprover" />
+            </div> 
+            <selectUser  v-model:visible="approverVisible" :data="userSelectedList"  @change="sureApprover" />
         </div>
     </el-drawer>
 </template>
 <script setup>
 import { ref, watch, computed } from 'vue' 
+import selectUser from '../dialog/selectUserDialog.vue'
 import $func from '@/utils/flow/index'
-import { setTypes,hrbpOptions,approvalPageButtons } from '@/utils/flow/const'
-import { useStore } from '@/store/modules/workflow'
-import employeesDialog from '../dialog/employeesDialog.vue'
-import roleDialog from '../dialog/roleDialog.vue' 
+import { setTypes,approvalPageButtons } from '@/utils/flow/const'
+import { useStore } from '@/store/modules/outsideflow'  
 let store = useStore()
 let props = defineProps({
     directorMaxLevel: {
@@ -140,22 +84,21 @@ let props = defineProps({
         default: 0
     }
 });
+let approverVisible = ref(false)
 
 const activeName = ref('baseTab')
-let approverConfig = ref({})
-let approverVisible = ref(false)
-let approverRoleVisible = ref(false)
-let checkedRoleList = ref([])
-let checkedList = ref([]) 
-let checkApprovalPageBtns = ref([])
-let checkedHRBP = ref('') 
+let approverConfig = ref({}) 
+let checkApprovalPageBtns = ref([]) 
 let approvalPageBtns = ref([]) 
+ 
+const userSelectedList = ref([]) 
 
 let afterSignUpWayVisible = computed(()=> approverConfig.value?.isSignUp == 1) 
 let checkAfterSignUpWay = ref(false)
  
 let approverConfig1 = computed(() => store.approverConfig1)
 let approverDrawer = computed(() => store.approverDrawer)
+
 let visible = computed({
     get() {
         return approverDrawer.value
@@ -163,62 +106,38 @@ let visible = computed({
     set() {
         closeDrawer()
     }
-}) 
- 
+})  
+/**监听对象 */
 watch(approverConfig1, (val) => { 
     approverConfig.value = val.value;   
     checkApprovalPageBtns.value = val.value.buttons?.approvalPage;   
 })
-watch(approverConfig1, (val) => { 
-    approvalPageBtns.value = val.value.buttons?.approvalPage;   
-    if (val.value.nodeProperty == 6) {
-        val.value.nodeApproveList.length > 0 && val.value.nodeApproveList.map(item => {
-            checkedHRBP.value = item.targetId
-        })
-    }   
-})
+/**监听属性 */
 watch(() => approverConfig.value?.property?.afterSignUpWay, (newVal, oldVal) => { 
         checkAfterSignUpWay.value = newVal == 1?true:false
     } 
 )
-watch(checkedHRBP, (val) => {  
-    let labelName = hrbpOptions.find(item => item.value == val)?.label; 
-    approverConfig.value.nodeApproveList = [{"type":6,"targetId":val,"name":labelName}]; 
-  
-})
-
-const changeType = (val) => {
-    //console.log('typevale=====>',val);
-    
+/**选择审批人类型 */
+const changeType = (val) => {  
     approverConfig.value.nodeApproveList = [];
     approverConfig.value.signType = 1;
     approverConfig.value.noHeaderAction = 2;
-    checkedHRBP.value = ''; 
-    if (val == 3) {
-        approverConfig.value.directorLevel = 1;
-    } else {
-
-    }
-}
+    approverConfig.value.directorLevel = 1; 
+} 
+/**选择人员 */
 const addApprover = () => {
     approverVisible.value = true;
-    checkedList.value = approverConfig.value.nodeApproveList
+    userSelectedList.value = approverConfig.value.nodeApproveList;
 }
-const addRoleApprover = () => {
-    approverRoleVisible.value = true;
-    checkedRoleList.value = approverConfig.value.nodeApproveList
-}
+/**保存选中人员 */
 const sureApprover = (data) => {
     approverConfig.value.nodeApproveList = data;
     approverVisible.value = false;
 }
-const sureRoleApprover = (data) => {
-    approverConfig.value.nodeApproveList = data;
-    approverRoleVisible.value = false;
-}
-const saveApprover = () => { 
-    approverConfig.value.error = !$func.setApproverStr(approverConfig.value) 
-    //console.log('approverConfig.===saveApprover=======',JSON.stringify(approverConfig.value)) 
+/**保存并关闭抽屉 */
+const saveApprover = () => {  
+    console.log(' approverConfig.value.nodeApproveList=======',JSON.stringify(approverConfig.value.nodeApproveList)) 
+    approverConfig.value.error = !$func.setApproverStr(approverConfig.value)     
     store.setApproverConfig({
         value: approverConfig.value,
         flag: true,
@@ -226,10 +145,7 @@ const saveApprover = () => {
     })
     closeDrawer()
 }
-const closeDrawer = () => {
-    store.setApprover(false)
-}
-  
+/**选择审批页面按钮显示 */
 const handleCheckedButtonsChange = (val) =>  {   
     const index = approvalPageBtns.value.indexOf(val); 
     index < 0 ? approvalPageBtns.value.push(val) : approvalPageBtns.value.splice(index, 1);    
@@ -240,6 +156,7 @@ const handleCheckedButtonsChange = (val) =>  {
         approverConfig.value.isSignUp = 0;
     }
 }
+/**选择审批页面 打回后是否回到审批人 */
 const handleAfterSignUpWay = (val) => {
     const isTure = approverConfig.value.hasOwnProperty("property");
     if (isTure) {
@@ -252,18 +169,16 @@ const handleAfterSignUpWay = (val) => {
         Object.assign(approverConfig.value, {
             property: { afterSignUpWay: val ? 1 : 2 }
         });
-    }
-    console.log('approverConfig.value=============',JSON.stringify(approverConfig.value))
+    } 
 }
+/**关闭抽屉 */
+const closeDrawer = () => {
+    store.setApprover(false)
+} 
 
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
-
-.el-drawer__header{
-    margin-bottom: 5px !important;
-}
-
 .selected_list {
     margin-bottom: 20px;
     line-height: 30px;
@@ -271,10 +186,10 @@ const handleAfterSignUpWay = (val) => {
 
 .selected_list span {
     margin-right: 10px;
-    padding: 3px 6px 3px 9px;
-    line-height: 12px;
+    padding: 8px 15px 8px 20px;
+    line-height: 40px;
     white-space: nowrap;
-    border-radius: 2px;
+    border-radius: 20px;
     border: 1px solid rgba(220, 220, 220, 1);
 }
 
@@ -290,6 +205,7 @@ const handleAfterSignUpWay = (val) => {
     color: #46a6fe;
     cursor: pointer;
 }
+
 .el-tabs { 
     margin-left: 20px !important;
 }
@@ -297,6 +213,7 @@ const handleAfterSignUpWay = (val) => {
     .approver_content {
         padding-bottom: 10px;
         border-bottom: 1px solid #f2f2f2;
+        min-height: 250px;
     }
 
     .approver_self_select,

@@ -1,0 +1,51 @@
+{
+    "code": "200",
+    "msg": "success",
+    "data": {
+        "bpmnCode": null,
+        "bpmnName": null,
+        "bpmnType": null,
+        "formCode": null,
+        "appId": null,
+        "deduplicationType": 1,
+        "effectiveStatus": 0,
+        "remark": "",
+        "isDel": 0,
+        "nodes": [ 
+            {
+                "confId": 35,
+                "nodeId": "Gb2",
+                "nodeType": 1,
+                "nodeProperty": 1,
+                "nodePropertyName": null,
+                "nodeFrom": "",
+                "nodeFroms": null,
+                "prevId": [],
+                "batchStatus": 0,
+                "approvalStandard": 2,
+                "nodeName": "发起人",
+                "nodeDisplayName": "发起人",
+                "annotation": null,
+                "isDeduplication": 0,
+                "isSignUp": 0,
+                "orderedNodeType": null,
+                "remark": "",
+                "isDel": 0,
+                "nodeTo": [],
+                "property": null,
+                "params": null,
+                "buttons": {
+                    "startPage": [],
+                    "approvalPage": [
+                        2
+                    ],
+                    "viewPage": null
+                },
+                "templateVos": null,
+                "approveRemindVo": null,
+                "formCode": "PROJECT_uoSXu4",
+                "conditionNodes": []
+            }
+        ]
+    }
+}

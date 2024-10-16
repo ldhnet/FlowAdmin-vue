@@ -6,21 +6,28 @@
 -->
 <template>
     <el-drawer :append-to-body="true" title="发起人" v-model="visible" class="set_promoter"  :with-header="false" :size="680">
-        <span class="drawer-title">发起人</span> 
-        <div class="demo-drawer__content">
+        <span class="drawer-title">选择发起人</span>  
+        <div class="demo-drawer__content"> 
             <div class="promoter_content drawer_content">
-                <p>{{ $func.arrToStr(flowPermission) || '所有人' }}</p>
-                <el-button type="primary" @click="addPromoter">添加/修改发起人</el-button>
+
+                <span style="font-size: small;color: red;">*发起人 默认全部，预览环境不支持修改，可以联系管理员</span>
+
+                <!-- <p>{{ $func.arrToStr(flowPermission) || '所有人' }}</p>
+                <el-button type="primary" @click="addPromoter">添加/修改发起人</el-button> -->
             </div>
             <div class="demo-drawer__footer clear">
                 <el-button type="primary" @click="savePromoter">确 定</el-button>
                 <el-button @click="closeDrawer">取 消</el-button>
-            </div>
-  
+            </div> 
+            <selectUser
+                v-model:visible="promoterVisible"
+                :data="checkedList"
+                @change="surePromoter" />
         </div>
     </el-drawer>
 </template>
-<script setup> 
+<script setup>
+import selectUser from '../dialog/selectUserDialog.vue'
 import $func from '@/utils/flow/index'
 import { useStore } from '@/store/modules/outsideflow'
 import { computed, ref, watch } from 'vue'
@@ -77,7 +84,7 @@ const closeDrawer = () => {
             padding: 18px 0;
             font-size: 14px;
             line-height: 20px;
-            color: #000000;
+            color: #000000; 
         }
     }
 }

@@ -165,7 +165,7 @@ function getList() {
 /** 新增接入业务方 */
 function handleAdd() {
   reset();
-  title.value = "添加业务方";
+  title.value = "注册应用";
   open.value = true;
 }
 /** 提交表单 */
@@ -201,7 +201,7 @@ function handleEdit(row) {
     form.value.applyType = form.value.applyType.toString();
     form.value.isSon = form.value.isSon?.toString();
     open.value = true;
-    title.value = "编辑业务方";
+    title.value = "编辑应用";
   });
 }
 

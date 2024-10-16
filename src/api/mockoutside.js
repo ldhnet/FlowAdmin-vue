@@ -10,8 +10,8 @@ const headers = {
   "Userid": cache.session.get('userId'),
   "Username": cache.session.get('userName')
 }
-//let baseUrl = "http://117.72.70.166:7001";
-let baseUrl = "http://localhost:7001";
+let baseUrl = "http://117.72.70.166:7001";
+//let baseUrl = "http://localhost:7001";
 
 /**
  * 获取接入业务方列表
@@ -89,3 +89,24 @@ export function getPartyMarkKV() {
   return http.get(`${baseUrl}/outSideBpm/businessParty/getPartyMarkKV`, { headers })
 }
  
+
+
+/** 流程设计 * /
+ 
+/**
+ * 获取审批数据
+ * @param { Number } id 
+ * @returns 
+ */
+export function getApiWorkFlowData(data) {
+  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
+}
+ 
+/**
+ * 设置审批数据
+ * @param {*} data 
+ * @returns 
+ */
+export function setApiWorkFlowData(data) {
+  return http.post(`${baseUrl}/bpmnConf/edit`, data, { headers })
+}

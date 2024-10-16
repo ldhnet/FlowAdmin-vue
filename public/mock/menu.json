@@ -213,7 +213,7 @@
         }, {
             "name": "outsideMgt",
             "path": "/outsideMgt",
-            "hidden": true,
+            "hidden": false,
             "redirect": "noRedirect",
             "component": "Layout",
             "alwaysShow": true,

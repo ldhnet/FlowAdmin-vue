@@ -108,6 +108,13 @@ All.prototype = {
         }
         return arr.join("或")
     },  
+    getLabelStr(str, obj) {
+        let ret = obj.find(c => c.value === str);
+        if (ret) {
+            return ret.label;
+        }
+        return '';
+    },  
     conditionStr(nodeConfig, index) {
         var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index];
         if (conditionList.length == 0) {
@@ -125,6 +132,11 @@ All.prototype = {
                 if (columnType == "String" && showType == "3") {
                     if (zdy1) {
                         str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
+                    }
+                }
+                if (columnType == "String" && showType == "2") {
+                    if (zdy1) {
+                        str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                     }
                 }
                 if (columnType == "Double") {
