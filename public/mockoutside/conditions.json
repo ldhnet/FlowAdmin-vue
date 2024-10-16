@@ -14,7 +14,7 @@
       "columnId": "2",
       "showType": "2",
       "showName": "请假时长",
-      "columnName": "purchaseType",
+      "columnName": "LeaveType",
       "columnType": "String",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
     },

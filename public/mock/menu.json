@@ -267,6 +267,18 @@
                         "noCache": false,
                         "link": null
                     }
+                },
+                {
+                    "name": "outsideflowPreview",
+                    "path": "preview",
+                    "hidden": true,
+                    "component": "outsideMgt/preview/index",
+                    "meta": {
+                        "title": "三方流程模板预览",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 }
             ]
         }
