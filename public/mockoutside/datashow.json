@@ -2,16 +2,185 @@
     "code": "200",
     "msg": "success",
     "data": {
+        "id": 1,
+        "bpmnName": "工商大学入学审批",
         "bpmnCode": null,
-        "bpmnName": null,
-        "bpmnType": null,
-        "formCode": null,
+        "businessPartyId": 1,
         "appId": null,
-        "deduplicationType": 1,
-        "effectiveStatus": 0,
+        "isOutSideProcess": 1,
+        "bpmnType": 1,
+        "formCode": 2,
         "remark": "",
-        "isDel": 0,
-        "nodes": [ 
+        "effectiveStatus": 0,
+        "deduplicationType": 1,
+        "nodes": [
+            {
+                "nodeId": "XW4BSF",
+                "nodeName": "审核人",
+                "nodeType": 4,
+                "nodeFrom": "4VKASF",
+                "prevId": [],
+                "nodeTo": [],
+                "setType": 5,
+                "directorLevel": 1,
+                "signType": 1,
+                "noHeaderAction": 2,
+                "error": false,
+                "isSignUp": 0,
+                "property": {
+                    "emplIds": [
+                        8
+                    ],
+                    "emplList": [
+                        {
+                            "id": 8,
+                            "name": "周十"
+                        }
+                    ],
+                    "roleIds": [],
+                    "roleList": [],
+                    "signType": 1,
+                    "afterSignUpWay": 1
+                },
+                "buttons": {
+                    "startPage": [
+                        1
+                    ],
+                    "approvalPage": [
+                        3,
+                        4
+                    ],
+                    "viewPage": [
+                        0
+                    ]
+                },
+                "nodeProperty": 5
+            },
+            {
+                "nodeId": "ROBASF",
+                "nodeName": "审核人",
+                "nodeType": 4,
+                "nodeFrom": "MTKASF",
+                "prevId": [],
+                "nodeTo": [
+                    "XW4BSF"
+                ],
+                "setType": 5,
+                "directorLevel": 1,
+                "signType": 1,
+                "noHeaderAction": 2,
+                "error": false,
+                "isSignUp": 0,
+                "property": {
+                    "emplIds": [
+                        2,
+                        3
+                    ],
+                    "emplList": [
+                        {
+                            "id": 2,
+                            "name": "李四"
+                        },
+                        {
+                            "id": 3,
+                            "name": "王五"
+                        }
+                    ],
+                    "roleIds": [],
+                    "roleList": [],
+                    "signType": 1,
+                    "afterSignUpWay": 1
+                },
+                "buttons": {
+                    "startPage": [
+                        1
+                    ],
+                    "approvalPage": [
+                        3,
+                        4
+                    ],
+                    "viewPage": [
+                        0
+                    ]
+                },
+                "nodeDisplayName": "2人(李四,王五)会签",
+                "nodeProperty": 5
+            },
+            {
+                "nodeId": "MTKASF",
+                "nodeName": "条件1",
+                "nodeDisplayName": "支出费用：大于3000 并且 请假时长：大于等于48H",
+                "nodeType": 3,
+                "nodeFrom": "4VKASF",
+                "prevId": [],
+                "nodeTo": [
+                    "ROBASF"
+                ],
+                "priorityLevel": 1,
+                "nodeApproveList": [],
+                "error": false,
+                "isDefault": 0,
+                "property": {
+                    "conditionList": [
+                        {
+                            "showType": "2",
+                            "columnId": "1",
+                            "type": 2,
+                            "showName": "支出费用",
+                            "zdy1": "2",
+                            "columnDbname": "outTotalMoney",
+                            "columnType": "String",
+                            "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+                        },
+                        {
+                            "showType": "2",
+                            "columnId": "2",
+                            "type": 2,
+                            "showName": "请假时长",
+                            "zdy1": "3",
+                            "columnDbname": "purchaseType",
+                            "columnType": "String",
+                            "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
+                        }
+                    ],
+                    "sort": 1,
+                    "isDefault": 0
+                }
+            },
+            {
+                "nodeId": "2QKASF",
+                "nodeName": "条件2",
+                "nodeDisplayName": "其他条件进入此流程",
+                "nodeType": 3,
+                "nodeFrom": "4VKASF",
+                "prevId": [],
+                "nodeTo": [
+                    "XW4BSF"
+                ],
+                "priorityLevel": 2,
+                "nodeApproveList": [],
+                "isDefault": 1,
+                "error": false,
+                "property": {
+                    "conditionList": [],
+                    "sort": 2,
+                    "isDefault": 1
+                }
+            },
+            {
+                "nodeId": "4VKASF",
+                "nodeName": "路由",
+                "nodeType": 2,
+                "nodeFrom": "Gb2",
+                "prevId": [],
+                "nodeTo": [
+                    "MTKASF",
+                    "2QKASF"
+                ],
+                "error": true,
+                "isSignUp": 0,
+                "property": {}
+            },
             {
                 "confId": 35,
                 "nodeId": "Gb2",
@@ -31,7 +200,9 @@
                 "orderedNodeType": null,
                 "remark": "",
                 "isDel": 0,
-                "nodeTo": [],
+                "nodeTo": [
+                    "4VKASF"
+                ],
                 "property": null,
                 "params": null,
                 "buttons": {

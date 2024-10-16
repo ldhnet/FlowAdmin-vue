@@ -15,20 +15,7 @@ export class FormatUtils {
         let combinationList = this.getEndpointNodeId(treeList);
         let finalList = this.cleanNodeList(combinationList);
         let fomatList = this.adapterActivitiNodeList(finalList);
-        return fomatList;
-        // let finalObj = {
-        //     bpmnCode: "SFZHSQ-00011",
-        //     bpmnName: "合同审批", //name 改成 bpmnName 其他的都是添加的
-        //     bpmnType: null,
-        //     formCode: "PROJECT_" + NodeUtils.idGenerator(),
-        //     appId: null,
-        //     deduplicationType: 2,//2去重,1不去重
-        //     effectiveStatus: 1,
-        //     remark: "合同审批",
-        //     isDel: 0,
-        //     nodes: fomatList
-        // }
-        // return finalObj;
+        return fomatList; 
     }
     /**
      * 展平树结构
