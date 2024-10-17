@@ -92,6 +92,13 @@
             </div>
           </template>
           <el-collapse accordion>
+            <el-collapse-item title="v3.1.0 - 2024-10-17">
+              <ol> 
+                <li>三方业务表单接入</li>
+                <li>三方业务方注册，应用注册</li>
+                <li>三方业务流程设计</li>
+              </ol>
+            </el-collapse-item>
             <el-collapse-item title="v3.0.0 - 2024-08-10">
               <ol> 
                 <li>其他细节优化</li>

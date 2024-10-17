@@ -5,10 +5,10 @@
     {
       "columnId": "1",
       "showType": "2",
-      "showName": "支出费用",
-      "columnName": "planProcurementTotalMoney",
-      "columnType": "Double",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+      "showName": "账户类型",
+      "columnName": "accountType",
+      "columnType": "String",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"腾讯云\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"百度云\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"阿里云\",\"disabled\":\"false\"}]"
     },
     {
       "columnId": "2",
@@ -18,7 +18,7 @@
       "columnType": "Double",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
     },
-    {
+     {
       "columnId": "3",
       "showType": "2",
       "showName": "采购费用",
@@ -29,11 +29,11 @@
     {
       "columnId": "4",
       "showType": "2",
-      "showName": "账户类型",
-      "columnName": "accountType",
-      "columnType": "String",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"腾讯云\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"百度云\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"阿里云\",\"disabled\":\"false\"}]"
-    },
+      "showName": "支出费用",
+      "columnName": "planProcurementTotalMoney",
+      "columnType": "Double",
+      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+    }, 
     {
       "columnId": "5",
       "showType": "2",
