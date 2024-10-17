@@ -179,6 +179,7 @@ function handleUpdate() {
 /** 重置按钮操作 */
 function resetQuery() {
   taskMgmtVO.value = {
+     isOutSideProcess : 1,
      bpmnCode: undefined,
      bpmnName: undefined
  };

@@ -139,7 +139,12 @@ All.prototype = {
                         str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                     }
                 }
-                if (columnType == "Double") {
+                if (columnType == "Double" && showType == "2") {
+                    if (zdy1) {
+                        str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
+                    }
+                }
+                if (columnType == "Double" && showType != "2") {
                     if (optType != 6 && zdy1) {
                         var optTypeStr = ["", "<", ">", "≤", "=", "≥"][optType]
                         str += `${showName} ${optTypeStr} ${zdy1} 并且 `

@@ -94,17 +94,17 @@ const publish = () => {
       })
       .then((data) => {       
           console.log("提交到API=====data=", JSON.stringify(data));  
-          proxy.$modal.closeLoading();
-        //   setApiWorkFlowData(data).then((resLog) => {
-        //       proxy.$modal.closeLoading();
-        //       if (resLog.code == 200) { 
-        //           ElMessage.success("设置成功,F12控制台查看数据");
-        //           const obj = { path: "/outsideMgt/outsideTemp" };
-        //           proxy.$tab.openPage(obj);
-        //       } else { 
-        //           ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
-        //       }
-        //   });
+          //proxy.$modal.closeLoading();
+           setApiWorkFlowData(data).then((resLog) => {
+               proxy.$modal.closeLoading();
+               if (resLog.code == 200) { 
+                   ElMessage.success("设置成功,F12控制台查看数据");
+                   const obj = { path: "/outsideMgt/outsideTemp" };
+                   proxy.$tab.openPage(obj);
+               } else { 
+                   ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
+               }
+           });
       })
       .catch((err) => { 
           proxy.$modal.closeLoading();

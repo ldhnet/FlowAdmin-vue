@@ -6,24 +6,24 @@
       "columnId": "1",
       "showType": "2",
       "showName": "支出费用",
-      "columnName": "outTotalMoney",
-      "columnType": "String",
+      "columnName": "planProcurementTotalMoney",
+      "columnType": "Double",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
     },
     {
       "columnId": "2",
       "showType": "2",
       "showName": "请假时长",
-      "columnName": "LeaveType",
-      "columnType": "String",
+      "columnName": "leaveHour",
+      "columnType": "Double",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
     },
     {
       "columnId": "3",
       "showType": "2",
       "showName": "采购费用",
-      "columnName": "purchaseMoney",
-      "columnType": "String",
+      "columnName": "planProcurementTotalMoney",
+      "columnType": "Double",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2W\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于5W\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于10W\",\"disabled\":\"false\"}]"
     },
     {
@@ -38,7 +38,7 @@
       "columnId": "5",
       "showType": "2",
       "showName": "职级",
-      "columnName": "jobLevelType",
+      "columnName": "jobLevelVo",
       "columnType": "String",
       "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"CEO\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"CTO\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"CFO\",\"disabled\":\"false\"}]"
     } 

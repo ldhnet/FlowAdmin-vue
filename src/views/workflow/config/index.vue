@@ -88,6 +88,7 @@ const data = reactive({
       pageSize: 10
    },
    taskMgmtVO: { 
+      isOutSideProcess : 0,
       bpmnCode: undefined,
       bpmnName: undefined
    },
@@ -159,6 +160,7 @@ function handleUpdate() {
 /** 重置按钮操作 */
 function resetQuery() {
    taskMgmtVO.value = {
+      isOutSideProcess : 0,
       bpmnCode: undefined,
       bpmnName: undefined
   };

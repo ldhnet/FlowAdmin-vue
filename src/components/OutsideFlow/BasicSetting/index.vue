@@ -92,16 +92,16 @@ let businessPartyOptions = [{
 
 let formCodeOptions = [{
     "value": "智能架构系统审批流",
-    "key": 1
+    "key": 'znjs'
 }, {
-    "value": "工商大学审批",
-    "key": 2
+    "value": "埃德伯格审批",
+    "key": 'bjgs_devtt'
 }, {
     "value": "埃德伯格学校审批",
-    "key": 3
+    "key": 'adbgxx'
 }, {
     "value": "智慧农业果木苗申请",
-    "key": 4
+    "key": 'zhny_guomu'
 }];
 
 

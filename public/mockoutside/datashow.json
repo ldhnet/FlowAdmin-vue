@@ -3,13 +3,13 @@
     "msg": "success",
     "data": {
         "id": 1,
-        "bpmnName": "工商大学入学审批",
+        "bpmnName": "埃德伯格入学审批",
         "bpmnCode": null,
-        "businessPartyId": 1,
+        "businessPartyId": 4,
         "appId": null,
         "isOutSideProcess": 1,
         "bpmnType": 1,
-        "formCode": 2,
+        "formCode": "adbgxx",
         "remark": "",
         "effectiveStatus": 0,
         "deduplicationType": 1,
@@ -109,7 +109,7 @@
             {
                 "nodeId": "MTKASF",
                 "nodeName": "条件1",
-                "nodeDisplayName": "支出费用：大于3000 并且 请假时长：大于等于48H",
+                "nodeDisplayName": "支出费用：大于3000",
                 "nodeType": 3,
                 "nodeFrom": "4VKASF",
                 "prevId": [],
@@ -128,19 +128,9 @@
                             "type": 2,
                             "showName": "支出费用",
                             "zdy1": "2",
-                            "columnDbname": "outTotalMoney",
-                            "columnType": "String",
+                            "columnDbname": "planProcurementTotalMoney",
+                            "columnType": "Double",
                             "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
-                        },
-                        {
-                            "showType": "2",
-                            "columnId": "2",
-                            "type": 2,
-                            "showName": "请假时长",
-                            "zdy1": "3",
-                            "columnDbname": "purchaseType",
-                            "columnType": "String",
-                            "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
                         }
                     ],
                     "sort": 1,

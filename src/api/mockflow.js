@@ -13,7 +13,7 @@ const headers = {
 let baseUrl = "http://117.72.70.166:7001";
 //let baseUrl = "http://localhost:7001";
 /**
- * 获取审批数据
+ * 获取流程配置详情
  * @param { Number } id 
  * @returns 
  */
@@ -21,7 +21,7 @@ export function getApiWorkFlowData(data) {
   return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
 }
 /**
- * 获取审批数据
+ * 获取FromCode
  * @param { Number } id 
  * @returns 
  */
@@ -29,7 +29,7 @@ export function getFromCodeData() {
   return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`, { headers })
 }
 /**
- * 设置审批数据
+ * 设置/添加审批流程配置详情
  * @param {*} data 
  * @returns 
  */
