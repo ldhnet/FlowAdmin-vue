@@ -67,15 +67,17 @@ function setLayout() {
 
 const timerCheckVersion = setInterval(() => {
   checkVersion();
-},1000 * 60 * 60)
+},1000 * 6)
 
 function checkVersion() {
   const versionSetting = settingsStore.version
   if(!versionSetting) return 
   getCurrentVersion().then(res => {
       if (res.version !== versionSetting && res.must) {
-        clearInterval(timerCheckVersion)
+        clearInterval(timerCheckVersion);
         reloadNotifier(res.version);
+      }else{
+        clearInterval(timerCheckVersion);
       }
     })
 }
@@ -85,7 +87,8 @@ function reloadNotifier(version) {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      localStorage.setItem('version-setting',version) 
+      localStorage.setItem('version-setting',version);
+      clearInterval(timerCheckVersion);
       location.reload(true);
     }).catch(() => {});
 }
