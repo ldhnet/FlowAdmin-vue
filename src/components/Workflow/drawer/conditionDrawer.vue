@@ -34,6 +34,14 @@
                                 v-for="(item1,index1) in JSON.parse(item.fixedDownBoxValue)" :key="index1">{{item1.value}}</a>
                             </p>
                         </div>
+                        <div v-else-if="item.columnType == 'String' && item.showType == 2">
+                            <p class="check_box">
+                                <select style="width:300px;" v-model="item.zdy1"> 
+                                    <option v-for="({key, value}) in JSON.parse(item.fixedDownBoxValue)" :value="key" :key="key">{{ value }}</option>
+                                </select>
+                            </p>
+                    
+                        </div>
                         <div v-else>
                             <p>
                                 <select v-model="item.optType" :style="'width:'+(item.optType==6?370:100)+'px'" @change="changeOptType(item)">
@@ -172,8 +180,6 @@ const addCondition = async () => {
     }
 }
 const sureCondition = () => {
-    //1.弹窗有，外面无+
-    //2.弹窗有，外面有不变
     for (var i = 0; i < conditionList.value.length; i++) {
         var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i];
         if ($func.toggleClass(conditionConfig.value.conditionList, conditionList.value[i], "columnId")) {
@@ -201,7 +207,19 @@ const sureCondition = () => {
                     "columnDbname": columnName,
                     "columnType": columnType,
                 })
-            } else if (columnType == "String" && showType == "3") {
+            } else if (columnType == "String" && showType == "2") {
+                conditionConfig.value.conditionList.push({
+                    "showType": showType,
+                    "columnId": columnId,
+                    "type": 2,
+                    "showName": showName,
+                    "zdy1": "",
+                    "columnDbname": columnName,
+                    "columnType": columnType,
+                    "fixedDownBoxValue": fixedDownBoxValue
+                })
+            }
+            else if (columnType == "String" && showType == "3") {
                 conditionConfig.value.conditionList.push({
                     "showType": showType,
                     "columnId": columnId,
@@ -214,8 +232,7 @@ const sureCondition = () => {
                 })
             }
         }
-    }
-    //3.弹窗无，外面有-
+    } 
     for (let i = conditionConfig.value.conditionList.length - 1; i >= 0; i--) {
         if (!$func.toggleClass(conditionList.value, conditionConfig.value.conditionList[i], "columnId")) {
             conditionConfig.value.conditionList.splice(i, 1);

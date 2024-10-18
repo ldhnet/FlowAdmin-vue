@@ -74,8 +74,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getFromCodeData } from "@/api/mockflow"
-import { bizFormMaps } from "@/utils/flow/const"
+import { getFromCodeData } from "@/api/mockflow" 
 const { proxy } = getCurrentInstance();
 let worlflowList = ref([]);
 
@@ -138,6 +137,7 @@ let statusColor = {
   "LEAVE_WMA": 'leave', 
   "DSFZH_WMA": 'jiejing',
   "PURCHASE_WMA": 'bought',  
+  "UCARREFUEl_WMA": 'trip',  
 }; 
  
 onMounted(async () => { 

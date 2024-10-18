@@ -169,7 +169,7 @@ function handleQuery() {
 }
 
 function handleAdd() {
-  router.push({ path: "design"});
+  router.push({ path: "/outsideMgt/outsideDesign"});
 }
 
 function handleUpdate() {

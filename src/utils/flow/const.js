@@ -115,7 +115,8 @@ export let viewPageButtons = [
 
 export const bizFormMaps = new Map([
   ['DSFZH_WMA', '/forms/form1.vue'],
-  ['LEAVE_WMA', '/forms/form2.vue']
+  ['LEAVE_WMA', '/forms/form2.vue'],
+  ['UCARREFUEl_WMA', '/forms/form3.vue']
 ]);
 
 export let statusColor = {

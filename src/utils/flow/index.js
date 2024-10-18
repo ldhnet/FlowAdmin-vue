@@ -59,6 +59,7 @@ All.prototype = {
         arr.splice(includesIndex, 1);
     },
     setApproverStr(nodeConfig) {
+        if(!nodeConfig) return; 
         if (nodeConfig.setType == 5) {
             if (nodeConfig.nodeApproveList.length == 1) {
                 return nodeConfig.nodeApproveList[0].name
@@ -97,6 +98,7 @@ All.prototype = {
         }  
     },
     dealStr(str, obj) {
+        if(!obj) return; 
         let arr = [];
         let list = str.split(",");
         for (var elem in obj) {
@@ -108,21 +110,23 @@ All.prototype = {
         }
         return arr.join("或")
     },  
-    getLabelStr(str, obj) {
-        let ret = obj.find(c => c.value === str);
+    getLabelStr(str, obj) { 
+        if(!obj) return; 
+        let ret = obj.find(c => c.key === str);
         if (ret) {
-            return ret.label;
+            return ret.value;
         }
         return '';
     },  
-    conditionStr(nodeConfig, index) {
-        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index];
+    conditionStr(nodeConfig, index) { 
+        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index]; 
         if (conditionList.length == 0) {
             return (index == nodeConfig.conditionNodes.length - 1) && nodeConfig.conditionNodes[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
         } else {
             let str = ""
             for (var i = 0; i < conditionList.length; i++) {
                 var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2, fixedDownBoxValue } = conditionList[i];
+                
                 if (columnId == 0) {
                     if (nodeApproveList.length != 0) {
                         str += '发起人属于：'

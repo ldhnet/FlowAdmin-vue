@@ -44,11 +44,11 @@
     }, 
     {
       "columnId": "6",
-      "showType": "3",
+      "showType": "2",
       "showName": "采购类型",
       "columnName": "purchaseType",
       "columnType": "String",
-      "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"台式机\",\"column\":\"\",\"type\":\"1\"},\"2\":{\"key\":\"2\",\"value\":\"笔记本\",\"column\":\"\",\"type\":\"1\"}}"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"台式机\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"笔记本\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"一体机\",\"disabled\":\"false\"}]"
     }
   ]
 }

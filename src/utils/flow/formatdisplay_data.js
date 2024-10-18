@@ -11,7 +11,8 @@ export class FormatDisplayUtils {
     static getToTree(parmData) {        
         if (isEmptyArray(parmData)) return;
         let node = this.createNodeDisplay(parmData); 
-        let formatList = this.formatDisplayStructNodeList(parmData.nodes);     
+        if (!node) return;
+        let formatList = this.formatDisplayStructNodeList(parmData?.nodes);     
         node.nodeConfig = this.depthConverterToTree(formatList);//parmData.nodes
         return node;
     }
@@ -22,9 +23,10 @@ export class FormatDisplayUtils {
      * @returns Object
      */
     static createNodeDisplay(nodeData) { 
+       if (!nodeData) return;
        if (isEmptyArray(nodeData)) return;
        let displayObj = {
-            tableId: nodeData.id,
+            tableId: nodeData?.id,
             bpmnCode: nodeData.bpmnCode,
             bpmnName: nodeData.bpmnName, //name 改成 bpmnName 其他的都是添加的
             bpmnType: nodeData.bpmnType,
@@ -47,7 +49,8 @@ export class FormatDisplayUtils {
      * @returns 
      */
     static depthConverterToTree(parmData) {
-        if (isEmptyArray(parmData)) return
+        if(!parmData) return;
+        if (isEmptyArray(parmData)) return;
         let nodesGroup = {}, startNode = {}
         for (let t of parmData) {
             if (nodesGroup.hasOwnProperty(t.nodeFrom)) {
@@ -77,9 +80,9 @@ export class FormatDisplayUtils {
     }
 
     static formatDisplayStructNodeList(nodeList) {
+        if (!nodeList) return;
         if (isEmptyArray(nodeList)) return nodeList;
         for (let node of nodeList) {    
-    
             if (node.nodeType == 3) {
                 node.priorityLevel = node.property.sort;
                 node.isDefault = node.property.isDefault;

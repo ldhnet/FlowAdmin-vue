@@ -120,7 +120,7 @@ export function getBpmnConflistPage(pageDto, taskMgmtVO) {
  * @returns 
  */
 export function processOperation(data) {
-  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation`, data, { headers })
+  return http.post(`${baseUrl}/bpmnConf/process/buttonsOperation?formCode=${data.formCode}`, data, { headers })
 }
 
 /**
