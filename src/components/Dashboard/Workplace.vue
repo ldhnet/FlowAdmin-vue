@@ -137,6 +137,7 @@ const hrList = [
 let statusColor = {
   "LEAVE_WMA": 'leave', 
   "DSFZH_WMA": 'jiejing',
+  "PURCHASE_WMA": 'bought',  
 }; 
  
 onMounted(async () => { 
@@ -158,6 +159,10 @@ function handleStart(row) {
     const params ={
         formCode: row.formCode
     };  
+    if ('PURCHASE_WMA' == row.formCode) {
+        proxy.$modal.msgWarning("采购表单努力开发中！^-^");
+        return;
+    }
     const obj = { path:'/bizentry/index',query:params };
     proxy.$tab.openPage(obj);
 } 
