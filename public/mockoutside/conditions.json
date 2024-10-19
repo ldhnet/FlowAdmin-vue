@@ -8,7 +8,7 @@
       "showName": "账户类型",
       "columnName": "accountType",
       "columnType": "String",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"腾讯云\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"百度云\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"阿里云\",\"disabled\":\"false\"}]"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"腾讯云\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"百度云\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"阿里云\",\"disabled\":\"false\"}]"
     },
     {
       "columnId": "2",
@@ -16,7 +16,7 @@
       "showName": "请假时长",
       "columnName": "leaveHour",
       "columnType": "Double",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于等于16H\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于等于24H\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于等于48H\",\"disabled\":\"false\"}]"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"大于等于16H\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"大于等于24H\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"大于等于48H\",\"disabled\":\"false\"}]"
     },
      {
       "columnId": "3",
@@ -24,7 +24,7 @@
       "showName": "采购费用",
       "columnName": "planProcurementTotalMoney",
       "columnType": "Double",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2W\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于5W\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于10W\",\"disabled\":\"false\"}]"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"大于2W\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"大于5W\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"大于10W\",\"disabled\":\"false\"}]"
     },
     {
       "columnId": "4",
@@ -32,7 +32,7 @@
       "showName": "支出费用",
       "columnName": "planProcurementTotalMoney",
       "columnType": "Double",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"大于2000\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"大于3000\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"大于5000\",\"disabled\":\"false\"}]"
     }, 
     {
       "columnId": "5",
@@ -40,7 +40,7 @@
       "showName": "职级",
       "columnName": "jobLevelVo",
       "columnType": "String",
-      "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"CEO\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"CTO\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"CFO\",\"disabled\":\"false\"}]"
+      "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"CEO\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"CTO\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"CFO\",\"disabled\":\"false\"}]"
     } 
   ]
 }

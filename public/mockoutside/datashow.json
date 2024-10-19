@@ -130,7 +130,7 @@
                             "zdy1": "2",
                             "columnDbname": "planProcurementTotalMoney",
                             "columnType": "Double",
-                            "fixedDownBoxValue": "[{\"value\":\"1\",\"label\":\"大于2000\",\"disabled\":\"false\"},{\"value\":\"2\",\"label\":\"大于3000\",\"disabled\":\"false\"},{\"value\":\"3\",\"label\":\"大于5000\",\"disabled\":\"false\"}]"
+                            "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"大于2000\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"大于3000\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"大于5000\",\"disabled\":\"false\"}]"
                         }
                     ],
                     "sort": 1,

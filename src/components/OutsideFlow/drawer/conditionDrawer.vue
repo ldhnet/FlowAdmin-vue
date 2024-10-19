@@ -22,7 +22,7 @@
                         <div style="font-size: small;"> 
                             <span style="color: gray;margin-right: 10px;width: 100px;overflow: hidden;">{{ item.showName }} </span>
                             <el-select v-model="item.zdy1"  placeholder="请选择" style="width: 300px">
-                                <el-option v-for="opt in JSON.parse(item.fixedDownBoxValue)" :key="opt.value" :label="opt.label" :value="opt.value" :disabled="item.disabled" />
+                                <el-option v-for="opt in JSON.parse(item.fixedDownBoxValue)" :key="opt.key" :label="opt.value" :value="opt.key" :disabled="item.disabled" />
                             </el-select>
                         </div> 
                         <a @click="$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
@@ -124,7 +124,7 @@ const sureCondition = () => {
                     "zdy1": "",
                     "columnDbname": columnName,
                     "columnType": columnType,
-                    "fixedDownBoxValue": fixedDownBoxValue
+                    "fixedDownBoxValue": fixedDownBoxValue??'[]'
             })
         }
     } 
