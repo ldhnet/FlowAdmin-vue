@@ -114,7 +114,7 @@ let defaultText = computed(() => {
 let showText = computed(() => {
     if (props.nodeConfig.nodeType == 1) return $func.arrToStr(props.flowPermission) || '所有人';
     if (props.nodeConfig.nodeType == 4) return $func.setApproverStr(props.nodeConfig);
-    if (props.nodeConfig.nodeType == 5) return $func.copyerStr(props.nodeConfig);
+    if (props.nodeConfig.nodeType == 6) return $func.copyerStr(props.nodeConfig);
 });
 
 props.nodeConfig.nodeDisplayName = showText;
@@ -137,7 +137,7 @@ const resetConditionNodesErr = () => {
 onMounted(() => {
     if (props.nodeConfig.nodeType == 4) {
         props.nodeConfig.error = !$func.setApproverStr(props.nodeConfig);
-    } else if (props.nodeConfig.nodeType == 5) {
+    } else if (props.nodeConfig.nodeType == 6) {
         props.nodeConfig.error = !$func.copyerStr(props.nodeConfig);
     } else if (props.nodeConfig.nodeType == 2) {
         resetConditionNodesErr()
@@ -255,7 +255,15 @@ const setPerson = (priorityLevel) => {
             flag: false,
             id: _uid,
         });
-    } else if (nodeType == 4) {
+    } else if (nodeType == 2){
+        setCondition(true);
+        setConditionsConfig({
+            value: JSON.parse(JSON.stringify(props.nodeConfig)),
+            priorityLevel,
+            flag: false,
+            id: _uid,
+        });
+    }else if (nodeType == 4) {
         setApprover(true);
         setApproverConfig({
             value: {
@@ -265,21 +273,15 @@ const setPerson = (priorityLevel) => {
             flag: false,
             id: _uid,
         });
-    } else if (nodeType == 5) {
+    } else if (nodeType == 6) {
         setCopyer(true);
         setCopyerConfig({
             value: JSON.parse(JSON.stringify(props.nodeConfig)),
             flag: false,
             id: _uid,
         });
-    } else {
-        setCondition(true);
-        setConditionsConfig({
-            value: JSON.parse(JSON.stringify(props.nodeConfig)),
-            priorityLevel,
-            flag: false,
-            id: _uid,
-        });
+    }else{
+        console.log("setPerson：节点类型错误"); 
     }
 };
 const arrTransfer = (index, type = 1) => {

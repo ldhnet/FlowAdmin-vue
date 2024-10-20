@@ -107,7 +107,7 @@ const getJson = () => {
     if (tipList.value.length != 0) {
         emit('nextChange', { label: "流程设计", key: "processDesign" });
         tipVisible.value = true;
-        return;
+        return false;
     }
     let submitData = JSON.parse(JSON.stringify(nodeConfig.value));
     return submitData;

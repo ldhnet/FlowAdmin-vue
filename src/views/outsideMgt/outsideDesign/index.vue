@@ -82,10 +82,10 @@ onMounted(async () => {
 
 const publish = () => { 
   const step1 = basicSetting.value.getData();
-  const step2 = processDesign.value.getData();
-  proxy.$modal.loading(); 
+  const step2 = processDesign.value.getData(); 
   Promise.all([step1, step2])
       .then((res) => { 
+          proxy.$modal.loading(); 
           ElMessage.success("设置成功,F12控制台查看数据");
           let basicData = res[0].formData;
           var nodes = FormatUtils.formatSettings(res[1].formData);
@@ -106,7 +106,7 @@ const publish = () => {
                }
            });
       })
-      .catch((err) => { 
+      .catch((err) => {  
           proxy.$modal.closeLoading();
           if (err)
               console.log("设置失败" + JSON.stringify(err));

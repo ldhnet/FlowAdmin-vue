@@ -16,32 +16,18 @@
         </template>
         <div class="demo-drawer__content">
             <div class="condition_content drawer_content">
-                <p class="tip">当审批单同时满足以下条件时进入此流程</p>
+                <p class="tip">当审批单满足以下条件时进入此流程</p>
+                
                 <ul>
                     <li v-for="(item,index) in conditionConfig.conditionList" :key="index"> 
                         <div style="font-size: small;"> 
-                            <span style="color: gray;margin-right: 10px;width: 100px;overflow: hidden;">{{ item.showName }} </span>
-                            <el-select v-model="item.zdy1"  placeholder="请选择" style="width: 300px">
-                                <el-option v-for="opt in JSON.parse(item.fixedDownBoxValue)" :key="opt.key" :label="opt.value" :value="opt.key" :disabled="item.disabled" />
+                            <span style="margin-right: 10px;width: 100px;overflow: hidden;">{{ item.showName }} </span>
+                            <el-select v-model="item.zdy1"  placeholder="请选择条件" style="width: 300px">
+                                <el-option v-for="opt in JSON.parse(item.fixedDownBoxValue)" :key="opt.key" :label="opt.value" :value="opt.key" />
                             </el-select>
-                        </div> 
-                        <a @click="$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
+                        </div>   
                     </li>
-                </ul>
-                <el-button type="primary" @click="addCondition">添加条件</el-button>
-                <el-dialog title="选择条件" v-model="conditionVisible" :width="480" append-to-body class="condition_list">
-                    <p class="tip">请选择用来区分审批流程的条件字段</p>
-                    <p class="check_box"> 
-                         <template  v-for="(item,index) in conditions" :key="index" >                        
-                             <a :class="$func.toggleClass(conditionList,item,'columnId')&&'active'"  @click="$func.toChecked(conditionList,item,'columnId')">{{item.showName}}</a>
-                             <br v-if="(index + 1)%3 == 0"/> 
-                         </template> 
-                    </p>
-                    <template #footer>
-                        <el-button @click="conditionVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="sureCondition">确 定</el-button>
-                    </template>
-                </el-dialog>
+                </ul>         
             </div>
    
             <div class="demo-drawer__footer clear">
@@ -52,22 +38,18 @@
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed } from 'vue' 
+import { ref, watch, computed, onMounted } from 'vue' 
 import $func from '@/utils/flow/index'
 import { useStore } from '@/store/modules/outsideflow'
-import { getConditions } from '@/api/mockoutsideflow' 
-
-let conditionVisible = ref(false)
+import { getConditions } from '@/api/mockoutsideflow'  
+let store = useStore()
+let { setCondition, setConditionsConfig } = store
 let conditionsConfig = ref({
     conditionNodes: [],
 })
 let conditionConfig = ref({})
 let PriorityLevel = ref('')
-let conditions = ref([])
-let conditionList = ref([]) 
-let store = useStore()
-let { setCondition, setConditionsConfig } = store
-let tableId = computed(()=> store.tableId)
+let conditionConfigDef=ref({}) 
 let conditionsConfig1 = computed(()=> store.conditionsConfig1)
 let conditionDrawer = computed(()=> store.conditionDrawer)
 let visible = computed({
@@ -78,64 +60,23 @@ let visible = computed({
         closeDrawer()
     }
 })
-watch(conditionsConfig1, (val) => {
-    conditionsConfig.value = val.value;
-    PriorityLevel.value = val.priorityLevel
-    conditionConfig.value = val.priorityLevel
-        ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1]
-        : { nodeApproveList: [], conditionList: [] }
-}) 
-const addCondition = async () => { 
-    conditionList.value = [];
-    conditionVisible.value = true;
-    let { data } = await getConditions({ tableId: tableId.value })
-    conditions.value = data;
-    if (conditionConfig.value.conditionList) {
 
-        for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
-            var { columnId } = conditionConfig.value.conditionList[i]
-            if (columnId == 0) {
-                conditionList.value.push({ columnId: 0 })
-            } else {
-                conditionList.value.push(conditions.value.filter(item => { return item.columnId == columnId; })[0])
-            }
-        }
+watch(conditionsConfig1, (val) => { 
+    conditionsConfig.value = val.value;
+    PriorityLevel.value = val.priorityLevel 
+    conditionConfig.value = val.priorityLevel ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1] : conditionConfigDef
+    if(Array.isArray(conditionConfig.value.conditionList) && conditionConfig.value.conditionList.length == 0){
+        conditionConfig.value.conditionList = conditionConfigDef.value.conditionList
     }
-}
-const sureCondition = () => { 
-    for (var i = 0; i < conditionList.value.length; i++) {
-        var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i];  
-        if ($func.toggleClass(conditionConfig.value.conditionList, conditionList.value[i], "columnId")) {
-            continue;
-        }
-        if (columnId == 0) {
-            conditionConfig.value.nodeApproveList = [];
-            conditionConfig.value.conditionList.push({
-                "type": 1,
-                "columnId": columnId,
-                "showName": '发起人'
-            });
-        } else { 
-            conditionConfig.value.conditionList.push({
-                    "showType": showType,
-                    "columnId": columnId,
-                    "type": 2,
-                    "showName": showName,
-                    "zdy1": "",
-                    "columnDbname": columnName,
-                    "columnType": columnType,
-                    "fixedDownBoxValue": fixedDownBoxValue??'[]'
-            })
-        }
+}) 
+onMounted(async () => {
+    let { data } =await getConditions();
+    conditionConfigDef.value = { 
+        nodeApproveList: [], 
+        conditionList: data
     } 
-    for (let i = conditionConfig.value.conditionList.length - 1; i >= 0; i--) {
-        if (!$func.toggleClass(conditionList.value, conditionConfig.value.conditionList[i], "columnId")) {
-            conditionConfig.value.conditionList.splice(i, 1);
-        }
-    }
-    conditionConfig.value.conditionList.sort(function (a, b) { return a.columnId - b.columnId; }); 
-    conditionVisible.value = false;
-}
+})
+ 
 const saveCondition = () => {
     closeDrawer()  
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
@@ -172,10 +113,8 @@ const closeDrawer = (val) => {
         border: 1px solid rgba(217, 217, 217, 1);
         font-size: 12px;
     }
-
     .condition_content {
         padding: 20px 20px 0;
-
         p.tip {
             margin: 20px 0;
             width: 610px;
@@ -186,64 +125,11 @@ const closeDrawer = (val) => {
             color: #46a6fe;
             font-size: 14px;
         }
-
         ul {
             max-height: 500px;
             overflow-y: scroll;
-            margin-bottom: 20px;
-     
-            li {
-                // border-bottom: 1px solid #F2F2F2;
-                margin-bottom: 20px;
-                &>span {
-                    float: left;
-                    margin-right: 5px;
-                    width: 70px;
-                    line-height: 65px;
-                    text-align: right;
-                    color: #0857a1;
-                    font-size: 14px;
-
-                }
-
-                &>div {
-                    display: inline-block;
-                    width: 80%;
-
-                    &>p:not(:last-child) {
-                        margin-bottom: 10px;
-                    }
-                }
-
-                &:not(:last-child)>div>p {
-                    margin-bottom: 20px;
-                }
-
-                &>a {
-                    float: right;
-                    margin-right: 10px;
-                    margin-top: 10px;
-                    color: #46a6fe;
-                    font-size: 14px;
-                }
-
-                select,
-                input {
-                    width: 100%;
-                    height: 32px;
-                    background: rgba(255, 255, 255, 1);
-                    border-radius: 4px;
-                    border: 1px solid rgba(217, 217, 217, 1);
-                }
-
-                select+input {
-                    width: 260px;
-                }
-
-                select {
-                    margin-right: 10px;
-                    width: 100px;
-                }
+            margin-bottom: 20px;     
+            li { 
 
                 p.selected_list {
                     padding-left: 10px;
@@ -252,32 +138,11 @@ const closeDrawer = (val) => {
                     // border: 1px solid rgba(217, 217, 217, 1);
                     word-break: break-word;
                 }
-
-                p.check_box {
-                    line-height: 32px;
-                }
+ 
             }
-        }
-
-        .el-button {
-            margin-bottom: 20px;
-        }
+        } 
     }
 }
 
-.condition_list {
-    .el-dialog__body {
-        padding: 16px 26px;
-    }
-
-    p {
-        color: #666666;
-        margin-bottom: 10px;
-
-        &>.check_box {
-            margin-bottom: 0;
-            line-height: 36px;
-        }
-    }
-}
+ 
 </style>
