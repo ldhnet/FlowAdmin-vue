@@ -263,7 +263,7 @@
                     "hidden": false,
                     "component": "outsideMgt/outsideTemp/index",
                     "meta": {
-                        "title": "模板管理",
+                        "title": "流程管理",
                         "icon": "",
                         "noCache": false,
                         "link": null
