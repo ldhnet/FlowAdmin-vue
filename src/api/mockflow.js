@@ -45,6 +45,20 @@ export function getTodoList() {
 }
 
 /**
+ * 获取抄送给我流程列表
+ * @param {*} pageDto 
+ * @param {*} taskMgmtVO 
+ * @returns 
+ */
+export function getCopyToMelistPage(pageDto, taskMgmtVO) {
+  let data = {
+    "pageDto": pageDto,
+    "taskMgmtVO": taskMgmtVO
+  }
+  return http.post(`${baseUrl}/bpmnConf/process/listPage/9`, data, { headers })
+}
+
+/**
  * 获取所有实例列表
  * @param {*} pageDto 
  * @param {*} taskMgmtVO 

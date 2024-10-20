@@ -70,6 +70,18 @@
                         "noCache": false,
                         "link": null
                     }
+                }, 
+                {
+                    "name": "CopyToMeTask",
+                    "path": "CopyToMe",
+                    "hidden": false,
+                    "component": "flowtask/copyToMe/index",
+                    "meta": {
+                        "title": "抄送到我",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 },
                 {
                     "name": "approve",
