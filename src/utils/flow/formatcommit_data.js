@@ -152,7 +152,7 @@ export class FormatUtils {
                 delete node.conditionList;
             }
 
-            if (node.nodeType == 4 || node.nodeType == 5) {
+            if (node.nodeType == 4 || node.nodeType == 6) {
                 let approveObj = {
                     emplIds: [],
                     emplList: [],

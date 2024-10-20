@@ -91,12 +91,12 @@ export class FormatDisplayUtils {
                 delete node.property;
             }
 
-            if (node.nodeType == 4 || node.nodeType == 5) {
+            if (node.nodeType == 4 || node.nodeType == 6) {
                 let empList = [];
                 if (node.nodeProperty == 6 && !isEmptyArray(node.property.emplIds)) {
                     for (let emplId of node.property.emplIds) {
                         let approveObj = {
-                            type: 6,
+                            type: 5,
                             targetId: parseInt(emplId),
                             name: hrbpOptions.find(item => item.value == emplId)?.label
                         };

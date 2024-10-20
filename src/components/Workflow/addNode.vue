@@ -9,7 +9,7 @@
                         </div>
                         <p>审批人</p>
                     </a>
-                    <a class="add-node-popover-item notifier" @click="addType(5)">
+                    <a class="add-node-popover-item notifier" @click="addType(6)">
                         <div class="item-wrapper">
                             <span class="iconfont"></span>
                         </div>
@@ -72,7 +72,7 @@ const addType = (type)=> {
                 },
                 "nodeApproveList": []
             }
-        } else if (type == 5) {
+        } else if (type == 6) {
             data = {
                 "nodeId": NodeUtils.idGenerator(),
                 "nodeName": "抄送人",
@@ -81,7 +81,7 @@ const addType = (type)=> {
                 "nodeFrom": "", 
                 "prevId": [],
                 "nodeTo": [],
-                "setType": 1, 
+                "setType": 5, 
                 "error": true,
                 "ccSelfSelectFlag": 1,
                 "childNode": props.childNodeP,
