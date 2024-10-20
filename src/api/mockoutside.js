@@ -13,6 +13,26 @@ const headers = {
 let baseUrl = "http://117.72.70.166:7001";
 //let baseUrl = "http://localhost:7001";
 
+/** 流程设计 * /
+ 
+/**
+ * 获取审批数据
+ * @param { Number } id 
+ * @returns 
+ */
+export function getApiWorkFlowData(data) {
+  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
+}
+ 
+/**
+ * 设置审批数据
+ * @param {*} data 
+ * @returns 
+ */
+export function setApiWorkFlowData(data) {
+  return http.post(`${baseUrl}/bpmnConf/edit`, data, { headers })
+}
+
 /**
  * 获取接入业务方列表
  * @param { page } 分页
@@ -58,12 +78,12 @@ export function getApplicationsPageList(page,vo) {
 }
 
 /**
- * 接入业务方应用注册
+ * 添加业务方应用
  * @param {*} data 
  * @returns 
  */
-export function registerApplication(data) {
-  return http.post(`${baseUrl}/outSideBpm/businessParty/registerApplication`, data, { headers })
+export function addApplication(data) {
+  return http.post(`${baseUrl}/outSideBpm/businessParty/addBpmProcessAppApplication`, data, { headers })
 } 
 /**
  * 获取注册应用详情
@@ -91,22 +111,13 @@ export function getPartyMarkKV() {
  
 
 
-/** 流程设计 * /
- 
+/** 应用关联条件模板 * /
+
 /**
- * 获取审批数据
- * @param { Number } id 
+ * 添加条件模板
+ * @param {*} param 
  * @returns 
  */
-export function getApiWorkFlowData(data) {
-  return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
-}
- 
-/**
- * 设置审批数据
- * @param {*} data 
- * @returns 
- */
-export function setApiWorkFlowData(data) {
-  return http.post(`${baseUrl}/bpmnConf/edit`, data, { headers })
-}
+export function setTemplateConf(data) { 
+  return http.post(`${baseUrl}/outSideBpm/templateConf/edit`, data, { headers })
+} 

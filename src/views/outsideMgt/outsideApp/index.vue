@@ -20,15 +20,16 @@
                plain
                icon="Plus"
                :disabled="single"
-               @click="addConditionsTemplate"
-               v-hasPermi="['system:post:edit']"
+               @click="addConditionsTemplate" 
             >添加条件模板</el-button>
          </el-col>
     </el-row>
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="业务方名称" align="center" prop="businessName" />
       <el-table-column label="业务方标识" align="center" prop="businessCode" />
       <el-table-column label="应用名称" align="center" prop="title" />
+      <el-table-column label="应用标识" align="center" prop="processKey" />      
       <el-table-column label="应用类型" align="center" prop="applyTypeName" />
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template #default="scope">
@@ -70,9 +71,9 @@
           <el-col :span="24">
             <el-form-item label="应用类型" prop="applyType">
               <el-radio-group v-model="form.applyType">
-                <el-radio value="1">流程</el-radio>
-                <el-radio value="2">应用</el-radio>
-                <el-radio value="3">父级应用</el-radio>
+                <el-radio value="1" disabled="true">流程</el-radio>
+                <el-radio value="2" disabled="true">应用</el-radio>
+                <el-radio value="3" disabled="true">父级应用</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -81,8 +82,8 @@
           <el-col :span="24">
             <el-form-item label="子应用" prop="isSon">
               <el-radio-group v-model="form.isSon">
-                <el-radio value="1">是</el-radio>
-                <el-radio value="2">否</el-radio> 
+                <el-radio value="1" disabled="true">是</el-radio>
+                <el-radio value="2" disabled="true">否</el-radio> 
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -116,26 +117,78 @@
         </div>
       </template>
     </el-dialog>
+
+     <!-- 添加条件模板对话框 -->
+     <el-dialog title="添加条件模板" v-model="openTemplate" width="550px" append-to-body>
+      <el-form :model="templateForm" :rules="templateRules" ref="formTemplateRef" label-width="130px" style="margin: 0 20px;">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="业务方名称" prop="businessPartyName">
+              <el-input v-model="templateForm.businessPartyName"  :disabled="true" placeholder="请输入业务方名称" />
+            </el-form-item> 
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="应用名称" prop="applicationName">
+              <el-input v-model="templateForm.applicationName" :disabled="true" placeholder="请输入应用名称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="条件模板ID" prop="templateMark">
+              <el-input v-model="templateForm.templateMark"  placeholder="请输入条件模板唯一标识" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="条件模板名称" prop="templateName">
+              <el-input v-model="templateForm.templateName" placeholder="请输入条件模板名称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="备注">
+              <el-input v-model="templateForm.remark" type="textarea" placeholder="请输入内容"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitTemplateForm">确 定</el-button>
+          <el-button @click="cancelTemplate">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
+    
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"; 
-import { getApplicationsPageList, registerApplication, getApplicationDetail, getPartyMarkKV } from "@/api/mockoutside";
+import { getApplicationsPageList, addApplication, getApplicationDetail, getPartyMarkKV } from "@/api/mockoutside";
 const { proxy } = getCurrentInstance();
 const list = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
 const total = ref(0);
 const open = ref(false);
+const openTemplate = ref(false); 
 const title = ref("");
-const tempIds = ref([]);
+const appIds = ref([]);
 const single = ref(true);
 const multiple = ref(true);
+const businessPartyName = ref("");
+const applicationName = ref(""); 
 
 let partyMarkOptions = ref([]);
 const data = reactive({
   form: {},
+  templateForm: {},
   page: {
     page: 1,
     pageSize: 10
@@ -145,9 +198,15 @@ const data = reactive({
     businessCode: [{ required: true, message: '请选择业务方', trigger: 'change' }],
     title: [{ required: true, message: '请输入应用名称', trigger: 'blur' }],
     applyType: [{ required: true, message: '', trigger: 'change' }]
+  },
+  templateRules: {
+    businessPartyName: [{ required: true, message: '', trigger: 'blur' }],
+    applicationName: [{ required: true, message: '', trigger: 'blur' }],
+    templateMark: [{ required: true, message: '请输入条件模板ID', trigger: 'blur' }],
+    templateName: [{ required: true, message: '请输入条件模板名称', trigger: 'blur' }]
   }
 });
-const { page, vo, form, rules } = toRefs(data);
+const { page, vo, form, rules,templateForm,templateRules } = toRefs(data);
 
 onMounted(async () => {
   getList();
@@ -158,7 +217,6 @@ onMounted(async () => {
 function getListAA() {
   loading.value = true;
   getPartyMarkKV().then(response => {
-    console.log('getListAA() ========', JSON.stringify(response));
     partyMarkOptions.value = response.data;
   }).catch(() => {
 
@@ -179,9 +237,12 @@ function getList() {
 
 /** 多选框选中数据 */
 function handleSelectionChange(selection) {
-  tempIds.value = selection.map(item => item.postId);
+  appIds.value = selection.map(item => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
+
+  businessPartyName.value = selection.map(item => item.businessName);
+  applicationName.value = selection.map(item => item.name); 
 }
 
 /** 新增接入业务方 */
@@ -195,13 +256,13 @@ function submitForm() {
   proxy.$refs["formRef"].validate(valid => {
     if (valid) {
       if (form.value.id != undefined) {
-        registerApplication(form.value).then(response => {
+        addApplication(form.value).then(response => {
           proxy.$modal.msgSuccess("修改成功");
           open.value = false;
           getList();
         });
       } else {
-        registerApplication(form.value).then(response => {
+        addApplication(form.value).then(response => {
           if (response.code != 200) {
             proxy.$modal.msgError("注册失败");
             return;
@@ -214,6 +275,7 @@ function submitForm() {
     }
   });
 }
+
 /** 修改按钮操作 */
 function handleEdit(row) {
   reset();
@@ -235,7 +297,12 @@ function handleDelete(row) {
 /** 添加条件模板 */
 function addConditionsTemplate(row) {
   reset();
-  const tempId = row.id || tempIds.value;
+  const appId = row.id || appIds.value[0];
+  templateForm.value.applicationId = appId;
+  templateForm.value.businessPartyName = businessPartyName.value[0];
+  templateForm.value.applicationName = applicationName.value[0]; 
+  openTemplate.value = true;  
+  //console.log(JSON.stringify(templateForm.value));
   // getPost(tempId).then(response => {
   //   form.value = response.data;
   //   open.value = true;
@@ -243,11 +310,27 @@ function addConditionsTemplate(row) {
   // });
 }
 
+/** 提交条件模板表单 */
+function submitTemplateForm() {
+  proxy.$refs["formTemplateRef"].validate(valid => {
+    if (valid) {
+      proxy.$modal.msgSuccess("添加成功");
+      openTemplate.value = false; 
+    }
+  });
+}
 /** 取消操作表单 */
 function cancel() {
   open.value = false;
   reset();
 }
+
+/** 取消操作添加条件模板表单 */
+function cancelTemplate() {
+  openTemplate.value = false;
+  reset();
+}
+
 
 /** 重置操作表单 */
 function reset() {
@@ -255,11 +338,20 @@ function reset() {
     id: undefined,
     businessCode: undefined,
     title: undefined,
-    applyType: undefined,
-    isSon: undefined,
+    applyType: 2,
+    isSon: 2,
     applicationUrl: undefined,
     pcIcon: undefined,
     effectiveSource: undefined,
+    remark: undefined
+  };
+  templateForm.value = {
+    businessPartyName: undefined,
+    applicationName: undefined,
+    businessPartyId: undefined,
+    applicationId: undefined,
+    templateMark: undefined,
+    templateName: undefined, 
     remark: undefined
   };
   proxy.resetForm("queryRef");

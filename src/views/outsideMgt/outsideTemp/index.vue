@@ -124,10 +124,10 @@ const initFromCode = async () => {
 }
 /**获取三方注册应用名称 */
 const getFromCodeName = (formCode) => { 
- const result= formCodeOptions.value.filter(item => item.businessCode == formCode)[0]; 
+ const result= formCodeOptions.value.filter(item => item.processKey == formCode)[0]; 
  return result?.title;
 }
-/**获取也无妨名称 */
+/**获取业务方名称 */
 const getPartyMarkName = (id) => { 
  const result= partyMarkOptions.value.filter(item => item.id == id)[0]; 
  return result?.name;
