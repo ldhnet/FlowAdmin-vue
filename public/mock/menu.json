@@ -230,7 +230,7 @@
             "component": "Layout",
             "alwaysShow": true,
             "meta": {
-                "title": "三方管理",
+                "title": "业务方管理",
                 "icon": "component",
                 "noCache": false,
                 "link": null
@@ -241,7 +241,7 @@
                     "hidden": false,
                     "component": "outsideMgt/outsideJoin/index",
                     "meta": {
-                        "title": "三方申请",
+                        "title": "业务方申请",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -252,7 +252,7 @@
                     "hidden": false,
                     "component": "outsideMgt/outsideApp/index",
                     "meta": {
-                        "title": "三方应用",
+                        "title": "应用管理",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -263,7 +263,7 @@
                     "hidden": false,
                     "component": "outsideMgt/outsideTemp/index",
                     "meta": {
-                        "title": "三方模板",
+                        "title": "模板管理",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -274,7 +274,7 @@
                     "hidden": false,
                     "component": "outsideMgt/outsideDesign/index",
                     "meta": {
-                        "title": "三方设计",
+                        "title": "流程设计",
                         "icon": "",
                         "noCache": false,
                         "link": null
