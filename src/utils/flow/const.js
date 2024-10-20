@@ -26,7 +26,7 @@ export const nodeConf = {
     getway : 2,//'网关'
     condition : 3,//'条件'
     approve: 4,//'审核人'
-    copy: 5//'抄送人'
+    copy: 6//'抄送人'
   },
   approveType: {
       role: 4,//'指定角色'

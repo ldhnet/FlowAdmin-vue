@@ -124,12 +124,12 @@
                     "conditionList": [
                         {
                             "showType": "2",
-                            "columnId": "1",
+                            "columnId": "36",
                             "type": 2,
-                            "showName": "支出费用",
+                            "showName": "条件",
                             "zdy1": "2",
-                            "columnDbname": "planProcurementTotalMoney",
-                            "columnType": "Double",
+                            "columnDbname": "templateMarks",
+                            "columnType": "String",
                             "fixedDownBoxValue": "[{\"key\":\"1\",\"value\":\"大于2000\",\"disabled\":\"false\"},{\"key\":\"2\",\"value\":\"大于3000\",\"disabled\":\"false\"},{\"key\":\"3\",\"value\":\"大于5000\",\"disabled\":\"false\"}]"
                         }
                     ],

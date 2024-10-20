@@ -12,10 +12,21 @@
     </el-form>
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="handleAdd">注册</el-button>
+        <el-button type="primary" plain icon="Plus" @click="handleAdd">注册应用</el-button>
       </el-col>
+      <el-col :span="1.5">
+            <el-button
+               type="success"
+               plain
+               icon="Plus"
+               :disabled="single"
+               @click="addConditionsTemplate"
+               v-hasPermi="['system:post:edit']"
+            >添加条件模板</el-button>
+         </el-col>
     </el-row>
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="业务方标识" align="center" prop="businessCode" />
       <el-table-column label="应用名称" align="center" prop="title" />
       <el-table-column label="应用类型" align="center" prop="applyTypeName" />
@@ -116,9 +127,12 @@ const list = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
 const total = ref(0);
-
 const open = ref(false);
 const title = ref("");
+const tempIds = ref([]);
+const single = ref(true);
+const multiple = ref(true);
+
 let partyMarkOptions = ref([]);
 const data = reactive({
   form: {},
@@ -162,6 +176,14 @@ function getList() {
     loading.value = false;
   });
 }
+
+/** 多选框选中数据 */
+function handleSelectionChange(selection) {
+  tempIds.value = selection.map(item => item.postId);
+  single.value = selection.length != 1;
+  multiple.value = !selection.length;
+}
+
 /** 新增接入业务方 */
 function handleAdd() {
   reset();
@@ -208,6 +230,17 @@ function handleEdit(row) {
 /** 删除按钮操作 */
 function handleDelete(row) {
   proxy.$modal.msgError("演示环境不允许删除操作！");
+}
+
+/** 添加条件模板 */
+function addConditionsTemplate(row) {
+  reset();
+  const tempId = row.id || tempIds.value;
+  // getPost(tempId).then(response => {
+  //   form.value = response.data;
+  //   open.value = true;
+  //   title.value = "修改岗位";
+  // });
 }
 
 /** 取消操作表单 */

@@ -77,7 +77,7 @@ const addType = (type)=> {
                 "nodeId": NodeUtils.idGenerator(),
                 "nodeName": "抄送人",
                 "nodeDisplayName": "抄送人", 
-                "nodeType": 5,
+                "nodeType": 6,
                 "nodeFrom": "", 
                 "prevId": [],
                 "nodeTo": [],

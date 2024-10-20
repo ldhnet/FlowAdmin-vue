@@ -22,7 +22,7 @@
                   <el-table ref="refTable" :data="userList" border height="260px">
                     <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
                       <template #default="scope"> 
-                        <el-button link type="primary" icon="Plus" @click="handleSelectUser(scope.row)" />
+                        <el-button link type="primary" icon="CirclePlus" @click="handleSelectUser(scope.row)" />
                       </template>
                     </el-table-column>
                     <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" /> 

@@ -110,9 +110,9 @@ All.prototype = {
         }
         return arr.join("或")
     },  
-    getLabelStr(str, obj) { 
+    getLabelStr(str, obj) {  
         if(!obj) return; 
-        let ret = obj.find(c => c.key === str);
+        let ret = obj[str];
         if (ret) {
             return ret.value;
         }
