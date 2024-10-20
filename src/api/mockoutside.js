@@ -114,6 +114,14 @@ export function getPartyMarkKV() {
 /** 应用关联条件模板 * /
 
 /**
+ * 获取条件模板列表
+ * @param {*} param 
+ * @returns 
+ */
+export function getTemplatelistPage(businessPartyId,applicationId) {  
+  return http.get(`${baseUrl}/outSideBpm/templateConf/selectListByPartMarkIdAndAppId/${businessPartyId}/${applicationId}`, { headers })
+} 
+/**
  * 添加条件模板
  * @param {*} param 
  * @returns 

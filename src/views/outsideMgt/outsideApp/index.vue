@@ -21,7 +21,7 @@
                icon="Plus"
                :disabled="single"
                @click="addConditionsTemplate" 
-            >添加条件模板</el-button>
+            >添加条件</el-button>
          </el-col>
     </el-row>
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
@@ -36,10 +36,11 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="280" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button link type="primary" icon="View" @click="handleTemplateList(scope.row)">查看条件</el-button>
+          <!-- <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -119,7 +120,7 @@
     </el-dialog>
 
      <!-- 添加条件模板对话框 -->
-     <el-dialog title="添加条件模板" v-model="openTemplate" width="550px" append-to-body>
+     <el-dialog title="添加条件" v-model="openTemplate" width="550px" append-to-body>
       <el-form :model="templateForm" :rules="templateRules" ref="formTemplateRef" label-width="130px" style="margin: 0 20px;">
         <el-row>
           <el-col :span="24">
@@ -165,12 +166,14 @@
       </template>
     </el-dialog>
     
+    <TemplateList ref="templateListRef" :visible="templateListVisible"  />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"; 
-import { getApplicationsPageList, addApplication, getApplicationDetail, getPartyMarkKV } from "@/api/mockoutside";
+import { getApplicationsPageList, addApplication, getApplicationDetail, getPartyMarkKV,setTemplateConf } from "@/api/mockoutside";
+import TemplateList from "./template.vue"; 
 const { proxy } = getCurrentInstance();
 const list = ref([]);
 const loading = ref(false);
@@ -184,8 +187,10 @@ const single = ref(true);
 const multiple = ref(true);
 const businessPartyName = ref("");
 const applicationName = ref(""); 
+const processKey = ref(""); 
 
 let partyMarkOptions = ref([]);
+let templateListVisible = ref(false)
 const data = reactive({
   form: {},
   templateForm: {},
@@ -241,6 +246,7 @@ function handleSelectionChange(selection) {
   single.value = selection.length != 1;
   multiple.value = !selection.length;
 
+  processKey.value = selection.map(item => item.processKey);
   businessPartyName.value = selection.map(item => item.businessName);
   applicationName.value = selection.map(item => item.name); 
 }
@@ -300,23 +306,21 @@ function addConditionsTemplate(row) {
   const appId = row.id || appIds.value[0];
   templateForm.value.applicationId = appId;
   templateForm.value.businessPartyName = businessPartyName.value[0];
-  templateForm.value.applicationName = applicationName.value[0]; 
+  templateForm.value.applicationName = applicationName.value[0];  
+  templateForm.value.applicationFormCode = processKey.value[0]; 
   openTemplate.value = true;  
-  //console.log(JSON.stringify(templateForm.value));
-  // getPost(tempId).then(response => {
-  //   form.value = response.data;
-  //   open.value = true;
-  //   title.value = "修改岗位";
-  // });
+  //console.log(JSON.stringify(templateForm.value)); 
 }
 
 /** 提交条件模板表单 */
 function submitTemplateForm() {
   proxy.$refs["formTemplateRef"].validate(valid => {
     if (valid) {
-      proxy.$modal.msgSuccess("添加成功");
-      openTemplate.value = false; 
-    }
+       setTemplateConf(templateForm.value).then(response => {
+          proxy.$modal.msgSuccess("添加成功");
+          openTemplate.value = false; 
+        });
+      }
   });
 }
 /** 取消操作表单 */
@@ -329,9 +333,13 @@ function cancel() {
 function cancelTemplate() {
   openTemplate.value = false;
   reset();
+} 
+
+function handleTemplateList(row) { 
+
+  proxy.$refs["templateListRef"].show(row.businessPartyId,row.id);
 }
-
-
+ 
 /** 重置操作表单 */
 function reset() {
   form.value = {
@@ -350,6 +358,7 @@ function reset() {
     applicationName: undefined,
     businessPartyId: undefined,
     applicationId: undefined,
+    applicationFormCode: undefined,
     templateMark: undefined,
     templateName: undefined, 
     remark: undefined

@@ -159,10 +159,7 @@ let saveDialog = ()=> {
 }
 
 getList();
-// 显示弹框
-function show() {  
-  props.visible = true;
-} 
+
 /**
  * 关闭弹窗
  */
@@ -170,9 +167,7 @@ function show() {
    checkedUsersList.value = []
    emits('update:visible', false) 
 }
-defineExpose({
-  show,
-});
+
 </script>
 <style lang="css" scoped>
 .tip {
