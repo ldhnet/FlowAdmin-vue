@@ -3,174 +3,17 @@
     "msg": "success",
     "data": {
         "id": 1,
-        "bpmnName": "埃德伯格入学审批",
-        "bpmnCode": null,
-        "businessPartyId": 4,
+        "bpmnName": "埃德伯格入学流程",
+        "bpmnCode": null, 
         "appId": null,
         "isOutSideProcess": 1,
         "bpmnType": 1,
+        "businessPartyId": "4",
         "formCode": "adbgxx",
         "remark": "",
         "effectiveStatus": 0,
         "deduplicationType": 1,
-        "nodes": [
-            {
-                "nodeId": "XW4BSF",
-                "nodeName": "审核人",
-                "nodeType": 4,
-                "nodeFrom": "4VKASF",
-                "prevId": [],
-                "nodeTo": [],
-                "setType": 5,
-                "directorLevel": 1,
-                "signType": 1,
-                "noHeaderAction": 2,
-                "error": false,
-                "isSignUp": 0,
-                "property": {
-                    "emplIds": [
-                        8
-                    ],
-                    "emplList": [
-                        {
-                            "id": 8,
-                            "name": "周十"
-                        }
-                    ],
-                    "roleIds": [],
-                    "roleList": [],
-                    "signType": 1,
-                    "afterSignUpWay": 1
-                },
-                "buttons": {
-                    "startPage": [
-                        1
-                    ],
-                    "approvalPage": [
-                        3,
-                        4
-                    ],
-                    "viewPage": [
-                        0
-                    ]
-                },
-                "nodeProperty": 5
-            },
-            {
-                "nodeId": "ROBASF",
-                "nodeName": "审核人",
-                "nodeType": 4,
-                "nodeFrom": "MTKASF",
-                "prevId": [],
-                "nodeTo": [
-                    "XW4BSF"
-                ],
-                "setType": 5,
-                "directorLevel": 1,
-                "signType": 1,
-                "noHeaderAction": 2,
-                "error": false,
-                "isSignUp": 0,
-                "property": {
-                    "emplIds": [
-                        2,
-                        3
-                    ],
-                    "emplList": [
-                        {
-                            "id": 2,
-                            "name": "李四"
-                        },
-                        {
-                            "id": 3,
-                            "name": "王五"
-                        }
-                    ],
-                    "roleIds": [],
-                    "roleList": [],
-                    "signType": 1,
-                    "afterSignUpWay": 1
-                },
-                "buttons": {
-                    "startPage": [
-                        1
-                    ],
-                    "approvalPage": [
-                        3,
-                        4
-                    ],
-                    "viewPage": [
-                        0
-                    ]
-                },
-                "nodeDisplayName": "2人(李四,王五)会签",
-                "nodeProperty": 5
-            },
-            {
-                "nodeId": "MTKASF",
-                "nodeName": "条件1",
-                "nodeDisplayName": "支出费用：大于3000",
-                "nodeType": 3,
-                "nodeFrom": "4VKASF",
-                "prevId": [],
-                "nodeTo": [
-                    "ROBASF"
-                ],
-                "priorityLevel": 1,
-                "nodeApproveList": [],
-                "error": false,
-                "isDefault": 0,
-                "property": {
-                    "conditionList": [
-                        {
-                            "showType": "2",
-                            "columnId": "36",
-                            "type": 2,
-                            "showName": "条件",
-                            "zdy1": "2",
-                            "columnDbname": "templateMarks",
-                            "columnType": "String",
-                            "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"腾讯云\",\"column\":\"\",\"type\":\"1\"},\"2\":{\"key\":\"2\",\"value\":\"百度云\",\"column\":\"\",\"type\":\"1\"},\"3\":{\"key\":\"3\",\"value\":\"阿里云\",\"column\":\"\",\"type\":\"1\"}}"
-                        }
-                    ],
-                    "sort": 1,
-                    "isDefault": 0
-                }
-            },
-            {
-                "nodeId": "2QKASF",
-                "nodeName": "条件2",
-                "nodeDisplayName": "其他条件进入此流程",
-                "nodeType": 3,
-                "nodeFrom": "4VKASF",
-                "prevId": [],
-                "nodeTo": [
-                    "XW4BSF"
-                ],
-                "priorityLevel": 2,
-                "nodeApproveList": [],
-                "isDefault": 1,
-                "error": false,
-                "property": {
-                    "conditionList": [],
-                    "sort": 2,
-                    "isDefault": 1
-                }
-            },
-            {
-                "nodeId": "4VKASF",
-                "nodeName": "路由",
-                "nodeType": 2,
-                "nodeFrom": "Gb2",
-                "prevId": [],
-                "nodeTo": [
-                    "MTKASF",
-                    "2QKASF"
-                ],
-                "error": true,
-                "isSignUp": 0,
-                "property": {}
-            },
+        "nodes": [ 
             {
                 "confId": 35,
                 "nodeId": "Gb2",
@@ -190,9 +33,7 @@
                 "orderedNodeType": null,
                 "remark": "",
                 "isDel": 0,
-                "nodeTo": [
-                    "4VKASF"
-                ],
+                "nodeTo": [],
                 "property": null,
                 "params": null,
                 "buttons": {
@@ -204,7 +45,7 @@
                 },
                 "templateVos": null,
                 "approveRemindVo": null,
-                "formCode": "PROJECT_uoSXu4",
+                "formCode": "adbgxx",
                 "conditionNodes": []
             }
         ]

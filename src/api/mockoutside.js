@@ -122,6 +122,21 @@ export function getTemplatelistPage(businessPartyId,applicationId) {
   return http.get(`${baseUrl}/outSideBpm/templateConf/selectListByPartMarkIdAndAppId/${businessPartyId}/${applicationId}`, { headers })
 } 
 /**
+ * 获取条件模板列表
+ * @param {*} param 
+ * @returns 
+ */
+export function getTemplateByPartyMarkIdAndFormCode(businessPartyId,formCode) {  
+  if(!businessPartyId || !formCode) {
+    return Promise.resolve({
+      "code": 999,
+      "msg": "",
+      "data": []
+    })
+  }
+  return http.get(`${baseUrl}/outSideBpm/templateConf/selectListByPartyMarkIdAndFormCode/${businessPartyId}/${formCode}`, { headers })
+} 
+/**
  * 添加条件模板
  * @param {*} param 
  * @returns 

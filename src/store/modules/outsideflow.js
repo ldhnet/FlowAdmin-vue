@@ -15,6 +15,10 @@
     },
     instanceDrawer: false,
     instanceViewConfig1: {},
+    basideFormConfig: {
+      partyMarkId: undefined, 
+      formCode: undefined
+    },
   }),
   actions: {
     setUserId(payload) {
@@ -25,6 +29,9 @@
     },
     setIsTried(payload) {
       this.isTried = payload
+    },
+    setBasideFormConfig(payload) {
+      this.basideFormConfig = payload
     },
     setPromoter(payload) {
       this.promoterDrawer = payload

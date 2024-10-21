@@ -64,7 +64,7 @@ let title = ref('');
 onMounted(async () => {  
  let mockjson = {};
  proxy.$modal.loading();
- if (route.query.id) {
+ if (route.query.id&& route.query.id != 0) {
      mockjson = await getApiWorkFlowData({ id: route.query.id });
  } else {
      mockjson = await getMockWorkFlowData({ id: 0 });

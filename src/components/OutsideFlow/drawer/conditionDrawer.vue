@@ -18,7 +18,7 @@
             <div class="condition_content drawer_content">
                 <p class="tip">当审批单满足以下条件时进入此流程</p>
                 
-                <ul>
+                <ul v-if="conditionsIsExist">
                     <li v-for="(item,index) in conditionConfig.conditionList" :key="index"> 
                         <div style="font-size: small;"> 
                             <span style="margin-right: 10px;width: 100px;overflow: hidden;">{{ item.showName }} </span>
@@ -27,9 +27,16 @@
                             </el-select>
                         </div>   
                     </li>
-                </ul>         
-            </div>
-   
+                </ul>   
+                <ul v-if="!conditionsIsExist">
+                    <li> 
+                        <span style="font-size: medium;color: red;">* 请先在 <em style="color: black; font-weight: 900;"> 基础设置</em> 里选择业务方和业务方应用，才可以获取到条件模板</span>
+                    </li>
+                    <li> 
+                        <span style="font-size: medium;color: red;margin-top: 10px;">*温馨提示：<em style="color: black; font-weight: 900;">应用管理</em> 菜单里需要先提前添加条件模板</span>
+                    </li>
+                </ul>
+            </div>   
             <div class="demo-drawer__footer clear">
                 <el-button type="primary" @click="saveCondition">确 定</el-button>
                 <el-button @click="closeDrawer">取 消</el-button>
@@ -38,20 +45,22 @@
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue' 
+import { ref, watch, computed } from 'vue' 
 import $func from '@/utils/flow/index'
-import { useStore } from '@/store/modules/outsideflow'
-import { getConditions } from '@/api/mockoutsideflow'  
+import { useStore } from '@/store/modules/outsideflow' 
+import { getTemplateByPartyMarkIdAndFormCode } from '@/api/mockoutside'  
+
 let store = useStore()
 let { setCondition, setConditionsConfig } = store
 let conditionsConfig = ref({
     conditionNodes: [],
 })
+let conditionsIsExist = ref(false)
 let conditionConfig = ref({})
-let PriorityLevel = ref('')
-let conditionConfigDef=ref({}) 
+let PriorityLevel = ref('') 
 let conditionsConfig1 = computed(()=> store.conditionsConfig1)
 let conditionDrawer = computed(()=> store.conditionDrawer)
+let basideFormConfig = computed(()=> store.basideFormConfig)
 let visible = computed({
     get() {
         return conditionDrawer.value
@@ -61,22 +70,43 @@ let visible = computed({
     }
 })
 
-watch(conditionsConfig1, (val) => { 
+watch(conditionsConfig1,async (val) => { 
     conditionsConfig.value = val.value;
-    PriorityLevel.value = val.priorityLevel 
-    conditionConfig.value = val.priorityLevel ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1] : conditionConfigDef
-    if(Array.isArray(conditionConfig.value.conditionList) && conditionConfig.value.conditionList.length == 0){
-        conditionConfig.value.conditionList = conditionConfigDef.value.conditionList
+    PriorityLevel.value = val.priorityLevel  
+    conditionConfig.value = val.priorityLevel ? conditionsConfig.value.conditionNodes[val.priorityLevel-1] :  { nodeApproveList: [], conditionList: [] }  
+}, { deep: true, immediate: true}) 
+
+watch(conditionConfig,async (newVal, oldVal) => {  
+    // console.log('newVal===================',JSON.stringify(newVal.conditionList))
+    // console.log('basideFormConfig.value===================',JSON.stringify(basideFormConfig.value))
+    //console.log('oldVal===================',JSON.stringify(oldVal))
+    if(Array.isArray(newVal.conditionList) && newVal.conditionList.length == 0){
+        let {code,data } = await getTemplateByPartyMarkIdAndFormCode(basideFormConfig.value.partyMarkId, basideFormConfig.value.formCode);
+        if(code == 200) { 
+            const conditionMaps =  data.map(item =>{return {key: item.templateMark,value: item.templateName}})
+            let conditionGroup = {}
+            for (let t of conditionMaps) {
+                if (!conditionGroup.hasOwnProperty(t.key)) { 
+                    conditionGroup[t.key] = t
+                }
+            }  
+            conditionConfig.value.conditionList = [{
+                columnId: "36",
+                showType: "2",
+                showName: "条件",
+                columnName: "templateMarks",
+                columnType: "String",
+                fixedDownBoxValue: JSON.stringify(conditionGroup),
+            }]
+            conditionsIsExist.value=true;  
+        }else{
+            conditionsIsExist.value=false;
+        } 
+    }else{
+        conditionsIsExist.value=true; 
     }
-}) 
-onMounted(async () => {
-    let { data } =await getConditions();
-    conditionConfigDef.value = { 
-        nodeApproveList: [], 
-        conditionList: data
-    } 
-})
- 
+}, { deep: true, immediate: true}) 
+
 const saveCondition = () => {
     closeDrawer()  
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
@@ -129,16 +159,13 @@ const closeDrawer = (val) => {
             max-height: 500px;
             overflow-y: scroll;
             margin-bottom: 20px;     
-            li { 
-
-                p.selected_list {
-                    padding-left: 10px;
+            li {  
+                    padding-top: 20px;
+                    padding-left: 5px;
                     border-radius: 4px;
-                    min-height: 32px;
-                    // border: 1px solid rgba(217, 217, 217, 1);
-                    word-break: break-word;
-                }
- 
+                    min-height: 50px;
+                    //border: 1px solid rgba(217, 217, 217, 1);
+                    word-break: break-word; 
             }
         } 
     }

@@ -72,8 +72,8 @@
           <el-col :span="24">
             <el-form-item label="审批流类型" prop="type">
               <el-radio-group v-model="form.type">
-                <el-radio value="1">嵌入式</el-radio>
-                <el-radio value="2">调入式</el-radio>
+                <el-radio value="1" :disabled=true>嵌入式</el-radio>
+                <el-radio value="2" :disabled=true>调入式</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -206,7 +206,7 @@ function reset() {
     id: undefined,
     businessPartyMark: undefined,
     name: undefined,
-    type: undefined,
+    type: '2',
     remark: undefined
   };
   proxy.resetForm("queryRef");

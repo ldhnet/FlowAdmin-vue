@@ -7,8 +7,7 @@
                         <el-option v-for="(item, index) in businessPartyOptions" :key="index" :label="item.label"
                             :value="item.value"></el-option>
                     </el-select>
-                </el-form-item>
-
+                </el-form-item>                
             <el-form-item label="模板类型" prop="formCode">
                 <template #label>
                   <span>
@@ -18,16 +17,14 @@
                      模板类型
                   </span>
                </template> 
-                <el-select v-model="form.formCode" placeholder="请选择模板类型" :style="{ width: '100%' }">
-                    <el-option v-for="(item, index) in formCodeOptions" :key="index" :label="item.value"
-                        :value="item.key"></el-option>
+                <el-select @change="selectFormCodeChanged" v-model="form.formCode" placeholder="请选择模板类型" :style="{ width: '100%' }">
+                    <el-option v-for="(item, index) in formCodeOptions" :key="index" :label="item.label"
+                        :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
-
             <el-form-item label="流程名称" prop="bpmnName">
                 <el-input v-model="form.bpmnName" placeholder="请输入审批名称" :style="{ width: '100%' }" />
             </el-form-item>
-
             <el-form-item label="审批人去重" prop="deduplicationType">
                 <el-select v-model="form.deduplicationType" placeholder="请选择去重类型" :style="{ width: '100%' }">
                     <el-option v-for="(item, index) in duplicateOptions" :key="index" :label="item.label"
@@ -49,8 +46,10 @@
 <script setup>
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils' 
+import { useStore } from '@/store/modules/outsideflow'  
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
+let store = useStore()
 let props = defineProps({
     basicData: {
         type: Object,
@@ -70,88 +69,56 @@ let duplicateOptions = [{
     "label": "后去重",
     "value": 3
 }];
-let businessPartyOptions = [{
-    "label": "云能力",
-    "value": 1
-}, {
-    "label": "智能驾驶",
-    "value": 2
-}, {
-    "label": "工商大学",
-    "value": 3
-}, {
+let businessPartyOptions = [ {
     "label": "埃德伯格学校",
-    "value": 4
-}, {
-    "label": "河南省桐柏县智慧农业系统",
-    "value": 5
-}, {
-    "label": "OA-01测试",
-    "value": 11
+    "value": "4"
 }];
 
-let formCodeOptions = [{
-    "value": "智能架构系统审批流",
-    "key": 'znjs'
-}, {
-    "value": "测试01",
-    "key": 'cloud_01'
-}, {
-    "value": "埃德伯格学校审批",
-    "key": 'adbgxx'
-}, {
-    "value": "智慧农业果木苗申请",
-    "key": 'zhny_guomu'
-}];
-
-
-const form = reactive({
-    bpmnName: undefined,
+let formCodeOptions = ref([]); 
+let form = reactive({
     bpmnCode: generatorID,
-    businessPartyId: undefined,
-    appId: undefined,
+    bpmnName: null, 
+    businessPartyId: null,
+    appId: null,
     isOutSideProcess: 1,
     bpmnType: 1,
-    formCode: undefined,
-    remark: undefined,
+    formCode: null,
+    remark: null,
     effectiveStatus: false,
     deduplicationType: 1
 })
+watch(form, (val) => {    
+    if (val.businessPartyId) {
+        formCodeOptions.value = [{
+            "label": "埃德伯格",
+            "value": 'adbgxx'
+        }]; 
+        store.setBasideFormConfig({
+            partyMarkId: form.businessPartyId, 
+            formCode: form.formCode
+        })
+    }
+}, { deep: true, immediate: true}) 
 
-onMounted(async () => {
-    //console.log('basicData=====props=======',JSON.stringify(props.basicData))
+onMounted(() => { 
+    //console.log('props.basicData=====',JSON.stringify(props.basicData))
     if (props.basicData) {
         form.bpmnName = props.basicData.bpmnName;
         form.bpmnCode = props.basicData.bpmnCode;
         form.formCode = props.basicData.formCode;
-        form.businessPartyId = props.basicData.businessPartyId;
+        form.businessPartyId = "4";//props.basicData.businessPartyId
         form.appId = props.basicData.appId;
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;
-    } 
+    }  
+    //console.log('form=====form==form=====',JSON.stringify(form))
 });
 
 let rules = {
-    formCode: [{
-        required: true,
-        message: '请选择模板类型',
-        trigger: 'blur'
-    }],
-    bpmnName: [{
-        required: true,
-        message: '请输入流程名称',
-        trigger: 'blur'
-    }],
-    bpmnCode: [{
-        required: true,
-        message: '请输入流程编号',
-        trigger: 'blur'
-    }], 
-    businessPartyId: [{
-        required: true,
-        message: '请输选择业务方',
-        trigger: 'blur'
-    }]
+    formCode: [{ required: true, message: '请选择模板类型', trigger: 'change' }],
+    bpmnName: [{ required: true, message: '请输入流程名称', trigger: 'blur' }],
+    bpmnCode: [{ required: true, message: '请输入流程编号', trigger: 'blur' }], 
+    businessPartyId: [{ required: true, message: '请输选择业务方', trigger: 'change' }]
 };
 const nextSubmit = (ruleFormRef) => {
     if (!ruleFormRef) return
@@ -174,6 +141,10 @@ const getData = () => {
         })
     })
 };
+ 
+const selectFormCodeChanged = (value) => {
+ 
+}
 defineExpose({
     getData
 })

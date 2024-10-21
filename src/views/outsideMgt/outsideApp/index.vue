@@ -72,9 +72,9 @@
           <el-col :span="24">
             <el-form-item label="应用类型" prop="applyType">
               <el-radio-group v-model="form.applyType">
-                <el-radio value="1" disabled="true">流程</el-radio>
-                <el-radio value="2" disabled="true">应用</el-radio>
-                <el-radio value="3" disabled="true">父级应用</el-radio>
+                <el-radio value="1" :disabled=true>流程</el-radio>
+                <el-radio value="2" :disabled=true>应用</el-radio>
+                <el-radio value="3" :disabled=true>父级应用</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -83,8 +83,8 @@
           <el-col :span="24">
             <el-form-item label="子应用" prop="isSon">
               <el-radio-group v-model="form.isSon">
-                <el-radio value="1" disabled="true">是</el-radio>
-                <el-radio value="2" disabled="true">否</el-radio> 
+                <el-radio value="1" :disabled=true>是</el-radio>
+                <el-radio value="2" :disabled=true>否</el-radio> 
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -125,14 +125,14 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="业务方名称" prop="businessPartyName">
-              <el-input v-model="templateForm.businessPartyName"  :disabled="true" placeholder="请输入业务方名称" />
+              <el-input v-model="templateForm.businessPartyName"  :disabled=true placeholder="请输入业务方名称" />
             </el-form-item> 
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="应用名称" prop="applicationName">
-              <el-input v-model="templateForm.applicationName" :disabled="true" placeholder="请输入应用名称" />
+              <el-input v-model="templateForm.applicationName" :disabled=true placeholder="请输入应用名称" />
             </el-form-item>
           </el-col>
         </el-row>
