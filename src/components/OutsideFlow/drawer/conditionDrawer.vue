@@ -77,8 +77,8 @@ watch(conditionsConfig1,async (val) => {
 }, { deep: true, immediate: true}) 
 
 watch(conditionConfig,async (newVal, oldVal) => {  
-    // console.log('newVal===================',JSON.stringify(newVal.conditionList))
-    // console.log('basideFormConfig.value===================',JSON.stringify(basideFormConfig.value))
+    console.log('newVal===================',JSON.stringify(newVal.conditionList))
+    console.log('basideFormConfig.value===================',JSON.stringify(basideFormConfig.value))
     //console.log('oldVal===================',JSON.stringify(oldVal))
     if(Array.isArray(newVal.conditionList) && newVal.conditionList.length == 0){
         let {code,data } = await getTemplateByPartyMarkIdAndFormCode(basideFormConfig.value.partyMarkId, basideFormConfig.value.formCode);

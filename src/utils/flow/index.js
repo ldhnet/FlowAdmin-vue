@@ -119,7 +119,7 @@ All.prototype = {
         return '';
     },  
     conditionStr(nodeConfig, index) { 
-        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index]; 
+        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index];  
         if (conditionList.length == 0) {
             return (index == nodeConfig.conditionNodes.length - 1) && nodeConfig.conditionNodes[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
         } else {
@@ -133,15 +133,23 @@ All.prototype = {
                         str += nodeApproveList.map(item => { return item.name }).join("或") + " 并且 "
                     }
                 }
-                if (columnType == "String" && showType == "3") {
-                    if (zdy1) {
-                        str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
-                    }
+                if (columnType == "String" && showType == "3") {                 
+                    if (!fixedDownBoxValue) {
+                        str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
+                    }else {
+                        if (zdy1) {
+                            str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
+                        }
+                    }   
                 }
                 if (columnType == "String" && showType == "2") {
-                    if (zdy1) {
-                        str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
-                    }
+                    if (!fixedDownBoxValue) {
+                        str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
+                    }else {
+                        if (zdy1) {
+                            str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
+                        }
+                    }                  
                 }
                 if (columnType == "Double" && showType == "2") {
                     if (zdy1) {
@@ -156,7 +164,7 @@ All.prototype = {
                         str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `
                     }
                 }
-            }
+            } 
             return str ? str.substring(0, str.length - 4) : '请设置条件'
         }
     },
