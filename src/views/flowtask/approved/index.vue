@@ -18,8 +18,8 @@
       <el-table v-loading="loading" :data="dataList">
          <el-table-column label="模板类型" align="center" prop="processKey">
             <template #default="item">  {{item.row.processKey}} 
-               <el-tooltip content="业务方外部接入表单流程" placement="top">
-                  <el-tag v-if="item.row.isOutSideProcess" type="warning" round>OUT</el-tag>
+               <el-tooltip v-if="item.row.isOutSideProcess" content="外部(第三方)业务方表单接入流程引擎" placement="top">
+                  <el-tag type="warning" round>OUT</el-tag>
                </el-tooltip> 
             </template>
          </el-table-column>  

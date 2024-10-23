@@ -174,8 +174,8 @@ export function getEffectiveBpmn(data) {
  * @param {*} data 
  * @returns 
  */
-export function getViewBusinessProcess(data) {
-  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess`, data, { headers })
+export function getViewBusinessProcess(data) { 
+  return http.post(`${baseUrl}/bpmnConf/process/viewBusinessProcess?formCode=${data.formCode}`, data, { headers })
 }
 
 /**

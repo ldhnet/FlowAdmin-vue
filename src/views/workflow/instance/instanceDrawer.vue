@@ -67,7 +67,11 @@ const handleTabClick = (tab, event) => {
   if (tab.paneName == 'baseTab') {
     loadComponent();
     preview();
-    baseTabShow.value = true;
+    if(viewConfig.value.isOutSideAccess){
+      baseTabShow.value = false;
+    }else{
+      baseTabShow.value = true;
+    }    
     flowStepShow.value = false;
     flowReviewShow.value = false;
   } else if (tab.paneName == 'flowStep') {
@@ -102,11 +106,12 @@ const loadComponent = () => {
 /**
  * 预览
  */
-const preview = () => {
+const preview = () => { 
   let queryParams = ref({
     "formCode": viewConfig.value.formCode,
     "processNumber": viewConfig.value.processNumber,
-    "type": 2
+    "type": 2,
+    "isOutSideAccessProc": viewConfig.value.isOutSideAccess
   });
   proxy.$modal.loading();
   getViewBusinessProcess(queryParams.value).then(response => {
