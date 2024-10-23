@@ -144,3 +144,15 @@ export function getTemplateByPartyMarkIdAndFormCode(businessPartyId,formCode) {
 export function setTemplateConf(data) { 
   return http.post(`${baseUrl}/outSideBpm/templateConf/edit`, data, { headers })
 } 
+
+/** 三方业务发起 * /
+
+ /**
+ * 三方业务发起
+ * @param {*} data 
+ * @returns 
+ */
+ export function processSubmit(data) {
+  return http.post(`${baseUrl}/outSide/processSubmit`, data, { headers })
+} 
+

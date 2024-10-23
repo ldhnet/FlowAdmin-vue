@@ -15,8 +15,14 @@
             <el-button icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
-      <el-table v-loading="loading" :data="dataList">
-         <el-table-column label="模板类型" align="center" prop="processKey" />
+      <el-table v-loading="loading" :data="dataList"> 
+         <el-table-column label="模板类型" align="center" prop="processKey">
+            <template #default="item">  {{item.row.processKey}} 
+               <el-tooltip content="业务方外部接入表单流程" placement="top">
+                  <el-tag v-if="item.row.isOutSideProcess" type="warning" round>OUT</el-tag>
+               </el-tooltip> 
+            </template>
+         </el-table-column>  
          <el-table-column label="模板名称" align="center" prop="processTypeName" />
          <el-table-column label="流程编号" align="center" prop="processNumber" />
          <el-table-column label="流程描述" align="center" prop="description" />
