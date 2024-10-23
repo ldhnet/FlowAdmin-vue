@@ -6,12 +6,19 @@
         </div>
         <el-tabs v-model="activeName" class="set-tabs" @tab-click="handleTabClick">
             <el-tab-pane label="表单信息" name="baseTab">
-                <div class="approve" v-if="componentLoaded">
+                <div class="approve">
                     <el-row style="padding-left: -5px;padding-right: -5px;">
-                        <el-col :span="24" class="my-col">
+                        <el-col :span="24" class="my-col"  v-if="componentLoaded">
                             <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
                                 <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent"
                                     :previewData="componentData" :isPreview="true" />
+                            </div>
+                        </el-col>
+                        <el-col :span="24" class="my-col" v-if="!componentLoaded">
+                            <div>
+                                <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*外部表单接入，开发中，敬请期待。</span>
+                                <!-- <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*业务方提交表单填写不完整</span>
+                                <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*具体原因可以联系管理员进行查询</span> -->
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col">
@@ -52,17 +59,17 @@
                                                             v-if="activity.verifyStatus == 99">进行中</el-tag></span>
                                                 </div>
                                             </template>
-<p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
-<p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
-</p>
-<p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
-<p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
-</el-card>
-</div>
-</el-timeline-item>
-</el-timeline>
-</el-col>
-</el-row>-->
+                        <p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
+                        <p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
+                        </p>
+                        <p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
+                        <p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
+                        </el-card>
+                        </div>
+                        </el-timeline-item>
+                        </el-timeline>
+                        </el-col>
+                        </el-row>-->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="审批记录" name="flowStep">
@@ -84,18 +91,19 @@
 
 <script setup>
 import { ref, markRaw, watch } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus' 
 import cache from '@/plugins/cache';
 import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/Workflow/flowStepTable.vue"
 import ReviewWarp from "@/components/Workflow/reviewWarp.vue"
 import employeesDialog from '@/components/Workflow/dialog/usersDialog.vue'
-import { bizFormMaps, statusColor, pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
+import { bizFormMaps, pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
 
 const { proxy } = getCurrentInstance()
-const route = useRoute();
+const route = useRoute(); 
 const formCode = route.query?.formCode
 const processNumber = route.query?.processNumber
+const isOutSideAccess= route.query?.isOutSideAccess?(route.query?.isOutSideAccess == 'true' ? true : false) : false;
 const taskId = route.query?.taskId
 const activeName = ref('baseTab')
 const modules = import.meta.glob('../../forms/**/*.vue');
@@ -128,14 +136,15 @@ let rules = {
     }]
 };
 const flowParam = ref({
-    "formCode": formCode,
-    "accountType": 1
+    "processNumber": processNumber,
+    "isStartPreview": false
 });
-const activities = ref([]);
+
 let approveSubData = reactive({
     "taskId": taskId,
     "processNumber": processNumber,
-    "formCode": formCode
+    "formCode": formCode,
+    "isOutSideAccessProc":isOutSideAccess
 });
 
 onMounted(() => {
@@ -153,11 +162,15 @@ watch(handleClickType, (val) => {
 })
 
 const handleTabClick = (tab, event) => {
-    if (tab.paneName == 'baseTab') {
-        loadComponent();
+    if (tab.paneName == 'baseTab') { 
         preview();
-        getFlowApproveStep();
-        baseTabShow.value = true;
+        //getFlowApproveStep(); 
+        if(isOutSideAccess){ 
+            baseTabShow.value = false; 
+        }else{
+            loadComponent();
+            baseTabShow.value = true; 
+        }
         flowStepShow.value = false;
         flowReviewShow.value = false;
     } else if (tab.paneName == 'flowStep') {
@@ -170,21 +183,21 @@ const handleTabClick = (tab, event) => {
         flowReviewShow.value = true;
     }
 };
-const getFlowApproveStep = async () => {
-    let param = {
-        "processNumber": processNumber,
-    }
-    let resData = await getBpmVerifyInfoVos(param);
-    if (resData.code == 200) {
-        activities.value = resData.data.map(c => {
-            return {
-                ...c,
-                type: statusColor[c.verifyStatus],
-                size: 'large'
-            }
-        });
-    }
-};
+// const getFlowApproveStep = async () => {
+//     let param = {
+//         "processNumber": processNumber,
+//     }
+//     let resData = await getBpmVerifyInfoVos(param);
+//     if (resData.code == 200) {
+//         activities.value = resData.data.map(c => {
+//             return {
+//                 ...c,
+//                 type: statusColor[c.verifyStatus],
+//                 size: 'large'
+//             }
+//         });
+//     }
+// };
 /**
  * 点击页面按钮
  * @param param 
@@ -221,13 +234,16 @@ const preview = () => {
     let queryParams = ref({
         "formCode": formCode,
         "processNumber": processNumber,
-        "type": 2
+        "type": 2,
+        "isOutSideAccessProc":isOutSideAccess
     });
     proxy.$modal.loading();
     getViewBusinessProcess(queryParams.value).then(response => {
         if (response.code == 200) {
-            componentData.value = response.data;
-            componentLoaded.value = true;
+            if(!isOutSideAccess){
+                componentData.value = response.data;
+                componentLoaded.value = true;
+            } 
             let auditButtons = response.data.processRecordInfo?.pcButtons?.audit; 
             if (Array.isArray(auditButtons) && auditButtons.length > 0) {
                 approvalButtons.value = auditButtons.map(c => {

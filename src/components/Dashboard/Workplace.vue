@@ -3,7 +3,31 @@
         <el-card>
             <template v-slot:header>
                 <div class="clearfix">
-                    <span>可用流程</span>
+                    <span>第三方流程（业务方流程）【*业务方（第三方）系统的表单，需要审批流程，接入本流程引擎*】</span>
+                </div>
+            </template>
+            <el-row :gutter="10">
+                <el-col :md="6" v-for="(item, index) in outsideflowList">
+                    <el-card shadow="always" class="card-col" @click="handleOutSide(item)">
+                        <div slot="title">
+                            <div class="card-icon">
+                                <el-avatar size="large">
+                                    <img :src="item.IconUrl" />
+                                </el-avatar>
+                            </div>
+                            <div class="card-title">
+                                <a>{{ item.title }}</a>
+                                <p>{{ item.description }}</p>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-card>
+        <el-card>
+            <template v-slot:header>
+                <div class="clearfix">
+                    <span>可用流程(4)</span>
                 </div>
             </template>
             <el-row :gutter="10">
@@ -81,6 +105,13 @@ let worlflowList = ref([]);
 function handleFlow(row) {
     proxy.$modal.msgSuccess("演示环境努力开发中！");
 }
+const outsideflowList =[
+    {
+        title: "第三方流程",
+        description: "接入测试",
+        IconUrl: getAssetsFile("jiejing")
+    }
+];
 
 const flowList = [
     {
@@ -161,10 +192,14 @@ function handleStart(row) {
     };  
     if ('PURCHASE_WMA' == row.formCode) {
         proxy.$modal.msgWarning("采购表单努力开发中！^-^");
-        return;
+        return;  
     }
     const obj = { path:'/bizentry/index',query:params };
     proxy.$tab.openPage(obj);
+} 
+function handleOutSide(row) {
+    proxy.$tab.openPage("/outsideMgt/bizForm","采购");
+    return; 
 } 
 
  function getAssetsFile(pathUrl) { 

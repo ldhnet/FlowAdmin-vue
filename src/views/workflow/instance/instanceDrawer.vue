@@ -9,6 +9,9 @@
             <component v-if="componentLoaded" :is="loadedComponent" :previewData="componentData" :isPreview="true">
             </component>
           </div>
+          <div v-if="!baseTabShow" >
+            <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*外部表单接入，开发中，敬请期待。</span>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="审批记录" name="flowStep">
           <div v-if="flowStepShow">
@@ -64,12 +67,12 @@ let visible = computed({
   }
 })
 const handleTabClick = (tab, event) => {
-  if (tab.paneName == 'baseTab') {
-    loadComponent();
+  if (tab.paneName == 'baseTab') { 
     preview();
     if(viewConfig.value.isOutSideAccess){
       baseTabShow.value = false;
     }else{
+      loadComponent();
       baseTabShow.value = true;
     }    
     flowStepShow.value = false;

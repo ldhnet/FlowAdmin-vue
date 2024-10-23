@@ -30,11 +30,14 @@ let props = defineProps({
         default: () => ({}),
     }
 }); 
-let nodeConfig = computed(() => {  
-    let approvers =props.nodeConfig.assigneeList; 
+let nodeConfig = computed(() => {   
     let nameStr= '';
     if(props.nodeConfig.nodeType == 1)
         return props.nodeConfig;
+    let approvers =props.nodeConfig.assigneeList; 
+    if(!Array.isArray(approvers) || approvers.length == 0){
+        return props.nodeConfig;
+    }
     for (let item of approvers) {  
         if(item.isDeduplication == 1){ 
             nameStr +='<del><em>'+ item.assigneeName +'</em></del>' + '  ';

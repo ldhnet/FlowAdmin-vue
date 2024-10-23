@@ -291,6 +291,18 @@
                         "noCache": false,
                         "link": null
                     }
+                },
+                {
+                    "name": "bizForm",
+                    "path": "bizForm",
+                    "hidden": true,
+                    "component": "outsideMgt/bizForm/form1",
+                    "meta": {
+                        "title": "业务方表单发起测试",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 }
             ]
         }
