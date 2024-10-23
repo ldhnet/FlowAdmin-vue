@@ -8,6 +8,8 @@
 
 import axios from "axios";   
 import useUserStore from '@/store/modules/user'
+import cache from '@/plugins/cache';
+
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   timeout: 60 * 1000, // Timeout
@@ -31,8 +33,15 @@ _axios.interceptors.request.use(
 );
  
 _axios.interceptors.response.use(
+  function (response) {  
 
-  function (response) { 
+    let Userid= cache.session.get('userId')
+    let Username = cache.session.get('userName') 
+    if (!Userid || !Username) {
+      useUserStore().logOut().then(() => {
+        location.href = '/admin/';//index
+      })
+    } 
     return response.data;
   },
   function (error) { 
