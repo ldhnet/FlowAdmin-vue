@@ -144,7 +144,8 @@ let approveSubData = reactive({
     "taskId": taskId,
     "processNumber": processNumber,
     "formCode": formCode,
-    "isOutSideAccessProc":isOutSideAccess
+    "isOutSideAccessProc":isOutSideAccess,
+    "outSideType":2
 });
 
 onMounted(() => {
