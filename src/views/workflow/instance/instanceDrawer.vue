@@ -119,9 +119,13 @@ const preview = () => {
     "isOutSideAccessProc": viewConfig.value.isOutSideAccess
   });
   proxy.$modal.loading();
-  getViewBusinessProcess(queryParams.value).then(response => {
-    componentData.value = response.data;
-    componentLoaded.value = true 
+  getViewBusinessProcess(queryParams.value).then(response => { 
+    if(baseTabShow.value){
+      componentData.value = response.data;
+      componentLoaded.value = true 
+    }else{
+      formData.value =  response.data.formData;
+    } 
     proxy.$modal.closeLoading();
   });
 }
