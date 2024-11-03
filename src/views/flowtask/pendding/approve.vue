@@ -40,35 +40,7 @@
                                 </el-form-item>
                             </el-form>
                         </el-col>
-                    </el-row>
-
-                    <!-- <el-row style="float: left;">
-                        <el-col :span="24">
-                            <el-timeline style="max-width: 600px">
-                                <el-timeline-item v-for="(activity, index) in activities" :key="index"
-                                    :timestamp="activity.verifyDate" :size="activity.size" :type="activity.type">
-                                    <p v-if="activity.taskName == '发起'"> {{ activity.taskName }}</p>
-                                    <p v-else-if="activity.taskName == '流程结束'"> {{ activity.taskName }}</p>
-                                    <div v-else>
-                                        <el-card style="max-width: 600px;min-width: 200px">
-                                            <template #header>
-                                                <div class="card-header">
-                                                    <span>{{ activity.taskName }} </span>
-                                                    <span><el-tag type="success"
-                                                            v-if="activity.verifyStatus == 99">进行中</el-tag></span>
-                                                </div>
-                                            </template>
-                        <p v-if="activity.verifyUserName">审批人: {{ activity.verifyUserName }}</p>
-                        <p v-if="activity.verifyStatusName">审批结果: {{ activity.verifyStatusName }}
-                        </p>
-                        <p v-if="activity.verifyDesc">审批备注: {{ activity.verifyDesc }}</p>
-                        <p v-if="activity.verifyDate">操作时间: {{ activity.verifyDate }}</p>
-                        </el-card>
-                        </div>
-                        </el-timeline-item>
-                        </el-timeline>
-                        </el-col>
-                        </el-row>-->
+                    </el-row> 
                 </div>
             </el-tab-pane>
             <el-tab-pane label="审批记录" name="flowStep">
@@ -128,6 +100,8 @@ let dialogVisible = ref(false);
 let dialogTitle = ref('');
 let isMultiple = ref(false);//false 转办，true 加批
 
+let desployDesc = ref(false);
+
 let rules = {
     remark: [{
         required: true,
@@ -165,7 +139,6 @@ watch(handleClickType, (val) => {
 const handleTabClick = (tab, event) => {
     if (tab.paneName == 'baseTab') { 
         preview();
-        //getFlowApproveStep(); 
         if(isOutSideAccess){ 
             baseTabShow.value = false; 
         }else{
@@ -184,21 +157,7 @@ const handleTabClick = (tab, event) => {
         flowReviewShow.value = true;
     }
 };
-// const getFlowApproveStep = async () => {
-//     let param = {
-//         "processNumber": processNumber,
-//     }
-//     let resData = await getBpmVerifyInfoVos(param);
-//     if (resData.code == 200) {
-//         activities.value = resData.data.map(c => {
-//             return {
-//                 ...c,
-//                 type: statusColor[c.verifyStatus],
-//                 size: 'large'
-//             }
-//         });
-//     }
-// };
+
 /**
  * 点击页面按钮
  * @param param 
@@ -244,7 +203,8 @@ const preview = () => {
             if(!isOutSideAccess){
                 componentData.value = response.data;
                 componentLoaded.value = true;
-            } else{
+            } else
+            {
                 formData.value = response.data.formData;
             }
             let auditButtons = response.data.processRecordInfo?.pcButtons?.audit; 

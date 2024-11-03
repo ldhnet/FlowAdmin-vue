@@ -9,6 +9,17 @@
             <el-input v-model="taskMgmtVO.bpmnName" placeholder="请输入关键字" clearable style="width: 200px"
                @keyup.enter="handleQuery" />
          </el-form-item>
+         <el-form-item label="状态" prop="effectiveStatus">
+            <el-select
+               v-model="taskMgmtVO.effectiveStatus"
+               placeholder="状态"
+               clearable
+               style="width: 240px"
+            >        
+            <el-option label="禁用" value="0" />
+            <el-option label="启动" value="1" /> 
+            </el-select>
+         </el-form-item>
 
          <el-form-item>
             <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -88,6 +99,7 @@ const data = reactive({
       pageSize: 10
    },
    taskMgmtVO: { 
+      effectiveStatus: undefined,
       isOutSideProcess : 0,
       bpmnCode: undefined,
       bpmnName: undefined
