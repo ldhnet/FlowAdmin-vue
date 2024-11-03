@@ -15,10 +15,9 @@
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col" v-if="!componentLoaded">
-                            <div>
-                                <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*外部表单接入，开发中，敬请期待。</span>
-                                <!-- <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*业务方提交表单填写不完整</span>
-                                <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*具体原因可以联系管理员进行查询</span> -->
+                            <div :class="{ disableClss: !enableClass }">
+                                <p v-if="!formData" style="font-size: small;color: red;text-align: center;margin: 0 35%;">*未获取到外部表单信息，请联系管理员。</p> 
+                                <p v-if="formData"  v-html="formData"></p>
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col">
@@ -122,6 +121,7 @@ const approveForm = reactive({
     remark: ''
 });
 
+let formData = ref(null);
 const componentFormRef = ref(null);
 const handleClickType = ref(null);
 let dialogVisible = ref(false);
@@ -244,7 +244,9 @@ const preview = () => {
             if(!isOutSideAccess){
                 componentData.value = response.data;
                 componentLoaded.value = true;
-            } 
+            } else{
+                formData.value = response.data.formData;
+            }
             let auditButtons = response.data.processRecordInfo?.pcButtons?.audit; 
             if (Array.isArray(auditButtons) && auditButtons.length > 0) {
                 approvalButtons.value = auditButtons.map(c => {

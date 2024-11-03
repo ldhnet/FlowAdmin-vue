@@ -10,7 +10,8 @@
             </component>
           </div>
           <div v-if="!baseTabShow" >
-            <span style="font-size: small;color: red;text-align: center;margin: 0 35%;">*外部表单接入，开发中，敬请期待。</span>
+            <p v-if="!formData" style="font-size: small;color: red;text-align: center;margin: 0 35%;">*未获取到外部表单信息，请联系管理员。</p> 
+            <p v-if="formData"  v-html="formData"></p>
           </div>
         </el-tab-pane>
         <el-tab-pane label="审批记录" name="flowStep">
@@ -52,6 +53,7 @@ let flowReviewShow = ref(false);
 let componentData = ref(null);
 let componentLoaded = ref(false);
 let loadedComponent = ref(null);
+let formData = ref(null);
 
 const flowParam = ref({
   "processNumber": viewConfig.value?.processNumber,
@@ -119,7 +121,7 @@ const preview = () => {
   proxy.$modal.loading();
   getViewBusinessProcess(queryParams.value).then(response => {
     componentData.value = response.data;
-    componentLoaded.value = true
+    componentLoaded.value = true 
     proxy.$modal.closeLoading();
   });
 }
