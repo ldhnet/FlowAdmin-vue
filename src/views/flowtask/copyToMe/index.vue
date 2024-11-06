@@ -118,6 +118,7 @@ function handlePreview(row) {
    setInstanceDrawerConfig({
       formCode: row.processKey,
       processNumber: row.processNumber,
+      isOutSideAccess: row.isOutSideProcess,
    })
 }
 
