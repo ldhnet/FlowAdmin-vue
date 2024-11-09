@@ -179,10 +179,13 @@ function submitForm() {
   });
 }
 /** 修改按钮操作 */
-function handleEdit(row) {  
-  proxy.$modal.msgError("演示环境不允许操作！");return;
+function handleEdit(row) {   
   reset();
   const id = row.id;
+  if(id == 1){
+    proxy.$modal.msgError("演示数据不允许修改操作！");
+    return;
+  }
   getBusinessPartyDetail(id).then(response => {
     form.value = response.data; 
     form.value.type = form.value.type.toString();
