@@ -72,7 +72,7 @@ let duplicateOptions = [{
 }];
 let businessPartyOptions = [ {
     "label": "克伯格学校",
-    "value": "1"
+    "value": 1
 }];
 
 let formCodeOptions = ref([]); 
