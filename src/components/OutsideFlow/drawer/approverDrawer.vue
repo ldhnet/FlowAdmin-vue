@@ -44,7 +44,7 @@
                             <p>【审批页面】按钮权限显示控制</p> 
 
                             <el-checkbox-group class="clear"  v-model="checkApprovalPageBtns"> 
-                                <el-checkbox style="margin: 6px 0;width: 100%;"  border
+                                <el-checkbox style="margin: 6px 0;width: 100%;height: 45px;"  border
                                     v-for="opt in approvalPageButtons"  
                                     :value="opt.value" 
                                     :disabled="opt.type === 'default'"
@@ -56,7 +56,7 @@
                                     </span>
                                 </el-checkbox>
                             </el-checkbox-group> 
-                            <el-checkbox border style="margin-top: 6px;width: 100%;" 
+                            <el-checkbox border style="margin-top: 6px;width: 100%;height: 45px;" 
                             v-if="afterSignUpWayVisible"  
                             v-model="checkAfterSignUpWay"
                             @change="handleAfterSignUpWay(checkAfterSignUpWay)">
@@ -230,7 +230,7 @@ const closeDrawer = () => {
     .approver_content,
     .approver_some,
     .approver_self_select {
-        padding-top:10px;
+        padding-top:5px;
         .el-radio-group {
             display: unset;
         }
