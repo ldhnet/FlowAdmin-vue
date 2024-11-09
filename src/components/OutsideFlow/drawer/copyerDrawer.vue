@@ -9,7 +9,7 @@
         <span class="drawer-title">抄送人设置</span> 
         <div class="demo-drawer__content">
             <div class="copyer_content drawer_content">
-                <el-button type="primary" @click="addCopyer">添加成员</el-button>
+                <el-button type="primary" size="default" @click="addCopyer">添加成员</el-button>
                 <p class="selected_list">
                     <span v-for="(item,index) in copyerConfig.nodeApproveList" :key="index">{{item.name}}
                         <img src="@/assets/images/add-close1.png" @click="$func.removeEle(copyerConfig.nodeApproveList,item,'targetId')">
@@ -21,8 +21,8 @@
                 </el-checkbox-group>       
             </div>
             <div class="demo-drawer__footer clear">
-                <el-button type="primary" @click="saveCopyer">确 定</el-button>
-                <el-button @click="closeDrawer">取 消</el-button>
+                <el-button type="primary" size="default" @click="saveCopyer">确 定</el-button>
+                <el-button size="default" @click="closeDrawer">取 消</el-button>
             </div>
             <selectUser
                 v-model:visible="copyerVisible"

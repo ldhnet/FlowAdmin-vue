@@ -12,31 +12,32 @@
                           placeholder="请输入用户名称"
                           clearable
                           style="width: 150px"
+                          size="default"
                           @keyup.enter="handleQuery"
                         />
                     </el-form-item> 
                     <el-form-item>
-                        <el-button type="primary" @click="handleQuery">搜索</el-button> 
+                        <el-button type="primary"  size="default" @click="handleQuery">搜索</el-button> 
                     </el-form-item>
                   </el-form>
                   <el-table ref="refTable" :data="userList" border height="260px">
                     <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
                       <template #default="scope"> 
-                        <el-button link type="primary" icon="CirclePlus" @click="handleSelectUser(scope.row)" />
+                        <el-button link type="primary"  size="default" icon="CirclePlus" @click="handleSelectUser(scope.row)" />
                       </template>
                     </el-table-column>
                     <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" /> 
                     <el-table-column label="邮箱" prop="email" :show-overflow-tooltip="true" /> 
                     <el-table-column label="状态" align="center" prop="status">
                       <template #default="scope">
-                          <el-tag> {{ scope.row.status === '0' ? '正常' : '停用' }}</el-tag>
+                          <el-tag  size="default"> {{ scope.row.status === '0' ? '正常' : '停用' }}</el-tag>
                       </template>
                     </el-table-column> 
                 </el-table>
                 <div style="margin: 10px 0;">
                   <el-pagination
                       v-show="total > 0"
-                      size="small"
+                      size="default"
                       background
                       layout="prev, pager, next"
                       :total="total"
@@ -49,7 +50,7 @@
           <el-table  ref="selectedTable" :data="checkedUsersList" border height="310px">   
             <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
               <template #default="scope"> 
-                <el-button link type="primary" icon="Delete" @click="handleRemove(scope.row)" />
+                <el-button link type="primary"  size="default" icon="Delete" @click="handleRemove(scope.row)" />
               </template>
             </el-table-column>
             <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" />  
@@ -58,8 +59,8 @@
       </el-row>
       <template #footer>
          <div class="dialog-footer">
-            <el-button type="primary" @click="saveDialog">确 定</el-button>
-            <el-button @click="closeDialog">取 消</el-button>
+            <el-button type="primary"  size="default" @click="saveDialog">确 定</el-button>
+            <el-button  size="default" @click="closeDialog">取 消</el-button>
          </div>
       </template>
    </el-dialog>

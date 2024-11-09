@@ -96,11 +96,33 @@ export class approvalButtonConf {
 }
 
 export let approvalPageButtons = [
-  { value: approvalButtonConf.agree, label: '同意', type: 'default' },
-  { value: approvalButtonConf.noAgree, label: '不同意', type: 'default' },
-  { value: approvalButtonConf.repulse, label: '打回' },
-  { value: approvalButtonConf.addApproval, label: '加批' },
-  { value: approvalButtonConf.transfer, label: '转办' }
+  { 
+    value: approvalButtonConf.agree, 
+    label: '同意', 
+    description: '审批通过，流转到下一个节点', 
+    type: 'default' 
+  },
+  { 
+    value: approvalButtonConf.noAgree, 
+    label: '不同意', 
+    description: '当不同意任务时，当前任务被终止，并结束整个流程', 
+    type: 'default'
+  },
+  { 
+    value: approvalButtonConf.repulse, 
+    label: '打回',
+    description: '打回到发起人，发起人重新提交后，流程重新开始'
+  },
+
+  { 
+    value: approvalButtonConf.transfer, 
+    label: '转办', 
+    description: '审批页面显示【转办】按钮，转办后选择审批人，转办后自己将不再进行审批' 
+  },
+  { value: approvalButtonConf.addApproval, 
+    label: '加批' , 
+    description: '在当前任务上额外添加新人员，以处理相关事项或提供必要的审批或意见'
+  }
 ]
 export let startPageButtons = [
   { value: approvalButtonConf.submit, label: '提交', type: 'default' },

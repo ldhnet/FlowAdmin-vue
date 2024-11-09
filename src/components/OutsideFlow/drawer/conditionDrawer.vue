@@ -38,8 +38,8 @@
                 </ul>
             </div>   
             <div class="demo-drawer__footer clear">
-                <el-button type="primary" @click="saveCondition">确 定</el-button>
-                <el-button @click="closeDrawer">取 消</el-button>
+                <el-button type="primary" size="default" @click="saveCondition">确 定</el-button>
+                <el-button size="default" @click="closeDrawer">取 消</el-button>
             </div>
         </div>
     </el-drawer>
@@ -77,8 +77,8 @@ watch(conditionsConfig1,async (val) => {
 }, { deep: true, immediate: true}) 
 
 watch(conditionConfig,async (newVal, oldVal) => {  
-    console.log('newVal===================',JSON.stringify(newVal.conditionList))
-    console.log('basideFormConfig.value===================',JSON.stringify(basideFormConfig.value))
+    // console.log('newVal===================',JSON.stringify(newVal.conditionList))
+    // console.log('basideFormConfig.value===================',JSON.stringify(basideFormConfig.value))
     //console.log('oldVal===================',JSON.stringify(oldVal))
     if(Array.isArray(newVal.conditionList) && newVal.conditionList.length == 0){
         let {code,data } = await getTemplateByPartyMarkIdAndFormCode(basideFormConfig.value.partyMarkId, basideFormConfig.value.formCode);

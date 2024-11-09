@@ -16,8 +16,8 @@
                 <el-button type="primary" @click="addPromoter">添加/修改发起人</el-button> -->
             </div>
             <div class="demo-drawer__footer clear">
-                <el-button type="primary" @click="savePromoter">确 定</el-button>
-                <el-button @click="closeDrawer">取 消</el-button>
+                <el-button size="default" type="primary" @click="savePromoter">确 定</el-button>
+                <el-button size="default" @click="closeDrawer">取 消</el-button>
             </div> 
             <selectUser
                 v-model:visible="promoterVisible"
@@ -27,8 +27,7 @@
     </el-drawer>
 </template>
 <script setup>
-import selectUser from '../dialog/selectUserDialog.vue'
-import $func from '@/utils/flow/index'
+import selectUser from '../dialog/selectUserDialog.vue' 
 import { useStore } from '@/store/modules/outsideflow'
 import { computed, ref, watch } from 'vue'
 let flowPermission = ref([])

@@ -9,7 +9,7 @@
                         <el-radio v-for="({ value, label }) in setTypes" :value="value">{{ label }}</el-radio> 
                     </el-radio-group>
 
-                    <el-button type="primary" @click="addApprover" v-if="approverConfig.setType == 5">添加成员</el-button>
+                    <el-button type="primary" @click="addApprover" size="default" v-if="approverConfig.setType == 5">添加成员</el-button>
                     <p class="selected_list">
                         <span v-for="(item,index) in approverConfig.nodeApproveList" :key="index">{{item.name}}
                             <img src="@/assets/images/add-close1.png" @click="$func.removeEle(approverConfig.nodeApproveList,item,'targetId')">
@@ -42,30 +42,37 @@
                     <el-tab-pane label="按钮设置" name="btnTab">                    
                         <div class="approver_some">
                             <p>【审批页面】按钮权限显示控制</p> 
+
                             <el-checkbox-group class="clear"  v-model="checkApprovalPageBtns"> 
-                                <el-checkbox style="margin: 0 15px 0 0;"  border
-                                 v-for="opt in approvalPageButtons"  
-                                :value="opt.value" 
-                                :disabled="opt.type === 'default'"
-                                 @change="handleCheckedButtonsChange(opt.value)"
-                                >{{opt.label}}</el-checkbox>
+                                <el-checkbox style="margin: 6px 0;width: 100%;"  border
+                                    v-for="opt in approvalPageButtons"  
+                                    :value="opt.value" 
+                                    :disabled="opt.type === 'default'"
+                                    @change="handleCheckedButtonsChange(opt.value)"
+                                    >
+                                    【{{opt.label}}】 
+                                    <span class="opt-description">
+                                        {{opt.description}}
+                                    </span>
+                                </el-checkbox>
                             </el-checkbox-group> 
-
-                            <!-- <el-checkbox-group v-if="afterSignUpWayVisible" class="approver_some" v-model="checkAfterSignUpWay"> 
-                                <el-checkbox style="margin: 0 15px 0 0;"  border  :value="1"  @change="handleAfterSignUpWay(opt.value)" >是否回到加批人</el-checkbox>
-                            </el-checkbox-group>  -->
-
-                            <el-checkbox border style="margin-top: 10px;" 
+                            <el-checkbox border style="margin-top: 6px;width: 100%;" 
                             v-if="afterSignUpWayVisible"  
                             v-model="checkAfterSignUpWay"
-                            @change="handleAfterSignUpWay(checkAfterSignUpWay)">是否回到加批人</el-checkbox>
+                            @change="handleAfterSignUpWay(checkAfterSignUpWay)">
+                                是否回到加批人
+                                <span class="opt-description">
+                                    选中后，加批人审批完之后，会回到本节点的审批人再次审批
+                                 </span>
+                            </el-checkbox>
                         </div> 
+                     
                     </el-tab-pane> 
                 </el-tabs> 
             </div>
             <div class="demo-drawer__footer clear">
-                <el-button type="primary" @click="saveApprover">确 定</el-button>
-                <el-button @click="closeDrawer">取 消</el-button>
+                <el-button type="primary"  size="default"  @click="saveApprover">确 定</el-button>
+                <el-button  size="default"  @click="closeDrawer">取 消</el-button>
             </div> 
             <selectUser  v-model:visible="approverVisible" :data="userSelectedList"  @change="sureApprover" />
         </div>
@@ -214,9 +221,7 @@ const closeDrawer = () => {
         padding-bottom: 10px;
         border-bottom: 1px solid #f2f2f2;
         min-height: 250px;
-    }
-
-    .approver_self_select,
+    }  
     .approver_content {
         .el-button {
             margin-bottom: 20px;
@@ -236,42 +241,20 @@ const closeDrawer = () => {
             height: 16px;
         }
     }
-    .approver_manager p {
-        line-height: 32px;
-    }
-    .approver_manager select {
-        width: 420px;
-        height: 32px;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 4px;
-        border: 1px solid rgba(217, 217, 217, 1);
-    }
-    .approver_manager p.tip {
-        margin: 10px 0 22px 0;
-        font-size: 12px;
-        line-height: 16px;
-        color: #f8642d;
-    }
-    .approver_self {
-        padding: 28px 20px;
-    }
-    .approver_self_select,
-    .approver_manager,
+
+    .approver_self_select, 
     .approver_content {
         padding: 20px 20px 0;
-    }
-
-    .approver_manager p:first-of-type,
+    } 
     .approver_some p {
         line-height: 19px;
         font-size: 14px;
         margin-bottom: 14px;
-    }
-    .approver_self_select h3 {
-        margin: 5px 0 20px;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 19px;
-    }
+    } 
 }
+.opt-description {
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--el-text-color-placeholder);
+    } 
 </style>
