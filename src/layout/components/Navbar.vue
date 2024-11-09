@@ -16,6 +16,8 @@
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
 
+        <Message id="message" class="right-menu-item hover-effect" />
+        
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
@@ -57,6 +59,7 @@ import SizeSelect from '@/components/SizeSelect'
 import HeaderSearch from '@/components/HeaderSearch'
 import RuoYiGit from '@/components/Mark/Git'
 import RuoYiDoc from '@/components/Mark/Doc'
+import Message from "./Message";
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
 import useSettingsStore from '@/store/modules/settings'
