@@ -95,3 +95,11 @@ export function getWorkFlowData(data) {
 export function getMockWorkFlowData(data) {
   return http.get(`${baseUrl}mock/datashow.json`, { params: data })
 }
+
+/**
+ * 获取电子签名 
+ * @returns 
+ */
+export function getSignatureData() {
+  return http.get(`${baseUrl}mock/signature.json`)
+}

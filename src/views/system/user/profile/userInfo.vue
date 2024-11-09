@@ -32,7 +32,7 @@ const props = defineProps({
 });
 
 const { proxy } = getCurrentInstance();
-const _userName=cache.session.get('userName');
+const _userName = decodeURIComponent(cache.session.get('userName'));
 const form = ref({});
 const rules = ref({
   nickName: [{ required: true, message: "用户昵称不能为空", trigger: "blur" }],

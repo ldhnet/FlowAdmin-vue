@@ -11,6 +11,7 @@ const useUserStore = defineStore(
       id: '',
       name: '',
       avatar: '',
+      signature: '',
       roles: [],
       permissions: []
     }),
@@ -67,6 +68,10 @@ const useUserStore = defineStore(
             reject(error)
           })
         })
+      },
+      /** 设置用户签名 */
+      setSignature(signature) {
+        this.signature = signature;
       }
     }
   })
