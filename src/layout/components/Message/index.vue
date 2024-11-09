@@ -1,17 +1,14 @@
 <template>
-  <div class="message">
-    <!-- <svg-icon icon-class="" @click="goto" /> -->
+  <div class="message" style="font-size: 20px;padding-top: 2px;"> 
     <el-tooltip content="消息通知" placement="bottom" effect="dark">
       <div>
         <el-popover placement="bottom" :width="310" trigger="click">
-          <template #reference>
-       
+          <template #reference>       
               <el-icon>
                 <el-badge :value="5" class="item">
                   <Bell />
                 </el-badge>
-              </el-icon>
-        
+              </el-icon>        
           </template>
           <el-tabs v-model="activeName">
             <el-tab-pane label="通知(5)" name="first">
@@ -63,7 +60,7 @@
 const activeName = ref("first");
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="scss"> 
 .message-empty {
   display: flex;
   flex-direction: column;

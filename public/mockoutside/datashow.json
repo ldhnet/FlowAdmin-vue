@@ -8,7 +8,7 @@
         "appId": null,
         "isOutSideProcess": 1,
         "bpmnType": 1,
-        "businessPartyId": "1",
+        "businessPartyId": 1,
         "formCode": "adbgxx",
         "remark": "",
         "effectiveStatus": 0,

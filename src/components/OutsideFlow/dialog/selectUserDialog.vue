@@ -2,8 +2,7 @@
    <!-- 授权用户 -->
    <el-dialog title="选择用户" v-model="visibleDialog" style="width: 800px !important;" append-to-body>
       <el-row  :gutter="10"> 
-        <el-col :span="16">
-            <p class="tip">人员列表</p>
+        <el-col :span="16"> 
             <div> 
                   <el-form :model="queryParams" ref="queryRef" :inline="true">
                     <el-form-item label="用户名称" prop="userName">
@@ -20,7 +19,7 @@
                         <el-button type="primary"  size="default" @click="handleQuery">搜索</el-button> 
                     </el-form-item>
                   </el-form>
-                  <el-table ref="refTable" :data="userList" border height="260px">
+                  <el-table ref="refTable" :data="userList" border height="350px">
                     <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
                       <template #default="scope"> 
                         <el-button link type="primary"  size="default" icon="CirclePlus" @click="handleSelectUser(scope.row)" />
@@ -47,7 +46,7 @@
         </el-col>
         <el-col :span="8">
           <p class="tip">已选中列表</p>
-          <el-table  ref="selectedTable" :data="checkedUsersList" border height="310px">   
+          <el-table  ref="selectedTable" :data="checkedUsersList" border height="350px">   
             <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
               <template #default="scope"> 
                 <el-button link type="primary"  size="default" icon="Delete" @click="handleRemove(scope.row)" />
