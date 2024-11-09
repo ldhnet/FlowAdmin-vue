@@ -83,7 +83,7 @@ const addType = (type)=> {
                 "nodeTo": [],
                 "setType": 5, 
                 "error": true,
-                "ccSelfSelectFlag": 1,
+                "ccSelfSelectFlag": 0,
                 "childNode": props.childNodeP,
                 "isSignUp":0,
                 "property":{},

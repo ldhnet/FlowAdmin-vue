@@ -53,7 +53,20 @@ onMounted(async () => {
         nodeConfig.value = props.processData;
     }
 });
-
+/**
+ * 判断流程中是否有审批节点
+ * @param treeNode 
+ */
+const preTreeIsApproveNode = (treeNode) =>  { 
+  if(!treeNode) return false;  
+  if(treeNode.nodeType == 4) { 
+    return true;
+  }
+  else{
+    return preTreeIsApproveNode(treeNode.childNode);
+  } 
+}
+ 
 const reErr = ({ childNode }) => { 
     if (childNode) {
         let { nodeType, error, nodeName, conditionNodes } = childNode;
@@ -72,7 +85,7 @@ const reErr = ({ childNode }) => {
         else if (nodeType == 3) {
             reErr(childNode);
         }
-        else if (nodeType == 4 || nodeType == 5) {
+        else if (nodeType == 4 || nodeType == 6) {
             if (error) {
                 tipList.value.push({
                     name: nodeName,
@@ -103,11 +116,13 @@ const zoomSize = (type) => {
 const getJson = () => {
     setIsTried(true);
     tipList.value = []; 
-    if (!nodeConfig.value || !nodeConfig.value.childNode) {
-        proxy.$modal.msgError("至少配置一个审批人节点");
+    let isApproveNode = preTreeIsApproveNode(nodeConfig.value);
+    if (!nodeConfig.value || !nodeConfig.value.childNode || !isApproveNode) {
+        emit('nextChange', { label: "流程设计", key: "processDesign" });
+        proxy.$modal.msgError("至少配置一个有效审批人节点");
         return;
-    }
-    reErr(nodeConfig.value);
+    } 
+    reErr(nodeConfig.value); 
     if (tipList.value.length != 0) {
         emit('nextChange', { label: "流程设计", key: "processDesign" });
         tipVisible.value = true;
