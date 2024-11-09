@@ -108,8 +108,10 @@ const publish = () => {
       })
       .catch((err) => {  
           proxy.$modal.closeLoading();
-          if (err)
-              console.log("设置失败" + JSON.stringify(err));
+          if (err){
+            console.log("设置失败" + JSON.stringify(err));
+            proxy.$modal.msgError("至少配置一个有效审批人节点");
+          } 
       }).finally(() => {
           //proxy.$modal.closeLoading();
       });

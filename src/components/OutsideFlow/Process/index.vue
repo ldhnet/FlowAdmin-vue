@@ -66,7 +66,10 @@ const preTreeIsApproveNode = (treeNode) =>  {
     return preTreeIsApproveNode(treeNode.childNode);
   } 
 }
- 
+ /**
+ * 节点必填校验
+ * @param childNode 
+ */
 const reErr = ({ childNode }) => { 
     if (childNode) {
         let { nodeType, error, nodeName, conditionNodes } = childNode;
@@ -118,9 +121,8 @@ const getJson = () => {
     tipList.value = []; 
     let isApproveNode = preTreeIsApproveNode(nodeConfig.value);
     if (!nodeConfig.value || !nodeConfig.value.childNode || !isApproveNode) {
-        emit('nextChange', { label: "流程设计", key: "processDesign" });
-        proxy.$modal.msgError("至少配置一个有效审批人节点");
-        return;
+        emit('nextChange', { label: "流程设计", key: "processDesign" }); 
+        return false;
     } 
     reErr(nodeConfig.value); 
     if (tipList.value.length != 0) {
@@ -137,7 +139,7 @@ const getData = () => {
     let resData = getJson();
     return new Promise((resolve, reject) => {
         if (!resData) {
-            return
+            reject({ formData: null });
         }
         resolve({ formData: resData })
     })
