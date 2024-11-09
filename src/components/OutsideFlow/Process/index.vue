@@ -34,7 +34,7 @@ import copyerDrawer from "@/components/OutsideFlow/drawer/copyerDrawer.vue";
 import conditionDrawer from "@/components/OutsideFlow/drawer/conditionDrawer.vue"; 
 import outsideNodeWrap from "@/components/OutsideFlow/nodeWrap.vue";
 const { proxy } = getCurrentInstance();
-let { setTableId, setIsTried } = useStore()
+let { setIsTried } = useStore()
 const emit = defineEmits(['nextChange'])
 let props = defineProps({
     processData: {
