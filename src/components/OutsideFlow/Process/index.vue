@@ -33,7 +33,7 @@ import approverDrawer from "@/components/OutsideFlow/drawer/approverDrawer.vue";
 import copyerDrawer from "@/components/OutsideFlow/drawer/copyerDrawer.vue";
 import conditionDrawer from "@/components/OutsideFlow/drawer/conditionDrawer.vue"; 
 import outsideNodeWrap from "@/components/OutsideFlow/nodeWrap.vue";
-
+const { proxy } = getCurrentInstance();
 let { setTableId, setIsTried } = useStore()
 const emit = defineEmits(['nextChange'])
 let props = defineProps({
@@ -54,7 +54,7 @@ onMounted(async () => {
     }
 });
 
-const reErr = ({ childNode }) => {
+const reErr = ({ childNode }) => { 
     if (childNode) {
         let { nodeType, error, nodeName, conditionNodes } = childNode;
         if (nodeType == 1) {
@@ -102,7 +102,11 @@ const zoomSize = (type) => {
 
 const getJson = () => {
     setIsTried(true);
-    tipList.value = [];
+    tipList.value = []; 
+    if (!nodeConfig.value || !nodeConfig.value.childNode) {
+        proxy.$modal.msgError("至少配置一个审批人节点");
+        return;
+    }
     reErr(nodeConfig.value);
     if (tipList.value.length != 0) {
         emit('nextChange', { label: "流程设计", key: "processDesign" });

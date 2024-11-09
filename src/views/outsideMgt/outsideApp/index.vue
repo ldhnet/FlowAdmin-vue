@@ -286,6 +286,10 @@ function submitForm() {
 function handleEdit(row) {
   reset();
   const id = row.id;
+  if(id == 1 || id== 2){
+    proxy.$modal.msgError("演示数据不允许修改操作！");
+    return;
+  }
   getApplicationDetail(id).then(response => {
     form.value = response.data;
     form.value.applyType = form.value.applyType.toString();

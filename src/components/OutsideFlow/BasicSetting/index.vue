@@ -47,6 +47,7 @@
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils' 
 import { useStore } from '@/store/modules/outsideflow'  
+import { getApplicationsPageList } from "@/api/mockoutside";
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
 let store = useStore()
@@ -70,8 +71,8 @@ let duplicateOptions = [{
     "value": 3
 }];
 let businessPartyOptions = [ {
-    "label": "埃德伯格学校",
-    "value": "4"
+    "label": "克伯格学校",
+    "value": "1"
 }];
 
 let formCodeOptions = ref([]); 
@@ -90,7 +91,7 @@ let form = reactive({
 watch(form, (val) => {    
     if (val.businessPartyId) {
         formCodeOptions.value = [{
-            "label": "埃德伯格",
+            "label": "克伯格毕业流程",
             "value": 'adbgxx'
         }]; 
         store.setBasideFormConfig({
@@ -106,7 +107,7 @@ onMounted(() => {
         form.bpmnName = props.basicData.bpmnName;
         form.bpmnCode = props.basicData.bpmnCode;
         form.formCode = props.basicData.formCode;
-        form.businessPartyId = "4";//props.basicData.businessPartyId
+        form.businessPartyId = props.basicData.businessPartyId
         form.appId = props.basicData.appId;
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;

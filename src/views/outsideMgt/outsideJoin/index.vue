@@ -149,6 +149,7 @@ function getList() {
 }
 /** 新增接入业务方 */
 function handleAdd() {
+  proxy.$modal.msgError("演示环境不允许操作！");return;
   reset();
   title.value = "添加业务方";
   open.value = true;
@@ -179,6 +180,7 @@ function submitForm() {
 }
 /** 修改按钮操作 */
 function handleEdit(row) {  
+  proxy.$modal.msgError("演示环境不允许操作！");return;
   reset();
   const id = row.id;
   getBusinessPartyDetail(id).then(response => {
