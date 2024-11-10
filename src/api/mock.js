@@ -103,3 +103,13 @@ export function getMockWorkFlowData(data) {
 export function getSignatureData() {
   return http.get(`${baseUrl}mock/signature.json`)
 }
+
+/**
+ * 获取数据根据url
+ * @returns 
+ */
+export function getDynamicsList(url,headers) {
+  return http.get(url, { headers })
+}
+ 
+ 

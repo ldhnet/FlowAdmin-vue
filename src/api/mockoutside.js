@@ -76,7 +76,10 @@ export function getApplicationsPageList(page,vo) {
   }
   return http.get(`${baseUrl}/outSideBpm/businessParty/applicationsPageList`,data, { headers })
 }
-
+/** 查询应用列表 根据业务方ID */
+export function getApplicationsByPartyMarkId(pId) { 
+  return http.get(`${baseUrl}/outSideBpm/businessParty/getApplicationsByPartyMarkId/${pId}`, { headers })
+}
 /**
  * 添加业务方应用
  * @param {*} data 

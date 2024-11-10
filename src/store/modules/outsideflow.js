@@ -15,10 +15,7 @@
     },
     instanceDrawer: false,
     instanceViewConfig1: {},
-    basideFormConfig: {
-      partyMarkId: undefined, 
-      formCode: undefined
-    },
+    basideFormConfig: {},
   }),
   actions: {
     setUserId(payload) {

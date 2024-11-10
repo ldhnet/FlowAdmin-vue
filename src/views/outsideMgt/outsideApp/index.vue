@@ -91,18 +91,32 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="应用URL" prop="applicationUrl">
-              <el-input v-model="form.applicationUrl" placeholder="请输入应用URL" />
+            <el-form-item label="审批人模板URL" prop="userRequestUri">
+              <el-input v-model="form.userRequestUri" placeholder="请输入审批人模板URL" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
+            <el-form-item label="角色模板URL" prop="roleRequestUri">
+              <el-input v-model="form.roleRequestUri" placeholder="请输入审批角色模板URL" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-row>
+          <el-col :span="24">
+            <el-form-item label="应用URL" prop="applicationUrl">
+              <el-input v-model="form.applicationUrl" placeholder="请输入应用URL" />
+            </el-form-item>
+          </el-col>
+        </el-row> -->
+        <!-- <el-row>
+          <el-col :span="24">
             <el-form-item label="icon图(app)" prop="effectiveSource">
               <ImageUpload :limit="1" :fileSize="3" :fileType="['jpg']"/>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注">
@@ -202,7 +216,9 @@ const data = reactive({
   rules: {
     businessCode: [{ required: true, message: '请选择业务方', trigger: 'change' }],
     title: [{ required: true, message: '请输入应用名称', trigger: 'blur' }],
-    applyType: [{ required: true, message: '', trigger: 'change' }]
+    applyType: [{ required: true, message: '', trigger: 'change' }],
+    userRequestUri: [{ required: true, message: '请输入审批人模板URL', trigger: 'blur' }],
+    roleRequestUri: [{ required: true, message: '请输入审批角色模板URL', trigger: 'blur' }]
   },
   templateRules: {
     businessPartyName: [{ required: true, message: '', trigger: 'blur' }],
@@ -350,11 +366,13 @@ function reset() {
     id: undefined,
     businessCode: undefined,
     title: undefined,
-    applyType: 2,
-    isSon: 2,
+    applyType: '2',
+    isSon: '2',
     applicationUrl: undefined,
     pcIcon: undefined,
     effectiveSource: undefined,
+    userRequestUri: undefined,
+    roleRequestUri: undefined,
     remark: undefined
   };
   templateForm.value = {
