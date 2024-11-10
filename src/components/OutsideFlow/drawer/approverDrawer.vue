@@ -143,7 +143,7 @@ const sureApprover = (data) => {
 }
 /**保存并关闭抽屉 */
 const saveApprover = () => {  
-    console.log(' approverConfig.value.nodeApproveList=======',JSON.stringify(approverConfig.value.nodeApproveList)) 
+    //console.log(' approverConfig.value.nodeApproveList=======',JSON.stringify(approverConfig.value.nodeApproveList)) 
     approverConfig.value.error = !$func.setApproverStr(approverConfig.value)     
     store.setApproverConfig({
         value: approverConfig.value,
