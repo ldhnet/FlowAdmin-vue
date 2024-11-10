@@ -108,7 +108,11 @@ export function getSignatureData() {
  * 获取数据根据url
  * @returns 
  */
-export function getDynamicsList(url,headers) {
+export function getDynamicsList(url) { 
+  let headers = {
+    "Userid": '1',
+    "Username": '%E5%BC%A0%E4%B8%89'
+  }
   return http.get(url, { headers })
 }
  

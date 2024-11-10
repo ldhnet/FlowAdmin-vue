@@ -47,7 +47,7 @@
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils' 
 import { useStore } from '@/store/modules/outsideflow'  
-import { getApplicationsPageList } from "@/api/mockoutside";
+import { getApplicationsByPartyMarkId } from "@/api/mockoutside";
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
 let store = useStore()
@@ -78,32 +78,44 @@ let businessPartyOptions = [ {
 let formCodeOptions = ref([]); 
 let form = reactive({
     bpmnCode: generatorID,
-    bpmnName: null, 
-    businessPartyId: null,
-    appId: null,
+    bpmnName: undefined, 
+    businessPartyId: undefined,
+    appId: undefined,
     isOutSideProcess: 1,
     bpmnType: 1,
-    formCode: null,
-    remark: null,
+    formCode: undefined,
+    remark: undefined,
     effectiveStatus: false,
     deduplicationType: 1
-})
-watch(form, (val) => {    
-    if (val.businessPartyId) {
-        formCodeOptions.value = [{
-            "label": "克伯格毕业流程",
-            "value": 'adbgxx'
-        }]; 
-        store.setBasideFormConfig({
-            partyMarkId: form.businessPartyId, 
-            formCode: form.formCode
-        })
+}) 
+watch(() => form.businessPartyId, (val) => {    
+    if (val) {
+        // formCodeOptions.value = [{
+        //     "label": "克伯格毕业流程",
+        //     "value": 'adbgxx'
+        // }];   
+        getApplicationsList(val); 
     }
+}, { deep: true, immediate: true}) 
+
+watch(() => form.formCode, (val) => {  
+    if (val){
+        const result = formCodeOptions.value.find(c => c.value == val); 
+        console.log('result====',JSON.stringify(result))
+        if (result){
+            store.setBasideFormConfig({
+                    partyMarkId: result.businessPartyId, 
+                    formCode: result.value,
+                    userRequestUri : result.userRequestUri,
+                    roleRequestUri : result.roleRequestUri
+            })
+        }
+    } 
 }, { deep: true, immediate: true}) 
 
 onMounted(() => { 
     //console.log('props.basicData=====',JSON.stringify(props.basicData))
-    if (props.basicData) {
+    if (!props.basicData) {
         form.bpmnName = props.basicData.bpmnName;
         form.bpmnCode = props.basicData.bpmnCode;
         form.formCode = props.basicData.formCode;
@@ -111,8 +123,7 @@ onMounted(() => {
         form.appId = props.basicData.appId;
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;
-    }  
-    //console.log('form=====form==form=====',JSON.stringify(form))
+    }   
 });
 
 let rules = {
@@ -146,6 +157,21 @@ const getData = () => {
 const selectFormCodeChanged = (value) => {
  
 }
+/** 查询应用列表 根据业务方ID*/
+function getApplicationsList(pId) {  
+  getApplicationsByPartyMarkId(pId).then(response => {
+    formCodeOptions.value = response.data.map(item =>  {
+            return { 
+                businessPartyId: item.businessPartyId,
+                value: item.processKey,
+                label: item.title,
+                userRequestUri: item.userRequestUri,
+                roleRequestUri: item.roleRequestUri
+            } 
+        });
+  });
+}
+
 defineExpose({
     getData
 })

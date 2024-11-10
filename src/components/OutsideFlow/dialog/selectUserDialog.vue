@@ -1,6 +1,6 @@
 <template>
    <!-- 授权用户 -->
-   <el-dialog title="选择用户" v-model="visibleDialog" style="width: 800px !important;" append-to-body>
+   <el-dialog title="选择用户" v-model="visibleDialog" style="width: 800px !important;" :before-close="handleClose" append-to-body>
       <el-row  :gutter="10"> 
         <el-col :span="16"> 
             <div> 
@@ -19,7 +19,7 @@
                         <el-button type="primary"  size="default" @click="handleQuery">搜索</el-button> 
                     </el-form-item>
                   </el-form>
-                  <el-table ref="refTable" :data="userList" border height="350px">
+                  <el-table ref="refTable" :data="userList" v-loading="loading"  border height="350px">
                     <el-table-column label="操作" width="55" align="center" class-name="small-padding fixed-width">
                       <template #default="scope"> 
                         <el-button link type="primary"  size="default" icon="CirclePlus" @click="handleSelectUser(scope.row)" />
@@ -67,7 +67,10 @@
 
 <script setup name="selectUserDialog"> 
 import { watch } from 'vue';
-import { getEmployees } from '@/api/mockoutsideflow';
+//import { getEmployees } from '@/api/mockoutsideflow';
+import { getDynamicsList } from '@/api/mock';
+import { useStore } from '@/store/modules/outsideflow' 
+let store = useStore() 
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -80,6 +83,7 @@ const props = defineProps({
 }); 
 const { proxy } = getCurrentInstance();
 let emits = defineEmits(['update:visible','change']) 
+const loading = ref(false)
 const userList = ref([]);
 const total = ref(0); 
 let checkedUsersList = ref([]);
@@ -102,19 +106,44 @@ let visibleDialog = computed({
 }); 
 let list = computed(()=>props.data); 
 
-watch(list, (newVal, oldVal) => { 
+watch(()=>props.visible, (newVal) => { 
+  if(newVal) {
+    getList();
+  }
+}, { deep: true, immediate: true}) 
+
+watch(list, (newVal) => { 
   checkedUsersList.value = newVal.map(item => {
             return {
                     userId:item.targetId,
                     userName:item.name
             }
         }) 
-}) 
+}, { deep: true, immediate: true}) 
 // 查询表数据
-function getList() {
-   getEmployees(queryParams).then(res => {
-    userList.value = res.data;
-    total.value = res.total;
+// function getList() {
+//    getEmployees(queryParams).then(res => {
+//     userList.value = res.data;
+//     total.value = res.total;
+//   });
+// }
+
+// 查询表数据
+function getList() {   
+  if(!store.basideFormConfig || !store.basideFormConfig.userRequestUri) {
+    return;
+  }
+  loading.value = true;
+   getDynamicsList(store.basideFormConfig.userRequestUri).then(res => { 
+    loading.value = false;
+    userList.value = res.data.map(item => {
+            return {
+                    userId:item.id,
+                    userName:item.name,
+                    email:'574427343@qq.com',
+                    status:1
+            }
+        })  
   });
 }
 
@@ -154,20 +183,23 @@ let saveDialog = ()=> {
     type: 1,
     targetId: item.userId,
     name: item.userName
-  })) 
+  }))  
+  handleClose();
   emits('change',checkedList) 
 }
 
-getList();
-
+getList(); 
 /**
  * 关闭弹窗
  */
  const closeDialog = () => {
-   checkedUsersList.value = []
+   handleClose();
    emits('update:visible', false) 
 }
-
+const handleClose = () => {
+  userList.value=[];
+  checkedUsersList.value = [] 
+}
 </script>
 <style lang="css" scoped>
 .tip {
