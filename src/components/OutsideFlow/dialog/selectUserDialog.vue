@@ -186,6 +186,7 @@ function getList() {
   if (!store.basideFormConfig || !store.basideFormConfig.userRequestUri) {
     return;
   }
+  console.log('store.basideFormConfig.userRequestUri=====',JSON.stringify(store.basideFormConfig.userRequestUri))
   loading.value = true;
   getDynamicsList(store.basideFormConfig.userRequestUri).then((res) => {
     loading.value = false;

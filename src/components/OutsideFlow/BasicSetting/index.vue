@@ -136,38 +136,7 @@ let form = reactive({
   effectiveStatus: false,
   deduplicationType: 1,
 });
-watch(
-  () => form.businessPartyId,
-  (val) => {
-    if (val) {   
-      getApplicationsByPartyMarkId(val).then((response) => {
-            formCodeOptions.value = response.data.map((item) => {
-            return {
-                businessPartyId: item.businessPartyId,
-                value: item.processKey,
-                label: item.title,
-                userRequestUri: item.userRequestUri,
-                roleRequestUri: item.roleRequestUri,
-            };
-            });
-        }).then(() => {
-            form.formCode = form.formCode||props.basicData.formCode;
-            const result = formCodeOptions.value.find((c) => c.value == form.formCode); 
-            if (result) {
-                store.setBasideFormConfig({
-                    partyMarkId: result.businessPartyId,
-                    formCode: result.value,
-                    userRequestUri: result.userRequestUri,
-                    roleRequestUri: result.roleRequestUri,
-                });
-            }
-        }); 
-    }
-  },
-  { deep: true, immediate: true }
-);
- 
-onMounted(() => {
+onMounted(async () => {
   //console.log('props.basicData=====',JSON.stringify(props.basicData))
   if (props.basicData) {
     form.bpmnName = props.basicData.bpmnName;
@@ -178,7 +147,33 @@ onMounted(() => {
     form.remark = props.basicData.remark;
     form.deduplicationType = props.basicData.deduplicationType;
   }
+  await getApplicationsList(form.businessPartyId);
 });
+watch(
+  () => form.businessPartyId,
+  (val) => {
+    if (val) {
+      getApplicationsList(val);
+    }
+  }
+);
+watch(
+  () => [formCodeOptions.value, form.formCode],
+  (newVal) => {
+    if (newVal[1] && newVal[0].length > 0) {
+      let _formCode = newVal[1] || props.basicData.formCode;
+      const result = formCodeOptions.value.find((c) => c.value == _formCode);
+      if (result) {
+        store.setBasideFormConfig({
+          partyMarkId: result.businessPartyId,
+          formCode: result.value,
+          userRequestUri: result.userRequestUri,
+          roleRequestUri: result.roleRequestUri,
+        });
+      }
+    }
+  }
+);
 
 let rules = {
   formCode: [{ required: true, message: "请选择模板类型", trigger: "change" }],
@@ -211,6 +206,20 @@ const getData = () => {
 };
 
 const selectFormCodeChanged = (value) => {};
+
+const getApplicationsList = async (partMarkId) => {
+  await getApplicationsByPartyMarkId(partMarkId).then((response) => {
+    formCodeOptions.value = response.data.map((item) => {
+      return {
+        businessPartyId: item.businessPartyId,
+        value: item.processKey,
+        label: item.title,
+        userRequestUri: item.userRequestUri,
+        roleRequestUri: item.roleRequestUri,
+      };
+    });
+  });
+};
 
 defineExpose({
   getData,
