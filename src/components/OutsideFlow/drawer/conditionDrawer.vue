@@ -83,13 +83,13 @@ watch(conditionConfig,async (newVal, oldVal) => {
     if(Array.isArray(newVal.conditionList) && newVal.conditionList.length == 0){
         let {code,data } = await getTemplateByPartyMarkIdAndFormCode(basideFormConfig.value.partyMarkId, basideFormConfig.value.formCode);
         if(code == 200) { 
-            const conditionMaps =  data.map(item =>{return {key: item.templateMark,value: item.templateName}})
+            const conditionMaps =  data.map(item =>{return {key: item.templateMark,value: item.name}}) 
             let conditionGroup = {}
             for (let t of conditionMaps) {
                 if (!conditionGroup.hasOwnProperty(t.key)) { 
                     conditionGroup[t.key] = t
                 }
-            }  
+            }   
             conditionConfig.value.conditionList = [{
                 columnId: "36",
                 showType: "2",

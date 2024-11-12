@@ -32,8 +32,10 @@ let props = defineProps({
 }); 
 let nodeConfig = computed(() => {   
     let nameStr= '';
-    if(props.nodeConfig.nodeType == 1)
+    if(props.nodeConfig.nodeType == 1){
+        props.nodeConfig.nodeDisplayName = props.nodeConfig.nodeName;
         return props.nodeConfig;
+    }        
     let approvers =props.nodeConfig.assigneeList; 
     if(!Array.isArray(approvers) || approvers.length == 0){
         return props.nodeConfig;
@@ -48,7 +50,7 @@ let nodeConfig = computed(() => {
       props.nodeConfig.nodeDisplayName =nameStr;
     return props.nodeConfig
 })
-//console.log("nodeConfig==============",JSON.stringify(props.nodeConfig)) 
+console.log("nodeConfig==============",JSON.stringify(props.nodeConfig)) 
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";

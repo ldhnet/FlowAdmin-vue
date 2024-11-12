@@ -105,7 +105,8 @@ const handleSubmit = () => {
                 if (res.code == 200) {
                     proxy.$message.success('提交成功');
                 } else {
-                    proxy.$message.error(res.msg);
+                    console.log('res======',JSON.stringify(res))
+                    proxy.$message.error(res.errMsg);
                 }
             }).catch((err) => {  
                     proxy.$modal.closeLoading(); 
