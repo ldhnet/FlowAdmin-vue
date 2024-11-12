@@ -90,8 +90,8 @@ const handleSubmit = () => {
   const htmlString = formToHTMLString(form);
   let param =  {
         "formCode":"adbgxx",
-        "businessPartyId":4, 
-        "businessPartyMark":"bjgs_devtt",
+        "businessPartyId":1, 
+        "businessPartyMark":"kbgschool",
         "templateMark":"",
         "outSideType":2,
         "userId":"1",
