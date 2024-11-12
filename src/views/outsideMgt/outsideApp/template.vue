@@ -2,7 +2,7 @@
    <el-dialog title="条件模板列表" v-model="visible" style="width: 800px !important;" append-to-body>
       <el-form :model="vo" ref="queryRef" :inline="true" v-show="showSearch"> 
         <el-form-item label="条件名称" prop="name">
-          <el-input v-model="vo.templateName" placeholder="请输入关键字" clearable style="width: 200px" @keyup.enter="handleQuery" />
+          <el-input v-model="vo.name" placeholder="请输入关键字" clearable style="width: 200px" @keyup.enter="handleQuery" />
         </el-form-item> 
         <el-form-item>
           <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -11,7 +11,7 @@
       </el-form>  
       <el-table v-loading="loading" :data="list">
         <el-table-column label="条件标识" align="center" prop="templateMark" />
-        <el-table-column label="条件名称" align="center" prop="templateName" /> 
+        <el-table-column label="条件名称" align="center" prop="name" /> 
         <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="创建时间" align="center" prop="createTime" >
           <template #default="scope">
@@ -49,7 +49,7 @@
           pageSize: 10
       },
       vo: {
-          templateName: undefined
+        name: undefined
       }
     });
   const { page, vo } = toRefs(data);

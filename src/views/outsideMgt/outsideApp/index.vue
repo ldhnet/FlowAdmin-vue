@@ -159,8 +159,8 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="条件模板名称" prop="templateName">
-              <el-input v-model="templateForm.templateName" placeholder="请输入条件模板名称" />
+            <el-form-item label="条件模板名称" prop="name">
+              <el-input v-model="templateForm.name" placeholder="请输入条件模板名称" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -224,7 +224,7 @@ const data = reactive({
     businessPartyName: [{ required: true, message: '', trigger: 'blur' }],
     applicationName: [{ required: true, message: '', trigger: 'blur' }],
     templateMark: [{ required: true, message: '请输入条件模板ID', trigger: 'blur' }],
-    templateName: [{ required: true, message: '请输入条件模板名称', trigger: 'blur' }]
+    name: [{ required: true, message: '请输入条件模板名称', trigger: 'blur' }]
   }
 });
 const { page, vo, form, rules,templateForm,templateRules } = toRefs(data);
@@ -382,7 +382,7 @@ function reset() {
     applicationId: undefined,
     applicationFormCode: undefined,
     templateMark: undefined,
-    templateName: undefined, 
+    name: undefined, 
     remark: undefined
   };
   proxy.resetForm("queryRef");
