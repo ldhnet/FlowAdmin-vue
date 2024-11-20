@@ -186,9 +186,10 @@ function getList() {
   if (!store.basideFormConfig || !store.basideFormConfig.userRequestUri) {
     return;
   }
-  console.log('store.basideFormConfig.userRequestUri=====',JSON.stringify(store.basideFormConfig.userRequestUri))
+  //console.log('store.basideFormConfig.userRequestUri=====',JSON.stringify(store.basideFormConfig.userRequestUri))
   loading.value = true;
   getDynamicsList(store.basideFormConfig.userRequestUri).then((res) => {
+    //console.log('store.basideFormConfig.userRequestUri==res========',JSON.stringify(res))
     loading.value = false;
     userList.value = res.data.map((item) => {
       return {
@@ -198,6 +199,8 @@ function getList() {
         status: 1,
       };
     });
+  }).catch((res) =>{
+    proxy.$modal.msgError("[应用管理]配置的审批人模板URL不正确，未能成功获取数据");
   });
 }
 
