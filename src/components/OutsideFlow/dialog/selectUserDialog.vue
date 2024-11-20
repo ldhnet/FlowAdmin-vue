@@ -250,12 +250,12 @@ getList();
  * 关闭弹窗
  */
 const closeDialog = () => {
-  handleClose();
-  emits("update:visible", false);
+  handleClose(); 
 };
 const handleClose = () => {
   userList.value = [];
   checkedUsersList.value = [];
+  emits("update:visible", false);
 };
 </script>
 <style lang="css" scoped>

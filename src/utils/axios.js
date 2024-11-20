@@ -50,9 +50,10 @@ _axios.interceptors.response.use(
     // if (status == 500) {
     //   
     // }
-    useUserStore().logOut().then(() => {
-      location.href = '/admin/';//index
-    })
+    
+    // useUserStore().logOut().then(() => {
+    //   location.href = '/admin/';//index
+    // })
     return Promise.reject(error);
   }
 );
