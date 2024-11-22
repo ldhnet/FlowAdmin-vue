@@ -35,8 +35,8 @@
 import { ref, markRaw } from 'vue'
 import { useStore } from '@/store/modules/workflow'
 import { getViewBusinessProcess } from "@/api/mockflow"
-import FlowStepTable from "@/components/Workflow/flowStepTable.vue"
-import ReviewWarp from "@/components/Workflow/reviewWarp.vue"
+import FlowStepTable from "@/components/Workflow/Preview/flowStepTable.vue"
+import ReviewWarp from "@/components/Workflow/Preview/reviewWarp.vue"
 import { bizFormMaps } from "@/utils/flow/const"
 const { proxy } = getCurrentInstance()
 let store = useStore()
