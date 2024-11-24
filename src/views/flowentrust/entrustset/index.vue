@@ -69,7 +69,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="开始时间" prop="beginTime">
-                            <el-date-picker :disabled-date="disabledBeginDate" v-model="form.beginTime" type="date" value-format="YYYY/MM/DD"
+                            <el-date-picker :disabled-date="disabledBeginDate" v-model="form.beginTime" type="date" value-format="YYYY-MM-DD"
                                 placeholder="请选择开始时间" />
                         </el-form-item>
                     </el-col>
@@ -77,7 +77,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="结束时间" prop="endTime">
-                            <el-date-picker :disabled-date="disabledEndDate" v-model="form.endTime" type="date" value-format="YYYY/MM/DD"
+                            <el-date-picker :disabled-date="disabledEndDate" v-model="form.endTime" type="date" value-format="YYYY-MM-DD"
                                 placeholder="请选择结束时间" />
                         </el-form-item>
                     </el-col>
