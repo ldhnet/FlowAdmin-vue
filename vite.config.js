@@ -22,6 +22,16 @@ export default defineConfig(({ mode, command }) => {
       // https://cn.vitejs.dev/config/#resolve-extensions
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
     },
+    optimizeDeps: {
+      include: ['@/./lib/vForm/designer.umd.js']  //此处路径必须跟main.js中import路径完全一致！
+    },
+    build: {
+      /* 其他build生产打包配置省略 */
+      //...
+      commonjsOptions: {
+          include: /node_modules|lib/  //这里记得把lib目录加进来，否则生产打包会报错！！
+      }
+    },
     // vite 相关配置
     server: {
       port: 80,

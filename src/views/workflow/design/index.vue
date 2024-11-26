@@ -23,6 +23,9 @@
         <div v-if="processConfig" v-show="activeStep === 'basicSetting'">
             <BasicSetting ref="basicSetting" :basicData="processConfig" @nextChange="changeSteps" />
         </div>
+        <div v-show="activeStep === 'formDesign'" >
+            <DynamicForm  ref="formDesign"  />
+        </div> 
         <div v-if="nodeConfig" v-show="activeStep === 'processDesign'">
             <Process ref="processDesign" :processData="nodeConfig" @nextChange="changeSteps" />
         </div>
@@ -39,6 +42,7 @@ import { FormatUtils } from '@/utils/flow/formatcommit_data'
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 import BasicSetting from "@/components/Workflow/BasicSetting/index.vue";
 import Process from "@/components/Workflow/Process/index.vue"; 
+import DynamicForm from "@/components/DynamicForm/index.vue";
 const { proxy } = getCurrentInstance()
 const route = useRoute();
  
@@ -49,6 +53,7 @@ let activeStep = ref("basicSetting"); // 激活的步骤面板
 
 let steps = ref([
    { label: "基础设置", key: "basicSetting" },
+   { label: "表单设计", key: "formDesign" },
    { label: "流程设计", key: "processDesign" },
 ]);
 
