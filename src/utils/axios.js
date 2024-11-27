@@ -39,7 +39,7 @@ _axios.interceptors.response.use(
     let Username = cache.session.get('userName') 
     if (!Userid || !Username) {
       useUserStore().logOut().then(() => {
-        location.href = '/admin/';//index
+        location.href = '/low/';//index
       })
     } 
     return response.data;
@@ -52,7 +52,7 @@ _axios.interceptors.response.use(
     // }
     
     // useUserStore().logOut().then(() => {
-    //   location.href = '/admin/';//index
+    //   location.href = '/low/';//index
     // })
     return Promise.reject(error);
   }
