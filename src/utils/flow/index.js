@@ -105,7 +105,7 @@ All.prototype = {
         let list = str.split(",");
         for (var elem in obj) {
             list.map(item => {
-                if (item == elem) {
+                if ((item - 1) == elem) {
                     arr.push(obj[elem].value)
                 }
             })
