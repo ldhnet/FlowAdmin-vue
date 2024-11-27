@@ -43,7 +43,9 @@ All.prototype = {
         }
     },
     toggleClass(arr, elem, key = 'id') {
-        return arr.some(item => { return item[key] == elem[key] });
+        if(arr && arr.length > 0) {
+            return arr.some(item => { return item[key] == elem[key] });
+        }
     },
     toChecked(arr, elem, key = 'id') { 
         var isIncludes = this.toggleClass(arr, elem, key);
@@ -110,9 +112,9 @@ All.prototype = {
         }
         return arr.join("或")
     },  
-    getLabelStr(str, obj) {  
+    getLabelStr(str, obj) {   
         if(!obj) return; 
-        let ret = obj[str];
+        let ret = obj[str-1];
         if (ret) {
             return ret.value;
         }
@@ -145,7 +147,7 @@ All.prototype = {
                 if (columnType == "String" && showType == "2") {
                     if (!fixedDownBoxValue) {
                         str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
-                    }else {
+                    }else { 
                         if (zdy1) {
                             str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                         }

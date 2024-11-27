@@ -198,3 +198,26 @@ export let approveList = {
   20: '任盈盈'
 };
 
+export const filedType = new Map([
+  ['input', '1'],//"Double" 
+  ['select', '2'],//"String" select
+  ['checkbox', '3'],//"String" checkbox
+  ['radio', '1'],
+  ['switch', '1'],
+  ['time', '1'],
+  ['time-range', '1'],
+  ['data-range', '1'],
+  ['date', '1']
+]);
+
+export const filedValueType = new Map([
+  ['input', 'Double'],//"Double" 
+  ['select', 'String'],//"String" select
+  ['checkbox', 'String'],//"String" checkbox
+  ['radio', 'Double'],
+  ['switch', 'Double'],
+  ['time', 'Double'],
+  ['time-range', 'Double'],
+  ['data-range', 'Double'],
+  ['date', 'Double']
+]);

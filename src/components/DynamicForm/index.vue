@@ -19,7 +19,7 @@ const observer = new MutationObserver(() => {
     const returnFiled = formDesign.value.getFormFieldJson(); 
     if (ObjectUtils.isObjectChanged(formField, returnFiled)) {
       formField = returnFiled;
-      console.log('异步执行一次', formField.formFields);
+      //console.log('异步执行一次', formField.formFields);
       store.setLowCodeFormField(formField);
     }
 }); 

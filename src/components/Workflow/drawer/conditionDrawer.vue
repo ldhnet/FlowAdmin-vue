@@ -95,10 +95,10 @@
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed,onMounted } from 'vue'
+import { ref, watch, computed } from 'vue'
 import $func from '@/utils/flow/index'
 import { useStore } from '@/store/modules/workflow'
-import { optTypes, opt1s } from '@/utils/flow/const'
+import { optTypes, opt1s,filedType,filedValueType } from '@/utils/flow/const'
 import { getConditions } from '@/api/mock'
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
 
@@ -121,7 +121,7 @@ let conditionDrawer = computed(()=> store.conditionDrawer)
 let lowCodeFormFields = {} 
 let visible = computed({
     get() {
-        lowCodeFormFields = store.lowCodeFormField; 
+        lowCodeFormFields = store.lowCodeFormField;  
         return conditionDrawer.value
     },
     set() {
@@ -134,10 +134,6 @@ watch(conditionsConfig1, (val) => {
     conditionConfig.value = val.priorityLevel
         ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1]
         : { nodeApproveList: [], conditionList: [] }
-})
-
-onMounted(()=>{
-    //console.log("lowCodeFormField============",JSON.stringify(store.lowCodeFormField));
 })
 
 const changeOptType = (item) => {
@@ -172,8 +168,35 @@ const removeStrEle = (item, key) => {
 const addCondition = async () => {
     conditionList.value = [];
     conditionVisible.value = true;
-    let { data } = await getConditions({ tableId: tableId.value })
-    conditions.value = data;
+    let conditionArr=[];
+    // let { data } = await getConditions({ tableId: tableId.value });
+    // conditionArr = data;
+    //console.log("data============",JSON.stringify(data));
+    if(lowCodeFormFields.hasOwnProperty("formFields")){ 
+        conditionArr =  lowCodeFormFields.formFields.map((item, index) => {  
+            if(item.fieldType && filedType.has(item.fieldType)){
+                let optionGroup = {};
+                if(item.optionItems){ 
+                    optionGroup = item.optionItems.map(c => {
+                        return {
+                            key: c.value,
+                            value: c.label
+                        } 
+                    })
+                }  
+                return {
+                    columnId: index + 1,
+                    showType: filedType.get(item.fieldType),
+                    showName: item.label,
+                    columnName: item.name,
+                    columnType: filedValueType.get(item.fieldType), 
+                    fixedDownBoxValue: JSON.stringify(optionGroup)
+                }
+            } 
+        })
+        //console.log("conditionArr============",JSON.stringify(conditionArr));
+    } 
+    conditions.value = conditionArr;
     if (conditionConfig.value.conditionList) {
         for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
             var { columnId } = conditionConfig.value.conditionList[i]
@@ -187,7 +210,7 @@ const addCondition = async () => {
 }
 const sureCondition = () => {
     for (var i = 0; i < conditionList.value.length; i++) {
-        var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i];
+        var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i]; 
         if ($func.toggleClass(conditionConfig.value.conditionList, conditionList.value[i], "columnId")) {
             continue;
         }
