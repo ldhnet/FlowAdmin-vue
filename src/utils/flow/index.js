@@ -100,19 +100,19 @@ All.prototype = {
     dealStr(str, obj) {
         if(!obj) return; 
         let arr = [];
-        let list = str.split(",");
-        for (var elem in obj) {
+        let list = str.split(","); 
+        for (var elem in obj) { 
             list.map(item => {
-                if (item == elem) {
+                if ((item - 1)== elem) {
                     arr.push(obj[elem].value)
                 }
             })
         }
         return arr.join("或")
     },  
-    getLabelStr(str, obj) {  
+    getLabelStr(index, obj) {  
         if(!obj) return; 
-        let ret = obj[str];
+        let ret = obj[index-1];
         if (ret) {
             return ret.value;
         }
