@@ -9,6 +9,7 @@
         "appId": null,
         "deduplicationType": 2,
         "effectiveStatus": 0,
+        "isLowCodeFlow": 1,
         "remark": "",
         "isDel": 0,
         "nodes": [ 
