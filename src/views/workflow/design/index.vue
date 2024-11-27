@@ -48,7 +48,8 @@ const route = useRoute();
  
 const basicSetting = ref(null);
 const processDesign = ref(null);
-
+const formDesign = ref(null);
+ 
 let activeStep = ref("basicSetting"); // 激活的步骤面板
 
 let steps = ref([
@@ -85,30 +86,35 @@ onMounted(async () => {
 });
 
 
-const publish = () => { 
+const publish = () => {  
     const step1 = basicSetting.value.getData();
-    const step2 = processDesign.value.getData();
+    const step2 = formDesign.value.getData();
+    const step3 = processDesign.value.getData();  
     proxy.$modal.loading(); 
-    Promise.all([step1, step2])
-        .then((res) => { 
+    Promise.all([step1, step2,step3])
+        .then((res) => {  
             //ElMessage.success("设置成功,F12控制台查看数据");
             let basicData = res[0].formData;
-            var nodes = FormatUtils.formatSettings(res[1].formData);
+            basicData.isLowCodeFlow = 1; // 1代表低代码表单
+            let formData = res[1].formData;   
+            //console.log("提交到API=data===formData=============================",JSON.stringify(formData)); 
+            Object.assign(basicData, { formData: formData }); 
+            var nodes = FormatUtils.formatSettings(res[2].formData); 
             Object.assign(basicData, { nodes: nodes });
             return basicData;
         })
         .then((data) => {       
             console.log("提交到API=====data=", JSON.stringify(data)); 
-            setApiWorkFlowData(data).then((resLog) => {
-                proxy.$modal.closeLoading();
-                if (resLog.code == 200) { 
-                    ElMessage.success("设置成功,F12控制台查看数据");
-                    const obj = { path: "/workflow/config" };
-                    proxy.$tab.openPage(obj);
-                } else { 
-                    ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
-                }
-            });
+            // setApiWorkFlowData(data).then((resLog) => {
+            //     proxy.$modal.closeLoading();
+            //     if (resLog.code == 200) { 
+            //         ElMessage.success("设置成功,F12控制台查看数据");
+            //         const obj = { path: "/workflow/config" };
+            //         proxy.$tab.openPage(obj);
+            //     } else { 
+            //         ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
+            //     }
+            // });
         })
         .catch((err) => { 
             proxy.$modal.closeLoading();

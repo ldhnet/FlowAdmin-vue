@@ -15,6 +15,7 @@
     },
     instanceDrawer: false,
     instanceViewConfig1: {},
+    lowCodeFormField: {},
   }),
   actions: {
     setUserId(payload) {
@@ -56,5 +57,8 @@
     setInstanceDrawerConfig(payload) {
       this.instanceViewConfig1 = payload
     },
+    setLowCodeFormField(payload) {
+      this.lowCodeFormField = payload
+    }, 
   }
 })

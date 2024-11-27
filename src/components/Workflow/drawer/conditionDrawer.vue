@@ -95,7 +95,7 @@
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed,onMounted } from 'vue'
 import $func from '@/utils/flow/index'
 import { useStore } from '@/store/modules/workflow'
 import { optTypes, opt1s } from '@/utils/flow/const'
@@ -117,9 +117,11 @@ let store = useStore()
 let { setCondition, setConditionsConfig } = store
 let tableId = computed(()=> store.tableId)
 let conditionsConfig1 = computed(()=> store.conditionsConfig1)
-let conditionDrawer = computed(()=> store.conditionDrawer)
+let conditionDrawer = computed(()=> store.conditionDrawer) 
+let lowCodeFormFields = {} 
 let visible = computed({
     get() {
+        lowCodeFormFields = store.lowCodeFormField; 
         return conditionDrawer.value
     },
     set() {
@@ -132,6 +134,10 @@ watch(conditionsConfig1, (val) => {
     conditionConfig.value = val.priorityLevel
         ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1]
         : { nodeApproveList: [], conditionList: [] }
+})
+
+onMounted(()=>{
+    //console.log("lowCodeFormField============",JSON.stringify(store.lowCodeFormField));
 })
 
 const changeOptType = (item) => {
