@@ -98,7 +98,7 @@ const publish = () => {
             basicData.isLowCodeFlow = 1; // 1代表低代码表单
             let lowcodeformData = res[1].formData;   
             //console.log("提交到API=data===formData=============================",JSON.stringify(formData)); 
-            Object.assign(basicData, { lfFormData : lowcodeformData }); 
+            Object.assign(basicData, { lfFormData : JSON.stringify(lowcodeformData) }); 
             var nodes = FormatUtils.formatSettings(res[2].formData); 
             Object.assign(basicData, { nodes: nodes });
             return basicData;
