@@ -118,11 +118,16 @@ const initFromCode = async () => {
   await getFromCodeData().then((res) => {
       if (res.code == 200) {
          formCodeOptions.value = res.data;
+         /**临时添加 */
+         formCodeOptions.value.push({
+            key: "LFTEST_WMA",
+            value: "低代码表单流程"
+         })
       }
    });
 }
 const getFromCodeName = (formCode) => { 
-  const result= formCodeOptions.value.filter(item => item.key == formCode)[0];  
+  const result= formCodeOptions.value.filter(item => item.key == formCode)[0];   
   return result?.value;
 }
 /** 查询列表 */

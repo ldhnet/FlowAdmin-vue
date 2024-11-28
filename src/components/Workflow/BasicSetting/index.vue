@@ -64,7 +64,14 @@ let duplicateOptions = [{
     "value": 3
 }];
 
-let formCodeOptions = ref([]);
+//let formCodeOptions = ref([]);
+
+let formCodeOptions = [
+  {
+    key: "LFTEST_WMA",
+    value: "低代码表单流程",
+  },
+];
 
 const form = reactive({
     bpmnName: '',
@@ -85,11 +92,11 @@ onMounted(async () => {
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;
     }
-    await getFromCodeData().then((res) => {
-        if (res.code == 200) { 
-            formCodeOptions.value = res.data;
-        }
-    });
+    // await getFromCodeData().then((res) => {
+    //     if (res.code == 200) { 
+    //         formCodeOptions.value = res.data;
+    //     }
+    // });
 });
 
 let rules = {
