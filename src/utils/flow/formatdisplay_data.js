@@ -36,6 +36,9 @@ export class FormatDisplayUtils {
             businessPartyId: nodeData.businessPartyId,
             deduplicationType: nodeData.deduplicationType,//2去重,1不去重
             effectiveStatus:  nodeData.effectiveStatus == 1?true:false,
+            isLowCodeFlow:  nodeData.isLowCodeFlow,
+            lfFormData:  nodeData.lfFormData,
+            lfFormDataId:  nodeData.lfFormDataId,
             remark: nodeData.remark,
             isDel: 0,
             directorMaxLevel: 3, 

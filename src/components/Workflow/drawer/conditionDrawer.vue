@@ -173,8 +173,8 @@ const addCondition = async () => {
     // conditionArr = data;
     //console.log("data============",JSON.stringify(data));
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
-        conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldType; }).map((item, index) => {   
-            if(item.fieldType && filedType.has(item.fieldType)){
+        conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldTypeName; }).map((item, index) => {   
+            if(item.fieldTypeName && filedType.has(item.fieldTypeName)){
                 let optionGroup = {};
                 if(item.optionItems){ 
                     optionGroup = item.optionItems.map(c => {
@@ -185,11 +185,11 @@ const addCondition = async () => {
                     })
                 }  
                 return {
-                    columnId: index + 1,
-                    showType: filedType.get(item.fieldType),
+                    columnId: 8,//index + 1,
+                    showType: filedType.get(item.fieldTypeName),
                     showName: item.label,
                     columnName: item.name,
-                    columnType: filedValueType.get(item.fieldType), 
+                    columnType: filedValueType.get(item.fieldTypeName), 
                     fixedDownBoxValue: JSON.stringify(optionGroup)
                 }
             } 

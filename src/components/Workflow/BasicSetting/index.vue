@@ -30,10 +30,9 @@
                 <el-input v-model="form.remark" type="textarea" placeholder="请输入流程说明" :maxlength="100" show-word-limit
                     :autosize="{ minRows: 4, maxRows: 4 }" :style="{ width: '100%' }"></el-input>
             </el-form-item>
-            <el-form-item style="float: right;">
+            <!-- <el-form-item style="float: right;">
                 <el-button type="primary" @click="nextSubmit(ruleFormRef)">下一步》》》</el-button>
-
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
     </div>
 </template>

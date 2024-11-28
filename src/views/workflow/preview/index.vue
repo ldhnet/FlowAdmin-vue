@@ -9,6 +9,7 @@
                     <el-radio-group v-model="tabPosition">
                         <!-- <el-radio-button value="buinessForm">业务表单信息</el-radio-button> -->
                         <el-radio-button value="flowForm">流程基本信息</el-radio-button>
+                        <el-radio-button value="formRender">业务表单预览</el-radio-button>
                         <el-radio-button value="flow">流程模板预览</el-radio-button>
                     </el-radio-group>
                 </el-col>
@@ -18,6 +19,11 @@
                 <el-col :span="24" v-if="tabPosition == 'flowForm'">
                     <div v-if="processConfig">
                         <BasicSetting ref="basicSetting" :basicData="processConfig" />
+                    </div>
+                </el-col>
+                <el-col :span="24" v-if="tabPosition == 'formRender'">
+                    <div v-if="processConfig">
+                        <FormRender ref="formRenderSetting" :lfFromData="lfFromDataConfig" />
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'flow'">
@@ -35,12 +41,14 @@
 import { ref, onMounted } from 'vue'
 import { getApiWorkFlowData } from "@/api/mockflow"
 import BasicSetting from "@/components/Workflow/BasicSetting/index.vue"
+import FormRender from "@/components/DynamicForm/formRender.vue";
 import Process from "@/components/Workflow/Process/index.vue"
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 const { proxy } = getCurrentInstance();
 const route = useRoute();
 const tabPosition = ref('flowForm')
 let processConfig = ref(null)
+let lfFromDataConfig = ref(null)
 let nodeConfig = ref(null)
 let title = ref('')
 let id = route.query?.id
@@ -56,9 +64,11 @@ onMounted(async () => {
 const init = async () => {
     let mockjson = await getApiWorkFlowData({ id }); 
     let data = FormatDisplayUtils.getToTree(mockjson.data);
+    console.log("data==============",JSON.stringify(data));
     processConfig.value = data;
     title.value = data?.bpmnName;
     nodeConfig.value = data?.nodeConfig;
+    lfFromDataConfig.value = data?.lfFormData
 }
 
 </script>
