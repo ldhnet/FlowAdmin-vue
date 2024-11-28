@@ -71,7 +71,7 @@
                     <p class="check_box">
                         <a :class="$func.toggleClass(conditionList,{columnId:0},'columnId')&&'active'" @click="$func.toChecked(conditionList,{columnId:0},'columnId')">发起人</a>
                          <template  v-for="(item,index) in conditions" :key="index" >                        
-                             <a :class="$func.toggleClass(conditionList,item,'columnId')&&'active'"  @click="$func.toChecked(conditionList,item,'columnId')">{{item.showName}}</a>
+                             <a :class="$func.toggleClass(conditionList,item,'columnId')&&'active'"  @click="$func.toChecked(conditionList,item,'columnId')">{{item?.showName}}</a>
                              <br v-if="(index)%3 == 0"/> 
                          </template> 
                     </p>
@@ -173,7 +173,7 @@ const addCondition = async () => {
     // conditionArr = data;
     //console.log("data============",JSON.stringify(data));
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
-        conditionArr =  lowCodeFormFields.formFields.map((item, index) => {  
+        conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldType; }).map((item, index) => {   
             if(item.fieldType && filedType.has(item.fieldType)){
                 let optionGroup = {};
                 if(item.optionItems){ 
@@ -194,7 +194,7 @@ const addCondition = async () => {
                 }
             } 
         })
-        //console.log("conditionArr============",JSON.stringify(conditionArr));
+        console.log("conditionArr============",JSON.stringify(conditionArr));
     } 
     conditions.value = conditionArr;
     if (conditionConfig.value.conditionList) {

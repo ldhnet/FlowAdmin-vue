@@ -168,6 +168,7 @@ let statusColor = {
   "DSFZH_WMA": 'jiejing',
   "PURCHASE_WMA": 'bought',  
   "UCARREFUEl_WMA": 'trip',  
+  "LF": 'zhushou',  
 }; 
  
 onMounted(async () => { 
