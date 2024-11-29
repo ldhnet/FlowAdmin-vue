@@ -22,7 +22,7 @@
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'formRender'">
-                    <div v-if="processConfig">
+                    <div v-if="processConfig" style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
                         <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" />
                     </div>
                 </el-col>

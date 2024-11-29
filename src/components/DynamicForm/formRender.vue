@@ -2,7 +2,7 @@
     <div>
       <v-form-render :form-json="formJson" :form-data="formData" :option-data="optionData" ref="vFormRef">
       </v-form-render>
-      <el-button type="primary" @click="submitForm">Submit</el-button>
+      <!-- <el-button type="primary" @click="submitForm">Submit</el-button> -->
     </div>
   </template>
   
