@@ -24,7 +24,7 @@
             <BasicSetting ref="basicSetting" :basicData="processConfig" @nextChange="changeSteps" />
         </div>
         <div v-show="activeStep === 'formDesign'" >
-            <DynamicForm  ref="formDesign"  />
+            <DynamicForm  ref="formDesign" :lfFormData="lfFormDataConfig" />
         </div> 
         <div v-if="nodeConfig" v-show="activeStep === 'processDesign'">
             <Process ref="processDesign" :processData="nodeConfig" @nextChange="changeSteps" />
@@ -64,8 +64,8 @@ const changeSteps = (item) => {
 
 let processConfig = ref(null);
 let nodeConfig = ref(null);
+let lfFormDataConfig= ref(null);
 let title = ref('');
-
 
 onMounted(async () => {  
    let mockjson = {};
@@ -78,11 +78,12 @@ onMounted(async () => {
    let data = FormatDisplayUtils.getToTree(mockjson.data);
    // console.log("old===data=nodes==========", JSON.stringify(data.nodes));
    // console.log("old===data=nodeConfig==============", JSON.stringify(data.nodeConfig));
-   proxy.$modal.closeLoading();
-
+   proxy.$modal.closeLoading(); 
    processConfig.value = data;
    title.value = data?.bpmnName;
-   nodeConfig.value = data?.nodeConfig;  
+   nodeConfig.value = data?.nodeConfig;     
+   lfFormDataConfig.value = data?.lfFormData;   
+   console.log("lfFormDataConfig==========", JSON.stringify(lfFormDataConfig.value));
 });
 
 

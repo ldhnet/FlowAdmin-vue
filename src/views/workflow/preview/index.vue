@@ -64,7 +64,7 @@ onMounted(async () => {
 const init = async () => {
     let mockjson = await getApiWorkFlowData({ id }); 
     let data = FormatDisplayUtils.getToTree(mockjson.data);
-    console.log("data==============",JSON.stringify(data));
+    //console.log("data==============",JSON.stringify(data));
     processConfig.value = data;
     title.value = data?.bpmnName;
     nodeConfig.value = data?.nodeConfig;
