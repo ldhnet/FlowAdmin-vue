@@ -10,13 +10,13 @@
     import { ref, reactive } from 'vue'
     import { ElMessage } from 'element-plus'
     let props = defineProps({
-      lfFromData: {
+      lfFormData: {
         type: String,
         default: "",
       }
     });
     /* 注意：formJson是指表单设计器导出的json，此处演示的formJson只是一个空白表单json！！ */
-    const formJson = reactive(JSON.parse(props.lfFromData));
+    const formJson = reactive(JSON.parse(props.lfFormData));
     const formData = reactive({})
     const optionData = reactive({})
     const vFormRef = ref(null)

@@ -23,7 +23,7 @@
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'formRender'">
                     <div v-if="processConfig">
-                        <FormRender ref="formRenderSetting" :lfFromData="lfFromDataConfig" />
+                        <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" />
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'flow'">
@@ -48,7 +48,7 @@ const { proxy } = getCurrentInstance();
 const route = useRoute();
 const tabPosition = ref('flowForm')
 let processConfig = ref(null)
-let lfFromDataConfig = ref(null)
+let lfFormDataConfig = ref(null)
 let nodeConfig = ref(null)
 let title = ref('')
 let id = route.query?.id
@@ -68,7 +68,7 @@ const init = async () => {
     processConfig.value = data;
     title.value = data?.bpmnName;
     nodeConfig.value = data?.nodeConfig;
-    lfFromDataConfig.value = data?.lfFormData
+    lfFormDataConfig.value = data?.lfFormData
 }
 
 </script>
