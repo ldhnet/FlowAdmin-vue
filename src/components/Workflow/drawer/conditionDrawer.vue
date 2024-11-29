@@ -69,10 +69,10 @@
                 <el-dialog title="选择条件" v-model="conditionVisible" :width="480" append-to-body class="condition_list">
                     <p>请选择用来区分审批流程的条件字段</p>
                     <p class="check_box">
-                        <a :class="$func.toggleClass(conditionList,{columnId:0},'columnId')&&'active'" @click="$func.toChecked(conditionList,{columnId:0},'columnId')">发起人</a>
+                        <!-- <a :class="$func.toggleClass(conditionList,{columnId:0},'columnId')&&'active'" @click="$func.toChecked(conditionList,{columnId:0},'columnId')">发起人</a> -->
                          <template  v-for="(item,index) in conditions" :key="index" >                        
                              <a :class="$func.toggleClass(conditionList,item,'columnId')&&'active'"  @click="$func.toChecked(conditionList,item,'columnId')">{{item?.showName}}</a>
-                             <br v-if="(index)%3 == 0"/> 
+                             <br v-if="(index + 1)%3 == 0"/> 
                          </template> 
                     </p>
                     <template #footer>
@@ -171,9 +171,9 @@ const addCondition = async () => {
     let conditionArr=[];
     // let { data } = await getConditions({ tableId: tableId.value });
     // conditionArr = data;
-    //console.log("data============",JSON.stringify(data));
+    //console.log("lowCodeFormFields.formFields============",JSON.stringify(lowCodeFormFields.formFields));
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
-        conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldTypeName; }).map((item, index) => {   
+        conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldTypeName; }).map((item, index) => {    
             if(item.fieldTypeName && filedType.has(item.fieldTypeName)){
                 let optionGroup = {};
                 if(item.optionItems){ 
@@ -185,7 +185,7 @@ const addCondition = async () => {
                     })
                 }  
                 return {
-                    columnId: 8,//index + 1,
+                    columnId: index + 8,
                     showType: filedType.get(item.fieldTypeName),
                     showName: item.label,
                     columnName: item.name,
