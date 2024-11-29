@@ -194,9 +194,10 @@ const addCondition = async () => {
                 }
             } 
         })
-        console.log("conditionArr============",JSON.stringify(conditionArr));
+        //console.log("conditionArr============",JSON.stringify(conditionArr.filter(nullableFilter)));
     } 
-    conditions.value = conditionArr;
+
+    conditions.value = conditionArr.filter(nullableFilter);
     if (conditionConfig.value.conditionList) {
         for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
             var { columnId } = conditionConfig.value.conditionList[i]
@@ -207,6 +208,9 @@ const addCondition = async () => {
             }
         }
     }
+}
+const nullableFilter= (elm) =>{
+    return (elm != null && elm !== false && elm !== "");
 }
 const sureCondition = () => {
     for (var i = 0; i < conditionList.value.length; i++) {
