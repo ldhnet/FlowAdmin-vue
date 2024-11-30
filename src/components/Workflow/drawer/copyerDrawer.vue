@@ -5,14 +5,14 @@
  * @FilePath: /ant-flow/src/components/drawer/copyerDrawer.vue
 -->
 <template>
-    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :with-header="false"
+    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :with-header="false" destory-on-close
         :size="680">
         <div class="el-drawer__header">
             <span class="drawer-title">抄送人</span>
         </div> 
-        <el-tabs>
-            <el-tab-pane label="抄送人设置">
-                <div class="copyer_content drawer_content">
+        <el-tabs v-model="activeName" @tab-click="handleTabClick">
+            <el-tab-pane label="抄送人设置" name="copyStep">
+                <div class="copyer_content drawer_content" v-if="copyStepShow">
                     <el-button type="primary" @click="addCopyer">添加成员</el-button>
                     <p class="selected_list">
                         <span v-for="(item, index) in copyerConfig.nodeApproveList" :key="index">{{ item.name }}
@@ -33,8 +33,8 @@
                 <employees-role-dialog v-model:visible="copyerVisible" :data="checkedList" @change="sureCopyer" />
 
             </el-tab-pane>
-            <el-tab-pane lazy label="表单权限设置">
-                <form-perm-conf default-perm="R" :formItems="formItems" v-model="formPerms"/>
+            <el-tab-pane lazy label="表单权限设置" name="formStep">
+                <form-perm-conf v-if="formStepShow" default-perm="R" :formItems="formItems" v-model="formPerms"/>
             </el-tab-pane>
         </el-tabs>
     </el-drawer>
@@ -52,12 +52,17 @@ let checkedList = ref([])
 let formPerms = ref([])
 let formItems = ref([])
 
+let activeName = ref('copyStep') 
+let copyStepShow = ref(true)
+let formStepShow = ref(false)
+
 let store = useStore()
 let { setCopyerConfig, setCopyer } = store
 let copyerDrawer = computed(()=> store.copyerDrawer)
 let copyerConfig1 = computed(()=> store.copyerConfig1)
 let visible = computed({
-    get() {
+    get() {  
+        handleTabClick({ paneName: "copyStep" })  
         return copyerDrawer.value
     },
     set() {
@@ -87,9 +92,21 @@ const saveCopyer = () => {
     })
     closeDrawer();
 }
-const closeDrawer = () => {
+const closeDrawer = () => { 
     setCopyer(false)
 }    
+const handleTabClick =(tab, event)  => {   
+    activeName.value = tab.paneName;
+    if (tab.paneName == 'copyStep') { 
+        copyStepShow.value = true;
+        formStepShow.value = false;
+    }
+    if (tab.paneName == 'formStep') {
+        copyStepShow.value = false;
+        formStepShow.value = true;
+    }
+}    
+
 </script>
 
 <style scoped lang="scss">  

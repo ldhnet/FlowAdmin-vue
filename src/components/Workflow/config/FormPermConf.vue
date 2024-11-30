@@ -25,7 +25,7 @@ onBeforeMount(() => {
   }
   permSelect.value = props.defaultPerm;
   //提取所有的字段及字段权限列表
-  formFields.value = getFormPermFields(props.defaultPerm);
+  formFields.value = getFormPermFields(props.defaultPerm); 
   //加载之前的权限
   (props.modelValue || []).forEach(v => {
     const i = formFields.value.findIndex(fv => fv.key === v.key)

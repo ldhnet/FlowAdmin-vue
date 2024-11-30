@@ -7,14 +7,19 @@ let store = useStore();
 export const formRef = ref(null)
 //表单内每个字段ID，与对应字段的配置
 export const formItemMap = new Map()
-//表单字段列表
-export const formFields = computed(() => store.lowCodeFormField)
+// //表单字段列表
+// export const formFields = computed(() => store.lowCodeFormField)
+
+// watch(formFields, () => {  
+//   getFormPermFields();
+// }, {deep: true})
+
  
 /**
  * 获取表单字段列表
  * @returns [{表单字段信息}]
  */
-export const getFormPermFields = (defaultPerm = 'R') => { 
+export const getFormPermFields = (defaultPerm = 'R') => {  
   let items = []
   //formItemMap.clear() //清空map
   const addItem = (item) => {
