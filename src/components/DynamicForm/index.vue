@@ -1,6 +1,6 @@
 <template>
   <div class="my-nav-content">
-    <div id="designer-id" style="margin-right: 100px; margin-left: -100px;">
+    <div id="designer-id" class="form-container">
       <v-form-designer ref="formDesign"></v-form-designer> 
     </div>
     <!-- <button @click="submitForm">ok</button> -->
@@ -80,15 +80,26 @@ defineExpose({
 })
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 body {
   margin: 0;
   /* 如果页面出现垂直滚动条，则加入此行CSS以消除之 */
-}
-
+} 
 .el-dialog {
   width: 700px !important;
   border: 1px solid #DDE1E5 !important;
   border-radius: 3px !important;
+} 
+.form-container {
+  background: white !important;
+  padding: 30px;
+  width: 90%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+} 
+.main-container {
+  margin-left: 0px !important;
 }
 </style>
