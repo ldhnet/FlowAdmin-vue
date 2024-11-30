@@ -47,97 +47,29 @@ const addType = (type)=> {
     if (type != 2 && type != 3) { 
         var data;
         if (type == 4) { 
-            data = {
-                "nodeId": NodeUtils.idGenerator(),
-                "nodeName": "审核人", 
-                "nodeDisplayName": "审核人", 
-                "nodeType": 4,
-                "nodeFrom": "", 
-                "prevId": [],
-                "nodeTo": [],
-                "setType": 1,  
-                "directorLevel": 1,
-                "signType": 1,
-                "noHeaderAction": 1, 
-                "childNode": props.childNodeP,
-                "error": true,
-                "isSignUp":0,
-                "property":{
-                    "afterSignUpWay":1
-                },
-                "buttons":{
-                    "startPage": [1],
-                    "approvalPage": [3,4],
-                    "viewPage": [0],
-                },
-                "nodeApproveList": []
-            }
+            data = NodeUtils.createApproveNode();  
+            data.childNode = props.childNodeP; 
         } else if (type == 6) {
-            data = {
-                "nodeId": NodeUtils.idGenerator(),
-                "nodeName": "抄送人",
-                "nodeDisplayName": "抄送人", 
-                "nodeType": 6,//节点类型
-                "nodeFrom": "", 
-                "prevId": [],
-                "nodeTo": [],
-                "setType": 5, 
-                "error": true,
-                "ccSelfSelectFlag": 0,
-                "childNode": props.childNodeP,
-                "isSignUp":0,
-                "property":{},
-                "buttons":{
-                    "startPage": [],
-                    "approvalPage": [],
-                    "viewPage": [],
-                },
-                "nodeApproveList": []
-            }
+            data = NodeUtils.createCopyNode();  
+            data.childNode = props.childNodeP;  
         }
         emits("update:childNodeP", data)
     } else {
-        emits("update:childNodeP", {
+        let gatewayNode={
             "nodeId": NodeUtils.idGenerator(),
-            "nodeName": "路由",
+            "nodeName": "网关",
             "nodeType": 2,
-            "nodeFrom": "", 
-            "prevId": [],
+            "nodeFrom": "",  
             "nodeTo": [],
             "childNode": null, 
             "error": true,
-            "isSignUp":0,
-            "property":{},
-            "conditionNodes": [{
-                "nodeId": NodeUtils.idGenerator(),
-                "nodeName": "条件1", 
-                "nodeDisplayName": "条件1", 
-                "nodeType": 3,
-                "nodeFrom": "", 
-                "prevId": [],
-                "nodeTo": [],
-                "priorityLevel": 1,
-                "conditionList": [],
-                "nodeApproveList": [],
-                "error": true,
-                "isDefault": 0, 
-                "childNode": props.childNodeP,
-            }, {
-                "nodeId": NodeUtils.idGenerator(),
-                "nodeName": "条件2",
-                "nodeDisplayName": "条件2", 
-                "nodeType": 3,
-                "nodeFrom": "", 
-                "prevId": [],
-                "nodeTo": [],
-                "priorityLevel": 2,
-                "conditionList": [],
-                "nodeApproveList": [],
-                "childNode": null,
-                "isDefault": 1, 
-                "error": false,
-            }]
-        })
+            "property":null,
+            "conditionNodes": [
+                NodeUtils.createConditionNode('条件1',props.childNodeP,0), 
+                NodeUtils.createConditionNode('条件2',null,0)
+            ]
+        };
+        emits("update:childNodeP", gatewayNode)
     }
 }
 </script>
