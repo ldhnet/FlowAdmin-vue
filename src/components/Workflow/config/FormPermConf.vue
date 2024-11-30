@@ -1,10 +1,12 @@
 <script setup>
-import {computed, onBeforeMount, ref, watch} from "vue";
-import nodeMixin from "./NodeMixin.js";
+import {onBeforeMount, ref, watch} from "vue"; 
 import {getFormPermFields} from "./FormInterface.js";
 
-const props = defineProps({
-  ...nodeMixin.props,
+const props = defineProps({ 
+  formItems: {
+    type: Array,
+    default: []
+  },  
   showE: {
     default: true
   },
@@ -12,23 +14,18 @@ const props = defineProps({
     default: 'R'
   }
 })
-const emit = defineEmits(nodeMixin.emits)
-const _value = computed(nodeMixin.computed._value(props, emit))
 const permSelect = ref('R')
 const updateKey = ref(1)
 const formFields = ref([])
-
+let emits = defineEmits(['changePermVal'])
 //加载的时候判断，赋默认值
 onBeforeMount(() => {
-  if (!_value.value){
-    _value.value = []
-  }
   permSelect.value = props.defaultPerm;
   //提取所有的字段及字段权限列表
   formFields.value = getFormPermFields(props.defaultPerm); 
   //加载之前的权限
-  (props.modelValue || []).forEach(v => {
-    const i = formFields.value.findIndex(fv => fv.key === v.key)
+  (props.formItems || []).forEach(v => {
+    const i = formFields.value.findIndex(fv => fv.fieldId === v.fieldId) 
     if (i > -1 && v.perm){
       formFields.value[i].perm = v.perm
     }
@@ -41,10 +38,8 @@ function allSelect(perm) {
 }
 
 //权限变化后，反馈给绑定的值
-watch(formFields, () => { 
-  _value.value = formFields.value.map(v => {
-    return {id: v.id, key: v.key, perm: v.perm}
-  })
+watch(formFields, (val) => {  
+  emits('changePermVal', val)
 }, {deep: true})
 
 </script>
@@ -57,7 +52,7 @@ watch(formFields, () => {
     <el-table-column prop="title" show-overflow-tooltip label="表单字段">
       <template v-slot="scope">
         <span v-if="scope.row.props?.required" style="color: var(--el-color-danger)"> * </span>
-        <span>{{ scope.row.name }}</span>
+        <span>{{ scope.row.fieldName }}</span>
       </template>
     </el-table-column>
     <el-table-column align="center" prop="readOnly" label="只读" width="80">

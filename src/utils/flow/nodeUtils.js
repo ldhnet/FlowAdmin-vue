@@ -39,6 +39,7 @@ export class NodeUtils {
         "property":{
           "afterSignUpWay":1
         },
+        "lfFieldControlVOs": [], 
         "buttons":{
             "startPage": [1],
             "approvalPage": [3,4],
@@ -65,6 +66,7 @@ export class NodeUtils {
         "ccFlag": 1,
         "childNode": {},
         "property":{},
+        "lfFieldControlVOs": [], 
         "buttons":{
             "startPage": [],
             "approvalPage": [],

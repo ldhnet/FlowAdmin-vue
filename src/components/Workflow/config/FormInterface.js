@@ -24,10 +24,10 @@ export const getFormPermFields = (defaultPerm = 'R') => {
   //formItemMap.clear() //清空map
   const addItem = (item) => {
     items.push({
-      id: item.name,
-      key: item.name,
-      name: `${item.label}`,
-      required: item.required,
+      fieldId: item.name,
+      //key: item.name,
+      fieldName: `${item.label}`,
+      //required: item.required,
       perm: item.perm ? item.perm : defaultPerm
     })
   }
