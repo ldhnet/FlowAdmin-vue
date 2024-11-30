@@ -100,18 +100,11 @@
                             </el-radio-group>
                         </div>
                     </div>
-                    <div class="demo-drawer__footer clear">
-                        <el-button type="primary" @click="saveApprover">确 定</el-button>
-                        <el-button @click="closeDrawer">取 消</el-button>
-                    </div>
-                    <employees-dialog v-model:visible="approverVisible" :data="checkedList" @change="sureApprover" />
-                    <role-dialog v-model:visible="approverRoleVisible" :data="checkedRoleList"
-                        @change="sureRoleApprover" />
                 </div>
             </el-tab-pane>
             <el-tab-pane lazy label="按钮权限设置" name="buttonStep">
-                <div class="approver_some">
-                    <p>【审批页面】按钮权限显示控制</p> 
+                <div class="approver_some drawer_content">
+                    <p>【审批页面】按钮权限显示控制</p>
                     <el-checkbox-group class="clear" v-model="checkApprovalPageBtns">
                         <el-checkbox style="margin: 6px 0;width: 100%;height: 45px;" border
                             v-for="opt in approvalPageButtons" :value="opt.value" :disabled="opt.type === 'default'"
@@ -133,20 +126,27 @@
 
             </el-tab-pane>
             <el-tab-pane lazy label="表单权限设置" name="formStep">
-                <form-perm-conf v-if="formStepShow" default-perm="R" v-model:formItems="formItems"
-                    @changePermVal="changePermVal" />
+                <div class="drawer_content">
+                    <form-perm-conf v-if="formStepShow" default-perm="R" v-model:formItems="formItems"
+                        @changePermVal="changePermVal" />
+                </div>
             </el-tab-pane>
         </el-tabs>
-
+        <div class="demo-drawer__footer clear">
+            <el-button type="primary" @click="saveApprover">确 定</el-button>
+            <el-button @click="closeDrawer">取 消</el-button>
+        </div>
+        <employees-dialog v-model:visible="approverVisible" :data="checkedList" @change="sureApprover" />
+        <role-dialog v-model:visible="approverRoleVisible" :data="checkedRoleList" @change="sureRoleApprover" />
     </el-drawer>
 </template>
 <script setup>
-import { ref, watch, computed } from 'vue' 
+import { ref, watch, computed } from 'vue'
 import $func from '@/utils/flow/index'
-import { setTypes,hrbpOptions,approvalPageButtons } from '@/utils/flow/const'
+import { setTypes, hrbpOptions, approvalPageButtons } from '@/utils/flow/const'
 import { useStore } from '@/store/modules/workflow'
 import employeesDialog from '../dialog/employeesDialog.vue'
-import roleDialog from '../dialog/roleDialog.vue' 
+import roleDialog from '../dialog/roleDialog.vue'
 import FormPermConf from "../config/FormPermConf.vue";
 let store = useStore()
 let props = defineProps({
@@ -155,68 +155,68 @@ let props = defineProps({
         default: 0
     }
 });
- 
+
 let approverConfig = ref({})
 let approverVisible = ref(false)
 let approverRoleVisible = ref(false)
 let checkedRoleList = ref([])
-let checkedList = ref([]) 
+let checkedList = ref([])
 let checkApprovalPageBtns = ref([])
-let checkedHRBP = ref('') 
-let approvalPageBtns = ref([]) 
+let checkedHRBP = ref('')
+let approvalPageBtns = ref([])
 
-let afterSignUpWayVisible = computed(()=> approverConfig.value?.isSignUp == 1) 
+let afterSignUpWayVisible = computed(() => approverConfig.value?.isSignUp == 1)
 let checkAfterSignUpWay = ref(false)
 
 let formItems = ref([])
 
-let activeName = ref('approverStep') 
+let activeName = ref('approverStep')
 let approverStepShow = ref(true)
 let formStepShow = ref(false)
- 
+
 let approverConfig1 = computed(() => store.approverConfig1)
 let approverDrawer = computed(() => store.approverDrawer)
 let visible = computed({
     get() {
-        handleTabClick({ paneName: "approverStep" })  
+        handleTabClick({ paneName: "approverStep" })
         return approverDrawer.value
     },
     set() {
         closeDrawer()
     }
-}) 
- 
-watch(approverConfig1, (val) => { 
-    approverConfig.value = val.value;   
-    formItems.value = approverConfig.value.lfFieldControlVOs || [];
-    console.log("approverConfig.value========",JSON.stringify(approverConfig.value))
-    checkApprovalPageBtns.value = val.value.buttons?.approvalPage;   
 })
-watch(approverConfig1, (val) => { 
-    approvalPageBtns.value = val.value.buttons?.approvalPage;   
+
+watch(approverConfig1, (val) => {
+    approverConfig.value = val.value;
+    formItems.value = approverConfig.value.lfFieldControlVOs || [];
+    console.log("approverConfig.value========", JSON.stringify(approverConfig.value))
+    checkApprovalPageBtns.value = val.value.buttons?.approvalPage;
+})
+watch(approverConfig1, (val) => {
+    approvalPageBtns.value = val.value.buttons?.approvalPage;
     if (val.value.nodeProperty == 6) {
         val.value.nodeApproveList.length > 0 && val.value.nodeApproveList.map(item => {
             checkedHRBP.value = item.targetId
         })
-    }   
+    }
 })
-watch(() => approverConfig.value?.property?.afterSignUpWay, (newVal, oldVal) => { 
-        checkAfterSignUpWay.value = newVal == 1?true:false
-    } 
+watch(() => approverConfig.value?.property?.afterSignUpWay, (newVal, oldVal) => {
+    checkAfterSignUpWay.value = newVal == 1 ? true : false
+}
 )
-watch(checkedHRBP, (val) => {  
-    let labelName = hrbpOptions.find(item => item.value == val)?.label; 
-    approverConfig.value.nodeApproveList = [{"type":6,"targetId":val,"name":labelName}]; 
-  
+watch(checkedHRBP, (val) => {
+    let labelName = hrbpOptions.find(item => item.value == val)?.label;
+    approverConfig.value.nodeApproveList = [{ "type": 6, "targetId": val, "name": labelName }];
+
 })
 
 const changeType = (val) => {
     //console.log('typevale=====>',val);
-    
+
     approverConfig.value.nodeApproveList = [];
     approverConfig.value.signType = 1;
     approverConfig.value.noHeaderAction = 2;
-    checkedHRBP.value = ''; 
+    checkedHRBP.value = '';
     if (val == 3) {
         approverConfig.value.directorLevel = 1;
     } else {
@@ -239,8 +239,8 @@ const sureRoleApprover = (data) => {
     approverConfig.value.nodeApproveList = data;
     approverRoleVisible.value = false;
 }
-const saveApprover = () => { 
-    approverConfig.value.error = !$func.setApproverStr(approverConfig.value) 
+const saveApprover = () => {
+    approverConfig.value.error = !$func.setApproverStr(approverConfig.value)
     //console.log('approverConfig.===saveApprover=======',JSON.stringify(approverConfig.value)) 
     store.setApproverConfig({
         value: approverConfig.value,
@@ -252,14 +252,14 @@ const saveApprover = () => {
 const closeDrawer = () => {
     store.setApprover(false)
 }
-  
-const handleCheckedButtonsChange = (val) =>  {   
-    const index = approvalPageBtns.value.indexOf(val); 
-    index < 0 ? approvalPageBtns.value.push(val) : approvalPageBtns.value.splice(index, 1);    
-    const isAddStep = approvalPageBtns.value.indexOf(19); 
-    if(isAddStep >= 0){
+
+const handleCheckedButtonsChange = (val) => {
+    const index = approvalPageBtns.value.indexOf(val);
+    index < 0 ? approvalPageBtns.value.push(val) : approvalPageBtns.value.splice(index, 1);
+    const isAddStep = approvalPageBtns.value.indexOf(19);
+    if (isAddStep >= 0) {
         approverConfig.value.isSignUp = 1;
-    }else{
+    } else {
         approverConfig.value.isSignUp = 0;
     }
 }
@@ -276,24 +276,24 @@ const handleAfterSignUpWay = (val) => {
             property: { afterSignUpWay: val ? 1 : 2 }
         });
     }
-    console.log('approverConfig.value=============',JSON.stringify(approverConfig.value))
+    console.log('approverConfig.value=============', JSON.stringify(approverConfig.value))
 }
-const handleTabClick =(tab, event)  => {   
-    activeName.value = tab.paneName; 
-    if (tab.paneName == 'formStep') { 
+const handleTabClick = (tab, event) => {
+    activeName.value = tab.paneName;
+    if (tab.paneName == 'formStep') {
         formStepShow.value = true;
-    }else{
+    } else {
         formStepShow.value = false;
     }
-}    
-const changePermVal = (data) => { 
-    approverConfig.value.lfFieldControlVOs = data; 
+}
+const changePermVal = (data) => {
+    approverConfig.value.lfFieldControlVOs = data;
 }    
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
 
-.el-drawer__header{
+.el-drawer__header {
     margin-bottom: 5px !important;
 }
 
@@ -323,9 +323,11 @@ const changePermVal = (data) => {
     color: #46a6fe;
     cursor: pointer;
 }
-.el-tabs { 
+
+.el-tabs {
     margin-left: 20px !important;
 }
+
 .set_promoter {
     .approver_content {
         min-height: 200px;
@@ -339,10 +341,12 @@ const changePermVal = (data) => {
             margin-bottom: 20px;
         }
     }
+
     .approver_content,
     .approver_some,
     .approver_self_select {
-        padding-top:10px;
+        padding-top: 10px;
+
         .el-radio-group {
             display: unset;
         }
@@ -353,9 +357,11 @@ const changePermVal = (data) => {
             height: 16px;
         }
     }
+
     .approver_manager p {
         line-height: 32px;
     }
+
     .approver_manager select {
         width: 420px;
         height: 32px;
@@ -363,15 +369,18 @@ const changePermVal = (data) => {
         border-radius: 4px;
         border: 1px solid rgba(217, 217, 217, 1);
     }
+
     .approver_manager p.tip {
         margin: 10px 0 22px 0;
         font-size: 12px;
         line-height: 16px;
         color: #f8642d;
     }
+
     .approver_self {
         padding: 28px 20px;
     }
+
     .approver_self_select,
     .approver_manager,
     .approver_content {
@@ -384,6 +393,7 @@ const changePermVal = (data) => {
         font-size: 14px;
         margin-bottom: 14px;
     }
+
     .approver_self_select h3 {
         margin: 5px 0 20px;
         font-size: 14px;

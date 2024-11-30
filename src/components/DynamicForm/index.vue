@@ -92,8 +92,8 @@ body {
 } 
 .form-container {
   background: white !important;
-  padding: 30px;
-  width: 90%;
+  padding: 0px;
+  width: 95%;
   left: 0;
   bottom: 0;
   right: 0;

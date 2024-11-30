@@ -5,11 +5,11 @@
  * @FilePath: /ant-flow/src/components/drawer/copyerDrawer.vue
 -->
 <template>
-    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :with-header="false" destory-on-close
-        :size="680">
+    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :with-header="false"
+        destory-on-close :size="680">
         <div class="el-drawer__header">
             <span class="drawer-title">抄送人</span>
-        </div> 
+        </div>
         <el-tabs v-model="activeName" @tab-click="handleTabClick">
             <el-tab-pane label="抄送人设置" name="copyStep">
                 <div class="copyer_content drawer_content" v-if="copyStepShow">
@@ -26,17 +26,18 @@
                         <el-checkbox :value="1">允许发起人自选抄送人</el-checkbox>
                     </el-checkbox-group>
                 </div>
-                <div class="demo-drawer__footer clear">
-                    <el-button type="primary" @click="saveCopyer">确 定</el-button>
-                    <el-button @click="closeDrawer">取 消</el-button>
-                </div>
-                <employees-role-dialog v-model:visible="copyerVisible" :data="checkedList" @change="sureCopyer" />
-
             </el-tab-pane>
             <el-tab-pane lazy label="表单权限设置" name="formStep">
-                <form-perm-conf v-if="formStepShow" default-perm="R"  v-model:formItems="formItems" @changePermVal="changePermVal" />
+                <div class="drawer_content">
+                    <form-perm-conf v-if="formStepShow" default-perm="R" v-model:formItems="formItems"  @changePermVal="changePermVal" />
+                </div>                
             </el-tab-pane>
         </el-tabs>
+        <div class="demo-drawer__footer clear">
+            <el-button type="primary" @click="saveCopyer">确 定</el-button>
+            <el-button @click="closeDrawer">取 消</el-button>
+        </div>
+        <employees-role-dialog v-model:visible="copyerVisible" :data="checkedList" @change="sureCopyer" />
     </el-drawer>
 </template>
 <script setup>
@@ -48,22 +49,22 @@ import { ref, watch, computed } from 'vue'
 let copyerConfig = ref({})
 let ccSelfSelectFlag = ref([])
 let copyerVisible = ref(false)
-let checkedList = ref([]) 
+let checkedList = ref([])
 let formItems = ref([])
 
-let activeName = ref('copyStep') 
+let activeName = ref('copyStep')
 let copyStepShow = ref(true)
 let formStepShow = ref(false)
 
 //let testObj = JSON.parse("{\"lfFieldControlVOs\":[{\"fieldId\":\"input12931\",\"fieldName\":\"发件人姓名\",\"perm\":\"R\"},{\"fieldId\":\"switch96070\",\"fieldName\":\"是否保密\",\"perm\":\"E\"},{\"fieldId\":\"input23031\",\"fieldName\":\"发件人号码\",\"perm\":\"H\"}]}");
-       
+
 let store = useStore()
 let { setCopyerConfig, setCopyer } = store
-let copyerDrawer = computed(()=> store.copyerDrawer)
-let copyerConfig1 = computed(()=> store.copyerConfig1)
+let copyerDrawer = computed(() => store.copyerDrawer)
+let copyerConfig1 = computed(() => store.copyerConfig1)
 let visible = computed({
-    get() {   
-        handleTabClick({ paneName: "copyStep" })  
+    get() {
+        handleTabClick({ paneName: "copyStep" })
         return copyerDrawer.value
     },
     set() {
@@ -73,7 +74,7 @@ let visible = computed({
 watch(copyerConfig1, (val) => {
     copyerConfig.value = val.value;
     formItems.value = copyerConfig.value.lfFieldControlVOs || [];
-    console.log("copyerConfig.value========",JSON.stringify(copyerConfig.value))
+    console.log("copyerConfig.value========", JSON.stringify(copyerConfig.value))
     ccSelfSelectFlag.value = copyerConfig.value.ccSelfSelectFlag == 0 ? [] : [copyerConfig.value.ccSelfSelectFlag]
 })
 
@@ -95,13 +96,13 @@ const saveCopyer = () => {
     })
     closeDrawer();
 }
-const closeDrawer = () => { 
-    console.log("copyerConfig.value.lfFieldControlVOs========",JSON.stringify(copyerConfig.value))
+const closeDrawer = () => {
+    console.log("copyerConfig.value.lfFieldControlVOs========", JSON.stringify(copyerConfig.value))
     setCopyer(false)
-}    
-const handleTabClick =(tab, event)  => {   
+}
+const handleTabClick = (tab, event) => {
     activeName.value = tab.paneName;
-    if (tab.paneName == 'copyStep') { 
+    if (tab.paneName == 'copyStep') {
         copyStepShow.value = true;
         formStepShow.value = false;
     }
@@ -109,16 +110,17 @@ const handleTabClick =(tab, event)  => {
         copyStepShow.value = false;
         formStepShow.value = true;
     }
-}    
-const changePermVal = (data) => { 
+}
+const changePermVal = (data) => {
     copyerConfig.value.lfFieldControlVOs = data;
     //console.log("copyerConfig.value.lfFieldControlVOs========",JSON.stringify(copyerConfig.value))
-}    
- 
+}
+
 </script>
 
-<style scoped lang="scss">  
+<style scoped lang="scss">
 @import "@/assets/styles/flow/dialog.scss";
+
 .selected_list {
     margin-bottom: 20px;
     line-height: 30px;
@@ -145,9 +147,11 @@ const changePermVal = (data) => {
     color: #46a6fe;
     cursor: pointer;
 }
+
 .set_copyer {
     .copyer_content {
-        padding: 20px 20px 0; 
+        padding: 20px 20px 0;
+
         .el-button {
             margin-bottom: 20px;
         }
