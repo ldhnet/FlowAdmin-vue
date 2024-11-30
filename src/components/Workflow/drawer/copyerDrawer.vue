@@ -5,35 +5,43 @@
  * @FilePath: /ant-flow/src/components/drawer/copyerDrawer.vue
 -->
 <template>
-    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer"  :with-header="false" :size="680">
-        <span class="drawer-title">抄送人设置</span> 
-        <div class="demo-drawer__content">
-            <div class="copyer_content drawer_content">
-                <el-button type="primary" @click="addCopyer">添加成员</el-button>
-                <p class="selected_list">
-                    <span v-for="(item,index) in copyerConfig.nodeApproveList" :key="index">{{item.name}}
-                        <img src="@/assets/images/add-close1.png" @click="$func.removeEle(copyerConfig.nodeApproveList,item,'targetId')">
-                    </span>
-                    <a v-if="copyerConfig.nodeApproveList&&copyerConfig.nodeApproveList.length!=0" @click="copyerConfig.nodeApproveList=[]">清除</a>
-                </p>
-                <el-checkbox-group v-model="ccSelfSelectFlag" class="clear">
-                    <el-checkbox :value="1">允许发起人自选抄送人</el-checkbox>
-                </el-checkbox-group>
-            </div>
-            <div class="demo-drawer__footer clear">
-                <el-button type="primary" @click="saveCopyer">确 定</el-button>
-                <el-button @click="closeDrawer">取 消</el-button>
-            </div>
-            <employees-role-dialog 
-                v-model:visible="copyerVisible"
-                :data="checkedList"
-                @change="sureCopyer"
-            />
-        </div>
+    <el-drawer :append-to-body="true" title="抄送人设置" v-model="visible" class="set_copyer" :with-header="false"
+        :size="680">
+        <div class="el-drawer__header">
+            <span class="drawer-title">抄送人</span>
+        </div> 
+        <el-tabs>
+            <el-tab-pane label="抄送人设置">
+                <div class="copyer_content drawer_content">
+                    <el-button type="primary" @click="addCopyer">添加成员</el-button>
+                    <p class="selected_list">
+                        <span v-for="(item, index) in copyerConfig.nodeApproveList" :key="index">{{ item.name }}
+                            <img src="@/assets/images/add-close1.png"
+                                @click="$func.removeEle(copyerConfig.nodeApproveList, item, 'targetId')">
+                        </span>
+                        <a v-if="copyerConfig.nodeApproveList && copyerConfig.nodeApproveList.length != 0"
+                            @click="copyerConfig.nodeApproveList = []">清除</a>
+                    </p>
+                    <el-checkbox-group v-model="ccSelfSelectFlag" class="clear">
+                        <el-checkbox :value="1">允许发起人自选抄送人</el-checkbox>
+                    </el-checkbox-group>
+                </div>
+                <div class="demo-drawer__footer clear">
+                    <el-button type="primary" @click="saveCopyer">确 定</el-button>
+                    <el-button @click="closeDrawer">取 消</el-button>
+                </div>
+                <employees-role-dialog v-model:visible="copyerVisible" :data="checkedList" @change="sureCopyer" />
+
+            </el-tab-pane>
+            <el-tab-pane lazy label="表单权限设置">
+                <form-perm-conf default-perm="R" :formItems="formItems" v-model="formPerms"/>
+            </el-tab-pane>
+        </el-tabs>
     </el-drawer>
 </template>
 <script setup>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
+import FormPermConf from "../config/FormPermConf.vue";
 import $func from '@/utils/flow/index'
 import { useStore } from '@/store/modules/workflow'
 import { ref, watch, computed } from 'vue'
@@ -41,6 +49,9 @@ let copyerConfig = ref({})
 let ccSelfSelectFlag = ref([])
 let copyerVisible = ref(false)
 let checkedList = ref([])
+let formPerms = ref([])
+let formItems = ref([])
+
 let store = useStore()
 let { setCopyerConfig, setCopyer } = store
 let copyerDrawer = computed(()=> store.copyerDrawer)
@@ -112,7 +123,7 @@ const closeDrawer = () => {
 .set_copyer {
     .copyer_content {
         padding: 20px 20px 0;
-
+        height: calc(-230px + 100vh) !important;
         .el-button {
             margin-bottom: 20px;
         }

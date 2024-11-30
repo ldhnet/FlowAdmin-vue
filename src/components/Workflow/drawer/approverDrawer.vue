@@ -96,24 +96,31 @@
                     <el-tab-pane label="按钮设置" name="btnTab">                    
                         <div class="approver_some">
                             <p>【审批页面】按钮权限显示控制</p> 
+
                             <el-checkbox-group class="clear"  v-model="checkApprovalPageBtns"> 
-                                <el-checkbox style="margin: 0 15px 0 0;"  border
-                                 v-for="opt in approvalPageButtons"  
-                                :value="opt.value" 
-                                :disabled="opt.type === 'default'"
-                                 @change="handleCheckedButtonsChange(opt.value)"
-                                >{{opt.label}}</el-checkbox>
+                                <el-checkbox style="margin: 6px 0;width: 100%;height: 45px;"  border
+                                    v-for="opt in approvalPageButtons"  
+                                    :value="opt.value" 
+                                    :disabled="opt.type === 'default'"
+                                    @change="handleCheckedButtonsChange(opt.value)"
+                                    >
+                                    【{{opt.label}}】 
+                                    <span class="opt-description">
+                                        {{opt.description}}
+                                    </span>
+                                </el-checkbox>
                             </el-checkbox-group> 
-
-                            <!-- <el-checkbox-group v-if="afterSignUpWayVisible" class="approver_some" v-model="checkAfterSignUpWay"> 
-                                <el-checkbox style="margin: 0 15px 0 0;"  border  :value="1"  @change="handleAfterSignUpWay(opt.value)" >是否回到加批人</el-checkbox>
-                            </el-checkbox-group>  -->
-
-                            <el-checkbox border style="margin-top: 10px;" 
+                            <el-checkbox border style="margin-top: 6px;width: 100%;height: 45px;" 
                             v-if="afterSignUpWayVisible"  
                             v-model="checkAfterSignUpWay"
-                            @change="handleAfterSignUpWay(checkAfterSignUpWay)">是否回到加批人</el-checkbox>
+                            @change="handleAfterSignUpWay(checkAfterSignUpWay)">
+                                是否回到加批人
+                                <span class="opt-description">
+                                    选中后，加批人审批完之后，会回到本节点的审批人再次审批
+                                 </span>
+                            </el-checkbox>
                         </div> 
+                     
                     </el-tab-pane> 
                 </el-tabs> 
             </div>
