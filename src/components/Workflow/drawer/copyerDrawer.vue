@@ -147,8 +147,7 @@ const changePermVal = (data) => {
 }
 .set_copyer {
     .copyer_content {
-        padding: 20px 20px 0;
-        height: calc(-230px + 100vh) !important;
+        padding: 20px 20px 0; 
         .el-button {
             margin-bottom: 20px;
         }
