@@ -14,11 +14,11 @@
                     </div>
                 </div>
             </div>
-            <div class="fd-nav-right">
-                <button type="button" class="ant-btn button-publish" @click="previewJson">
+            <div class="fd-nav-right"> 
+                <button type="button" class="fd-btn button-publish" @click="previewJson">
                     <span>预览json</span>
                 </button>
-                <button type="button" class="ant-btn button-publish" @click="publish">
+                <button type="button" class="fd-btn button-publish" @click="publish">
                     <span>发 布</span>
                 </button>
             </div>

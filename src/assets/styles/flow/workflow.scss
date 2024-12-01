@@ -98,7 +98,7 @@
      content: "\E62E"
  }
 
- .ant-btn {
+ .fd-btn {
      line-height: 1.5;
      display: inline-block;
      font-weight: 400;
@@ -120,21 +120,21 @@
      border-color: #d9d9d9
  }
 
- .ant-btn>.anticon {
+ .fd-btn>.anticon {
      line-height: 1
  }
 
- .ant-btn,
- .ant-btn:active,
- .ant-btn:focus {
+ .fd-btn,
+ .fd-btn:active,
+ .fd-btn:focus {
      outline: 0
  }
 
- .ant-btn>a:only-child {
+ .fd-btn>a:only-child {
      color: currentColor
  }
 
- .ant-btn>a:only-child:after {
+ .fd-btn>a:only-child:after {
      content: "";
      position: absolute;
      top: 0;
@@ -144,20 +144,20 @@
      background: transparent
  }
 
- .ant-btn:focus,
- .ant-btn:hover {
+ .fd-btn:focus,
+ .fd-btn:hover {
      color: #40a9ff;
      background-color: #fff;
      border-color: #40a9ff
  }
 
- .ant-btn:focus>a:only-child,
- .ant-btn:hover>a:only-child {
+ .fd-btn:focus>a:only-child,
+ .fd-btn:hover>a:only-child {
      color: currentColor
  }
 
- .ant-btn:focus>a:only-child:after,
- .ant-btn:hover>a:only-child:after {
+ .fd-btn:focus>a:only-child:after,
+ .fd-btn:hover>a:only-child:after {
      content: "";
      position: absolute;
      top: 0;
@@ -167,20 +167,20 @@
      background: transparent
  }
 
- .ant-btn.active,
- .ant-btn:active {
+ .fd-btn.active,
+ .fd-btn:active {
      color: #096dd9;
      background-color: #fff;
      border-color: #096dd9
  }
 
- .ant-btn.active>a:only-child,
- .ant-btn:active>a:only-child {
+ .fd-btn.active>a:only-child,
+ .fd-btn:active>a:only-child {
      color: currentColor
  }
 
- .ant-btn.active>a:only-child:after,
- .ant-btn:active>a:only-child:after {
+ .fd-btn.active>a:only-child:after,
+ .fd-btn:active>a:only-child:after {
      content: "";
      position: absolute;
      top: 0;
@@ -190,20 +190,20 @@
      background: transparent
  }
 
- .ant-btn.active,
- .ant-btn:active,
- .ant-btn:focus,
- .ant-btn:hover {
+ .fd-btn.active,
+ .fd-btn:active,
+ .fd-btn:focus,
+ .fd-btn:hover {
      background: #fff;
      text-decoration: none
  }
 
- .ant-btn>i,
- .ant-btn>span {
+ .fd-btn>i,
+ .fd-btn>span {
      pointer-events: none
  }
 
- .ant-btn:before {
+ .fd-btn:before {
      position: absolute;
      top: -1px;
      left: -1px;
@@ -219,17 +219,17 @@
      display: none
  }
 
- .ant-btn .anticon {
+ .fd-btn .anticon {
      transition: margin-left .3s cubic-bezier(.645, .045, .355, 1)
  }
 
- .ant-btn:active>span,
- .ant-btn:focus>span {
+ .fd-btn:active>span,
+ .fd-btn:focus>span {
      position: relative
  }
 
- .ant-btn>.anticon+span,
- .ant-btn>span+.anticon {
+ .fd-btn>.anticon+span,
+ .fd-btn>span+.anticon {
      margin-left: 8px
  }
 
@@ -288,7 +288,7 @@
      background: #fff
  }
 
- .ant-input {
+ .fd-input {
      font-family: Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
      font-variant: tabular-nums;
      box-sizing: border-box;
@@ -310,31 +310,31 @@
      transition: all .3s
  }
 
- .ant-input::-moz-placeholder {
+ .fd-input::-moz-placeholder {
      color: #bfbfbf;
      opacity: 1
  }
 
- .ant-input:-ms-input-placeholder {
+ .fd-input:-ms-input-placeholder {
      color: #bfbfbf
  }
 
- .ant-input::-webkit-input-placeholder {
+ .fd-input::-webkit-input-placeholder {
      color: #bfbfbf
  }
 
- .ant-input:focus,
- .ant-input:hover {
+ .fd-input:focus,
+ .fd-input:hover {
      border-color: #40a9ff;
      border-right-width: 1px !important
  }
 
- .ant-input:focus {
+ .fd-input:focus {
      outline: 0;
      box-shadow: 0 0 0 2px rgba(24, 144, 255, .2)
  }
 
- textarea.ant-input {
+ textarea.fd-input {
      max-width: 100%;
      height: auto;
      vertical-align: bottom;
@@ -548,14 +548,14 @@
      border-color: #fff
  }
 
- .fd-nav .button-publish.ant-btn:focus,
- .fd-nav .button-publish.ant-btn:hover {
+ .fd-nav .button-publish.fd-btn:focus,
+ .fd-nav .button-publish.fd-btn:hover {
      color: #3296fa;
      border-color: #fff;
      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .3)
  }
 
- .fd-nav .button-publish.ant-btn:active {
+ .fd-nav .button-publish.fd-btn:active {
      color: #3296fa;
      background: #d6eaff;
      box-shadow: none
@@ -570,14 +570,14 @@
      background: transparent
  }
 
- .fd-nav .button-preview.ant-btn:focus,
- .fd-nav .button-preview.ant-btn:hover {
+ .fd-nav .button-preview.fd-btn:focus,
+ .fd-nav .button-preview.fd-btn:hover {
      color: #fff;
      border-color: #fff;
      background: #59acfc
  }
 
- .fd-nav .button-preview.ant-btn:active {
+ .fd-nav .button-preview.fd-btn:active {
      color: #fff;
      border-color: #fff;
      background: #2186ef
@@ -733,7 +733,7 @@
      text-decoration: none
  }
 
- .ant-btn {
+ .fd-btn {
      position: relative
  }
 
@@ -1250,6 +1250,6 @@
      background: #fff
  }
 
- .ant-btn {
+ .fd-btn {
      position: relative
  }
