@@ -80,7 +80,7 @@ export class NodeUtils {
     * 创建网关对象
     * @returns object
     */
-    static createGatewayNode() {
+    static createGatewayNode(child) {
       let gatewayNode = {
         "nodeId": this.idGenerator(),
         "nodeName": "网关",
@@ -90,7 +90,10 @@ export class NodeUtils {
         "childNode": null, 
         "error": true,
         "property":null,
-        "conditionNodes": []
+        "conditionNodes": [
+          this.createConditionNode('条件1',child,0), 
+          this.createConditionNode('条件2',null,0)
+        ]
       }
       return gatewayNode;
     }
