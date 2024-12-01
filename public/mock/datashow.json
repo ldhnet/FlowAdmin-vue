@@ -7,7 +7,7 @@
         "bpmnType": null,
         "formCode": "LFTEST_WMA",
         "appId": null,
-        "deduplicationType": 2,
+        "deduplicationType": 1,
         "effectiveStatus": 0,
         "isLowCodeFlow": 1,
         "remark": "",

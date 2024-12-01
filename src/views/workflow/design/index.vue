@@ -15,6 +15,9 @@
                 </div>
             </div>
             <div class="fd-nav-right">
+                <button type="button" class="ant-btn button-publish" @click="previewJson">
+                    <span>预览json</span>
+                </button>
                 <button type="button" class="ant-btn button-publish" @click="publish">
                     <span>发 布</span>
                 </button>
@@ -29,6 +32,7 @@
         <div v-if="nodeConfig" v-show="activeStep === 'processDesign'">
             <Process ref="processDesign" :processData="nodeConfig" @nextChange="changeSteps" />
         </div>
+        <jsonDialog v-model:visible="viewJson" :title="jsonTitle"  :modelValue="nodeConfig" />
     </div>
 </template>
 
@@ -43,6 +47,7 @@ import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
 import BasicSetting from "@/components/Workflow/BasicSetting/index.vue";
 import Process from "@/components/Workflow/Process/index.vue"; 
 import DynamicForm from "@/components/DynamicForm/index.vue";
+import jsonDialog from "@/components/Workflow/dialog/jsonDialog.vue";
 const { proxy } = getCurrentInstance()
 const route = useRoute();
  
@@ -66,6 +71,9 @@ let processConfig = ref(null);
 let nodeConfig = ref(null);
 let lfFormDataConfig= ref(null);
 let title = ref('');
+
+let viewJson = ref(false);
+let jsonTitle = ref('');
 
 onMounted(async () => {  
    let mockjson = {};
@@ -127,7 +135,10 @@ const publish = () => {
             //proxy.$modal.closeLoading();
         });
 };
-
+const previewJson = () => {
+   viewJson.value = true;
+   jsonTitle.value = "预览JSON";
+}
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";
