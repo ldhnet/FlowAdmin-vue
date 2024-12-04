@@ -7,8 +7,9 @@
   </template>
   
   <script setup>
-    import { ref, reactive } from 'vue'
+    import { ref, reactive,getCurrentInstance } from 'vue'
     import { ElMessage } from 'element-plus'
+    const { proxy } = getCurrentInstance()
     let props = defineProps({
       lfFormData: {
         type: String,
@@ -28,11 +29,22 @@
     const submitForm = () => {
       vFormRef.value.getFormData().then(formData => {
         // Form Validation OK
-        alert( JSON.stringify(formData) )
-      }).catch(error => {
-        // Form Validation failed
+        console.log("Form Validation===", JSON.stringify(formData))
+        proxy.$emit("handleBizBtn", JSON.stringify(formData))
+      }).catch(error => { 
         ElMessage.error(error)
       })
     }
+const handleValidate = () => {
+   
+}
+const getFromData = () => {
+   const _formdata =vFormRef.value.getFormData();
+    return JSON.stringify(_formdata);
+}
+  defineExpose({
+    handleValidate,
+    getFromData
+  })
   </script>
   

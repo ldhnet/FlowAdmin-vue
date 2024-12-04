@@ -8,7 +8,14 @@
                     </template>
                     <el-row>
                         <el-col :span="24"> 
-                            <component  ref="formRef" v-if="componentLoaded" :is="loadedComponent" :isPreview="false" @handleBizBtn="handleSubmit"></component>
+                            <!-- <component  ref="formRef" v-if="componentLoaded" :is="loadedComponent" :isPreview="false" @handleBizBtn="handleSubmit"></component> -->
+                            <component  ref="formRef" 
+                                        v-if="componentLoaded" 
+                                        :is="loadedComponent" 
+                                        :lfFormData="lfFormData" 
+                                        :isPreview="false"  
+                                        @handleBizBtn="handleSubmit">
+                            </component>
                         </el-col>
                     </el-row> 
                 </el-tab-pane>
@@ -28,6 +35,7 @@
 import { ref, getCurrentInstance, onMounted } from 'vue' 
 import ReviewWarp from '@/components/Workflow/Preview/reviewWarp.vue'
 import { processOperation } from '@/api/mockflow'  
+import { getLowCodeFromCodeData } from '@/api/mocklow'  
 import {loadComponent} from '@/views/workflow/components/componentload.js'
 
 const { proxy } = getCurrentInstance()
@@ -38,11 +46,21 @@ const formRef = ref(null)
 const reviewWarpShow = ref(false) 
 const previewConf = ref(null) 
 let componentLoaded= ref(false);
-let loadedComponent= ref(null);
-let lfFormDataConfig = ref(null);
+let loadedComponent= ref(null); 
+let lfFormData= ref(null); 
+
 onMounted(async() => {
-    loadedComponent.value =await loadComponent(flowCode); 
+    await getLowCodeFromCodeData("LFTEST_WMA").then((res) => {
+        if (res.code == 200) {  
+            lfFormData.value = res.data
+        } 
+    }); 
     componentLoaded.value = true  
+    loadedComponent.value = await loadComponent(flowCode)
+        .catch((err) => { 
+            console.log('err=======', err);
+            componentLoaded.value = false   
+        });  
 })
 
 const handleSubmit = (param) => {  
@@ -76,7 +94,7 @@ const handleClick = (tab, event) => {
  */
 const startTest = (param) => {
     let bizFrom= JSON.parse(param);
-    bizFrom.formCode = flowCode ?? '';  
+    bizFrom.formCode =flowCode == 'LF'?"LFTEST_WMA" : flowCode,// flowCode ?? '';  
     bizFrom.operationType = 1;//operationType 1发起 3 审批
     proxy.$modal.loading();
     processOperation(bizFrom).then((res) => {
