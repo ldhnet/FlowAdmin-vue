@@ -13,7 +13,7 @@
     conditionsConfig1: {
       conditionNodes: [],
     },
-    instanceDrawer: false,
+    previewDrawer: false,
     instanceViewConfig1: {},
     basideFormConfig: {},
   }),
@@ -54,10 +54,10 @@
     setConditionsConfig(payload) {
       this.conditionsConfig1 = payload
     },
-    setInstanceDrawer(payload) {
-      this.instanceDrawer = payload
+    setPreviewDrawer(payload) {
+      this.previewDrawer = payload
     },
-    setInstanceDrawerConfig(payload) {
+    setPreviewDrawerConfig(payload) {
       this.instanceViewConfig1 = payload
     },
   }

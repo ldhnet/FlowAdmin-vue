@@ -49,17 +49,17 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="pageDto.page" v-model:limit="pageDto.pageSize"
          @pagination="getList" />
-      <InstanceDrawer v-if="visible" />
+      <previewDrawer v-if="visible" />
    </div>
 </template>
 
 <script setup>
 import { getCopyToMelistPage } from "@/api/mockflow";
-import InstanceDrawer from "@/views/workflow/instance/instanceDrawer.vue"
+import previewDrawer from "@/views/workflow/components/previewDrawer.vue"
 import { useStore } from '@/store/modules/workflow'
 let store = useStore()
-let { setInstanceDrawer, setInstanceDrawerConfig } = store
-let instanceDrawerVisible = computed(() => store.instanceDrawer)
+let { setPreviewDrawer, setPreviewDrawerConfig } = store
+let previewDrawerVisible = computed(() => store.previewDrawer)
 const dataList = ref([]);
 const loading = ref(true);
 const showSearch = ref(true);
@@ -67,7 +67,7 @@ const total = ref(0);
 
 let visible = computed({
    get() {
-      return instanceDrawerVisible.value
+      return previewDrawerVisible.value
    },
    set() {
       closeDrawer()
@@ -114,8 +114,8 @@ function resetQuery() {
 }
 
 function handlePreview(row) {
-   setInstanceDrawer(true);
-   setInstanceDrawerConfig({
+   setPreviewDrawer(true);
+   setPreviewDrawerConfig({
       formCode: row.processKey,
       processNumber: row.processNumber,
       isOutSideAccess: row.isOutSideProcess,

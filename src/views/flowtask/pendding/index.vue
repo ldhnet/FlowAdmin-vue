@@ -56,7 +56,7 @@
 import { getPenddinglistPage } from "@/api/mockflow";
 import { useStore } from '@/store/modules/workflow'
 let store = useStore()
-let { setInstanceDrawerConfig } = store
+let { setPreviewDrawerConfig } = store
 const { proxy } = getCurrentInstance();
 const dataList = ref([]);
 const loading = ref(true);
@@ -103,7 +103,7 @@ function handleUpdate(row) {
       taskId:  row.taskId,
       isOutSideAccess: row.isOutSideProcess,
    };
-   setInstanceDrawerConfig(params); 
+   setPreviewDrawerConfig(params); 
    const obj = { path: "pendding/approve", query: params }; 
    proxy.$tab.closeOpenPage(obj);
 }
