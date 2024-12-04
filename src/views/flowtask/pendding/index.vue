@@ -102,10 +102,13 @@ function handleUpdate(row) {
       processNumber: row.processNumber,
       taskId:  row.taskId,
       isOutSideAccess: row.isOutSideProcess,
+      isLowCodeFlow: row.isLowCodeFlow,
    };
    setPreviewDrawerConfig(params); 
+   // 关闭指定页签
    const obj = { path: "pendding/approve", query: params }; 
-   proxy.$tab.closeOpenPage(obj);
+   proxy.$tab.openPage(obj); 
+   // proxy.$tab.closeOpenPage(obj); 
 }
 function resetQuery() {
    taskMgmtVO.value = {

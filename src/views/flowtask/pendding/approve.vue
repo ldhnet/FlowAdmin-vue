@@ -8,16 +8,18 @@
             <el-tab-pane label="表单信息" name="baseTab">
                 <div class="approve">
                     <el-row style="padding-left: -5px;padding-right: -5px;">
-                        <el-col :span="24" class="my-col"  v-if="componentLoaded">
-                            <div v-if="baseTabShow" :class="{ disableClss: !enableClass }">
-                                <component ref="componentFormRef" v-if="componentLoaded" :is="loadedComponent"
-                                    :previewData="componentData" :isPreview="true" />
+                        <el-col :span="24" class="my-col" v-if="baseTabShow" :class="{ disableClss: !enableClass }">
+                            <div v-if="componentLoaded">
+                                <component :is="loadedComponent" :previewData="componentData" :isPreview="true">
+                                </component>
                             </div>
-                        </el-col>
-                        <el-col :span="24" class="my-col" v-if="!componentLoaded">
-                            <div :class="{ disableClss: !enableClass }">
-                                <p v-if="!formData" style="font-size: small;color: red;text-align: center;margin: 0 35%;">*未获取到外部表单信息，请联系管理员。</p> 
-                                <p v-if="formData"  v-html="formData"></p>
+                            <div v-else-if="isOutSideAccess == 'true'">
+                                <p v-if="formData" v-html="formData"></p>
+                            </div>
+                            <div v-else="isLowCodeFlow == 'true'">
+                                <div style="background: white !important; padding: 30px;max-width: 650px;min-height: 350px;left: 0;right: 0;margin: auto;">
+                                    <FormRender ref="formRenderSetting"  v-if="lfFormDataConfig"  :lfFormData="lfFormDataConfig" :isPreview="true" />
+                                </div>
                             </div>
                         </el-col>
                         <el-col :span="24" class="my-col">
@@ -40,7 +42,7 @@
                                 </el-form-item>
                             </el-form>
                         </el-col>
-                    </el-row> 
+                    </el-row>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="审批记录" name="flowStep">
@@ -50,7 +52,7 @@
             </el-tab-pane>
             <el-tab-pane label="流程预览" name="flowReview">
                 <div v-if="flowReviewShow">
-                    <ReviewWarp v-model:flowParam="flowParam" />
+                    <ReviewWarp />
                 </div>
             </el-tab-pane>
         </el-tabs>
@@ -61,23 +63,24 @@
 </template>
 
 <script setup>
-import { ref, markRaw, watch } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus' 
+import { ref, watch } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import cache from '@/plugins/cache';
-import { getViewBusinessProcess, processOperation, getBpmVerifyInfoVos } from "@/api/mockflow"
 import FlowStepTable from "@/components/Workflow/Preview/flowStepTable.vue"
 import ReviewWarp from "@/components/Workflow/Preview/reviewWarp.vue"
 import employeesDialog from '@/components/Workflow/dialog/usersDialog.vue'
-import { bizFormMaps, pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
-
+import FormRender from "@/components/DynamicForm/formRender.vue";
+import { pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
+import { getViewBusinessProcess, processOperation } from "@/api/mockflow"
+import { loadComponent } from '@/views/workflow/components/componentload.js' 
 const { proxy } = getCurrentInstance()
-const route = useRoute(); 
+const route = useRoute();
 const formCode = route.query?.formCode
 const processNumber = route.query?.processNumber
-const isOutSideAccess= route.query?.isOutSideAccess?(route.query?.isOutSideAccess == 'true' ? true : false) : false;
+const isOutSideAccess = route.query?.isOutSideAccess || false;
+const isLowCodeFlow = route.query?.isLowCodeFlow || false;
 const taskId = route.query?.taskId
 const activeName = ref('baseTab')
-const modules = import.meta.glob('../../forms/**/*.vue');
 
 let baseTabShow = ref(true);
 let flowStepShow = ref(false);
@@ -92,7 +95,6 @@ const approveFormRef = ref(null);
 const approveForm = reactive({
     remark: ''
 });
-
 let formData = ref(null);
 const componentFormRef = ref(null);
 const handleClickType = ref(null);
@@ -100,7 +102,7 @@ let dialogVisible = ref(false);
 let dialogTitle = ref('');
 let isMultiple = ref(false);//false 转办，true 加批
 
-let desployDesc = ref(false);
+let lfFormDataConfig = ref(null);
 
 let rules = {
     remark: [{
@@ -109,17 +111,14 @@ let rules = {
         trigger: 'blur'
     }]
 };
-const flowParam = ref({
-    "processNumber": processNumber,
-    "isStartPreview": false
-});
 
 let approveSubData = reactive({
     "taskId": taskId,
     "processNumber": processNumber,
     "formCode": formCode,
-    "isOutSideAccessProc":isOutSideAccess,
-    "outSideType":2
+    "isOutSideAccessProc": isOutSideAccess,
+    "outSideType": 2,
+    "isLowCodeFlow": isLowCodeFlow
 });
 
 onMounted(() => {
@@ -130,33 +129,13 @@ onMounted(() => {
 watch(approvalButtons, (val) => {
     enableClass.value = val.some(c => c.value == approvalButtonConf.resubmit);
 })
-
 watch(handleClickType, (val) => {
     dialogTitle.value = `设置${approvalButtonConf.buttonsObj[val]}人员`;
     isMultiple.value = val == approvalButtonConf.addApproval ? true : false;
-})
-
-const handleTabClick = (tab, event) => {
-    if (tab.paneName == 'baseTab') { 
-        preview();
-        if(isOutSideAccess){ 
-            baseTabShow.value = false; 
-        }else{
-            loadComponent();
-            baseTabShow.value = true; 
-        }
-        flowStepShow.value = false;
-        flowReviewShow.value = false;
-    } else if (tab.paneName == 'flowStep') {
-        baseTabShow.value = false;
-        flowStepShow.value = true;
-        flowReviewShow.value = false;
-    } else if (tab.paneName == 'flowReview') {
-        baseTabShow.value = false;
-        flowStepShow.value = false;
-        flowReviewShow.value = true;
-    }
-};
+}) 
+watch(() => route.params, (newParams) => {  
+    console.log('taskId================',JSON.stringify(taskId));   
+},{deep: true})
 
 /**
  * 点击页面按钮
@@ -181,39 +160,42 @@ const approveSubmit = async (param, type) => {
                     }
                 });
             };
-            await approveProcess(approveSubData);
+            await approveProcess(approveSubData);//业务处理
         }
     })
 }
-
-
 /**
- * 预览
+ * 表单预览
  */
 const preview = () => {
     let queryParams = ref({
         "formCode": formCode,
         "processNumber": processNumber,
         "type": 2,
-        "isOutSideAccessProc":isOutSideAccess
+        "isOutSideAccessProc": isOutSideAccess,
+        "isLowCodeFlow": isLowCodeFlow
     });
     proxy.$modal.loading();
-    getViewBusinessProcess(queryParams.value).then(response => {
+    getViewBusinessProcess(queryParams.value).then(async (response) => { 
         if (response.code == 200) {
-            if(!isOutSideAccess){
-                componentData.value = response.data;
-                componentLoaded.value = true;
-            } else
-            {
+            if (isOutSideAccess && isOutSideAccess == 'true') {//外部表单接入
+          
                 formData.value = response.data.formData;
             }
-            let auditButtons = response.data.processRecordInfo?.pcButtons?.audit; 
+            else if (isLowCodeFlow && isLowCodeFlow == 'true') {//低代码表单
+                lfFormDataConfig.value = response.data.lfFormData
+            } else {//自定义表单
+                loadedComponent.value = await loadComponent(formCode);
+                componentData.value = response.data;
+                componentLoaded.value = true;
+            }
+            let auditButtons = response.data.processRecordInfo?.pcButtons?.audit;
             if (Array.isArray(auditButtons) && auditButtons.length > 0) {
                 approvalButtons.value = auditButtons.map(c => {
                     return { value: c.buttonType, label: c.name };
-                }).sort(function(a,b){
+                }).sort(function (a, b) {
                     return a.value - b.value
-                }); 
+                });
                 approvalButtons.value = uniqueByMap(approvalButtons.value);
             }
         } else {
@@ -228,11 +210,11 @@ const preview = () => {
  * @param arr 
  */
 function uniqueByMap(arr) {
-    if (!Array.isArray(arr)) { 
+    if (!Array.isArray(arr)) {
         return
     }
     const res = new Map();
-    return arr.filter((item) => !res.has(item.value) && res.set(item.value, true)); 
+    return arr.filter((item) => !res.has(item.value) && res.set(item.value, true));
 }
 /**
  * 审批
@@ -254,7 +236,7 @@ const approveProcess = async (param) => {
             ElMessage.error("审批失败:" + resData.errMsg);
         }
         proxy.$modal.closeLoading();
-    }).catch(() => { });  
+    }).catch(() => { });
 }
 /**
  * 关闭当前审批页
@@ -265,21 +247,6 @@ const close = () => {
     proxy.$tab.closeOpenPage(obj);
 }
 /**
- * 动态加载表单组件
- */
-const loadComponent = () => {
-    if (bizFormMaps.has(formCode)) {
-        const componentPath = bizFormMaps.get(formCode);
-        const componentPathVue = `../..${componentPath}`;
-        const importDybanicVue = modules[componentPathVue];
-        importDybanicVue().then(component => {
-            loadedComponent.value = markRaw(component.default)
-        })
-    }
-}
-
-handleTabClick({ paneName: "baseTab" });
-/**
  * 选人员Dialog 弹框
  */
 const addUserDialog = () => {
@@ -288,22 +255,40 @@ const addUserDialog = () => {
 /**
  * 确定Dialog 弹框
  */
-const sureDialogBtn = async (data) => { 
-    approveSubData.operationType = handleClickType.value;  
+const sureDialogBtn = async (data) => {
+    approveSubData.operationType = handleClickType.value;
     approveSubData.approvalComment = data.remark;
     if (!isMultiple.value) {
         data.selectList.unshift({
-            id:  cache.session.get('userId'),
+            id: cache.session.get('userId'),
             name: cache.session.get('userName'),
         })
-        approveSubData.userInfos = data.selectList; 
-    }else{ 
+        approveSubData.userInfos = data.selectList;
+    } else {
         approveSubData.signUpUsers = data.selectList;
-    } 
+    }
     //console.log('sureDialogBtn==========approveSubData=============', JSON.stringify(approveSubData));  
     await approveProcess(approveSubData);
 }
 
+const handleTabClick = async (tab, event) => {
+    activeName.value = tab.paneName;
+    if (tab.paneName == 'baseTab') {
+        preview();
+        baseTabShow.value = true;
+        flowStepShow.value = false;
+        flowReviewShow.value = false;
+    } else if (tab.paneName == 'flowStep') {
+        baseTabShow.value = false;
+        flowStepShow.value = true;
+        flowReviewShow.value = false;
+    } else if (tab.paneName == 'flowReview') {
+        baseTabShow.value = false;
+        flowStepShow.value = false;
+        flowReviewShow.value = true;
+    }
+};
+handleTabClick({ paneName: "baseTab" });
 </script>
 <style lang="scss">
 .disableClss {

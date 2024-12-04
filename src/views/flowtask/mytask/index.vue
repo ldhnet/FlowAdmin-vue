@@ -121,6 +121,7 @@ function handlePreview(row) {
       formCode: row.processKey,
       processNumber: row.processNumber,
       isOutSideAccess: row.isOutSideProcess,
+      isLowCodeFlow: row.isLowCodeFlow,
    })
 }
 

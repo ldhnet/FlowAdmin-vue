@@ -17,7 +17,7 @@ let baseUrl = "http://117.72.70.166:8001";
  
 /**
  * 获取审批数据
- * @param { Number } id 
+ * @param {*} data 
  * @returns 
  */
 export function getApiWorkFlowData(data) {

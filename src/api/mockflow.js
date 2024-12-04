@@ -14,15 +14,14 @@ let baseUrl = "http://117.72.70.166:8001";
 //let baseUrl = "http://localhost:8001";
 /**
  * 获取流程配置详情
- * @param { Number } id 
+ * @param { * } data 
  * @returns 
  */
 export function getApiWorkFlowData(data) {
   return http.get(`${baseUrl}/bpmnConf/detail/${data.id}`, { headers })
 }
 /**
- * 获取FromCode
- * @param { Number } id 
+ * 获取FromCode 
  * @returns 
  */
 export function getFromCodeData() {

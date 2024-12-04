@@ -15,7 +15,7 @@
 
                 <el-tab-pane name="flowFromReview" label="流程预览">
                     <div v-if="reviewWarpShow">
-                        <ReviewWarp v-model:flowParam="flowParam" />
+                        <ReviewWarp v-model:previewConf="previewConf" />
                     </div>
                 </el-tab-pane>
             </el-tabs>
@@ -25,11 +25,10 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance } from 'vue' 
+import { ref, getCurrentInstance, onMounted } from 'vue' 
 import ReviewWarp from '@/components/Workflow/Preview/reviewWarp.vue'
-import { processOperation } from '@/api/mockflow' 
-import { bizFormMaps } from "@/utils/flow/const"
-const modules = import.meta.glob('../forms/**/*.vue');
+import { processOperation } from '@/api/mockflow'  
+import {loadComponent} from '@/views/workflow/components/componentload.js'
 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
@@ -37,9 +36,14 @@ const activeName = ref("createFrom")
 const flowCode = route.query?.formCode
 const formRef = ref(null)
 const reviewWarpShow = ref(false) 
-const flowParam = ref(null) 
+const previewConf = ref(null) 
 let componentLoaded= ref(false);
 let loadedComponent= ref(null);
+let lfFormDataConfig = ref(null);
+onMounted(async() => {
+    loadedComponent.value =await loadComponent(flowCode); 
+    componentLoaded.value = true  
+})
 
 const handleSubmit = (param) => {  
     //console.log('handleSubmit=====param=======', param);
@@ -59,8 +63,9 @@ const handleClick = (tab, event) => {
         if (!isValid) {
             activeName.value = "createFrom";
         } else { 
-            flowParam.value = JSON.parse(formRef.value.getFromData());
-            flowParam.value.formCode = flowCode ?? '';   
+            previewConf.value = JSON.parse(formRef.value.getFromData());
+            previewConf.value.formCode = flowCode ?? '';   
+            previewConf.value.isStartPreview = true;
             reviewWarpShow.value = true;
         }
     });
@@ -84,23 +89,7 @@ const startTest = (param) => {
         }
         proxy.$modal.closeLoading();
     });
-
-}
-/**
- * 动态加载业务表单组件
- */
-const loadComponent = () => {
-  if (bizFormMaps.has(flowCode)) {
-    const componentPath = bizFormMaps.get(flowCode);
-    const componentPathVue = `..${componentPath}`;  
-    const importDybanicVue = modules[componentPathVue];  
-    importDybanicVue().then(component => {
-      loadedComponent.value = markRaw(component.default)
-      componentLoaded.value = true
-    })
-  }
-}  
-loadComponent();
+} 
 /** 关闭按钮 */
 function close() {
     proxy.$tab.closePage();

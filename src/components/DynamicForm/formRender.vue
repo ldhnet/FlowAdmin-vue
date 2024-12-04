@@ -1,8 +1,8 @@
 <template>
     <div>
-      <v-form-render :form-json="formJson" :form-data="formData" :option-data="optionData" ref="vFormRef">
+      <v-form-render ref="vFormRef" :form-json="formJson" :form-data="formData" :option-data="optionData">
       </v-form-render>
-      <!-- <el-button type="primary" @click="submitForm">Submit</el-button> -->
+      <el-button v-if="!isPreview" type="primary" @click="submitForm">提交</el-button>
     </div>
   </template>
   
@@ -13,6 +13,10 @@
       lfFormData: {
         type: String,
         default: "",
+      },
+      isPreview: {
+          type: Boolean,
+          default: true,
       }
     });
     /* 注意：formJson是指表单设计器导出的json，此处演示的formJson只是一个空白表单json！！ */

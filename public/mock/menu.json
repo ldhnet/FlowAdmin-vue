@@ -91,7 +91,7 @@
                     "meta": {
                         "title": "流程审批",
                         "icon": "",
-                        "noCache": false,
+                        "noCache": true,
                         "link": null
                     }
                 }

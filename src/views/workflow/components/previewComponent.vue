@@ -14,18 +14,17 @@
         </div>
         <div v-if="viewConfig.isLowCodeFlow">
             <div style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
-                <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" />
+                <FormRender ref="formRenderSetting" v-if="lfFormDataConfig"  :lfFormData="lfFormDataConfig" :isPreview="isPreview"/>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref,computed, markRaw } from 'vue'
+import { ref,computed } from 'vue'
 import FormRender from "@/components/DynamicForm/formRender.vue";
-import { getViewBusinessProcess } from "@/api/mockflow"
-import { bizFormMaps } from "@/utils/flow/const"
-import { useStore } from '@/store/modules/workflow'
-const modules = import.meta.glob("./forms/*.vue"); // 动态引入组件
+import { getViewBusinessProcess } from "@/api/mockflow" 
+import { useStore } from '@/store/modules/workflow' 
+import {loadComponent} from '@/views/workflow/components/componentload.js'
 const { proxy } = getCurrentInstance()
 let store = useStore()
 let viewConfig = computed(() => store.instanceViewConfig1)
@@ -49,23 +48,11 @@ let visible = computed({
     return true;
   }
 })
-/**
- * 动态加载业务表单组件
- */
-const loadComponent = (formCode) => { 
-  if (bizFormMaps.has(formCode)) {
-    const componentPath = bizFormMaps.get(formCode);
-    const componentPathVue = `.${componentPath}`;
-    const importDybanicVue = modules[componentPathVue];
-    importDybanicVue().then(component => {
-      loadedComponent.value = markRaw(component.default)
-    })
-  }
-} 
+ 
 /**
  * 预览
  */
-const preview = (param) => {
+const preview = async (param) => {
     let queryParams = ref({
         "formCode": param.formCode,
         "processNumber": param.processNumber,
@@ -74,7 +61,7 @@ const preview = (param) => {
         "isLowCodeFlow": param.isLowCodeFlow || false
     });
     proxy.$modal.loading();
-    getViewBusinessProcess(queryParams.value).then(response => {
+    await getViewBusinessProcess(queryParams.value).then(async (response) => {
         if (response.code == 200) {
             const responseData = response.data;
             if (responseData.isOutSideAccessProc) {//外部接入
@@ -84,7 +71,7 @@ const preview = (param) => {
                 lfFormDataConfig.value = responseData.lfFormData
             }
             else {//自定义开发表单
-                loadComponent(param.formCode);
+                loadedComponent.value = await loadComponent(param.formCode);
                 componentData.value = responseData;
                 componentLoaded.value = true
             }

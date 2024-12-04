@@ -17,15 +17,23 @@ import { useStore } from '@/store/modules/workflow'
 const { proxy } = getCurrentInstance()
 let store = useStore()
 let viewConfig = computed(() => store.instanceViewConfig1) 
-
+let props = defineProps({
+    previewConf: {
+        type: Object,
+        default: () => (null)
+    }
+});
 const nodeConfig = ref(null) 
 const getFlowPreviewList = async (objData) => {  
-    const param = ref({
+    let param = {
         "processNumber": objData.processNumber,
         "isStartPreview": false,
         "isOutSideAccessProc": objData.isOutSideAccess || false,
         "isLowCodeFlow": objData.isLowCodeFlow || false
-    }) 
+    };
+    if(props.previewConf) {
+        param = props.previewConf;
+    }
     proxy.$modal.loading();
     let resData = await getFlowPreview(param);
     proxy.$modal.closeLoading();
@@ -34,7 +42,7 @@ const getFlowPreviewList = async (objData) => {
 }
 getFlowPreviewList(viewConfig.value);
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .end-node-circle {
     width: 20px;
     height: 20px;
