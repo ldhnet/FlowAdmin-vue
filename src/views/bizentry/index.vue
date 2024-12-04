@@ -73,14 +73,15 @@ const handleSubmit = (param) => {
  * @param event 
  */
 const handleClick = (tab, event) => {
-    if (tab.props.name != 'flowFromReview') {
+    console.log('tab.paneName=====param=======', tab.paneName);
+    if (tab.paneName != 'flowFromReview') {
         reviewWarpShow.value = false;
         return;
-    }
-    formRef.value.handleValidate().then((isValid) => {
-        if (!isValid) {
-            activeName.value = "createFrom";
-        } else { 
+    }  
+    formRef.value.handleValidate().then((isValid) => { 
+        if (!isValid) { 
+            activeName.value = "createFrom"; 
+        } else {  
             previewConf.value = JSON.parse(formRef.value.getFromData());
             previewConf.value.formCode = flowCode ?? '';   
             previewConf.value.isStartPreview = true;
@@ -94,8 +95,15 @@ const handleClick = (tab, event) => {
  */
 const startTest = (param) => {
     let bizFrom= JSON.parse(param);
-    bizFrom.formCode =flowCode == 'LF'?"LFTEST_WMA" : flowCode,// flowCode ?? '';  
-    bizFrom.operationType = 1;//operationType 1发起 3 审批
+    bizFrom.formCode = flowCode ?? '';  
+    bizFrom.operationType = 1;//operationType 1发起 3 审批 
+    if(flowCode == 'LF'){
+        bizFrom = {};
+        bizFrom.formCode = 'LFTEST_WMA';  
+        bizFrom.operationType = 1;//operationType 1发起 3 审批
+        bizFrom.isLowCodeFlow= true;
+        bizFrom.lfFields = JSON.parse(param);
+    } 
     proxy.$modal.loading();
     processOperation(bizFrom).then((res) => {
         if (res.code == 200) { 

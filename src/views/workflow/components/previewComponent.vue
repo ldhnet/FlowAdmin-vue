@@ -14,7 +14,11 @@
         </div>
         <div v-if="viewConfig.isLowCodeFlow">
             <div style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
-                <FormRender ref="formRenderSetting" v-if="lfFormDataConfig"  :lfFormData="lfFormDataConfig" :isPreview="isPreview"/>
+                <FormRender ref="formRenderSetting" 
+                        v-if="lfFormDataConfig"  
+                        :lfFormData="lfFormDataConfig" 
+                        :lfFieldsData="lfFieldsConfig" 
+                        :isPreview="isPreview"/>
             </div>
         </div>
     </div>
@@ -42,6 +46,8 @@ let componentLoaded = ref(false);
 let formData = ref(null);
 let loadedComponent = ref(null); 
 let lfFormDataConfig = ref(null);
+let lfFieldsConfig = ref(null);
+
 let tips = "*未获取到外部表单信息，请联系管理员。";
 let visible = computed({
   get() {  
@@ -68,7 +74,9 @@ const preview = async (param) => {
                 formData.value = responseData.formData;
             }
             else if (responseData.isLowCodeFlow) {//低代码表单
-                lfFormDataConfig.value = responseData.lfFormData
+                lfFormDataConfig.value = responseData.lfFormData;
+                lfFieldsConfig.value = JSON.stringify(responseData.lfFields);
+                console.log('lfFieldsConfig.value===========',lfFieldsConfig.value)
             }
             else {//自定义开发表单
                 loadedComponent.value = await loadComponent(param.formCode);

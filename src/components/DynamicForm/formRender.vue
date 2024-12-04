@@ -13,8 +13,12 @@
     let props = defineProps({
       lfFormData: {
         type: String,
-        default: "",
+        default: "{}",
       },
+      lfFieldsData: {
+        type: String,
+        default: "{}",
+      }, 
       isPreview: {
           type: Boolean,
           default: true,
@@ -22,8 +26,8 @@
     });
     /* 注意：formJson是指表单设计器导出的json，此处演示的formJson只是一个空白表单json！！ */
     const formJson = reactive(JSON.parse(props.lfFormData));
-    const formData = reactive({})
-    const optionData = reactive({})
+    const formData = reactive(JSON.parse(props.lfFieldsData));
+    const optionData = reactive({});
     const vFormRef = ref(null)
   
     const submitForm = () => {
@@ -35,9 +39,15 @@
         ElMessage.error(error)
       })
     }
-const handleValidate = () => {
-   
-}
+  const handleValidate = () => {
+    let isValidField = false;
+    vFormRef.value.validateForm((isValid) => {
+      isValidField = isValid;
+    });
+    return new Promise((resolve, reject) => { 
+       resolve(isValidField);
+    });
+  }
 const getFromData = () => {
    const _formdata =vFormRef.value.getFormData();
     return JSON.stringify(_formdata);
