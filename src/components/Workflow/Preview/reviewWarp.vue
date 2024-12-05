@@ -34,8 +34,8 @@ const getFlowPreviewList = async (objData) => {
     if(props.previewConf) {
         param = props.previewConf;
     }
-    console.log("props.previewConf=============", JSON.stringify(props.previewConf))
-    console.log("param=========8888=====", JSON.stringify(param))
+    // console.log("props.previewConf=============", JSON.stringify(props.previewConf))
+    // console.log("param=========8888=====", JSON.stringify(param))
     proxy.$modal.loading();
     let resData = await getFlowPreview(param);
     proxy.$modal.closeLoading();

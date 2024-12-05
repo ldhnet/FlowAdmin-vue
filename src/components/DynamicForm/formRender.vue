@@ -51,10 +51,19 @@
     });
   }
 
-const getFromData = () => {
-   const _formdata =vFormRef.value.getFormData();
-    return JSON.stringify(_formdata);
-}
+  const getFromData = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        vFormRef.value.getFormData().then(formData => {
+          resolve(JSON.stringify(formData));
+        }).catch(err => {
+          reject("");
+        })
+      } catch (error) {
+        reject("");
+      }
+    });
+  }
   defineExpose({
     handleValidate,
     getFromData

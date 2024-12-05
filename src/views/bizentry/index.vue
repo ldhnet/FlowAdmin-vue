@@ -43,7 +43,7 @@ const activeName = ref("createFrom")
 const flowCode = route.query?.formCode
 const formRef = ref(null)
 const reviewWarpShow = ref(false) 
-const previewConf = ref(null) 
+const previewConf = ref({}) 
 let componentLoaded= ref(false);
 let loadedComponent= ref(null); 
 let lfFormData= ref(null); 
@@ -75,13 +75,20 @@ const handleClick =async (tab, event) => {
         reviewWarpShow.value = false;
         return;
     }  
-   await formRef.value.handleValidate().then((isValid) => {  
+   await formRef.value.handleValidate().then(async (isValid) => {  
         if (!isValid) { 
             activeName.value = "createFrom";  
         } else {   
-            previewConf.value = JSON.parse(formRef.value.getFromData());
-            previewConf.value.formCode = flowCode ?? '';   
-            previewConf.value.isStartPreview = true;
+            const _formData = await formRef.value.getFromData(); 
+            if (flowCode == 'LF') {   
+                previewConf.value.lfFields = JSON.parse(_formData);  
+            }else{
+                previewConf.value = JSON.parse(_formData); 
+            } 
+            previewConf.value.formCode = flowCode == 'LF'?"LFTEST_WMA" : flowCode?? '';   
+            previewConf.value.isStartPreview = true; 
+            previewConf.value.isLowCodeFlow = flowCode == 'LF'; 
+            previewConf.value.isOutSideAccess= false; 
             reviewWarpShow.value = true;
         }
     });
