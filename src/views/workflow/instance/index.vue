@@ -25,7 +25,7 @@
             </template>
          </el-table-column>  
          <el-table-column label="模板名称" align="center" prop="processTypeName" />
-         <el-table-column label="流程编号" align="center" prop="processNumber" />
+         <el-table-column label="流程编号" align="center" prop="processNumber" width="280"/>
          <el-table-column label="流程描述" align="center" prop="description" />
          <el-table-column label="状态" align="center" prop="effectiveStatus">
             <template #default="item">

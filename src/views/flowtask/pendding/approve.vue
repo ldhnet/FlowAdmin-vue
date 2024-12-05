@@ -18,7 +18,11 @@
                             </div>
                             <div v-else="isLowCodeFlow == 'true'">
                                 <div style="background: white !important; padding: 30px;max-width: 650px;min-height: 350px;left: 0;right: 0;margin: auto;">
-                                    <FormRender ref="formRenderSetting"  v-if="lfFormDataConfig"  :lfFormData="lfFormDataConfig" :isPreview="true" />
+                                    <FormRender ref="formRenderSetting"  
+                                            v-if="lfFormDataConfig"  
+                                            :lfFormData="lfFormDataConfig" 
+                                            :lfFieldsData="lfFieldsConfig" 
+                                            :isPreview="true" />
                                 </div>
                             </div>
                         </el-col>
@@ -103,6 +107,7 @@ let dialogTitle = ref('');
 let isMultiple = ref(false);//false 转办，true 加批
 
 let lfFormDataConfig = ref(null);
+let lfFieldsConfig = ref(null);
 
 let rules = {
     remark: [{
@@ -133,9 +138,6 @@ watch(handleClickType, (val) => {
     dialogTitle.value = `设置${approvalButtonConf.buttonsObj[val]}人员`;
     isMultiple.value = val == approvalButtonConf.addApproval ? true : false;
 }) 
-watch(() => route.params, (newParams) => {  
-    console.log('taskId================',JSON.stringify(taskId));   
-},{deep: true})
 
 /**
  * 点击页面按钮
@@ -184,6 +186,7 @@ const preview = () => {
             }
             else if (isLowCodeFlow && isLowCodeFlow == 'true') {//低代码表单
                 lfFormDataConfig.value = response.data.lfFormData
+                lfFieldsConfig.value = JSON.stringify(response.data.lfFields||{})
             } else {//自定义表单
                 loadedComponent.value = await loadComponent(formCode);
                 componentData.value = response.data;

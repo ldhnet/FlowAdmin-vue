@@ -72,16 +72,15 @@ const handleSubmit = (param) => {
  * @param tab 
  * @param event 
  */
-const handleClick = (tab, event) => {
-    console.log('tab.paneName=====param=======', tab.paneName);
+const handleClick =async (tab, event) => { 
     if (tab.paneName != 'flowFromReview') {
         reviewWarpShow.value = false;
         return;
     }  
-    formRef.value.handleValidate().then((isValid) => { 
+   await formRef.value.handleValidate().then((isValid) => {  
         if (!isValid) { 
-            activeName.value = "createFrom"; 
-        } else {  
+            activeName.value = "createFrom";  
+        } else {   
             previewConf.value = JSON.parse(formRef.value.getFromData());
             previewConf.value.formCode = flowCode ?? '';   
             previewConf.value.isStartPreview = true;

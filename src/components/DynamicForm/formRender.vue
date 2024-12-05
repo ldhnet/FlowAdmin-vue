@@ -40,14 +40,17 @@
       })
     }
   const handleValidate = () => {
-    let isValidField = false;
-    vFormRef.value.validateForm((isValid) => {
-      isValidField = isValid;
-    });
-    return new Promise((resolve, reject) => { 
-       resolve(isValidField);
+    return new Promise((resolve, reject) => {
+      try {
+        vFormRef.value.validateForm((isValid) => { 
+          resolve(isValid);
+        });
+      } catch (error) {
+        reject(false);
+      }
     });
   }
+
 const getFromData = () => {
    const _formdata =vFormRef.value.getFormData();
     return JSON.stringify(_formdata);
