@@ -76,7 +76,7 @@ const preview = async (param) => {
             else if (responseData.isLowCodeFlow) {//低代码表单
                 lfFormDataConfig.value = responseData.lfFormData;
                 lfFieldsConfig.value = JSON.stringify(responseData.lfFields);
-                console.log('lfFieldsConfig.value===========',lfFieldsConfig.value)
+                //console.log('lfFieldsConfig.value===========',lfFieldsConfig.value)
             }
             else {//自定义开发表单
                 loadedComponent.value = await loadComponent(param.formCode);

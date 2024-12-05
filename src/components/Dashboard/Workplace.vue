@@ -179,7 +179,7 @@ onMounted(async () => {
                 formCode: c.key,
                 title: c.value,
                 description:  c.value + '流程办理',
-                IconUrl: getAssetsFile(statusColor[c.key])
+                IconUrl: getAssetsFile(statusColor[c.key]||'icon-manage-19')
             }
         });
         }

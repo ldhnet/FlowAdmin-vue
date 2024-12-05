@@ -7,9 +7,8 @@
                         填写表单
                     </template>
                     <el-row>
-                        <el-col :span="24"> 
-                            <!-- <component  ref="formRef" v-if="componentLoaded" :is="loadedComponent" :isPreview="false" @handleBizBtn="handleSubmit"></component> -->
-                            <component  ref="formRef" 
+                        <el-col :span="24">  
+                             <component  ref="formRef" 
                                         v-if="componentLoaded" 
                                         :is="loadedComponent" 
                                         :lfFormData="lfFormData" 
@@ -63,8 +62,7 @@ onMounted(async() => {
         });  
 })
 
-const handleSubmit = (param) => {  
-    //console.log('handleSubmit=====param=======', param);
+const handleSubmit = (param) => {   
     startTest(param)
 }
 /**
