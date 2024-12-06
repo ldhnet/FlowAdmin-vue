@@ -129,7 +129,7 @@
                     "hidden": false,
                     "component": "workflow/config/index",
                     "meta": {
-                        "title": "流程模板列表",
+                        "title": "流程设计",
                         "icon": "",
                         "noCache": false,
                         "link": null
@@ -138,10 +138,10 @@
                 {
                     "name": "FlowDesign",
                     "path": "design",
-                    "hidden": false,
+                    "hidden": true,
                     "component": "workflow/design/index",
                     "meta": {
-                        "title": "流程模板设计",
+                        "title": "流程图设计",
                         "icon": "",
                         "noCache": false,
                         "link": null
