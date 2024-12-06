@@ -10,8 +10,8 @@
 -  📢📢预览功能以及API介绍文档来啦(持续完善中...) [wiki](https://gitee.com/ldhnet/FlowAdmin-vue/wikis)
 -  📢📢📢后端功能即将开源,加关注加群及时了解最新动态
 -  📢📢 **antflow后端开源啦!!** | 🆓 **完全开源免费,无付费引导,可放心使用** 
--  开源前端地址 [Gitee仓库](https://gitee.com/ldhnet/AntFlow-Vue3) |    [GitHub仓库](https://github.com/ldhnet/AntFlow-Vue3) 
--  开源后端地址 [Gitee仓库](https://gitee.com/tylerzhou/Antflow) | [Github仓库](https://github.com/mrtylerzhou/AntFlow) 
+-  开源前端地址 [Gitee仓库](https://gitee.com/ldhnet/AntFlow-Vue3) | [GitHub仓库](https://github.com/ldhnet/AntFlow-Vue3) | [GitCode仓库](https://gitcode.com/ldhnet/FlowDesigner/overview) 
+-  开源后端地址 [Gitee仓库](https://gitee.com/tylerzhou/Antflow) | [Github仓库](https://github.com/mrtylerzhou/AntFlow) | [GitCode仓库](https://gitcode.com/zypqqgc/AntFlow/overview) 
  - QQ技术交流群（972107977） 期待您的加入
  - 有疑问可以Issues留言，我们会认真对待
   [issues地址](https://gitee.com/ldhnet/FlowAdmin-vue/issues)
