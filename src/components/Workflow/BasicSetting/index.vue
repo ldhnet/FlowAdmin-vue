@@ -17,7 +17,15 @@
             </el-form-item>
 
             <el-form-item label="流程名称" prop="bpmnName">
-                <el-input v-model="form.bpmnName" placeholder="请输入审批名称" :style="{ width: '100%' }" />
+                <template #label>
+                    <span>
+                        <el-tooltip content="同【模板类型】名称一致，不需手动输入" placement="top">
+                        <el-icon><question-filled /></el-icon>
+                        </el-tooltip>
+                        流程名称
+                    </span>
+                </template>
+                <el-input v-model="form.bpmnName" placeholder="请输入审批名称" :style="{ width: '100%' }" readonly/>
             </el-form-item>
 
             <el-form-item label="审批人去重" prop="deduplicationType">
@@ -38,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
+import { ref, reactive, onMounted, watch,getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
 import { getFromCodeData } from "@/api/mockflow";
 import { getLowCodeFlowFormCodes } from "@/api/mocklow";
@@ -79,7 +87,16 @@ const form = reactive({
     effectiveStatus: false,
     deduplicationType: 1
 })
-
+watch(() => form.formCode,(val) => {
+    if (val) { 
+        formCodeOptions.value.forEach(item => {
+            if (item.key == val) {
+                form.bpmnName = item.value;
+            }
+        })
+    }
+});
+ 
 onMounted(async () => {
     //console.log('basicData=====props=======',JSON.stringify(props.basicData))
     if (props.basicData) {
@@ -123,7 +140,7 @@ let rules = {
     bpmnName: [{
         required: true,
         message: '请输入流程名称',
-        trigger: 'blur'
+        trigger: 'change'
     }],
     bpmnCode: [{
         required: true,
