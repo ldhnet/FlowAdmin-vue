@@ -1,7 +1,7 @@
-import { ref, markRaw } from 'vue' 
+import { markRaw } from 'vue' 
 import { bizFormMaps } from "@/utils/flow/const"
 const modules = import.meta.glob("./forms/*.vue"); // 动态引入组件
-import FormRender from "@/components/DynamicForm/formRender.vue";
+import FormRender from "@/components/DynamicForm/formRender.vue";// 低代码表单渲染组件
 /**
  * 动态加载业务表单组件
  */
@@ -19,7 +19,7 @@ export const loadComponent = (flowCode) => {
           console.log(err);
           reject(err);
         });
-    }else if(flowCode == "LF"){ 
+    }else if(flowCode == "LFTEST_WMA"){ 
       resolve(markRaw(FormRender));
     } else {
       reject("未定义业务表单组件");

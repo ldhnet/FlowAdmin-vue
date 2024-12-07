@@ -29,14 +29,11 @@
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
+            <el-button type="primary" plain icon="Edit" @click="handleDIYDesign">流程设计(DIY)</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit"  @click="handleUpdate">修改</el-button>
-         </el-col>
-         <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete"  @click="handleDelete">删除</el-button>
-         </el-col>
+            <el-button type="success" plain icon="Edit"  @click="handleLFDesign">流程设计(LF)</el-button>
+         </el-col> 
       </el-row>
 
       <el-table v-loading="loading" :data="configList">
@@ -166,12 +163,12 @@ function handleQuery() {
    getList();
 }
  
-function handleAdd() {
-   router.push({ path: "design"});
+function handleLFDesign() {
+   router.push({ path: "lf-design"});
 }
 
-function handleUpdate() {
-   proxy.$modal.msgError("演示环境不允许删除操作！");
+function handleDIYDesign() {
+   router.push({ path: "diy-design"});
 }
 
 /** 重置按钮操作 */

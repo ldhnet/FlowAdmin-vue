@@ -122,6 +122,18 @@
                         "noCache": false,
                         "link": null
                     }
+                },   
+                {
+                    "name": "FlowTemp",
+                    "path": "FlowTemp",
+                    "hidden": false,
+                    "component": "workflow/FlowTemp/index",
+                    "meta": {
+                        "title": "流程模板",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
                 },
                 {
                     "name": "FlowConfig",
@@ -136,12 +148,24 @@
                     }
                 },
                 {
-                    "name": "FlowDesign",
-                    "path": "design",
+                    "name": "LF-FlowDesign",
+                    "path": "lf-design",
                     "hidden": true,
-                    "component": "workflow/design/index",
+                    "component": "workflow/design/lf",
                     "meta": {
-                        "title": "流程图设计",
+                        "title": "低代码表单流程设计",
+                        "icon": "",
+                        "noCache": false,
+                        "link": null
+                    }
+                },
+                {
+                    "name": "DIY-FlowDesign",
+                    "path": "diy-design",
+                    "hidden": true,
+                    "component": "workflow/design/diy",
+                    "meta": {
+                        "title": "自定义表单流程设计",
                         "icon": "",
                         "noCache": false,
                         "link": null

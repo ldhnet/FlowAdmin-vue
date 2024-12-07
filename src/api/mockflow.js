@@ -28,6 +28,13 @@ export function getFromCodeData() {
   return http.get(`${baseUrl}/bpmnBusiness/listFormInfo`, { headers })
 }
 /**
+ * 获取所有FromCode 包括（DIY和LF）
+ * @returns 
+ */
+export function getAllFormCodes() {
+  return http.get(`${baseUrl}/bpmnBusiness/allFormCodes`, { headers })
+}
+/**
  * 设置/添加审批流程配置详情
  * @param {*} data 
  * @returns 

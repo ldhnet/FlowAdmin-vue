@@ -14,10 +14,19 @@ let baseUrl = "http://117.72.70.166:8001";
 //let baseUrl = "http://localhost:8001";
  
 /**
- * 获取低代码表单FromCode
+ * 获取低代码表单根据FromCode
  * @param { String } formCode 
  * @returns 
  */
 export function getLowCodeFromCodeData(formCode) {
   return http.get(`${baseUrl}/lowcode/getformDataByFormCode?formCode=${formCode}`, { headers })
+} 
+
+/**
+ * 获取所有低代码的FromCode
+ * @param { String } formCode 
+ * @returns 
+ */
+export function getLowCodeFlowFormCodes() {
+  return http.get(`${baseUrl}/lowcode/getLowCodeFlowFormCodes`, { headers })
 } 

@@ -97,7 +97,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getFromCodeData } from "@/api/mockflow" 
+import { getAllFormCodes } from "@/api/mockflow" 
 const { proxy } = getCurrentInstance();
 let worlflowList = ref([]);
 
@@ -168,16 +168,17 @@ let statusColor = {
   "DSFZH_WMA": 'jiejing',
   "PURCHASE_WMA": 'bought',  
   "UCARREFUEl_WMA": 'trip',  
-  "LF": 'zhushou',  
+  "LFTEST_WMA": 'zhushou',  
 }; 
  
 onMounted(async () => { 
-    await getFromCodeData().then((res) => {
+    await getAllFormCodes().then((res) => {
         if (res.code == 200) { 
             worlflowList.value = res.data.reverse().map(c => {
             return { 
                 formCode: c.key,
                 title: c.value,
+                formType: c.type,
                 description:  c.value + '流程办理',
                 IconUrl: getAssetsFile(statusColor[c.key]||'icon-manage-19')
             }
@@ -188,7 +189,8 @@ onMounted(async () => {
 
 function handleStart(row) {
     const params ={
-        formCode: row.formCode
+        formType: row.formType,
+        formCode: row.formCode 
     };  
     if ('PURCHASE_WMA' == row.formCode) {
         proxy.$modal.msgWarning("采购表单努力开发中！^-^");

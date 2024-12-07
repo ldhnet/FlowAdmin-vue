@@ -41,6 +41,7 @@ const { proxy } = getCurrentInstance()
 const route = useRoute();
 const activeName = ref("createFrom")
 const flowCode = route.query?.formCode
+const formType = route.query?.formType
 const formRef = ref(null)
 const reviewWarpShow = ref(false) 
 const previewConf = ref({}) 
@@ -48,8 +49,10 @@ let componentLoaded= ref(false);
 let loadedComponent= ref(null); 
 let lfFormData= ref(null); 
 
+const isLFFlow = route.query?.formType == 'LF'
+
 onMounted(async() => {
-    await getLowCodeFromCodeData("LFTEST_WMA").then((res) => {
+    await getLowCodeFromCodeData(flowCode).then((res) => {
         if (res.code == 200) {  
             lfFormData.value = res.data
         } 
@@ -80,14 +83,14 @@ const handleClick =async (tab, event) => {
             activeName.value = "createFrom";  
         } else {   
             const _formData = await formRef.value.getFromData(); 
-            if (flowCode == 'LF') {   
+            if (isLFFlow) {   
                 previewConf.value.lfFields = JSON.parse(_formData);  
             }else{
                 previewConf.value = JSON.parse(_formData); 
             } 
-            previewConf.value.formCode = flowCode == 'LF'?"LFTEST_WMA" : flowCode?? '';   
+            previewConf.value.formCode = flowCode||'';   
             previewConf.value.isStartPreview = true; 
-            previewConf.value.isLowCodeFlow = flowCode == 'LF'; 
+            previewConf.value.isLowCodeFlow = isLFFlow; 
             previewConf.value.isOutSideAccess= false; 
             reviewWarpShow.value = true;
         }
