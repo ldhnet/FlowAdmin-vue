@@ -176,7 +176,7 @@ watch(
 );
 
 let rules = {
-  formCode: [{ required: true, message: "请选择模板类型", trigger: "change" }],
+  formCode: [{ required: true, message: "请选择模板类型", trigger: "blur" }],
   bpmnName: [{ required: true, message: "请输入流程名称", trigger: "blur" }],
   bpmnCode: [{ required: true, message: "请输入流程编号", trigger: "blur" }],
   businessPartyId: [
@@ -209,6 +209,7 @@ const selectFormCodeChanged = (value) => {};
 
 const getApplicationsList = async (partMarkId) => {
   await getApplicationsByPartyMarkId(partMarkId).then((response) => {
+    if(response.code != 200) return;
     formCodeOptions.value = response.data.map((item) => {
       return {
         businessPartyId: item.businessPartyId,
