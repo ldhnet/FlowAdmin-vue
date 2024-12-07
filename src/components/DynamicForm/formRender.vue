@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="max-width: 800px;left: 0;right: 0;margin: auto;">
     <v-form-render ref="vFormRef" :form-json="formJson" :form-data="formData" :option-data="optionData"> </v-form-render>
     <el-button v-if="!isPreview" type="primary" @click="submitForm">提交</el-button>
   </div>

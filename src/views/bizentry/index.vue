@@ -2,17 +2,13 @@
     <div class="app-container">
         <div class="box">
             <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane name="createFrom" style="max-width: 1280px;height: calc(100vh - 200px);overflow: auto">
+                <el-tab-pane name="createFrom">
                     <template #label>
                         填写表单
                     </template>
-                    <el-row>
-                        <el-col :span="24">
-                            <component ref="formRef" v-if="componentLoaded" :is="loadedComponent"
+                    <component ref="formRef" v-if="componentLoaded" :is="loadedComponent"
                                 :lfFormData="lfFormData" :isPreview="false" @handleBizBtn="handleSubmit">
-                            </component>
-                        </el-col>
-                    </el-row>
+                    </component>
                 </el-tab-pane>
 
                 <el-tab-pane name="flowFromReview" label="流程预览">

@@ -90,7 +90,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
-import { getBpmnConflistPage,getEffectiveBpmn,getFromCodeData } from "@/api/mockflow";
+import { getBpmnConflistPage,getEffectiveBpmn,getAllFormCodes } from "@/api/mockflow";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
 let formCodeOptions = ref([]);
@@ -121,14 +121,9 @@ onMounted(async() => {
    getList(); 
 })
 const initFromCode = async () => {
-  await getFromCodeData().then((res) => {
+  await getAllFormCodes().then((res) => {
       if (res.code == 200) {
-         formCodeOptions.value = res.data;
-         /**临时添加 */
-         formCodeOptions.value.push({
-            key: "LFTEST_WMA",
-            value: "低代码表单流程"
-         })
+         formCodeOptions.value = res.data; 
       }
    });
 }
