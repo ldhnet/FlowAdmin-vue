@@ -11,13 +11,13 @@
                 <el-button icon="Refresh" @click="resetQuery">重置</el-button>
             </el-form-item>
         </el-form>
-        <el-row :gutter="10" class="mb8"> 
+        <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
-            <el-button type="primary" plain icon="Edit" @click="handleDIYTemp">模板类型(DIY)</el-button>
+                <el-button type="primary" plain icon="Edit" @click="handleDIYTemp">模板类型(DIY)</el-button>
             </el-col>
             <el-col :span="1.5">
-                <el-button type="success" plain icon="Edit"  @click="handleLFTemp">模板类型(LF)</el-button>
-            </el-col> 
+                <el-button type="success" plain icon="Edit" @click="handleLFTemp">模板类型(LF)</el-button>
+            </el-col>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
         </el-row>
 
@@ -26,12 +26,13 @@
                 :show-overflow-tooltip="true" />
             <el-table-column label="模板名称" align="center" prop="value" v-if="columns[1].visible"
                 :show-overflow-tooltip="true" />
-            <el-table-column label="模板类型" align="center" prop="type" v-if="columns[2].visible" :show-overflow-tooltip="true">     
+            <el-table-column label="模板类型" align="center" prop="type" v-if="columns[2].visible"
+                :show-overflow-tooltip="true">
                 <template #default="item">
                     <el-tag v-if="item.row.type === 'LF'" type="success">{{ item.row.type }}</el-tag>
                     <el-tag v-else type="warning">{{ item.row.type }}</el-tag>
                 </template>
-            </el-table-column> 
+            </el-table-column>
             <el-table-column label="备注" align="center" prop="remark" v-if="columns[3].visible"
                 :show-overflow-tooltip="true" />
             <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[4].visible">
@@ -41,22 +42,44 @@
             </el-table-column>
             <el-table-column label="操作" width="320" align="center" class-name="small-padding fixed-width">
                 <template #default="scope">
-                    <el-button link type="primary" icon="ZoomIn" @click="handlePreview(scope.row)">查看表单</el-button>
+                    <el-button link type="primary" icon="ZoomIn" @click="handleLFTemp(scope.row)">查看表单</el-button>
                     <el-button link type="primary" icon="Edit" @click="handleEdit(scope.row)">编辑</el-button>
                     <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+        <!-- 查看表单 -->
+        <el-dialog :title="title" v-model="open" width="720px" append-to-body>
+            <div style="background: white !important; padding: 30px;max-width: 850px;left: 0;right: 0;margin: auto;"> 
+                <component v-if="componentLoaded" :is="loadedComponent" :lfFormData="lfFormDataConfig"
+                    :isPreview="true">
+                </component>
+            </div>
+            <template #footer>
+                <div class="dialog-footer">
+                    <el-button @click="closeDialog">关 闭</el-button>
+                </div>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { getAllFormCodes } from "@/api/mockflow";
+import { getLowCodeFromCodeData } from '@/api/mocklow'
+import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js';
 const { proxy } = getCurrentInstance();
 const list = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
+const open = ref(false);
+const title = ref("");
+
+let lfFormDataConfig = ref(null)
+let loadedComponent = ref(null)
+let componentLoaded = ref(null)
 
 const data = reactive({
     form: {},
@@ -93,13 +116,29 @@ function handleDIYTemp(row) {
 }
 
 /** 查看表单操作 */
-function handleLFTemp(row) {
-    proxy.$modal.msgError("演示数据不允许修改操作！");
+const handleLFTemp = async (row) => {
+    loadedComponent.value =null;
+    title.value = "查看表单";
+    proxy.$modal.loading();
+    if (row.type == 'LF') {//低代码表单
+        await getLowCodeFromCodeData(row.key).then(async (res) => { 
+            if (res.code == 200) {
+                lfFormDataConfig.value = res.data
+                loadedComponent.value = await loadLFComponent();
+                componentLoaded.value = true;
+            }else {
+                proxy.$modal.msgWarning("未定义业务表单组件");
+            }
+        });    
+    } else {//自定义表单
+        loadedComponent.value = await loadDIYComponent(row.key)
+        .catch((err) => { proxy.$modal.msgWarning(err); });
+        componentLoaded.value = true;
+    }
+    proxy.$modal.closeLoading();
+    open.value = true;
 }
-/** 查看表单操作 */
-function handlePreview(row) {
-    proxy.$modal.msgError("演示数据不允许修改操作！");
-}
+
 /** 修改按钮操作 */
 function handleEdit(row) {
     proxy.$modal.msgError("演示数据不允许修改操作！");
@@ -119,6 +158,9 @@ function handleQuery() {
 function resetQuery() {
     proxy.resetForm("queryRef");
     handleQuery();
+}
+function closeDialog() {
+    open.value = false;
 }
 
 </script>

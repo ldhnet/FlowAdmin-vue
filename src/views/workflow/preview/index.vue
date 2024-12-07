@@ -78,7 +78,7 @@ const init = async () => {
         loadedComponent.value = await loadLFComponent();
         componentLoaded.value = true; 
     } else {//自定义表单
-        loadedComponent.value = await loadDIYComponent(data.formCode); 
+        loadedComponent.value = await loadDIYComponent(data.formCode).catch((err) => { proxy.$modal.msgError(err); });
         componentLoaded.value = true;
     }
 }

@@ -70,7 +70,7 @@ const preview = async (param) => {
                 componentLoaded.value = true
             }
             else {//自定义开发表单
-                loadedComponent.value = await loadDIYComponent(param.formCode);
+                loadedComponent.value = await loadDIYComponent(param.formCode).catch((err) => { proxy.$modal.msgError(err); });
                 componentData.value = responseData;
                 componentLoaded.value = true
             }

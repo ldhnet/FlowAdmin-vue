@@ -1,15 +1,7 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="16">
-        <v-form-render ref="vFormRef" :form-json="formJson" :form-data="formData" :option-data="optionData"> </v-form-render>
-      </el-col>  
-    </el-row> 
-    <el-row>  
-      <el-col :span="16">
-        <el-button v-if="!isPreview" type="primary" @click="submitForm">提交</el-button>
-      </el-col>
-    </el-row> 
+    <v-form-render ref="vFormRef" :form-json="formJson" :form-data="formData" :option-data="optionData"> </v-form-render>
+    <el-button v-if="!isPreview" type="primary" @click="submitForm">提交</el-button>
   </div>
 </template>
   
