@@ -49,6 +49,40 @@
             </el-table-column>
         </el-table>
 
+        <!-- 添加模板类型 -->
+        <el-dialog :title="title" v-model="openForm" append-to-body>
+            <el-form :model="form" :rules="rules" ref="formRef" label-width="130px" style="margin: 0 20px;">
+          
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="模板标识" prop="key">
+                        <el-input v-model="form.key" placeholder="请输入模板唯一标识" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="模板名称" prop="value">
+                        <el-input v-model="form.value" placeholder="请输入模板名称" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="备注">
+                        <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <template #footer>
+                <div class="dialog-footer"> 
+                    <el-button @click="closeDialog">关 闭</el-button>
+                    <el-button type="primary" @click="submitForm">确 定</el-button>                   
+                </div>
+            </template>
+        </el-dialog>
+
         <!-- 查看表单 -->
         <el-dialog :title="title" v-model="open" append-to-body>
             <div class="component"> 
@@ -75,6 +109,7 @@ const list = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
 const open = ref(false);
+const openForm = ref(false); 
 const title = ref("");
 
 let lfFormDataConfig = ref(null)
@@ -83,9 +118,13 @@ let componentLoaded = ref(null)
 
 const data = reactive({
     form: {},
-    vo: {}
+    vo: {},
+    rules: {
+        key: [{ required: true, message: '请输入模板唯一标识', trigger: 'blur' }],
+        value: [{ required: true, message: '请输入模板名称', trigger: 'blur' }], 
+    }
 });
-const { vo, form } = toRefs(data);
+const { vo, form,rules } = toRefs(data);
 onMounted(async () => {
     getList();
 })
@@ -116,8 +155,15 @@ function handleDIYTemp(row) {
 }
 /** 添加低代码业务表单FromCode */
 function createLFTemp(row) {
-    proxy.$modal.msgSuccess("努力开发中。。。。。");
+    reset();
+    title.value = "添加模板";
+    openForm.value = true;  
 }
+/** 提交表单 */
+function submitForm(row) { 
+    openForm.value = false;  
+}
+
  
 /** 查看表单操作 */
 const handleLFTemp = async (row) => {
@@ -165,8 +211,17 @@ function resetQuery() {
 }
 function closeDialog() {
     open.value = false;
+    openForm.value = false;
 }
-
+/** 重置操作表单 */
+function reset() {
+  form.value = {
+    key: undefined,
+    value: undefined, 
+    remark: undefined
+  };
+  proxy.resetForm("formRef");
+};
 </script>
 <style lang="scss" scoped> 
 .component{

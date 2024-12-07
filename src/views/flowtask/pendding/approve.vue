@@ -288,7 +288,7 @@ const handleTabClick = async (tab, event) => {
 };
 handleTabClick({ paneName: "baseTab" });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .disableClss {
     pointer-events: none;
 }

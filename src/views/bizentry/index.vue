@@ -106,7 +106,7 @@ const startTest = (param) => {
         bizFrom = {};  
         bizFrom.formCode = flowCode|| '';
         bizFrom.operationType = 1;//operationType 1发起 3 审批 
-        bizFrom.isLowCodeFlow = false;  
+        bizFrom.isLowCodeFlow = true;  
         bizFrom.lfFields = JSON.parse(param);
     }
     proxy.$modal.loading();

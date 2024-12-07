@@ -6,7 +6,9 @@
             </p>
         </div>
         <div v-if="componentLoaded"  class="component"> 
-            <component :is="loadedComponent" :previewData="componentData" :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig"  :isPreview="isPreview"></component>
+            <component :is="loadedComponent" :previewData="componentData" 
+            :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig" 
+             :isPreview="isPreview"></component>
         </div>
         <div v-if="viewConfig.isOutSideAccess">
             <p v-if="formData" v-html="formData"></p>
