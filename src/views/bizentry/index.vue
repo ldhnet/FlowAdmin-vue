@@ -79,7 +79,7 @@ const handleClick = async (tab, event) => {
             activeName.value = "createFrom";
         } else {
             const _formData = await formRef.value.getFromData();
-            if (isLFFlow) {
+            if (isLFFlow && isLFFlow == true) {
                 previewConf.value.lfFields = JSON.parse(_formData);
             } else {
                 previewConf.value = JSON.parse(_formData);
@@ -98,13 +98,15 @@ const handleClick = async (tab, event) => {
  */
 const startTest = (param) => {
     let bizFrom = JSON.parse(param);
-    bizFrom.formCode = flowCode ?? '';
+    bizFrom.formCode = flowCode|| '';
     bizFrom.operationType = 1;//operationType 1发起 3 审批 
-    if (flowCode == 'LF') {
-        bizFrom = {};
-        bizFrom.formCode = 'LFTEST_WMA';
-        bizFrom.operationType = 1;//operationType 1发起 3 审批
-        bizFrom.isLowCodeFlow = true;
+    bizFrom.isLowCodeFlow = false; 
+    bizFrom.lfFields = null;
+    if (isLFFlow && isLFFlow == true) {
+        bizFrom = {};  
+        bizFrom.formCode = flowCode|| '';
+        bizFrom.operationType = 1;//operationType 1发起 3 审批 
+        bizFrom.isLowCodeFlow = false;  
         bizFrom.lfFields = JSON.parse(param);
     }
     proxy.$modal.loading();
