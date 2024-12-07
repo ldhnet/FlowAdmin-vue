@@ -127,7 +127,7 @@
                     "name": "FlowTemp",
                     "path": "FlowTemp",
                     "hidden": false,
-                    "component": "workflow/FlowTemp/index",
+                    "component": "workflow/temp/index",
                     "meta": {
                         "title": "流程模板",
                         "icon": "",

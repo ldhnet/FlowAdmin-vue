@@ -24,7 +24,7 @@
             </div>
         </div>
         <div v-if="processConfig" v-show="activeStep === 'basicSetting'">
-            <BasicSetting ref="basicSetting" :basicData="processConfig" @nextChange="changeSteps" />
+            <BasicSetting ref="basicSetting" :basicData="processConfig" @nextChange="changeSteps" :flowType="'DIY'"/>
         </div> 
         <div v-if="nodeConfig" v-show="activeStep === 'processDesign'">
             <Process ref="processDesign" :processData="nodeConfig" @nextChange="changeSteps" />
@@ -39,8 +39,9 @@ import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
 import { getMockWorkFlowData } from '@/api/mock';
 import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
-import { FormatUtils } from '@/utils/flow/formatcommit_data'
-import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
+import { FormatUtils } from '@/utils/flow/formatcommit_data';
+import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data';
+import { NodeUtils } from '@/utils/flow/nodeUtils';
 import BasicSetting from "@/components/Workflow/BasicSetting/index.vue";
 import Process from "@/components/Workflow/Process/index.vue";  
 import jsonDialog from "@/components/Workflow/dialog/jsonDialog.vue";
@@ -73,7 +74,7 @@ onMounted(async () => {
    if (route.query.id) {
        mockjson = await getApiWorkFlowData({ id: route.query.id });
    } else {
-       mockjson = await getMockWorkFlowData({ id: 0 });
+       mockjson = NodeUtils.createStartNode();
    }
    let data = FormatDisplayUtils.getToTree(mockjson.data);
    // console.log("old===data=nodes==========", JSON.stringify(data.nodes));

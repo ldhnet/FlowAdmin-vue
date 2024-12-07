@@ -10,8 +10,8 @@ const headers = {
   "Userid": cache.session.get('userId'),
   "Username": cache.session.get('userName')
 }
-let baseUrl = "http://117.72.70.166:8001";
-//let baseUrl = "http://localhost:8001";
+//let baseUrl = "http://117.72.70.166:8001";
+let baseUrl = "http://localhost:8001";
 /**
  * 获取流程配置详情
  * @param { * } data 

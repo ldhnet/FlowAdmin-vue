@@ -41,9 +41,15 @@
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
 import { getFromCodeData } from "@/api/mockflow";
+import { getLowCodeFlowFormCodes } from "@/api/mocklow";
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
+let loading = ref(false);
 let props = defineProps({
+    flowType: {
+        type: String,
+        default: () => (''),
+    },
     basicData: {
         type: Object,
         default: () => (null),
@@ -63,15 +69,7 @@ let duplicateOptions = [{
     "value": 3
 }];
 
-//let formCodeOptions = ref([]);
-
-let formCodeOptions = [
-  {
-    key: "LFTEST_WMA",
-    value: "低代码表单流程",
-  },
-];
-
+let formCodeOptions = ref([]); 
 const form = reactive({
     bpmnName: '',
     bpmnCode: generatorID,
@@ -90,14 +88,32 @@ onMounted(async () => {
         form.formCode = props.basicData.formCode;
         form.remark = props.basicData.remark;
         form.deduplicationType = props.basicData.deduplicationType;
+    }  
+    if (props.flowType == 'DIY') {
+        getDIYFromCodeList();
+    } else if (props.flowType == 'LF') {
+        getLFFromCodeList();
     }
-    // await getFromCodeData().then((res) => {
-    //     if (res.code == 200) { 
-    //         formCodeOptions.value = res.data;
-    //     }
-    // });
 });
 
+const getDIYFromCodeList = async()=> {
+   loading.value = true;
+   await getFromCodeData().then((res) => {
+    loading.value = false;
+        if (res.code == 200) { 
+            formCodeOptions.value = res.data;
+        }
+   });
+}
+const getLFFromCodeList = async()=> {
+   loading.value = true;
+   await getLowCodeFlowFormCodes().then((res) => {
+    loading.value = false;
+        if (res.code == 200) { 
+            formCodeOptions.value = res.data;
+        }
+   });
+}
 let rules = {
     formCode: [{
         required: true,
@@ -115,14 +131,7 @@ let rules = {
         trigger: 'blur'
     }],
 };
-const nextSubmit = (ruleFormRef) => {
-    if (!ruleFormRef) return
-    ruleFormRef.validate((valid, fields) => {
-        if (valid) {
-            emit('nextChange', { label: "流程设计", key: "processDesign" })
-        }
-    })
-}
+
 // 给父级页面提供得获取本页数据得方法
 const getData = () => {
     return new Promise((resolve, reject) => {
