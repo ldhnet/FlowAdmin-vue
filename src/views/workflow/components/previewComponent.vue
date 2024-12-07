@@ -5,8 +5,7 @@
                 {{ tips }}
             </p>
         </div>
-        <div v-if="componentLoaded"  style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
-            <!-- style="pointer-events: none;" -->
+        <div v-if="componentLoaded"  class="component"> 
             <component :is="loadedComponent" :previewData="componentData" :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig"  :isPreview="isPreview"></component>
         </div>
         <div v-if="viewConfig.isOutSideAccess">
@@ -82,3 +81,14 @@ const preview = async (param) => {
 }
 preview(viewConfig.value);
 </script>
+<style lang="scss" scoped>
+.component{
+    background: white !important; 
+    padding: 30px !important;
+    max-width: 720px !important;
+    min-height: 520px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important;
+}
+</style>

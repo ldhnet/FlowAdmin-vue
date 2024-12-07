@@ -9,8 +9,7 @@
                 <div class="approve">
                     <el-row style="padding-left: -5px;padding-right: -5px;">
                         <el-col :span="24" class="my-col" v-if="baseTabShow" :class="{ disableClss: !enableClass }">
-                            <div v-if="componentLoaded" 
-                                style="background: white !important; padding: 30px;max-width: 650px;min-height: 200px;left: 0;right: 0;margin: auto;">
+                            <div v-if="componentLoaded"  class="component">
                                 <component :is="loadedComponent" 
                                 :previewData="componentData" 
                                 :lfFormData="lfFormDataConfig"
@@ -293,7 +292,14 @@ handleTabClick({ paneName: "baseTab" });
 .disableClss {
     pointer-events: none;
 }
-
+.component {
+    background: white !important;
+    padding: 30px !important;
+    max-width: 720px !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important;
+}
 .approve {
     width: 100%;
     height: 100%;

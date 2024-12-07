@@ -50,8 +50,8 @@
         </el-table>
 
         <!-- 查看表单 -->
-        <el-dialog :title="title" v-model="open" width="720px" append-to-body>
-            <div style="background: white !important; padding: 30px;max-width: 850px;left: 0;right: 0;margin: auto;"> 
+        <el-dialog :title="title" v-model="open" append-to-body>
+            <div class="component"> 
                 <component v-if="componentLoaded" :is="loadedComponent" :lfFormData="lfFormDataConfig"
                     :isPreview="true">
                 </component>
@@ -168,3 +168,13 @@ function closeDialog() {
 }
 
 </script>
+<style lang="scss" scoped> 
+.component{
+    background: white !important; 
+    padding: 30px !important;
+    max-width: 720px !important; 
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important;
+}
+</style> 
