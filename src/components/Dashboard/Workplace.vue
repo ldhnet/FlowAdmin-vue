@@ -1,5 +1,5 @@
 <template>
-    <div>  
+    <div>
         <el-card>
             <template v-slot:header>
                 <div class="clearfix">
@@ -23,7 +23,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-        </el-card> 
+        </el-card>
         <el-card>
             <template v-slot:header>
                 <div class="clearfix">
@@ -47,7 +47,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-        </el-card> 
+        </el-card>
         <el-card>
             <template v-slot:header>
                 <div class="clearfix">
@@ -76,76 +76,76 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getAllFormCodes } from "@/api/mockflow" 
+import { ref, onMounted, getCurrentInstance } from 'vue'
+import { getAllFormCodes } from "@/api/mockflow"
 const { proxy } = getCurrentInstance();
 let worlflowList = ref([]);
 let lfFlowList = ref([]);
 function handleFlow(row) {
     proxy.$modal.msgSuccess("演示环境努力开发中！");
 }
-const outsideflowList =[
+const outsideflowList = [
     {
         title: "第三方流程",
         description: "接入测试",
         IconUrl: getAssetsFile("jiejing")
     }
 ];
-
-
-  
 let statusColor = {
-  "LEAVE_WMA": 'leave', 
-  "DSFZH_WMA": 'jiejing',
-  "PURCHASE_WMA": 'bought',  
-  "UCARREFUEl_WMA": 'trip',  
-  "LFTEST_WMA": 'zhushou',  
-}; 
- 
-onMounted(async () => { 
+    "LEAVE_WMA": 'leave',
+    "DSFZH_WMA": 'jiejing',
+    "PURCHASE_WMA": 'bought',
+    "UCARREFUEl_WMA": 'trip',
+    "LFTEST_WMA": 'zhushou',
+};
+
+onMounted(async () => {
+    proxy.$modal.loading();
     await getAllFormCodes().then((res) => {
-        if (res.code == 200) { 
+        if (res.code == 200) {
             const totalData = res.data.reverse().map(c => {
-                return { 
+                return {
                     formCode: c.key,
                     title: c.value,
                     formType: c.type,
-                    description:  c.value + '流程办理',
-                    IconUrl: getAssetsFile(statusColor[c.key]||'icon-manage-19')
+                    description: c.value + '流程办理',
+                    IconUrl: getAssetsFile(statusColor[c.key] || 'icon-manage-19')
                 }
             });
             lfFlowList.value = totalData.filter(c => c.formType == 'LF');
-            worlflowList.value= totalData.filter(c => c.formType == 'DIY');
+            worlflowList.value = totalData.filter(c => c.formType == 'DIY');
+            proxy.$modal.closeLoading();
         }
     });
 });
 
 function handleStart(row) {
-    const params ={
+    const params = {
         formType: row.formType,
-        formCode: row.formCode 
-    };  
+        formCode: row.formCode
+    };
     if ('PURCHASE_WMA' == row.formCode) {
         proxy.$modal.msgWarning("采购表单努力开发中！^-^");
-        return;  
+        return;
     }
-    const obj = { path:'/bizentry/index',query:params };
+    const obj = { path: '/bizentry/index', query: params };
     proxy.$tab.openPage(obj);
-} 
+}
 function handleOutSide(row) {
-    proxy.$tab.openPage("/outsideMgt/bizForm","采购");
-    return; 
-}  
- function getAssetsFile(pathUrl) { 
+    proxy.$tab.openPage("/outsideMgt/bizForm", "采购");
+    return;
+}
+function getAssetsFile(pathUrl) {
     return new URL(`../../assets/images/work/${pathUrl}.png`, import.meta.url).href;
- }
-  
+}
+
 </script>
 <style lang="scss" scoped>
 .card-col {
     cursor: pointer;
     margin-bottom: 10px;
     overflow: hidden;
+
     &:hover {
         background: rgba(0, 0, 0, 0.45);
 
@@ -167,7 +167,7 @@ function handleOutSide(row) {
         color: #1890ff;
         width: 95px;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 
@@ -176,7 +176,7 @@ function handleOutSide(row) {
         font-size: 12px;
         font-weight: 300;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 }

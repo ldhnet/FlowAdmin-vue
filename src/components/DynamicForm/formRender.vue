@@ -32,8 +32,8 @@
       }
     });
     /* 注意：formJson是指表单设计器导出的json，此处演示的formJson只是一个空白表单json！！ */
-    const formJson = reactive(JSON.parse(props.lfFormData));
-    const formData = reactive(JSON.parse(props.lfFieldsData));
+    const formJson = reactive(JSON.parse(props.lfFormData||"{}"));
+    const formData = reactive(JSON.parse(props.lfFieldsData||"{}"));
     const optionData = reactive({});
     const vFormRef = ref(null)
   

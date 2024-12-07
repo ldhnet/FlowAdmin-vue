@@ -23,7 +23,11 @@
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'formRender'">
                     <div v-if="processConfig" style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
-                        <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" />
+                        <!-- <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" /> -->
+                        <component v-if="componentLoaded" :is="loadedComponent"  
+                                :lfFormData="lfFormDataConfig"
+                                :lfFieldsData="lfFieldsConfig" :isPreview="true">
+                        </component>
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'flow'">
@@ -38,12 +42,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getApiWorkFlowData } from "@/api/mockflow"
-import BasicSetting from "@/components/Workflow/BasicSetting/index.vue"
-import FormRender from "@/components/DynamicForm/formRender.vue";
-import Process from "@/components/Workflow/Process/index.vue"
-import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data'
+import { ref, onMounted } from 'vue';
+import { getApiWorkFlowData } from "@/api/mockflow";
+import BasicSetting from "@/components/Workflow/BasicSetting/index.vue"; 
+import Process from "@/components/Workflow/Process/index.vue";
+import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data';
+import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js';
 const { proxy } = getCurrentInstance();
 const route = useRoute();
 const tabPosition = ref('flowForm')
@@ -52,6 +56,8 @@ let lfFormDataConfig = ref(null)
 let nodeConfig = ref(null)
 let title = ref('')
 let id = route.query?.id
+let loadedComponent = ref(null)
+let componentLoaded = ref(null)
 /** 关闭按钮 */
 function close() {
     proxy.$tab.closePage();
@@ -63,12 +69,18 @@ onMounted(async () => {
 });
 const init = async () => {
     let mockjson = await getApiWorkFlowData({ id }); 
-    let data = FormatDisplayUtils.getToTree(mockjson.data);
-    //console.log("data==============",JSON.stringify(data));
+    let data = FormatDisplayUtils.getToTree(mockjson.data); 
     processConfig.value = data;
     title.value = data?.bpmnName;
-    nodeConfig.value = data?.nodeConfig;
-    lfFormDataConfig.value = data?.lfFormData
+    nodeConfig.value = data?.nodeConfig; 
+    if (data.isLowCodeFlow == '1') {//低代码表单
+        lfFormDataConfig.value = data?.lfFormData 
+        loadedComponent.value = await loadLFComponent();
+        componentLoaded.value = true; 
+    } else {//自定义表单
+        loadedComponent.value = await loadDIYComponent(data.formCode); 
+        componentLoaded.value = true;
+    }
 }
 
 </script>

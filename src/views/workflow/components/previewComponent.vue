@@ -5,30 +5,20 @@
                 {{ tips }}
             </p>
         </div>
-        <div v-if="componentLoaded">
+        <div v-if="componentLoaded"  style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
             <!-- style="pointer-events: none;" -->
-            <component :is="loadedComponent" :previewData="componentData" :isPreview="isPreview"></component>
+            <component :is="loadedComponent" :previewData="componentData" :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig"  :isPreview="isPreview"></component>
         </div>
         <div v-if="viewConfig.isOutSideAccess">
             <p v-if="formData" v-html="formData"></p>
-        </div>
-        <div v-if="viewConfig.isLowCodeFlow">
-            <div style="background: white !important; padding: 30px;max-width: 850px;min-height: 520px;left: 0;right: 0;margin: auto;">
-                <FormRender ref="formRenderSetting" 
-                        v-if="lfFormDataConfig"  
-                        :lfFormData="lfFormDataConfig" 
-                        :lfFieldsData="lfFieldsConfig" 
-                        :isPreview="isPreview"/>
-            </div>
-        </div>
+        </div> 
     </div>
 </template>
 <script setup>
-import { ref,computed } from 'vue'
-import FormRender from "@/components/DynamicForm/formRender.vue";
+import { ref,computed } from 'vue' 
 import { getViewBusinessProcess } from "@/api/mockflow" 
 import { useStore } from '@/store/modules/workflow' 
-import {loadComponent} from '@/views/workflow/components/componentload.js'
+import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js'
 const { proxy } = getCurrentInstance()
 let store = useStore()
 let viewConfig = computed(() => store.instanceViewConfig1)
@@ -69,17 +59,18 @@ const preview = async (param) => {
     proxy.$modal.loading();
     await getViewBusinessProcess(queryParams.value).then(async (response) => {
         if (response.code == 200) {
-            const responseData = response.data;
-            if (responseData.isOutSideAccessProc) {//外部接入
+            const responseData = response.data; 
+            if (responseData.isOutSideAccessProc && responseData.isOutSideAccessProc == 'true') {//外部接入
                 formData.value = responseData.formData;
             }
-            else if (responseData.isLowCodeFlow) {//低代码表单
+            else if (responseData.isLowCodeFlow && responseData.isLowCodeFlow == '1') {//低代码表单
                 lfFormDataConfig.value = responseData.lfFormData;
                 lfFieldsConfig.value = JSON.stringify(responseData.lfFields);
-                //console.log('lfFieldsConfig.value===========',lfFieldsConfig.value)
+                loadedComponent.value = await loadLFComponent(param.formCode); 
+                componentLoaded.value = true
             }
             else {//自定义开发表单
-                loadedComponent.value = await loadComponent(param.formCode);
+                loadedComponent.value = await loadDIYComponent(param.formCode);
                 componentData.value = responseData;
                 componentLoaded.value = true
             }

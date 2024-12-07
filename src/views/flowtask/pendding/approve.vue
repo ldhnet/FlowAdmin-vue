@@ -9,22 +9,18 @@
                 <div class="approve">
                     <el-row style="padding-left: -5px;padding-right: -5px;">
                         <el-col :span="24" class="my-col" v-if="baseTabShow" :class="{ disableClss: !enableClass }">
-                            <div v-if="componentLoaded">
-                                <component :is="loadedComponent" :previewData="componentData" :isPreview="true">
+                            <div v-if="componentLoaded" 
+                                style="background: white !important; padding: 30px;max-width: 650px;min-height: 200px;left: 0;right: 0;margin: auto;">
+                                <component :is="loadedComponent" 
+                                :previewData="componentData" 
+                                :lfFormData="lfFormDataConfig"
+                                :lfFieldsData="lfFieldsConfig"
+                                :isPreview="true">
                                 </component>
                             </div>
                             <div v-else-if="isOutSideAccess == 'true'">
                                 <p v-if="formData" v-html="formData"></p>
-                            </div>
-                            <div v-else="isLowCodeFlow == 'true'">
-                                <div style="background: white !important; padding: 30px;max-width: 650px;min-height: 350px;left: 0;right: 0;margin: auto;">
-                                    <FormRender ref="formRenderSetting"  
-                                            v-if="lfFormDataConfig"  
-                                            :lfFormData="lfFormDataConfig" 
-                                            :lfFieldsData="lfFieldsConfig" 
-                                            :isPreview="true" />
-                                </div>
-                            </div>
+                            </div> 
                         </el-col>
                         <el-col :span="24" class="my-col">
                             <el-form ref="approveFormRef" :model="approveForm" :rules="rules" class="my-form">
@@ -73,10 +69,9 @@ import cache from '@/plugins/cache';
 import FlowStepTable from "@/components/Workflow/Preview/flowStepTable.vue"
 import ReviewWarp from "@/components/Workflow/Preview/reviewWarp.vue"
 import employeesDialog from '@/components/Workflow/dialog/usersDialog.vue'
-import FormRender from "@/components/DynamicForm/formRender.vue";
 import { pageButtonsColor, approvalPageButtons, approvalButtonConf } from "@/utils/flow/const"
 import { getViewBusinessProcess, processOperation } from "@/api/mockflow"
-import { loadComponent } from '@/views/workflow/components/componentload.js' 
+import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js'
 const { proxy } = getCurrentInstance()
 const route = useRoute();
 const formCode = route.query?.formCode
@@ -137,7 +132,7 @@ watch(approvalButtons, (val) => {
 watch(handleClickType, (val) => {
     dialogTitle.value = `设置${approvalButtonConf.buttonsObj[val]}人员`;
     isMultiple.value = val == approvalButtonConf.addApproval ? true : false;
-}) 
+})
 
 /**
  * 点击页面按钮
@@ -176,19 +171,21 @@ const preview = () => {
         "type": 2,
         "isOutSideAccessProc": isOutSideAccess,
         "isLowCodeFlow": isLowCodeFlow
-    });
+    }); 
     proxy.$modal.loading();
-    getViewBusinessProcess(queryParams.value).then(async (response) => { 
+    getViewBusinessProcess(queryParams.value).then(async (response) => {
         if (response.code == 200) {
             if (isOutSideAccess && isOutSideAccess == 'true') {//外部表单接入
-          
+
                 formData.value = response.data.formData;
             }
             else if (isLowCodeFlow && isLowCodeFlow == 'true') {//低代码表单
                 lfFormDataConfig.value = response.data.lfFormData
-                lfFieldsConfig.value = JSON.stringify(response.data.lfFields||{})
+                lfFieldsConfig.value = JSON.stringify(response.data.lfFields || {})
+                loadedComponent.value = await loadLFComponent();
+                componentLoaded.value = true; 
             } else {//自定义表单
-                loadedComponent.value = await loadComponent(formCode);
+                loadedComponent.value = await loadDIYComponent(formCode);
                 componentData.value = response.data;
                 componentLoaded.value = true;
             }
@@ -244,8 +241,7 @@ const approveProcess = async (param) => {
 /**
  * 关闭当前审批页
  */
-const close = () => {
-    //proxy.$tab.closePage();
+const close = () => { 
     const obj = { path: "/flowtask/pendding" };
     proxy.$tab.closeOpenPage(obj);
 }

@@ -36,8 +36,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ElMessage } from 'element-plus';
-import { useRoute } from 'vue-router';
-import { getMockWorkFlowData } from '@/api/mock';
+import { useRoute } from 'vue-router'; 
 import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatcommit_data';
 import { FormatDisplayUtils } from '@/utils/flow/formatdisplay_data';
@@ -90,7 +89,7 @@ const publish = () => {
     const step1 = basicSetting.value.getData(); 
     const step2 = processDesign.value.getData();  
     proxy.$modal.loading(); 
-    Promise.all([step1, step2,step3])
+    Promise.all([step1, step2])
         .then((res) => {  
             //ElMessage.success("设置成功,F12控制台查看数据");
             let basicData = res[0].formData; 

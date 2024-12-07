@@ -7,16 +7,12 @@
                         填写表单
                     </template>
                     <el-row>
-                        <el-col :span="24">  
-                             <component  ref="formRef" 
-                                        v-if="componentLoaded" 
-                                        :is="loadedComponent" 
-                                        :lfFormData="lfFormData" 
-                                        :isPreview="false"  
-                                        @handleBizBtn="handleSubmit">
+                        <el-col :span="24">
+                            <component ref="formRef" v-if="componentLoaded" :is="loadedComponent"
+                                :lfFormData="lfFormData" :isPreview="false" @handleBizBtn="handleSubmit">
                             </component>
                         </el-col>
-                    </el-row> 
+                    </el-row>
                 </el-tab-pane>
 
                 <el-tab-pane name="flowFromReview" label="流程预览">
@@ -31,89 +27,93 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, onMounted } from 'vue' 
+import { ref, getCurrentInstance, onMounted } from 'vue'
 import ReviewWarp from '@/components/Workflow/Preview/reviewWarp.vue'
-import { processOperation } from '@/api/mockflow'  
-import { getLowCodeFromCodeData } from '@/api/mocklow'  
-import {loadComponent} from '@/views/workflow/components/componentload.js'
+import { processOperation } from '@/api/mockflow'
+import { getLowCodeFromCodeData } from '@/api/mocklow'
+import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js'
 
 const { proxy } = getCurrentInstance()
 const route = useRoute();
 const activeName = ref("createFrom")
 const flowCode = route.query?.formCode
-const formType = route.query?.formType
 const formRef = ref(null)
-const reviewWarpShow = ref(false) 
-const previewConf = ref({}) 
-let componentLoaded= ref(false);
-let loadedComponent= ref(null); 
-let lfFormData= ref(null); 
+const reviewWarpShow = ref(false)
+const previewConf = ref({})
+let componentLoaded = ref(false);
+let loadedComponent = ref(null);
+let lfFormData = ref(null);
+const isLFFlow = route.query?.formType == 'LF';
 
-const isLFFlow = route.query?.formType == 'LF'
-
-onMounted(async() => {
-    await getLowCodeFromCodeData(flowCode).then((res) => {
-        if (res.code == 200) {  
-            lfFormData.value = res.data
-        } 
-    }); 
-    componentLoaded.value = true  
-    loadedComponent.value = await loadComponent(flowCode)
-        .catch((err) => { 
-            console.log('err=======', err);
-            componentLoaded.value = false   
-        });  
+onMounted(async () => {
+    await adapFlowType();
 })
-
-const handleSubmit = (param) => {   
-    startTest(param)
+const adapFlowType = async () => { 
+    if (isLFFlow && isLFFlow == true) {
+        await getLowCodeFromCodeData(flowCode).then((res) => {
+            if (res.code == 200) {
+                lfFormData.value = res.data
+            }
+        });
+        loadedComponent.value = await loadLFComponent();
+        componentLoaded.value = lfFormData.value ? true : false;
+    } else {
+        loadedComponent.value = await loadDIYComponent(flowCode)
+            .catch((err) => { console.log('err=======', err); proxy.$modal.msgError(err); componentLoaded.value = false; });
+        componentLoaded.value = true;
+    }
+}
+const handleSubmit = (param) => {
+    if (componentLoaded.value != true) { return; }
+    startTest(param);
 }
 /**
  * 点击tab切换
  * @param tab 
  * @param event 
  */
-const handleClick =async (tab, event) => { 
+const handleClick = async (tab, event) => {
+    if (componentLoaded.value != true) { return; }
     if (tab.paneName != 'flowFromReview') {
         reviewWarpShow.value = false;
         return;
-    }  
-   await formRef.value.handleValidate().then(async (isValid) => {  
-        if (!isValid) { 
-            activeName.value = "createFrom";  
-        } else {   
-            const _formData = await formRef.value.getFromData(); 
-            if (isLFFlow) {   
-                previewConf.value.lfFields = JSON.parse(_formData);  
-            }else{
-                previewConf.value = JSON.parse(_formData); 
-            } 
-            previewConf.value.formCode = flowCode||'';   
-            previewConf.value.isStartPreview = true; 
-            previewConf.value.isLowCodeFlow = isLFFlow; 
-            previewConf.value.isOutSideAccess= false; 
+    }
+    await formRef.value.handleValidate().then(async (isValid) => {
+        if (!isValid) {
+            activeName.value = "createFrom";
+        } else {
+            const _formData = await formRef.value.getFromData();
+            if (isLFFlow) {
+                previewConf.value.lfFields = JSON.parse(_formData);
+            } else {
+                previewConf.value = JSON.parse(_formData);
+            }
+            previewConf.value.formCode = flowCode || '';
+            previewConf.value.isStartPreview = true;
+            previewConf.value.isLowCodeFlow = isLFFlow;
+            previewConf.value.isOutSideAccess = false;
             reviewWarpShow.value = true;
         }
     });
-} 
+}
 /**
  * 发起流程
  * @param param 
  */
 const startTest = (param) => {
-    let bizFrom= JSON.parse(param);
-    bizFrom.formCode = flowCode ?? '';  
+    let bizFrom = JSON.parse(param);
+    bizFrom.formCode = flowCode ?? '';
     bizFrom.operationType = 1;//operationType 1发起 3 审批 
-    if(flowCode == 'LF'){
+    if (flowCode == 'LF') {
         bizFrom = {};
-        bizFrom.formCode = 'LFTEST_WMA';  
+        bizFrom.formCode = 'LFTEST_WMA';
         bizFrom.operationType = 1;//operationType 1发起 3 审批
-        bizFrom.isLowCodeFlow= true;
+        bizFrom.isLowCodeFlow = true;
         bizFrom.lfFields = JSON.parse(param);
-    } 
+    }
     proxy.$modal.loading();
     processOperation(bizFrom).then((res) => {
-        if (res.code == 200) { 
+        if (res.code == 200) {
             proxy.$modal.msgSuccess("发起流程成功");
             const obj = { path: "/flowtask/mytask" };
             proxy.$tab.openPage(obj);
@@ -122,7 +122,7 @@ const startTest = (param) => {
         }
         proxy.$modal.closeLoading();
     });
-} 
+}
 /** 关闭按钮 */
 function close() {
     proxy.$tab.closePage();
