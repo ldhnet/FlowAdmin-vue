@@ -26,7 +26,7 @@
                         <!-- <FormRender ref="formRenderSetting" :lfFormData="lfFormDataConfig" /> -->
                         <component v-if="componentLoaded" :is="loadedComponent"  
                                 :lfFormData="lfFormDataConfig"
-                                :lfFieldsData="lfFieldsConfig" :isPreview="true">
+                                :isPreview="true">
                         </component>
                     </div>
                 </el-col>

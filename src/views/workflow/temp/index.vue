@@ -16,7 +16,7 @@
                 <el-button type="primary" plain icon="Edit" @click="handleDIYTemp">模板类型(DIY)</el-button>
             </el-col>
             <el-col :span="1.5">
-                <el-button type="success" plain icon="Edit" @click="handleLFTemp">模板类型(LF)</el-button>
+                <el-button type="success" plain icon="Edit" @click="createLFTemp">模板类型(LF)</el-button>
             </el-col>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
         </el-row>
@@ -110,11 +110,15 @@ function getList() {
     });
 }
 
-/** 查看表单操作 */
+/** 添加自定义业务表单FromCode */
 function handleDIYTemp(row) {
     proxy.$modal.msgSuccess("后端添加流程适配以后自动查询出来");
 }
-
+/** 添加低代码业务表单FromCode */
+function createLFTemp(row) {
+    proxy.$modal.msgSuccess("努力开发中。。。。。");
+}
+ 
 /** 查看表单操作 */
 const handleLFTemp = async (row) => {
     loadedComponent.value =null;

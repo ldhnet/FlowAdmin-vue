@@ -50,7 +50,7 @@ let nodeConfig = computed(() => {
       props.nodeConfig.nodeDisplayName =nameStr;
     return props.nodeConfig
 })
-console.log("nodeConfig==============",JSON.stringify(props.nodeConfig)) 
+//console.log("nodeConfig==============",JSON.stringify(props.nodeConfig)) 
 </script>
 <style scoped lang="scss">
 @import "@/assets/styles/flow/workflow.scss";

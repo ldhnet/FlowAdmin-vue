@@ -29,10 +29,19 @@
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
+            <el-tooltip class="box-item"  effect="dark"  
+               content="需提前开发业务表单"  
+               placement="bottom">
             <el-button type="primary" plain icon="Edit" @click="handleDIYDesign">流程设计(DIY)</el-button>
+            </el-tooltip>
+            
          </el-col>
          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit"  @click="handleLFDesign">流程设计(LF)</el-button>
+            <el-tooltip class="box-item"  effect="dark"  
+               content="低代码表单+流程设计器"  
+               placement="bottom">
+               <el-button type="success" plain icon="Edit"  @click="handleLFDesign">流程设计(LF)</el-button>
+            </el-tooltip> 
          </el-col> 
       </el-row>
 
