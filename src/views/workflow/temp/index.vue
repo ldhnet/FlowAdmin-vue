@@ -102,7 +102,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getAllFormCodes } from "@/api/mockflow";
-import { getLowCodeFromCodeData } from '@/api/mocklow'
+import { getLowCodeFromCodeData,createLFFormCode } from '@/api/mocklow'
 import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/componentload.js';
 const { proxy } = getCurrentInstance();
 const list = ref([]);
@@ -150,18 +150,31 @@ function getList() {
 }
 
 /** 添加自定义业务表单FromCode */
-function handleDIYTemp(row) {
+function handleDIYTemp() {
     proxy.$modal.msgSuccess("后端添加流程适配以后自动查询出来");
 }
 /** 添加低代码业务表单FromCode */
-function createLFTemp(row) {
+function createLFTemp() {
     reset();
     title.value = "添加模板";
     openForm.value = true;  
+ 
 }
 /** 提交表单 */
-function submitForm(row) { 
-    openForm.value = false;  
+function submitForm() {  
+    proxy.$refs["formRef"].validate(valid => {
+    if (valid) { 
+        createLFFormCode(form.value).then(response => {
+          if (response.code != 200) {
+            proxy.$modal.msgError("新增失败");
+            return;
+          }
+          proxy.$modal.msgSuccess("新增成功");
+          openForm.value = false;
+          getList();
+        }); 
+    }
+  });
 }
 
  

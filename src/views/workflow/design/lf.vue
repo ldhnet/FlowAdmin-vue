@@ -91,7 +91,7 @@ onMounted(async () => {
    title.value = data?.bpmnName;
    nodeConfig.value = data?.nodeConfig;     
    lfFormDataConfig.value = data?.lfFormData;   
-   console.log("lfFormDataConfig==========", JSON.stringify(lfFormDataConfig.value));
+   //console.log("lfFormDataConfig==========", JSON.stringify(lfFormDataConfig.value));
 });
 
 

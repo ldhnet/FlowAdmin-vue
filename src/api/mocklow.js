@@ -30,3 +30,11 @@ export function getLowCodeFromCodeData(formCode) {
 export function getLowCodeFlowFormCodes() {
   return http.get(`${baseUrl}/lowcode/getLowCodeFlowFormCodes`, { headers })
 } 
+/**
+ * 新增低代码表单FormCode
+ * @param {*} data 
+ * @returns 
+ */
+export function createLFFormCode(data){
+  return http.post(`${baseUrl}/lowcode/createLowCodeFormCode`, data, { headers })
+}

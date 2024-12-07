@@ -88,8 +88,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { ElMessage } from 'element-plus';
+import { ref, onMounted,getCurrentInstance } from "vue"; 
 import { getBpmnConflistPage,getEffectiveBpmn,getAllFormCodes } from "@/api/mockflow";
 const router = useRouter();
 const { proxy } = getCurrentInstance();
@@ -107,6 +106,7 @@ const data = reactive({
    taskMgmtVO: { 
       effectiveStatus: undefined,
       isOutSideProcess : 0,
+      isLowCodeFlow : undefined,
       bpmnCode: undefined,
       bpmnName: undefined
    },
@@ -145,18 +145,23 @@ function getList() {
 const handleEdit =  (row) => {
    const params ={
       id: row.id
-   };
-   const obj = {path: "/workflow/design",query:params};
+   }; 
+   let obj = {}; 
+   if(row.isLowCodeFlow == '1'){ 
+      obj = {path: "/workflow/lf-design",query:params}; 
+   }else{  
+      obj = {path: "/workflow/diy-design",query:params}; 
+   } 
    proxy.$tab.openPage(obj);
 }
 
 const effectiveById = async (data) => {
     await getEffectiveBpmn(data).then(async (res) => {
         if (res.code == 200) {
-            getList();
-            ElMessage.success("操作成功");
+            getList(); 
+            proxy.$modal.msgSuccess("操作成功"); 
         } else {
-            ElMessage.error("操作失败");
+         proxy.$modal.msgError("操作失败");  
         }
     });
 
