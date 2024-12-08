@@ -199,10 +199,10 @@ export let approveList = {
 };
 export const condition_columnTypeMap = new Map([
   ['input', '8'],//"int/fload/double/string" input
-  ['select', '8'],//"String" select
-  ['checkbox', '12'],//"String" checkbox
-  ['radio', '8'],
-  ['switch', '8'],
+  ['select', '8'],//"string" select
+  ['checkbox', '12'],//"string" checkbox
+  ['radio', '9'],
+  ['switch', '9'],
   ['time', '11'],
   ['time-range', '11'],
   ['data-range', '10'],
