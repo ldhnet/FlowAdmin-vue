@@ -67,7 +67,8 @@ export default {
                         "ccSelfSelectFlag": 1,
                         "isDefault": 0,
                         "conditionList": [{ //当前条件
-                            "columnId": 0, //发起人
+                            "formId": 0, //条件表单的唯一Id
+                            "columnId": 0, //用于条件判断的字段Id，与后端对应
                             "type": 1, //1 发起人 2其他
                             "optType": "", //["", "<", ">", "≤", "=", "≥","介于两数之间"][optType]
                             "zdy1": "",//左侧自定义内容

@@ -1,4 +1,4 @@
-//import {  NodeUtils } from '@/utils/nodeUtils'
+//import { NodeUtils } from '@/utils/flow/nodeUtils'
 
 export class NodeUtils {
   /**
@@ -8,8 +8,7 @@ export class NodeUtils {
   static idGenerator() {
     let qutient = new Date() - new Date("2024-05-01");
     qutient += Math.ceil(Math.random() * 1000); // 防止重複
-    const chars =
-      "0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz";
+    const chars = "0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz";
     const charArr = chars.split("");
     const radix = chars.length;
     const res = [];
@@ -175,6 +174,37 @@ export class NodeUtils {
     };
     startObj.data = startNode;
     return startObj;
+  }
+
+ /**
+  * 条件判断对象
+  * @param {*} formId  条件表单Id
+  * @param {*} columnId 条件判断id
+  * @param {*} type 类型 1，发起人 2，其他表单条件
+  * @param {*} showName 显示名称.
+  * @param {*} showType //1,值类型（>,>=,<,<=,=）,2单选下拉, 3多选(checkbox) 其他
+  * @param {*} columnName  DB字段名称 
+  * @param {*} columnType  DB字段类型
+  * @param {*} fixedDownBoxValue 条件选项
+  * @returns 
+  */
+  static createJudgeNode(formId, columnId,type ,showName,showType,  columnName, columnType, fixedDownBoxValue) {
+    let judgeNode = {
+      formId: formId,                    
+      columnId: columnId,
+      showType: showType,
+      type: type, //1，发起人 2，其他表单条件
+      showName: showName,
+      optType: "2",
+      zdy1: "2",
+      opt1: "<",
+      zdy2: "",
+      opt2: "<",
+      columnDbname: columnName,
+      columnType: columnType,
+      fixedDownBoxValue: fixedDownBoxValue
+    }
+    return judgeNode;
   }
 }
 
