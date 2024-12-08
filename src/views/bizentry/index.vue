@@ -6,13 +6,15 @@
                     <template #label>
                         填写表单
                     </template>
+                <div style="height: calc(100vh - 200px);overflow-y: auto">
                     <component ref="formRef" v-if="componentLoaded" :is="loadedComponent"
                                 :lfFormData="lfFormData" :isPreview="false" @handleBizBtn="handleSubmit">
                     </component>
+                </div>
                 </el-tab-pane>
 
                 <el-tab-pane name="flowFromReview" label="流程预览">
-                    <div v-if="reviewWarpShow">
+                    <div v-if="reviewWarpShow" style="height: calc(100vh - 200px);overflow-y: auto">
                         <ReviewWarp v-model:previewConf="previewConf" />
                     </div>
                 </el-tab-pane>

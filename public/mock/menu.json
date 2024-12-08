@@ -124,8 +124,8 @@
                     }
                 },   
                 {
-                    "name": "FlowTemp",
-                    "path": "FlowTemp",
+                    "name": "flowtemp",
+                    "path": "flowtemp",
                     "hidden": false,
                     "component": "workflow/temp/index",
                     "meta": {

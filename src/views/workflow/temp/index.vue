@@ -13,10 +13,10 @@
         </el-form>
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
-                <el-button type="primary" plain icon="Edit" @click="handleDIYTemp">模板类型(DIY)</el-button>
+                <el-button type="primary" plain icon="CirclePlus" @click="handleDIYTemp">模板类型(DIY)</el-button>
             </el-col>
             <el-col :span="1.5">
-                <el-button type="success" plain icon="Edit" @click="createLFTemp">模板类型(LF)</el-button>
+                <el-button type="success" plain icon="CirclePlus" @click="createLFTemp">模板类型(LF)</el-button>
             </el-col>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
         </el-row>
