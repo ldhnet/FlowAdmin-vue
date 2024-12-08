@@ -42,8 +42,8 @@ All.prototype = {
             return arr.map(item => { return item.name }).toString()
         }
     },
-    toggleClass(arr, elem, key = 'id') {
-        if(arr && arr.length > 0) {
+    toggleClass(arr, elem, key = 'id') {//判断数组中是否包含某个元素 
+        if(arr && arr.length > 0) { 
             return arr.some(item => { return item[key] == elem[key] });
         }
     },

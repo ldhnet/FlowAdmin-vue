@@ -179,18 +179,12 @@ function handleQuery() {
    getList();
 }
 /** 跳转到低代码流程设计器 */
-function handleLFDesign() {
-   const params ={
-      type: "lf"
-   }; 
-   router.push({ path: "lf-design",query:params});
+function handleLFDesign() { 
+   router.push({ path: "lf-design"});
 }
 /** 跳转到自定义流程设计器 */
-function handleDIYDesign() {
-   const params ={
-      type: "diy"
-   }; 
-   router.push({ path: "diy-design",query:params});
+function handleDIYDesign() { 
+   router.push({ path: "diy-design"});
 }
 
 /** 重置按钮操作 */

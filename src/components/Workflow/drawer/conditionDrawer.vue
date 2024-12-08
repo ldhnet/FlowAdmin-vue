@@ -61,17 +61,17 @@
                                 <input type="text" style="width:75px;" v-enter-number="2" v-model="item.zdy2">
                             </p>
                         </div>
-                        <a v-if="item.type==1" @click="conditionConfig.nodeApproveList= [];$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
-                        <a v-if="item.type==2" @click="$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
+                        <a v-if="item.type==1" @click="conditionConfig.nodeApproveList= [];$func.removeEle(conditionConfig.conditionList,item,'formId')">删除</a>
+                        <a v-if="item.type==2" @click="$func.removeEle(conditionConfig.conditionList,item,'formId')">删除</a>
                     </li>
                 </ul>
                 <el-button type="primary" @click="addCondition">添加条件</el-button>
                 <el-dialog title="选择条件" v-model="conditionVisible" :width="480" append-to-body class="condition_list">
                     <p>请选择用来区分审批流程的条件字段</p>
                     <p class="check_box">
-                        <!-- <a :class="$func.toggleClass(conditionList,{columnId:0},'columnId')&&'active'" @click="$func.toChecked(conditionList,{columnId:0},'columnId')">发起人</a> -->
+                        <!-- <a :class="$func.toggleClass(conditionList,{formId:0},'formId')&&'active'" @click="$func.toChecked(conditionList,{formId:0},'formId')">发起人</a> -->
                          <template  v-for="(item,index) in conditions" :key="index" >                        
-                             <a :class="$func.toggleClass(conditionList,item,'columnId')&&'active'"  @click="$func.toChecked(conditionList,item,'columnId')">{{item?.showName}}</a>
+                             <a :class="$func.toggleClass(conditionList,item,'formId')&&'active'"  @click="$func.toChecked(conditionList,item,'formId')">{{item?.showName}}</a>
                              <br v-if="(index + 1)%3 == 0"/> 
                          </template> 
                     </p>
@@ -103,7 +103,7 @@ import { NodeUtils } from '@/utils/flow/nodeUtils'
 import { getConditions } from '@/api/mock'
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
 const route = useRoute();
-const flowFormType = route.query?.type||'';
+const routePath = route.path||''; 
 let conditionVisible = ref(false)
 let conditionsConfig = ref({
     conditionNodes: [],
@@ -171,15 +171,15 @@ const removeStrEle = (item, key) => {
 const addCondition = async () => {
     conditionList.value = [];
     conditionVisible.value = true;  
-    conditions.value =flowFormType == 'lf'? await  loadLFFormCondition(): await  loadDIYFormCondition(); 
+    conditions.value = routePath.indexOf('lf-design') > 0 ? await  loadLFFormCondition(): await  loadDIYFormCondition();   
     if (conditionConfig.value.conditionList) {
         for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
-            var { columnId } = conditionConfig.value.conditionList[i]
+            var { formId, columnId } = conditionConfig.value.conditionList[i]; 
             if (columnId == 0) {
-                conditionList.value.push({ columnId: 0 })
+                conditionList.value.push({formId:formId, columnId: 0 })
             } else {
-                conditionList.value.push(conditions.value.filter(item => { return item.columnId == columnId; })[0])
-            }
+                conditionList.value.push(conditions.value.filter(item => { return item.formId == formId; })[0])
+            } 
         }
     }
 }
@@ -188,16 +188,15 @@ const nullableFilter= (elm) =>{
     return (elm != null && elm !== false && elm !== "");
 }
 /**自定义表单条件加载 */
-const loadDIYFormCondition = () => {
+const loadDIYFormCondition = () => { 
     return new Promise(async (resolve, reject) => { 
         let { data } = await getConditions({ tableId: tableId.value }); 
         resolve(data);
         reject([]);
-    });
-
+    }); 
 }
 /**低代码表单条件加载 */
-const loadLFFormCondition = () => { 
+const loadLFFormCondition = () => {  
   return new Promise((resolve, reject) => { 
     let conditionArr = [];
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
@@ -206,15 +205,12 @@ const loadLFFormCondition = () => {
                 let optionGroup = {};
                 if(item.optionItems){ 
                     optionGroup = item.optionItems.map(c => {
-                        return {
-                            key: c.value,
-                            value: c.label
-                        } 
+                        return { key: c.value,  value: c.label } 
                     })
-                }  
+                }   
                 return {
-                    formId: index,
-                    columnId: index + 8,
+                    formId: index + 1,
+                    columnId: 8,//index + 
                     showType: filedType.get(item.fieldTypeName),
                     showName: item.label,
                     columnName: item.name,
@@ -241,7 +237,7 @@ const sureCondition = () => {
         const judgeObj= NodeUtils.createJudgeNode(formId, columnId,2, showName, showType, columnName, columnType, fixedDownBoxValue);
         if (columnId == 0) {
             conditionConfig.value.nodeApproveList = []; 
-            conditionConfig.value.conditionList.push({"formId": formId,  "columnId": columnId, "type": 1, "showName": '发起人'});
+            conditionConfig.value.conditionList.push({formId: formId, columnId: columnId,type: 1,showName: '发起人'});
         } else {
             conditionConfig.value.conditionList.push(judgeObj)
         }
