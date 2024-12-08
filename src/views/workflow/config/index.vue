@@ -76,7 +76,7 @@
                <el-button v-if="scope.row.effectiveStatus == 1" type="info" disabled link>启动</el-button>
                <el-button v-else type="success" link @click="effectiveById(scope.row)">启动</el-button>
                <el-button link type="primary" @click="handlePreview(scope.row)">预览</el-button>
-               <el-button link type="primary" @click="handleEdit(scope.row)">复制</el-button> 
+               <el-button link type="primary" @click="handleCopy(scope.row)">复制</el-button> 
                <el-button link type="primary"  @click="handleDelete(scope.row)">删除</el-button>
             </template>
          </el-table-column>
@@ -97,6 +97,7 @@ const configList = ref([]);
 const loading = ref(false);
 const showSearch = ref(true);
 const total = ref(0);
+
 const data = reactive({
    form: {},
    pageDto: {
@@ -141,8 +142,11 @@ function getList() {
       loading.value = false;
    }); 
 }
-
-const handleEdit =  (row) => {
+/**
+ * 复制操作
+ * @param row 
+ */
+const handleCopy =  (row) => {
    const params ={
       id: row.id
    }; 
@@ -154,7 +158,10 @@ const handleEdit =  (row) => {
    } 
    proxy.$tab.openPage(obj);
 }
-
+/**
+ * 启动流程
+ * @param data 
+ */
 const effectiveById = async (data) => {
     await getEffectiveBpmn(data).then(async (res) => {
         if (res.code == 200) {
@@ -171,13 +178,19 @@ function handleQuery() {
    pageDto.value.page = 1;
    getList();
 }
- 
+/** 跳转到低代码流程设计器 */
 function handleLFDesign() {
-   router.push({ path: "lf-design"});
+   const params ={
+      type: "lf"
+   }; 
+   router.push({ path: "lf-design",query:params});
 }
-
+/** 跳转到自定义流程设计器 */
 function handleDIYDesign() {
-   router.push({ path: "diy-design"});
+   const params ={
+      type: "diy"
+   }; 
+   router.push({ path: "diy-design",query:params});
 }
 
 /** 重置按钮操作 */

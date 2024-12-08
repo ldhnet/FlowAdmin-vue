@@ -37,8 +37,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { ElMessage } from 'element-plus';
+import { ref, onMounted } from "vue"; 
 import { useRoute } from 'vue-router';
 import { getApiWorkFlowData, setApiWorkFlowData } from '@/api/mockflow';
 import { FormatUtils } from '@/utils/flow/formatcommit_data';
@@ -102,7 +101,7 @@ const publish = () => {
     proxy.$modal.loading(); 
     Promise.all([step1, step2,step3])
         .then((res) => {  
-            //ElMessage.success("设置成功,F12控制台查看数据");
+            //proxy.$modal.msgSuccess("设置成功,F12控制台查看数据");
             let basicData = res[0].formData;
             basicData.isLowCodeFlow = 1; // 1代表低代码表单
             let lowcodeformData = res[1].formData;   
@@ -117,11 +116,11 @@ const publish = () => {
             setApiWorkFlowData(data).then((resLog) => {
                 proxy.$modal.closeLoading();
                 if (resLog.code == 200) { 
-                    ElMessage.success("设置成功,F12控制台查看数据");
+                    proxy.$modal.msgSuccess("设置成功,F12控制台查看数据");
                     const obj = { path: "/workflow/config" };
                     proxy.$tab.openPage(obj);
                 } else { 
-                    ElMessage.error("提交到API返回失败" + JSON.stringify(resLog.errMsg));
+                    proxy.$modal.msgError("提交到API返回失败" + JSON.stringify(resLog.errMsg));
                 }
             });
         })

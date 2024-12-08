@@ -101,7 +101,8 @@ import { useStore } from '@/store/modules/workflow'
 import { optTypes, opt1s,filedType,filedValueType } from '@/utils/flow/const'
 import { getConditions } from '@/api/mock'
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
-
+const route = useRoute();
+const flowFormType = route.query?.type||'';
 let conditionVisible = ref(false)
 let conditionsConfig = ref({
     conditionNodes: [],
@@ -167,11 +168,35 @@ const removeStrEle = (item, key) => {
 }
 const addCondition = async () => {
     conditionList.value = [];
-    conditionVisible.value = true;
-    let conditionArr=[];
-    // let { data } = await getConditions({ tableId: tableId.value });
-    // conditionArr = data;
-    //console.log("lowCodeFormFields.formFields============",JSON.stringify(lowCodeFormFields.formFields));
+    conditionVisible.value = true;  
+    conditions.value =flowFormType == 'lf'? await  loadLFFormCondition(): await  loadDIYFormCondition(); 
+    if (conditionConfig.value.conditionList) {
+        for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
+            var { columnId } = conditionConfig.value.conditionList[i]
+            if (columnId == 0) {
+                conditionList.value.push({ columnId: 0 })
+            } else {
+                conditionList.value.push(conditions.value.filter(item => { return item.columnId == columnId; })[0])
+            }
+        }
+    }
+}
+const nullableFilter= (elm) =>{
+    return (elm != null && elm !== false && elm !== "");
+}
+/**自定义表单条件加载 */
+const loadDIYFormCondition = () => {
+    return new Promise(async (resolve, reject) => { 
+        let { data } = await getConditions({ tableId: tableId.value }); 
+        resolve(data);
+        reject([]);
+    });
+
+}
+/**低代码表单条件加载 */
+const loadLFFormCondition = () => { 
+  return new Promise((resolve, reject) => { 
+    let conditionArr = [];
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
         conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldTypeName; }).map((item, index) => {    
             if(item.fieldTypeName && filedType.has(item.fieldTypeName)){
@@ -194,24 +219,15 @@ const addCondition = async () => {
                 }
             } 
         })
+        conditionArr= conditionArr.filter(nullableFilter);
         //console.log("conditionArr============",JSON.stringify(conditionArr.filter(nullableFilter)));
     } 
+    resolve(conditionArr);
+    reject([]);
+  });
+};   
 
-    conditions.value = conditionArr.filter(nullableFilter);
-    if (conditionConfig.value.conditionList) {
-        for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
-            var { columnId } = conditionConfig.value.conditionList[i]
-            if (columnId == 0) {
-                conditionList.value.push({ columnId: 0 })
-            } else {
-                conditionList.value.push(conditions.value.filter(item => { return item.columnId == columnId; })[0])
-            }
-        }
-    }
-}
-const nullableFilter= (elm) =>{
-    return (elm != null && elm !== false && elm !== "");
-}
+
 const sureCondition = () => {
     for (var i = 0; i < conditionList.value.length; i++) {
         var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i]; 
