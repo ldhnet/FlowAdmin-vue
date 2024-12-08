@@ -97,7 +97,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { useStore } from '@/store/modules/workflow'
-import { optTypes, opt1s,filedType,filedValueType } from '@/utils/flow/const'
+import { optTypes, opt1s,condition_filedTypeMap,condition_filedValueTypeMap,condition_columnTypeMap } from '@/utils/flow/const'
 import $func from '@/utils/flow/index'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
 import { getConditions } from '@/api/mock'
@@ -201,7 +201,7 @@ const loadLFFormCondition = () => {
     let conditionArr = [];
     if(lowCodeFormFields.hasOwnProperty("formFields")){ 
         conditionArr =  lowCodeFormFields.formFields.filter(item => { return item.fieldTypeName; }).map((item, index) => {    
-            if(item.fieldTypeName && filedType.has(item.fieldTypeName)){
+            if(item.fieldTypeName && condition_filedTypeMap.has(item.fieldTypeName)){
                 let optionGroup = {};
                 if(item.optionItems){ 
                     optionGroup = item.optionItems.map(c => {
@@ -210,11 +210,11 @@ const loadLFFormCondition = () => {
                 }   
                 return {
                     formId: index + 1,
-                    columnId: 8,//index + 
-                    showType: filedType.get(item.fieldTypeName),
+                    columnId: condition_columnTypeMap.get(item.fieldTypeName),
+                    showType: condition_filedTypeMap.get(item.fieldTypeName),
                     showName: item.label,
                     columnName: item.name,
-                    columnType: filedValueType.get(item.fieldTypeName), 
+                    columnType: condition_filedValueTypeMap.get(item.fieldTypeName), 
                     fixedDownBoxValue: JSON.stringify(optionGroup)
                 }
             } 

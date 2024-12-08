@@ -197,8 +197,18 @@ export let approveList = {
   19: '邱灵珊',
   20: '任盈盈'
 };
-
-export const filedType = new Map([
+export const condition_columnTypeMap = new Map([
+  ['input', '8'],//"int/fload/double/string" input
+  ['select', '8'],//"String" select
+  ['checkbox', '12'],//"String" checkbox
+  ['radio', '8'],
+  ['switch', '8'],
+  ['time', '11'],
+  ['time-range', '11'],
+  ['data-range', '10'],
+  ['date', '10']
+]);
+export const condition_filedTypeMap = new Map([
   ['input', '1'],//"Double" 
   ['select', '2'],//"String" select
   ['checkbox', '3'],//"String" checkbox
@@ -210,7 +220,7 @@ export const filedType = new Map([
   ['date', '1']
 ]);
 
-export const filedValueType = new Map([
+export const condition_filedValueTypeMap = new Map([
   ['input', 'Double'],//"Double" 
   ['select', 'String'],//"String" select
   ['checkbox', 'String'],//"String" checkbox
