@@ -51,11 +51,18 @@ const handleCopy = () => {
   const jsonELE = document.getElementById('jsonTextId');
   if (!jsonELE) return;
   const jsonText = jsonELE.innerText;  
-  navigator.clipboard.writeText(jsonText).then(() => { 
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(jsonText).then(() => { 
+      proxy.$modal.msgSuccess("复制成功"); 
+    }, () => { 
+      proxy.$modal.msgSuccess("复制失败"); 
+    });
+  }
+  else{
+    jsonELE.focus(); 
+    document.execCommand('copy');
     proxy.$modal.msgSuccess("复制成功"); 
-  }, () => { 
-    proxy.$modal.msgSuccess("复制失败"); 
-  });
+  } 
 }  
 </script>
 <style scoped lang="scss">
