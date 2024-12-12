@@ -43,6 +43,7 @@
                         </div>
                         <div v-else-if="item.columnType == 'String' && item.showType == 4">
                             <p class="check_box">
+                                <input v-model="item.optType" hidden>
                                 <input type="text" :placeholder="'请输入'+item.showName" v-model="item.zdy1">
                             </p> 
                         </div>
@@ -256,6 +257,7 @@ const sureCondition = () => {
 }
 /**条件抽屉的确认 */
 const saveCondition = () => {
+    console.log("conditionsConfig.value.conditionNodes=====",JSON.stringify(conditionsConfig.value.conditionNodes));
     closeDrawer() 
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
     conditionsConfig.value.conditionNodes.splice(conditionConfig.value.priorityLevel - 1, 0, a[0])//填充新下标

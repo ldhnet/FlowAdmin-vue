@@ -195,7 +195,7 @@ export class NodeUtils {
       showType: showType,
       type: type, //1，发起人 2，其他表单条件
       showName: showName,
-      optType: "2",
+      optType: "5",
       zdy1: "",
       opt1: "<",
       zdy2: "",

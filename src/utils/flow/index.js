@@ -154,6 +154,11 @@ All.prototype = {
                         }
                     }                  
                 }
+                if (columnType == "String" && showType == "4") {
+                    if (zdy1) {
+                        str += showName + '：' + zdy1 + " 并且 "
+                    }              
+                }
                 if (columnType == "Double" && showType == "2") {
                     if (zdy1) {
                         str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
