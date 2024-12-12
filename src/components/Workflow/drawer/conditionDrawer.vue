@@ -39,8 +39,12 @@
                                 <select style="width:300px;" v-model="item.zdy1"> 
                                     <option v-for="({key, value}) in JSON.parse(item.fixedDownBoxValue)" :value="key" :key="key">{{ value }}</option>
                                 </select>
-                            </p>
-                    
+                            </p> 
+                        </div>
+                        <div v-else-if="item.columnType == 'String' && item.showType == 4">
+                            <p class="check_box">
+                                <input type="text" :placeholder="'请输入'+item.showName" v-model="item.zdy1">
+                            </p> 
                         </div>
                         <div v-else>
                             <p>
@@ -140,10 +144,10 @@ watch(conditionsConfig1, (val) => {
 
 const changeOptType = (item) => {
     if (item.optType == 1) {
-        item.zdy1 = 2;
+        item.zdy1 = undfined;
     } else {
-        item.zdy1 = 1;
-        item.zdy2 = 2;
+        item.zdy1 = undfined;
+        item.zdy2 = undfined;
     }
 }
 const toStrChecked = (item, key) => {

@@ -199,6 +199,7 @@ export let approveList = {
 };
 export const condition_columnTypeMap = new Map([
   ['input', '8'],//"int/fload/double/string" input
+  ['input-number', '9'],//"Double" 
   ['select', '8'],//"string" select
   ['checkbox', '12'],//"string" checkbox
   ['radio', '9'],
@@ -209,7 +210,8 @@ export const condition_columnTypeMap = new Map([
   ['date', '10']
 ]);
 export const condition_filedTypeMap = new Map([
-  ['input', '1'],//"Double" 
+  ['input', '4'],//"String" 
+  ['input-number', '1'],//"Double" 
   ['select', '2'],//"String" select
   ['checkbox', '3'],//"String" checkbox
   ['radio', '1'],
@@ -221,7 +223,8 @@ export const condition_filedTypeMap = new Map([
 ]);
 
 export const condition_filedValueTypeMap = new Map([
-  ['input', 'Double'],//"Double" 
+  ['input', 'String'],//"Double" 
+  ['input-number', 'Double'],//"Double" 
   ['select', 'String'],//"String" select
   ['checkbox', 'String'],//"String" checkbox
   ['radio', 'Double'],
