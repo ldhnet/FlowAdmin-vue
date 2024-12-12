@@ -48,7 +48,7 @@
 <script setup>
 import { ref, reactive, onMounted, watch,getCurrentInstance } from 'vue'
 import { NodeUtils } from '@/utils/flow/nodeUtils'
-import { getFromCodeData } from "@/api/mockflow";
+import { getFromCodeData,getAllFormCodes } from "@/api/mockflow";
 import { getLowCodeFlowFormCodes } from "@/api/mocklow";
 const { proxy } = getCurrentInstance()
 const emit = defineEmits(['nextChange'])
@@ -111,8 +111,11 @@ onMounted(async () => {
     } else if (props.flowType == 'LF') {
         getLFFromCodeList();
     }
+    else {
+        getAllFormCodeList();
+    }
 });
-
+/**获取全部DIY FromCode */
 const getDIYFromCodeList = async()=> {
    loading.value = true;
    await getFromCodeData().then((res) => {
@@ -122,6 +125,7 @@ const getDIYFromCodeList = async()=> {
         }
    });
 }
+/**获取全部LF FromCode */
 const getLFFromCodeList = async()=> {
    loading.value = true;
    await getLowCodeFlowFormCodes().then((res) => {
@@ -131,6 +135,17 @@ const getLFFromCodeList = async()=> {
         }
    });
 }
+/**获取全部FromCode (LF和DIY)*/
+const getAllFormCodeList = async()=> {
+   loading.value = true;
+   await getAllFormCodes().then((res) => {
+    loading.value = false;
+        if (res.code == 200) { 
+            formCodeOptions.value = res.data;
+        }
+   });
+}
+
 let rules = {
     formCode: [{
         required: true,
