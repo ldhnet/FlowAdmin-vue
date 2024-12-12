@@ -204,7 +204,7 @@ export const condition_columnTypeMap = new Map([
   ['checkbox', '10004'],//"string" checkbox
   ['radio', '10001'],
   ['switch', '10001'],
-  ['time', '10003'],
+  ['time', '10002'],
   ['time-range', '10003'],
   ['data-range', '10002'],
   ['date', '10002']
