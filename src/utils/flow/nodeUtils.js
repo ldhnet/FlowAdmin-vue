@@ -92,7 +92,7 @@ export class NodeUtils {
       property: null,
       conditionNodes: [
         this.createConditionNode("条件1", child, 0),
-        this.createConditionNode("条件2", null, 0),
+        this.createConditionNode("条件2", null, 1),
       ],
     };
     return gatewayNode;

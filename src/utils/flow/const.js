@@ -198,16 +198,16 @@ export let approveList = {
   20: '任盈盈'
 };
 export const condition_columnTypeMap = new Map([
-  ['input', '10001'],//"int/fload/double/string" input
-  ['input-number', '10002'],//"Double" 
-  ['select', '10001'],//"string" select
-  ['checkbox', '10005'],//"string" checkbox
-  ['radio', '10002'],
-  ['switch', '10002'],
-  ['time', '10004'],
-  ['time-range', '10004'],
-  ['data-range', '10003'],
-  ['date', '10003']
+  ['input', '10000'],//"int/fload/double/string" input
+  ['input-number', '10001'],//"Double" 
+  ['select', '10000'],//"string" select
+  ['checkbox', '10004'],//"string" checkbox
+  ['radio', '10001'],
+  ['switch', '10001'],
+  ['time', '10003'],
+  ['time-range', '10003'],
+  ['data-range', '10002'],
+  ['date', '10002']
 ]);
 export const condition_filedTypeMap = new Map([
   ['input', '4'],//"String" 

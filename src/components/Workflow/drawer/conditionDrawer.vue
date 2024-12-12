@@ -145,10 +145,10 @@ watch(conditionsConfig1, (val) => {
 
 const changeOptType = (item) => {
     if (item.optType == 1) {
-        item.zdy1 = undfined;
+        item.zdy1 = null;
     } else {
-        item.zdy1 = undfined;
-        item.zdy2 = undfined;
+        item.zdy1 = null;
+        item.zdy2 = null;
     }
 }
 const toStrChecked = (item, key) => {
@@ -257,7 +257,7 @@ const sureCondition = () => {
 }
 /**条件抽屉的确认 */
 const saveCondition = () => {
-    console.log("conditionsConfig.value.conditionNodes=====",JSON.stringify(conditionsConfig.value.conditionNodes));
+    //console.log("conditionsConfig.value.conditionNodes=====",JSON.stringify(conditionsConfig.value.conditionNodes));
     closeDrawer() 
     var a = conditionsConfig.value.conditionNodes.splice(PriorityLevel.value - 1, 1)//截取旧下标
     conditionsConfig.value.conditionNodes.splice(conditionConfig.value.priorityLevel - 1, 0, a[0])//填充新下标
