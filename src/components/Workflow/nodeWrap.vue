@@ -124,8 +124,8 @@ const resetConditionNodesErr = () => {
     for (var i = 0; i < props.nodeConfig.conditionNodes.length; i++) { 
         let conditionTitle= $func.conditionStr(props.nodeConfig, i); 
         props.nodeConfig.conditionNodes[i].error = conditionTitle == "请设置条件" && i != props.nodeConfig.conditionNodes.length - 1; 
-        props.nodeConfig.conditionNodes[i].isDefault = 0;  
-        props.nodeConfig.conditionNodes[i].nodeDisplayName = conditionTitle=='null'?props.nodeConfig.conditionNodes[i].nodeDisplayName:conditionTitle;
+        props.nodeConfig.conditionNodes[i].isDefault = 0;   
+        props.nodeConfig.conditionNodes[i].nodeDisplayName = conditionTitle=='null' || conditionTitle==''?props.nodeConfig.conditionNodes[i].nodeDisplayName:conditionTitle;
     }
     let maxLen = props.nodeConfig.conditionNodes.length-1;
     let node = props.nodeConfig.conditionNodes[maxLen];
