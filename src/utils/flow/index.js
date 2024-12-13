@@ -1,3 +1,4 @@
+import { parseTime } from '@/utils/ruoyi'
 function All() {}
 All.prototype = {
     timer: "",
@@ -128,50 +129,64 @@ All.prototype = {
         } else {
             let str = ""
             for (var i = 0; i < conditionList.length; i++) {
-                var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2, fixedDownBoxValue } = conditionList[i];
-                
+                var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2,fieldTypeName, fixedDownBoxValue } = conditionList[i]; 
                 if (columnId == 0) {
                     if (nodeApproveList.length != 0) {
                         str += '发起人属于：'
                         str += nodeApproveList.map(item => { return item.name }).join("或") + " 并且 "
                     }
+                } 
+                if (fieldTypeName == "input") {
+                    if (zdy1) {
+                        str += showName + '：' + zdy1 + " 并且 "
+                    }              
                 }
-                if (columnType == "String" && showType == "3") {                 
+                if (fieldTypeName == "switch") { 
+                    str += showName + '：' + zdy1 + " 并且 "         
+                }
+                if (fieldTypeName == "radio") {
+                    // if (zdy1) {
+                    //     str += showName + '：' + zdy1 + " 并且 "
+                    // }              
+                }
+                if (fieldTypeName == "checkbox") {
                     if (!fixedDownBoxValue) {
                         str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
                     }else {
                         if (zdy1) {
                             str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                         }
-                    }   
+                    }             
                 }
-                if (columnType == "String" && showType == "2") {
+                if (fieldTypeName == "select") {
                     if (!fixedDownBoxValue) {
                         str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
                     }else { 
                         if (zdy1) {
                             str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                         }
-                    }                  
-                }
-                if (columnType == "String" && showType == "4") {
-                    if (zdy1) {
-                        str += showName + '：' + zdy1 + " 并且 "
                     }              
                 }
-                if (columnType == "Double" && showType == "2") {
-                    if (zdy1) {
-                        str += showName + '：' + this.getLabelStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
-                    }
+                if (fieldTypeName == "date") {
+                    if (zdy1) { 
+                        var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
+                        str += `${showName} ${optTypeStr} ${parseTime(zdy1, '{y}-{m}-{d}') } 并且 `
+                    }    
                 }
-                if (columnType == "Double" && showType != "2") {
+                if (fieldTypeName == "time") {
+                    if (zdy1) {
+                        var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
+                        str += `${showName} ${optTypeStr} ${parseTime(zdy1, '{h}:{i}:{s}') } 并且 `
+                    }    
+                }
+                if (fieldTypeName == "input-number"){
                     if (optType != 6 && zdy1) {
                         var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
                         str += `${showName} ${optTypeStr} ${zdy1} 并且 `
                     } else if (optType == 6 && zdy1 && zdy2) {
                         str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `
                     }
-                }
+                } 
             } 
             return str ? str.substring(0, str.length - 4) : '请设置条件'
         }

@@ -28,26 +28,52 @@
                                 <input type="text" placeholder="请选择具体人员/角色/部门" v-if="conditionConfig.nodeApproveList.length == 0" @click="addConditionRole">
                             </p>
                         </div>
-                        <div v-else-if="item.columnType == 'String' && item.showType == 3">
+                        <div v-else-if="item.fieldTypeName == 'input'">
+                            <p class="check_box">
+                                <input v-model="item.optType" hidden>
+                                <input type="text" :placeholder="'请输入'+item.showName" v-model="item.zdy1">
+                            </p>
+                        </div>
+                        <div v-else-if="item.fieldTypeName == 'date'"> 
+                            <p>
+                                <select v-model="item.optType" :style="'width:'+(item.optType==6?370:100)+'px'" @change="changeOptType(item)">
+                                    <option v-for="({value, label}) in optTypes" :value="value" :key="value">{{ label }}</option>
+                                </select>
+                                <el-date-picker v-if="item.optType!=6" v-model="item.zdy1" type="date" :placeholder="'请选择'+item.showName" format="YYYY/MM/DD" />
+                            </p>
+                        </div>
+                        <div v-else-if="item.fieldTypeName == 'time'"> 
+                            <p>
+                                <select v-model="item.optType" :style="'width:'+(item.optType==6?370:100)+'px'" @change="changeOptType(item)">
+                                    <option v-for="({value, label}) in optTypes" :value="value" :key="value">{{ label }}</option>
+                                </select>
+                                <el-time-picker v-if="item.optType!=6" v-model="item.zdy1" arrow-control :placeholder="'请选择'+item.showName" /> 
+                            </p>
+                        </div>
+                        <div v-else-if="item.fieldTypeName == 'switch'">
+                            <p class="check_box">                                 
+                                <el-switch v-model="item.zdy1" />
+                            </p>                            
+                        </div>
+                        <div v-else-if="item.fieldTypeName == 'radio'">
+                            <p class="check_box">
+                                {{item.fieldTypeName}}
+                            </p>                            
+                        </div>
+                        <div v-else-if="item.fieldTypeName == 'checkbox'">
                             <p class="check_box">
                                 <a :class="$func.toggleStrClass(item,item1.key)&&'active'" @click="toStrChecked(item,item1.key)"
                                 v-for="(item1,index1) in JSON.parse(item.fixedDownBoxValue)" :key="index1">{{item1.value}}</a>
                             </p>
                         </div>
-                        <div v-else-if="item.columnType == 'String' && item.showType == 2">
+                        <div v-else-if="item.fieldTypeName == 'select'">
                             <p class="check_box">
                                 <select style="width:300px;" v-model="item.zdy1"> 
                                     <option v-for="({key, value}) in JSON.parse(item.fixedDownBoxValue)" :value="key" :key="key">{{ value }}</option>
                                 </select>
                             </p> 
-                        </div>
-                        <div v-else-if="item.columnType == 'String' && item.showType == 4">
-                            <p class="check_box">
-                                <input v-model="item.optType" hidden>
-                                <input type="text" :placeholder="'请输入'+item.showName" v-model="item.zdy1">
-                            </p> 
-                        </div>
-                        <div v-else>
+                        </div>   
+                        <div v-else-if="item.fieldTypeName == 'input-number'">
                             <p>
                                 <select v-model="item.optType" :style="'width:'+(item.optType==6?370:100)+'px'" @change="changeOptType(item)">
                                     <option v-for="({value, label}) in optTypes" :value="value" :key="value">{{ label }}</option>
@@ -64,6 +90,12 @@
                                     <option v-for="({value, label}) in opt1s" :value="value" :key="value">{{ label }}</option>
                                 </select>
                                 <input type="text" style="width:75px;" v-enter-number="2" v-model="item.zdy2">
+                            </p>
+                        </div> 
+                        <div v-else>  
+                            <p class="check_box">
+                                <input v-model="item.optType" hidden>
+                                <input type="text" :placeholder="'请输入'+item.showName" v-model="item.zdy1">
                             </p>
                         </div>
                         <a v-if="item.type==1" @click="conditionConfig.nodeApproveList= [];$func.removeEle(conditionConfig.conditionList,item,'formId')">删除</a>
@@ -176,8 +208,8 @@ const removeStrEle = (item, key) => {
 const addCondition = async () => {
     conditionList.value = [];
     conditionVisible.value = true;  
-    conditions.value = routePath.indexOf('lf-design') > 0 ? await  loadLFFormCondition(): await  loadDIYFormCondition();   
-    if (conditionConfig.value.conditionList) {
+    conditions.value = routePath.indexOf('lf-design') > 0 ? await  loadLFFormCondition(): await  loadDIYFormCondition();    
+    if (conditionConfig.value.conditionList) { 
         for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
             var { formId, columnId } = conditionConfig.value.conditionList[i]; 
             if (columnId == 0) {
@@ -186,7 +218,7 @@ const addCondition = async () => {
                 conditionList.value.push(conditions.value.filter(item => { return item.formId == formId; })[0])
             } 
         }
-    }
+    } 
 }
 /**过滤空值 */
 const nullableFilter= (elm) =>{
@@ -220,6 +252,7 @@ const loadLFFormCondition = () => {
                     showName: item.label,
                     columnName: item.name,
                     columnType: condition_filedValueTypeMap.get(item.fieldTypeName), 
+                    fieldTypeName: item.fieldTypeName,
                     fixedDownBoxValue: JSON.stringify(optionGroup)
                 }
             } 
@@ -235,11 +268,11 @@ const loadLFFormCondition = () => {
 /**选择条件后确认 */
 const sureCondition = () => {
     for (var i = 0; i < conditionList.value.length; i++) {
-        var {formId, columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = conditionList.value[i]; 
+        var {formId, columnId, showName, columnName, showType, columnType,fieldTypeName, fixedDownBoxValue } = conditionList.value[i]; 
         if ($func.toggleClass(conditionConfig.value.conditionList, conditionList.value[i], "formId")) {
             continue;
         }
-        const judgeObj= NodeUtils.createJudgeNode(formId, columnId,2, showName, showType, columnName, columnType, fixedDownBoxValue);
+        const judgeObj= NodeUtils.createJudgeNode(formId, columnId,2, showName, showType, columnName, columnType, fieldTypeName,fixedDownBoxValue);
         if (columnId == 0) {
             conditionConfig.value.nodeApproveList = []; 
             conditionConfig.value.conditionList.push({formId: formId, columnId: columnId,type: 1,showName: '发起人'});
@@ -300,10 +333,8 @@ const closeDrawer = (val) => {
         border: 1px solid rgba(217, 217, 217, 1);
         font-size: 12px;
     }
-
     .condition_content {
         padding: 20px 20px 0;
-
         p.tip {
             margin: 20px 0;
             width: 610px;
@@ -314,12 +345,10 @@ const closeDrawer = (val) => {
             color: #46a6fe;
             font-size: 14px;
         }
-
         ul {
             max-height: 500px;
             overflow-y: scroll;
-            margin-bottom: 20px;
-     
+            margin-bottom: 20px;     
             li {
                 border-bottom: 1px solid #F2F2F2;
                 &>span {
@@ -329,23 +358,18 @@ const closeDrawer = (val) => {
                     line-height: 65px;
                     text-align: right;
                     color: #0857a1;
-                    font-size: 14px;
-
+                    font-size: 14px; 
                 }
-
                 &>div {
                     display: inline-block;
                     width: 370px;
-
                     &>p:not(:last-child) {
                         margin-bottom: 10px;
                     }
                 }
-
                 &:not(:last-child)>div>p {
                     margin-bottom: 20px;
                 }
-
                 &>a {
                     float: right;
                     margin-right: 10px;
@@ -353,7 +377,6 @@ const closeDrawer = (val) => {
                     color: #46a6fe;
                     font-size: 14px;
                 }
-
                 select,
                 input {
                     width: 100%;
@@ -361,17 +384,14 @@ const closeDrawer = (val) => {
                     background: rgba(255, 255, 255, 1);
                     border-radius: 4px;
                     border: 1px solid rgba(217, 217, 217, 1);
-                }
-
+                } 
                 select+input {
                     width: 260px;
                 }
-
                 select {
                     margin-right: 10px;
                     width: 100px;
                 }
-
                 p.selected_list {
                     padding-left: 10px;
                     border-radius: 4px;
@@ -379,28 +399,23 @@ const closeDrawer = (val) => {
                     border: 1px solid rgba(217, 217, 217, 1);
                     word-break: break-word;
                 }
-
                 p.check_box {
                     line-height: 32px;
                 }
             }
         }
-
         .el-button {
             margin-bottom: 20px;
         }
     }
 }
-
 .condition_list {
     .el-dialog__body {
         padding: 16px 26px;
     }
-
     p {
         color: #666666;
         margin-bottom: 10px;
-
         &>.check_box {
             margin-bottom: 0;
             line-height: 36px;

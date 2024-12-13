@@ -197,6 +197,7 @@ export let approveList = {
   19: '邱灵珊',
   20: '任盈盈'
 };
+//控件对应后端api的判断类型
 export const condition_columnTypeMap = new Map([
   ['input', '10000'],//"int/fload/double/string" input
   ['input-number', '10001'],//"Double" 
@@ -209,19 +210,20 @@ export const condition_columnTypeMap = new Map([
   ['data-range', '10002'],
   ['date', '10002']
 ]);
+//控件是否显示
 export const condition_filedTypeMap = new Map([
   ['input', '4'],//"String" 
   ['input-number', '1'],//"Double" 
   ['select', '2'],//"String" select
   ['checkbox', '3'],//"String" checkbox
-  ['radio', '1'],
+  //['radio', '1'],
   ['switch', '1'],
   ['time', '1'],
-  ['time-range', '1'],
-  ['data-range', '1'],
+  //['time-range', '1'],
+  //['data-range', '1'],
   ['date', '1']
 ]);
-
+//判断控件的值的类型
 export const condition_filedValueTypeMap = new Map([
   ['input', 'String'],//"Double" 
   ['input-number', 'Double'],//"Double" 

@@ -1,5 +1,4 @@
 //import { NodeUtils } from '@/utils/flow/nodeUtils'
-
 export class NodeUtils {
   /**
    * 根据自增数生成64进制id
@@ -188,7 +187,7 @@ export class NodeUtils {
   * @param {*} fixedDownBoxValue 条件选项
   * @returns 
   */
-  static createJudgeNode(formId, columnId,type ,showName,showType,  columnName, columnType, fixedDownBoxValue) {
+  static createJudgeNode(formId, columnId,type ,showName,showType,  columnName, columnType,fieldTypeName, fixedDownBoxValue) {
     let judgeNode = {
       formId: formId,                    
       columnId: columnId,
@@ -196,12 +195,13 @@ export class NodeUtils {
       type: type, //1，发起人 2，其他表单条件
       showName: showName,
       optType: "5",
-      zdy1: "",
+      zdy1:fieldTypeName == 'switch'?"1":"",
       opt1: "<",
       zdy2: "",
       opt2: "<",
       columnDbname: columnName,
       columnType: columnType,
+      fieldTypeName: fieldTypeName,
       fixedDownBoxValue: fixedDownBoxValue
     }
     return judgeNode;
