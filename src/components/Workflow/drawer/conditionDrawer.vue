@@ -172,7 +172,7 @@ watch(conditionsConfig1, (val) => {
     PriorityLevel.value = val.priorityLevel
     conditionConfig.value = val.priorityLevel
         ? conditionsConfig.value.conditionNodes[val.priorityLevel - 1]
-        : { nodeApproveList: [], conditionList: [] }
+        : { nodeApproveList: [], conditionList: [] } 
 })
 
 const changeOptType = (item) => {

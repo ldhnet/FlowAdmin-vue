@@ -123,8 +123,8 @@ All.prototype = {
         return '';
     },  
     conditionStr(nodeConfig, index) { 
-        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index];  
-        if (conditionList.length == 0) {
+        var { conditionList, nodeApproveList } = nodeConfig.conditionNodes[index];   
+        if (conditionList.length == 0) { 
             return (index == nodeConfig.conditionNodes.length - 1) && nodeConfig.conditionNodes[0].conditionList.length != 0 ? '其他条件进入此流程' : '请设置条件'
         } else {
             let str = ""
@@ -136,20 +136,20 @@ All.prototype = {
                         str += nodeApproveList.map(item => { return item.name }).join("或") + " 并且 "
                     }
                 } 
-                if (fieldTypeName == "input") {
+                else if (fieldTypeName == "input") {
                     if (zdy1) {
                         str += showName + '：' + zdy1 + " 并且 "
                     }              
                 }
-                if (fieldTypeName == "switch") { 
+                else if (fieldTypeName == "switch") { 
                     str += showName + '：' + zdy1 + " 并且 "         
                 }
-                if (fieldTypeName == "radio") {
+                else if (fieldTypeName == "radio") {
                     // if (zdy1) {
                     //     str += showName + '：' + zdy1 + " 并且 "
                     // }              
                 }
-                if (fieldTypeName == "checkbox") {
+                else if (fieldTypeName == "checkbox") {
                     if (!fixedDownBoxValue) {
                         str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
                     }else {
@@ -158,7 +158,7 @@ All.prototype = {
                         }
                     }             
                 }
-                if (fieldTypeName == "select") {
+                else if (fieldTypeName == "select") {
                     if (!fixedDownBoxValue) {
                         str += nodeConfig.conditionNodes[index].nodeDisplayName + "     "
                     }else { 
@@ -167,19 +167,19 @@ All.prototype = {
                         }
                     }              
                 }
-                if (fieldTypeName == "date") {
+                else if (fieldTypeName == "date") {
                     if (zdy1) { 
                         var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
                         str += `${showName} ${optTypeStr} ${parseTime(zdy1, '{y}-{m}-{d}') } 并且 `
                     }    
                 }
-                if (fieldTypeName == "time") {
+                else if (fieldTypeName == "time") {
                     if (zdy1) {
                         var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
                         str += `${showName} ${optTypeStr} ${parseTime(zdy1, '{h}:{i}:{s}') } 并且 `
                     }    
                 }
-                if (fieldTypeName == "input-number"){
+                else if (fieldTypeName == "input-number"){
                     if (optType != 6 && zdy1) {
                         var optTypeStr = ["", "≥", ">", "≤", "<", "="][optType]
                         str += `${showName} ${optTypeStr} ${zdy1} 并且 `
@@ -187,6 +187,9 @@ All.prototype = {
                         str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `
                     }
                 } 
+                else {
+                    str += null
+                }
             } 
             return str ? str.substring(0, str.length - 4) : '请设置条件'
         }

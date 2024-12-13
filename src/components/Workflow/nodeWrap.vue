@@ -62,7 +62,7 @@
                   <i class="anticon anticon-close close" @click="delTerm(index)"></i>
                 </div>
                 <div class="sort-right" v-if="index != nodeConfig.conditionNodes.length - 1" @click="arrTransfer(index)">&gt;</div>
-                <div class="content" @click="setPerson(item.priorityLevel)">{{ $func.conditionStr(nodeConfig, index) }}</div>
+                <div class="content" @click="setPerson(item.priorityLevel)">{{item.nodeDisplayName||$func.conditionStr(nodeConfig, index) }}</div>
                 <div class="error_tip" v-if="isTried && item.error">
                     <i class="anticon anticon-exclamation-circle"></i>
                 </div>
@@ -120,10 +120,12 @@ props.nodeConfig.nodeDisplayName = showText;
 let isInputList = ref([]);
 let isInput = ref(false);
 const resetConditionNodesErr = () => {
-    for (var i = 0; i < props.nodeConfig.conditionNodes.length; i++) {
-        props.nodeConfig.conditionNodes[i].error = $func.conditionStr(props.nodeConfig, i) == "请设置条件" && i != props.nodeConfig.conditionNodes.length - 1; 
-        props.nodeConfig.conditionNodes[i].isDefault = 0;
-        props.nodeConfig.conditionNodes[i].nodeDisplayName =  $func.conditionStr(props.nodeConfig, i);
+  
+    for (var i = 0; i < props.nodeConfig.conditionNodes.length; i++) { 
+        let conditionTitle= $func.conditionStr(props.nodeConfig, i); 
+        props.nodeConfig.conditionNodes[i].error = conditionTitle == "请设置条件" && i != props.nodeConfig.conditionNodes.length - 1; 
+        props.nodeConfig.conditionNodes[i].isDefault = 0;  
+        props.nodeConfig.conditionNodes[i].nodeDisplayName = conditionTitle=='null'?props.nodeConfig.conditionNodes[i].nodeDisplayName:conditionTitle;
     }
     let maxLen = props.nodeConfig.conditionNodes.length-1;
     let node = props.nodeConfig.conditionNodes[maxLen];
