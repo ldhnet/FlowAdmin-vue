@@ -128,10 +128,12 @@ const data = reactive({
 });
 const { pageDto, taskMgmtVO } = toRefs(data);
 onMounted(async() => {
-   await initFromCode();
-   getList(); 
+   loading.value = true;
+   await initFromCode();    
+   await getList(); 
+   loading.value = false;
 })
-const initFromCode = async () => {
+const initFromCode = async () => {  
   await getAllFormCodes().then((res) => {
       if (res.code == 200) {
          formCodeOptions.value = res.data; 
@@ -143,13 +145,11 @@ const getFromCodeName = (formCode) => {
   return result?.value;
 }
 /** 查询列表 */
-function getList() {
-   loading.value = true;
-   getBpmnConflistPage(pageDto.value,taskMgmtVO.value).then(response => {
+const getList = async () => { 
+   await getBpmnConflistPage(pageDto.value,taskMgmtVO.value).then(response => {
       let res = response.data;
       configList.value = res.data;
-      total.value = res.pagination.totalCount;
-      loading.value = false;
+      total.value = res.pagination.totalCount; 
    }); 
 }
 /**

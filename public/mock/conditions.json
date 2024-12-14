@@ -10,7 +10,7 @@
       "columnName": "accountType",
       "columnType": "String", 
       "fieldTypeName": "checkbox",  
-      "fixedDownBoxValue":"[{\"key\":1,\"value\":\"腾讯云\"},{\"key\":2,\"value\":\"百度云\"},{\"key\":3,\"value\":\"阿里云\"}]"
+      "fixedDownBoxValue":"[{\"key\":1,\"value\":\"百度云\"},{\"key\":2,\"value\":\"腾讯云\"},{\"key\":3,\"value\":\"中通云\"}]"
     },
     {
       "formId": "2",
