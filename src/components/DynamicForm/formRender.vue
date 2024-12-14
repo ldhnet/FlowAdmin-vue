@@ -64,8 +64,7 @@ const handleFormPerm = () => {
   if (isEmpty(props.lfFieldPerm)) return;
   if (isEmptyArray(lfFieldPermData)) return;
   let handlerFn = (fieldOpt) => {
-    let info = lfFieldPermData.find(function (ele) { return ele.fieldId == fieldOpt.name; });
-    console.log('info====111======',JSON.stringify(info));
+    let info = lfFieldPermData.find(function (ele) { return ele.fieldId == fieldOpt.name; }); 
     if (info) {
       if (info.perm == 'R') {
         fieldOpt.readonly = true;
@@ -74,14 +73,16 @@ const handleFormPerm = () => {
         fieldOpt.readonly = false;
         fieldOpt.hidden = false;
       } else if (info.perm == 'H') {
-        fieldOpt.readonly = false;
-        fieldOpt.hidden = true;
+        if(fieldOpt.fieldTypeName == 'input' || fieldOpt.fieldTypeName == 'textarea'){
+          formData[fieldOpt.name] = '******';
+        }  
+        fieldOpt.readonly = true;
+        fieldOpt.hidden = false;
       } else {
         fieldOpt.readonly = true;
         fieldOpt.hidden = false;
       }
-    }
-    console.log('info====2222======',JSON.stringify(info));
+    } 
   };
   traverseFieldWidgetsList(formJson.widgetList, handlerFn);
 } 
