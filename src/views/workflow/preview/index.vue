@@ -25,7 +25,7 @@
                     </div>
                 </el-col>
                 <el-col :span="24" v-if="tabPosition == 'flow'">
-                    <div style="pointer-events: auto;" v-if="nodeConfig">
+                    <div v-if="nodeConfig">
                         <Process ref="processDesign" :processData="nodeConfig" />
                     </div>
                 </el-col>

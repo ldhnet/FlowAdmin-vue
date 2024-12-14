@@ -92,7 +92,7 @@ function logout() {
     type: 'warning'
   }).then(() => {
     userStore.logOut().then(() => {
-      location.href = '/low/';///index
+      location.href = '/admin/';///index
     })
   }).catch(() => { });
 }
