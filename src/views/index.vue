@@ -107,6 +107,11 @@
             </div>
           </template>
           <el-collapse accordion>
+            <el-collapse-item title="v4.0.0 - 2024-12-14">
+              <ol> 
+                <li>低代码表单接入</li> 
+              </ol>
+            </el-collapse-item>
             <el-collapse-item title="v3.1.0 - 2024-10-17">
               <ol> 
                 <li>三方业务表单接入</li>
@@ -124,8 +129,7 @@
                 <li>Mock Data</li> 
                 <li>其他细节优化</li>
               </ol>
-            </el-collapse-item>
- 
+            </el-collapse-item> 
             <el-collapse-item title="v1.0.0 - 2024-08-01">
               <ol>
                 <li>防RuoYi-Vue版前端正式发布</li>
