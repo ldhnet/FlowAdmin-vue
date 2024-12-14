@@ -120,8 +120,18 @@ const data = reactive({
     form: {},
     vo: {},
     rules: {
-        key: [{ required: true, message: '请输入模板唯一标识', trigger: 'blur' }],
-        value: [{ required: true, message: '请输入模板名称', trigger: 'blur' }], 
+        key: [{ 
+            required: true, 
+            pattern: /^[A-Z]+$/,
+            message: '请输入模板唯一标识(只能是大写字母)', 
+            trigger: ['blur', 'change'] 
+        }],
+        value: [{ 
+            required: true, 
+            pattern: /[\u4e00-\u9fa5]+/,
+            message: '请输入模板名称(必须包含汉字)', 
+            trigger: ['blur', 'change'] 
+        }], 
     }
 });
 const { vo, form,rules } = toRefs(data);
