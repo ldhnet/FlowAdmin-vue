@@ -46,7 +46,7 @@
       </el-row>
 
       <el-table v-loading="loading" :data="configList">
-         <el-table-column label="模板类型" align="center" prop="formCode" />
+         <el-table-column label="模板类型" align="center" prop="formCode" />  
          <el-table-column label="模板名称" align="center" prop="formCodeName">
             <template #default="item">
                {{ getFromCodeName(item.row.formCode) }}
@@ -54,6 +54,16 @@
          </el-table-column>
          <el-table-column label="流程编号" align="center" prop="bpmnCode" />
          <el-table-column label="流程名称" align="center" prop="bpmnName" />
+         <el-table-column label="流程类型" align="center" prop="isLowCodeFlow">
+            <template #default="item">
+               <el-tooltip v-if="item.row.isLowCodeFlow != 1" content="自定义表单+流程设计器"  placement="top">
+                  <el-tag type="warning" round>DIY</el-tag>
+               </el-tooltip> 
+               <el-tooltip v-if="item.row.isLowCodeFlow == 1" content="低代码表单+流程设计器"  placement="top">
+                  <el-tag type="success" round>LF</el-tag>
+               </el-tooltip>  
+            </template>
+         </el-table-column>
          <el-table-column label="是否去重" align="center" prop="deduplicationType">
             <template #default="item">
                {{ item.row.deduplicationType == 1 ? '否' : '是' }}
