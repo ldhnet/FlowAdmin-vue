@@ -7,7 +7,8 @@
         </div>
         <div v-if="componentLoaded"  class="component"> 
             <component :is="loadedComponent" :previewData="componentData" 
-            :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig" 
+            :lfFormData="lfFormDataConfig" :lfFieldsData="lfFieldsConfig"     
+             :lfFieldPerm="lfFieldControlVOs" 
              :isPreview="isPreview"></component>
         </div>
         <div v-if="viewConfig.isOutSideAccess">
@@ -37,6 +38,7 @@ let formData = ref(null);
 let loadedComponent = ref(null); 
 let lfFormDataConfig = ref(null);
 let lfFieldsConfig = ref(null);
+let lfFieldControlVOs = ref(null);
 
 let tips = "*未获取到外部表单信息，请联系管理员。";
 let visible = computed({
@@ -64,6 +66,7 @@ const preview = async (param) => {
             else if (responseData.isLowCodeFlow && responseData.isLowCodeFlow == '1') {//低代码表单
                 lfFormDataConfig.value = responseData.lfFormData;
                 lfFieldsConfig.value = JSON.stringify(responseData.lfFields);
+                lfFieldControlVOs.value =  JSON.stringify(responseData.processRecordInfo.lfFieldControlVOs);
                 loadedComponent.value = await loadLFComponent(param.formCode); 
                 componentLoaded.value = true
             }

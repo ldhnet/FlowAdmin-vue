@@ -44,17 +44,19 @@ const advanceHandleFormData = () => {
       if (fieldOpt.fieldTypeName == 'input-number') {
         formData[fieldOpt.name] = Number(formData[fieldOpt.name]);
       }
-    } 
+    }
     traverseFieldWidgetsList(formJson.widgetList, handlerFieldType);
-  }
+  } 
   if (!isEmpty(props.lfFieldPerm)) {
     handleFormPerm();
-  }else{ 
-    let handlerFn = (fieldOpt) => {
-      fieldOpt.readonly = true;
-      fieldOpt.hidden = false;
-    } 
-    traverseFieldWidgetsList(formJson.widgetList, handlerFn);
+  } else {
+    if (props.isPreview) {
+      let handlerFn = (fieldOpt) => {
+        fieldOpt.readonly = true;
+        fieldOpt.hidden = false;
+      }
+      traverseFieldWidgetsList(formJson.widgetList, handlerFn);
+    }
   }
 }
 /**表单字段权限控制 */
@@ -63,6 +65,7 @@ const handleFormPerm = () => {
   if (isEmptyArray(lfFieldPermData)) return;
   let handlerFn = (fieldOpt) => {
     let info = lfFieldPermData.find(function (ele) { return ele.fieldId == fieldOpt.name; });
+    console.log('info====111======',JSON.stringify(info));
     if (info) {
       if (info.perm == 'R') {
         fieldOpt.readonly = true;
@@ -78,6 +81,7 @@ const handleFormPerm = () => {
         fieldOpt.hidden = false;
       }
     }
+    console.log('info====2222======',JSON.stringify(info));
   };
   traverseFieldWidgetsList(formJson.widgetList, handlerFn);
 } 

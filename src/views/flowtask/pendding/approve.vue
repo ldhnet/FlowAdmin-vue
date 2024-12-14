@@ -182,7 +182,7 @@ const preview = () => {
             }
             else if (isLowCodeFlow && isLowCodeFlow == 'true') {//低代码表单
                 lfFormDataConfig.value = response.data.lfFormData;
-                lfFieldControlVOs.value = JSON.stringify(response.data.lfFieldControlVOs);
+                lfFieldControlVOs.value = JSON.stringify(response.data.processRecordInfo.lfFieldControlVOs); 
                 lfFieldsConfig.value = JSON.stringify(response.data.lfFields);
                 loadedComponent.value = await loadLFComponent();
                 componentLoaded.value = true; 

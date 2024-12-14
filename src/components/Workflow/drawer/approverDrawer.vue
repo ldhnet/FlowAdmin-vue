@@ -189,7 +189,7 @@ let visible = computed({
 watch(approverConfig1, (val) => {
     approverConfig.value = val.value;
     formItems.value = approverConfig.value.lfFieldControlVOs || [];
-    console.log("approverConfig.value========", JSON.stringify(approverConfig.value))
+    //console.log("approverConfig.value========", JSON.stringify(approverConfig.value))
     checkApprovalPageBtns.value = val.value.buttons?.approvalPage;
 })
 watch(approverConfig1, (val) => {
@@ -276,7 +276,7 @@ const handleAfterSignUpWay = (val) => {
             property: { afterSignUpWay: val ? 1 : 2 }
         });
     }
-    console.log('approverConfig.value=============', JSON.stringify(approverConfig.value))
+    //console.log('approverConfig.value=============', JSON.stringify(approverConfig.value))
 }
 const handleTabClick = (tab, event) => {
     activeName.value = tab.paneName;
