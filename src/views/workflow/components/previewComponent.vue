@@ -23,7 +23,6 @@ import { loadDIYComponent, loadLFComponent } from '@/views/workflow/components/c
 const { proxy } = getCurrentInstance()
 let store = useStore()
 let viewConfig = computed(() => store.instanceViewConfig1)
-
 let props = defineProps({
     isPreview: {
         type: Boolean,
@@ -46,9 +45,7 @@ let visible = computed({
   }
 })
  
-/**
- * 预览
- */
+/**预览 */
 const preview = async (param) => {
     let queryParams = ref({
         "formCode": param.formCode,

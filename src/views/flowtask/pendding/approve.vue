@@ -8,12 +8,13 @@
             <el-tab-pane label="表单信息" name="baseTab">
                 <div class="approve">
                     <el-row style="padding-left: -5px;padding-right: -5px;">
-                        <el-col :span="24" class="my-col" v-if="baseTabShow" :class="{ disableClss: !enableClass }">
+                        <el-col :span="24" class="my-col" v-if="baseTabShow">
                             <div v-if="componentLoaded"  class="component">
                                 <component :is="loadedComponent" 
                                 :previewData="componentData" 
                                 :lfFormData="lfFormDataConfig"
                                 :lfFieldsData="lfFieldsConfig"
+                                :lfFieldPerm="lfFieldControlVOs" 
                                 :isPreview="true">
                                 </component>
                             </div>
@@ -102,7 +103,8 @@ let isMultiple = ref(false);//false 转办，true 加批
 
 let lfFormDataConfig = ref(null);
 let lfFieldsConfig = ref(null);
-
+let lfFieldControlVOs = ref(null);
+ 
 let rules = {
     remark: [{
         required: true,
@@ -179,8 +181,9 @@ const preview = () => {
                 formData.value = response.data.formData;
             }
             else if (isLowCodeFlow && isLowCodeFlow == 'true') {//低代码表单
-                lfFormDataConfig.value = response.data.lfFormData
-                lfFieldsConfig.value = JSON.stringify(response.data.lfFields || {})
+                lfFormDataConfig.value = response.data.lfFormData;
+                lfFieldControlVOs.value = JSON.stringify(response.data.lfFieldControlVOs);
+                lfFieldsConfig.value = JSON.stringify(response.data.lfFields);
                 loadedComponent.value = await loadLFComponent();
                 componentLoaded.value = true; 
             } else {//自定义表单
@@ -289,9 +292,6 @@ const handleTabClick = async (tab, event) => {
 handleTabClick({ paneName: "baseTab" });
 </script>
 <style lang="scss" scoped>
-.disableClss {
-    pointer-events: none;
-}
 .component {
     background: white !important;
     padding: 30px !important;

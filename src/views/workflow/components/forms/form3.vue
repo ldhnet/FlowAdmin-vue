@@ -2,7 +2,7 @@
     <div>
         <el-form ref="ruleFormRef" :model="form" :rules="rules"
             style="max-width: 600px;min-height: 100px; margin: auto;">
-            <el-row>
+            <el-row :class="{ disableClss: props.isPreview }">
                 <el-col :span="24">
                     <el-form-item label=" 车 牌 号" prop="licensePlateNumber">
                         <el-input v-model="form.licensePlateNumber"  style="width: 220px;"  placeholder="请输入车牌号" />
@@ -98,4 +98,8 @@ defineExpose({
     getFromData
 })
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.disableClss {
+    pointer-events: none;
+}
+</style>

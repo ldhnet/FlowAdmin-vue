@@ -2,7 +2,7 @@
     <div>
         <el-form ref="ruleFormRef" :model="form" :rules="rules"
             style="max-width: 600px;min-height: 100px; margin: auto;">
-            <el-row>
+            <el-row :class="{ disableClss: props.isPreview }">
                 <el-col :span="24">
                     <el-form-item label="请假类型" prop="leaveType">
                         <el-select v-model="form.leaveType" placeholder="请选择请假类型" :style="{ width: '220px' }">
@@ -141,4 +141,8 @@ defineExpose({
     getFromData
 })
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.disableClss {
+    pointer-events: none;
+}
+</style>
